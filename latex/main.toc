@@ -1,0 +1,12 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {german}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Vorwort}{2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Einleitung}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Hauptteil}{4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Diskussion}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Schlusswort}{6}

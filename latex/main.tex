@@ -1,0 +1,88 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[german]{babel}
+
+% for formulas
+\usepackage[amssymb]{SIunits}
+
+% for bibliography
+\usepackage[style=science]{biblatex}
+\addbibresource{references.bib}
+
+
+\usepackage{csquotes}
+
+% for graphics
+\usepackage{graphicx}
+\graphicspath{{images/}{../images/}}
+\usepackage{wrapfig} % for Text around images
+
+% for chemistry
+\usepackage[version=4]{mhchem}
+
+% for the multifile structure
+\usepackage{subfiles}
+
+\usepackage{background}
+
+\backgroundsetup{
+contents={}
+}
+
+\begin{document}
+
+\subfile{sections/titelblatt}
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Vorwort}
+\subfile{sections/vorwort}
+\pagebreak
+
+\section{Einleitung}
+\subfile{sections/einleitung}
+\pagebreak
+
+\section{Hauptteil}
+\subfile{sections/hauptteil}
+\pagebreak
+
+\section{Diskussion}
+\subfile{sections/diskussion}
+\pagebreak
+
+\section{Schlusswort}
+\subfile{sections/schlusswort}
+\pagebreak
+
+\printbibliography[heading=bibintoc]
+\pagebreak
+
+\listoffigures
+\pagebreak
+
+\listoftables
+\pagebreak
+
+\section*{Selbstständigkeitserklärung}
+Ich erkläre hiermit, dass ich diese Arbeit selbständig durchgeführt und keine anderen als die angegebene Quellen, Hilfsmittel und Hilfspersonen beigezogen habe. Alle Textstellen in der Arbeit, die wörtlich oder sinngemäss aus Quellen entnommen wurden, habe ich als solche gekennzeichnet.
+
+\vspace{2cm}
+\begin{center}
+    \noindent\rule{5cm}{0.4pt}\\
+    Luis Wirth
+\end{center}
+
+
+\begin{figure}
+    \centering
+    
+\end{figure}
+
+\end{document}
