@@ -13,9 +13,9 @@ y = pickle.load(open('y.pickle','rb'))
 
 X = X/255.0
 
-dense_layers = [0,1,2]
-layer_sizes = [32,64,128]
-conv_layers = [1,2,3]
+dense_layers = [0]
+layer_sizes = [64]
+conv_layers = [3]
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
@@ -48,3 +48,6 @@ for dense_layer in dense_layers:
             model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
             
             model.fit(X, y, batch_size=32, epochs=20, validation_split=0.1, callbacks=[tensorboard])
+            
+            model.save('64x3-CNN.model')
+
