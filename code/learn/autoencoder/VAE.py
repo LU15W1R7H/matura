@@ -13,6 +13,21 @@ x_test = np.reshape(x_test, (len(x_test),28,28,1))
 x_test = x_test.astype('float32') / 255.
 x_train = np.reshape(x_train, (len(x_train),28,28,1))
 
+x = Input(batch_shape=(batch_size,original_dim))
+h = Dense(intermediate_dim, activation='relu')(x)
+z_mean = Dense(latent_dim)(h)
+z_log_sigma = Dense(latent_dim)(h)
+
+def sampling(args):
+    z_mean,z_log_sigma = args
+    epsilon = K.random_normal(shape=(batch_size, latent_dim),mean=0.,std=epsilon_std)
+    return z_mean + K.exp(z_log_sigma) + epsilon
+
+
+
+
+#-----------------------------------------------------
+
 encoding_dim = 32 #bottleneck
 
 input_img = Input(shape=(28,28,1))

@@ -14,17 +14,14 @@ x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
 print(x_train.shape)
 print(x_test.shape)
 
+
+
 encoding_dim = 32 #bottleneck
 
 input_img = Input(shape=(784,))
 
-encoded = Dense(128, activation='relu')(input_img)
-encoded = Dense(64, activation='relu')(encoded)
-encoded = Dense(32, activation='relu')(encoded)
-
-decoded = Dense(64, activation='relu')(encoded)
-decoded = Dense(128, activation='relu')(decoded)
-decoded = Dense(784, activation='sigmoid')(decoded)
+encoded = Dense(encoding_dim, activation='relu')(input_img)
+decoded = Dense(784, activation='sigmoid')(encoded)
 
 
 autoencoder = Model(input_img, decoded)
