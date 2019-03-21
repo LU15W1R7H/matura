@@ -15,7 +15,7 @@ Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
 Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt, sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
 Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen. Dies garantiert, dass kein Auswendiglernen moeglich ist.
 
-Die Inputs/Features werden in einem Vektor $\vec{X}=(X_1,X_2,...,X_n)$ und die Outputs/Vohersagen in einem Vektor $\vec{Y}=(Y_1,Y_2,...,Y_m)$ zusammengefasst.  Das gleiche macht man mit den Labels, wobei diese so bezeichnet werden: $\hat{\vec{Y}}=(\hat{Y_1},\hat{Y_2},...,\hat{Y_m})$
+Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=(y_1,y_2,...,y_m)$ zusammengefasst.  Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)$ bezeichnet werden.
 
 
 \begin{figure}[h!]
@@ -28,16 +28,35 @@ Die Inputs/Features werden in einem Vektor $\vec{X}=(X_1,X_2,...,X_n)$ und die O
 \end{figure}
 
 \subsection{Modelle (allgemein)}
-Ein Modell ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{Y}=\mathit{f}(\vec{X})$ . Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{Y}$ besser mit den Labels $\hat{\vec{Y}}$ uebereinstimmt.
+Ein Modell ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
+Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen. Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Paramtern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
 
-\pagebreak
+Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls es ein einfachen linearen Zusammenhang zwischen den Features und den Labels besteht.
+$y=\phi_1x + \phi_0$. 
+
+Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}. Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
+
+BEISPIELMODELL (in der Art: Note anhand Lernstunden vorhersagen)
+
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
-Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss in einem ersten Schritt des Trainings die Genauigkeit des Models bewertet werden.
-Dafuer gibt es sogennante Kosten-, Verlust- oder Fehlerfunktionen. 
+Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
+Dafuer gibt es sogennante Kosten-, Verlust- oder Fehlerfunktionen. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.\par
 
-Die wohl bekannteste Kostenfunktion ist die 
+Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen.\\
+$C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)$\\
+Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler.\\
+$\bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)$\\
+%
+Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
+\begin{itemize}
+    \item{$c$ ist $0$, wenn $y = \hat{y}$}
+    \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
+    \item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
+\end{itemize}
 
+Eine beliebte Kostenfunktion ist der ``Mean Squared Error''
 \subsubsection{Gradient descent}
 
 \subsection{Neural Networks}
