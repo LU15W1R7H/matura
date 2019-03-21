@@ -3,10 +3,49 @@
 \begin{document}
 
 
-Der Themenbereich des Machinellen Lernens beschäftigt sich mit Algorithmen und Modellen, welche mithilfe von Trainingsdaten eine Korrelation zwischen Input und Output erlernt. Dabei werden keine expliziten Instruktionen ausgefuehrt, sondern das Modell erlernt von selbst den Zusammenhang. Unter korrekten Bedingungen (keine Ueberanpassung) findet kein auswenig Lernen statt, sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
-Diese Modelle machen laufend vorherrsagen ueber den vermuteten Output, welcher mit dem erwarteten Output vergliechen wird und so bewertet wird. Anhand dieser Bewertung wird eine Optimierung des Algorithmus vorgenommen. Somit gewinnt er Verstantniss aus Erfahrung, aehnlich wie der Mensch. 
+Der Themenbereich des Machinellen Lernens beschäftigt sich mit Algorithmen, um mathematischen Modellen beizubringen, Probleme zu loesen.
+Hierzu werden keine expliziten Instruktionen fest einprogrammiert, sondern das Modell wird trainiert und optimiert sich von selbst.
+Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 
-\subsection{Trainingsdaten}
-Mithilfe der Beispiele des Trainingsdatensatz soll das Model
+\subsection{Daten}
+
+Der Trainingsdatensatz beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten. Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
+Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat. Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
+Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
+Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt, sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
+Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen. Dies garantiert, dass kein Auswendiglernen moeglich ist.
+
+Die Inputs/Features werden in einem Vektor $\vec{X}=(X_1,X_2,...,X_n)$ und die Outputs/Vohersagen in einem Vektor $\vec{Y}=(Y_1,Y_2,...,Y_m)$ zusammengefasst.  Das gleiche macht man mit den Labels, wobei diese so bezeichnet werden: $\hat{\vec{Y}}=(\hat{Y_1},\hat{Y_2},...,\hat{Y_m})$
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[node distance=5cm,auto]
+        
+    \end{tikzpicture}
+    
+    \caption{eine Veranschaulichung eines Machine Learning Modells}
+\end{figure}
+
+\subsection{Modelle (allgemein)}
+Ein Modell ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{Y}=\mathit{f}(\vec{X})$ . Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{Y}$ besser mit den Labels $\hat{\vec{Y}}$ uebereinstimmt.
+
+\pagebreak
+\subsection{Training}
+\subsubsection{Kostenfunktionen}
+Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss in einem ersten Schritt des Trainings die Genauigkeit des Models bewertet werden.
+Dafuer gibt es sogennante Kosten-, Verlust- oder Fehlerfunktionen. 
+
+Die wohl bekannteste Kostenfunktion ist die 
+
+\subsubsection{Gradient descent}
+
+\subsection{Neural Networks}
+\subsubsection{Feedforward Neural Network}
+\subsubsection{Convolutional Neural Networks}
+\subsubsection{Autoencoder}
+\subsubsection{Variational Autoencoder?}
+\subsubsection{Detangled Autoencoder?}
+
 
 \end{document}
