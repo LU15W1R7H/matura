@@ -33,7 +33,7 @@ Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen. Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Paramtern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
 
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls es ein einfachen linearen Zusammenhang zwischen den Features und den Labels besteht.
-$y=\phi_1x + \phi_0$. 
+$y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden. 
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}. Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
 
@@ -49,7 +49,7 @@ $C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)$\\
 Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler.\\
 $\bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)$\\
 %
-Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
+Eine Kostenfunktion $c(y_i,\hat{y}_i)$ sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
     \item{$c$ ist $0$, wenn $y = \hat{y}$}
     \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}

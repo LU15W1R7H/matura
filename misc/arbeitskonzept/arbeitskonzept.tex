@@ -1,0 +1,103 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+
+\usepackage[english]{babel}
+
+\usepackage{graphicx}%including graphics/images
+\usepackage{amsmath}%for math
+\usepackage{amssymb}%also for math
+\usepackage{fancyhdr}%for header and footer
+\usepackage{xcolor}%for color settings
+\usepackage[a4paper, portrait, margin=2cm]{geometry}%for page layout
+%\usepackage[compact]{titlesec}%for sections
+\usepackage[normalem]{ulem}%for strikethrough text
+
+%footer and header
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{2pt}
+\rhead{Luis Wirth}
+\lhead{Arbeitskonzept}
+\chead{Maturarbeit}
+\cfoot{\thepage}
+
+\begin{document}
+
+\section*{Arbeitskonzept von Luis Wirth}
+
+\subsection*{Titel der Arbeit}
+``Bildsynthese von menschlichen Gesichtern mithilfe von Kuenstlicher Intelligenz''
+
+\subsection*{Leitfrage}
+``Wie generiert man mithilfe von Machine Learning Bilder von kuenstlichen menschlichen Gesichtern?''
+
+\subsection*{Gegenstand der Untersuchung}
+\textbf{Machine Learning} ist momentan ein sehr aktueller Themenbereich der viele neue Moeglichkeiten bietet.
+Es vereint die beiden Gebiete der Informatik und der Mathematik, um komplexe Problemstellungen zu loesen.
+Die vorliegende Arbeit soll beispielhaft eine konkrete \textbf{Anwendung} von Machine Learning aufzeigen, namentlich der Bildgenerierung von kuenstlichen menschlichen Gesichtern.
+\\\\
+Zu diesem Zweck gelangen \textbf{kuenstliche Neuronale Netze} zum Einsatz. Dabei wird der Fokus auf einer spezifischen Architektur liegen: den \textbf{Autoencodern}.
+Um das Vorgehen zu verstehen, wird die relevante Theorie erlauert.
+
+\subsection*{Fachliche Verfahren}
+Fuer das Programmieren der Applikation, welches die Bildgenerierung ausfuehrt soll, wird \textbf{Python3} verwendet.
+Mithilfe von \textbf{Tensorflow}, ein von Google entwickeltes Framework fuer datenstromorientierte Programmierung, wird das Neuronale Netz implementiert.
+\textbf{Keras}, eine Schnittstelle von Tensorflow, wird das Erstellen des Computation Graphs des Neuronalen Netzes erleichtern. 
+\\\\
+Dank Tensorflow und Keras muessen die komplexen Methoden zum Trainieren von Neuronalen Netzen (\textbf{Gradient Descent} in Kombination mit  \textbf{Linearer Algebra}) nicht selbst implementiert werden.
+Jedoch wird die Maturarbeit die dazugehoerige Theorie darlegen.
+
+\subsection*{Ressourcen}
+Fuer das Trainieren des Neuronalen Netzes ist ein leistungsstarker Computer (d.h. mit guter GPU) von Vorteil.
+\\\\
+Des weiteren werden \textbf{Trainingsdaten} fuer das Trainieren des Neuronale Netz benoetigt. In diesem Fall handelt es sich um Fotos von menschlichen Gesichtern, welche alle ein aehnlichen Format und einen moeglichst uniformen Hintergrund haben sollten.
+Dies koennten zum Beispiel Jahrbuchbilder einer Schule sein oder herausgefilterte Bilder aus dem Internet.
+\\\\
+Informationsquelle wird vor allem das Internet sein, da dieses Gebiet schwerpunktmaessig dort behandelt wird. Fuer die notwendige Theorie zu Gradient Descent etc. werden passende Buecher konsultiert.
+
+\pagebreak
+
+\subsection*{Zielsetzung}
+Das Ziel der Arbeit ist es, die Grundlagen und Moeglichkeiten von Machine Learning anhand eines konkreten Anwendungsbeispiel darzulegen.
+Dabei soll ebenfalls aufgezeigt werden, welcher Aufwand mit einem solchen Projekt verbunden ist.
+Die Arbeit kann deshalb als Orientierungshilfe fuer aehnliche Projekte dienen.\\\\
+Gleichzeitig soll verdeutlicht werden, dass es auch fuer programmieraffine Laien grundsaetzlich moeglich ist, Machine Learning auf komplexe Problemstellungen zu beziehen.
+\\\\
+Durch die Identifikation von verbindenen Merkmalen eines Datensatzes, ist es moeglich, neue Daten mit den gleichen Merkmalen zu generieren.
+Auf diese Weise eroeffnen sich vollig neue Anwendungsmoeglichkeiten.
+Autoencoder weisen zudem weitere interessante Aspekte auf, von denen einige in der Arbeit behandelt werden sollen.
+
+\subsection*{Zeitplan}
+Arbeitsphasen und Abgabetermine fuer Teilergebnisse.
+
+\begin{center}
+    \begin{minipage}[t]{.5\textwidth}
+        \centering 
+        \subsubsection*{general cmds}
+        \begin{tabular}{c | l}
+            \textbf{ } & doesn't modify \\
+            \textbf{\#}\textit{comment} & comment \\
+            \textbf{q} & quits \\ 
+            \textbf{l} & prints pattern space (debugging) \\ 
+        \end{tabular}\\
+
+    \end{minipage}%
+    \begin{minipage}[t]{.5\textwidth}
+        \centering
+        \subsubsection*{moving cmds}
+        \begin{tabular}{r | l}
+            \textbf{p} & pattern $\rightarrow$ output \\
+            \textbf{P} & first line pattern $\rightarrow$ output \\
+            \textbf{n} & pattern $\rightarrow$ output; next line \\
+            \textbf{N} & input $\rightarrow$ pattern; next line \\
+            \textbf{w} \textit{file} & pattern $\rightarrow$ \textit{file} \\
+            \textbf{x} & pattern $\leftrightarrow$ hold \\
+            \textbf{h} & pattern $\rightarrow$ hold \\
+            \textbf{H} & pattern $\rightarrow$+ hold \\
+            \textbf{G} & hold $\rightarrow$+ pattern \\
+        \end{tabular}\\
+
+    \end{minipage}
+\end{center}
+
+\end{document}
