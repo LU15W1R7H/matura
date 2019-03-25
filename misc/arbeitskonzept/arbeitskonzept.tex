@@ -22,82 +22,72 @@
 \cfoot{\thepage}
 
 \begin{document}
+\sloppy
 
 \section*{Arbeitskonzept von Luis Wirth}
 
 \subsection*{Titel der Arbeit}
-``Bildsynthese von menschlichen Gesichtern mithilfe von Kuenstlicher Intelligenz''
+``Bildsynthese von menschlichen Gesichtern mit KI''
 
 \subsection*{Leitfrage}
-``Wie generiert man mithilfe von Machine Learning Bilder von kuenstlichen menschlichen Gesichtern?''
+``Wie generiert man mithilfe von Machine Learning künstliche Bilder von menschlichen Gesichtern?''
 
 \subsection*{Gegenstand der Untersuchung}
-\textbf{Machine Learning} ist momentan ein sehr aktueller Themenbereich der viele neue Moeglichkeiten bietet.
-Es vereint die beiden Gebiete der Informatik und der Mathematik, um komplexe Problemstellungen zu loesen.
-Die vorliegende Arbeit soll beispielhaft eine konkrete \textbf{Anwendung} von Machine Learning aufzeigen, namentlich der Bildgenerierung von kuenstlichen menschlichen Gesichtern.
+\textbf{Machine Learning} ist momentan ein sehr aktueller Themenbereich der viele neue Möglichkeiten bietet.
+Es vereint die beiden Gebiete der Informatik und der Mathematik, um komplexe Problemstellungen zu lösen.
+Die vorliegende Arbeit soll beispielhaft eine konkrete \textbf{Anwendung} von Machine Learning aufzeigen, namentlich die künstliche Bildgenerierung von menschlichen Gesichtern.
 \\\\
-Zu diesem Zweck gelangen \textbf{kuenstliche Neuronale Netze} zum Einsatz. Dabei wird der Fokus auf einer spezifischen Architektur liegen: den \textbf{Autoencodern}.
-Um das Vorgehen zu verstehen, wird die relevante Theorie erlauert.
+Zu diesem Zweck gelangen \textbf{künstliche Neuronale Netze} zum Einsatz. Dabei wird der Fokus auf einer spezifischen Architektur liegen: den \textbf{Autoencodern}.
+Um das Vorgehen zu verstehen, wird die relevante Theorie erläutert.
 
 \subsection*{Fachliche Verfahren}
-Fuer das Programmieren der Applikation, welches die Bildgenerierung ausfuehrt soll, wird \textbf{Python3} verwendet.
-Mithilfe von \textbf{Tensorflow}, ein von Google entwickeltes Framework fuer datenstromorientierte Programmierung, wird das Neuronale Netz implementiert.
-\textbf{Keras}, eine Schnittstelle von Tensorflow, wird das Erstellen des Computation Graphs des Neuronalen Netzes erleichtern. 
+Für das Programmieren der Applikation, welche die Bildgenerierung ausführen soll, wird \textbf{Python3} verwendet.
+Mithilfe von \textbf{Tensorflow}, ein von Google entwickeltes Framework für datenstromorientierte Programmierung, wird das Neuronale Netz implementiert.
+\textbf{Keras}, eine Schnittstelle von Tensorflow, wird das Erstellen des Computational Graphs des Neuronalen Netzes erleichtern. 
 \\\\
-Dank Tensorflow und Keras muessen die komplexen Methoden zum Trainieren von Neuronalen Netzen (\textbf{Gradient Descent} in Kombination mit  \textbf{Linearer Algebra}) nicht selbst implementiert werden.
-Jedoch wird die Maturarbeit die dazugehoerige Theorie darlegen.
+Dank Tensorflow und Keras müssen die komplexen Verfahren zum Trainieren von Neuronalen Netzen (\textbf{Gradient Descent} in Kombination mit  \textbf{Linearer Algebra}) nicht selbst implementiert werden.
+Jedoch wird die Maturarbeit die dazugehörige Theorie darlegen.
+
 
 \subsection*{Ressourcen}
-Fuer das Trainieren des Neuronalen Netzes ist ein leistungsstarker Computer (d.h. mit guter GPU) von Vorteil.
+Für das Trainieren des Neuronalen Netzes ist ein leistungsstarker Computer (d.h. mit guter GPU) von Vorteil.
 \\\\
-Des weiteren werden \textbf{Trainingsdaten} fuer das Trainieren des Neuronale Netz benoetigt. In diesem Fall handelt es sich um Fotos von menschlichen Gesichtern, welche alle ein aehnlichen Format und einen moeglichst uniformen Hintergrund haben sollten.
-Dies koennten zum Beispiel Jahrbuchbilder einer Schule sein oder herausgefilterte Bilder aus dem Internet.
+Des weiteren werden \textbf{Trainingsdaten} für das Trainieren des Neuronale Netz benötigt. In diesem Fall handelt es sich um Fotos von menschlichen Gesichtern, welche alle ein ähnliches Format und einen möglichst uniformen Hintergrund haben sollten.
+Dies könnten zum Beispiel Jahrbuchbilder einer Schule sein oder herausgefilterte Bilder aus dem Internet.
 \\\\
-Informationsquelle wird vor allem das Internet sein, da dieses Gebiet schwerpunktmaessig dort behandelt wird. Fuer die notwendige Theorie zu Gradient Descent etc. werden passende Buecher konsultiert.
+Informationsquelle wird vor allem das Internet sein, da dieses Gebiet schwerpunktmässig dort behandelt wird. Für die notwendige Theorie zu Gradient Descent und dergleichen werden passende Bücher konsultiert.
 
 \pagebreak
 
 \subsection*{Zielsetzung}
-Das Ziel der Arbeit ist es, die Grundlagen und Moeglichkeiten von Machine Learning anhand eines konkreten Anwendungsbeispiel darzulegen.
+Das Ziel der Arbeit ist es, die Grundlagen und Möglichkeiten von Machine Learning anhand eines konkreten Anwendungsbeispiel darzulegen.
 Dabei soll ebenfalls aufgezeigt werden, welcher Aufwand mit einem solchen Projekt verbunden ist.
-Die Arbeit kann deshalb als Orientierungshilfe fuer aehnliche Projekte dienen.\\\\
-Gleichzeitig soll verdeutlicht werden, dass es auch fuer programmieraffine Laien grundsaetzlich moeglich ist, Machine Learning auf komplexe Problemstellungen zu beziehen.
+Die Arbeit kann deshalb als Orientierungshilfe für ähnliche Projekte dienen.\\\\
+Gleichzeitig soll verdeutlicht werden, dass es auch für programmieraffine Laien grundsätzlich möglich ist, Machine Learning auf komplexe Problemstellungen anzuwenden.
 \\\\
-Durch die Identifikation von verbindenen Merkmalen eines Datensatzes, ist es moeglich, neue Daten mit den gleichen Merkmalen zu generieren.
-Auf diese Weise eroeffnen sich vollig neue Anwendungsmoeglichkeiten.
-Autoencoder weisen zudem weitere interessante Aspekte auf, von denen einige in der Arbeit behandelt werden sollen.
+Durch die Identifikation von verbindenen Merkmalen eines Datensatzes, ist es möglich, \textit{neue} Daten mit den gleichen Merkmalen zu generieren.
+Dieses Prinzip hat unzählige Anwendungsmöglichkeiten! Einige davon werden in der Arbeit erläutert werden.
+Autoencoder weisen zudem weitere interessante Aspekte auf, von denen einige in der Arbeit behandelt werden.
 
 \subsection*{Zeitplan}
-Arbeitsphasen und Abgabetermine fuer Teilergebnisse.
+Deadlines
+\\\\
+\begin{tabular}{r | l}
+    29.03.19 & Abgabe Arbeitskonzept\\
+    12.04.19 & Theorie zu Machine Learning schreiben\\
+    28.04.19 & Trainingsdaten beschaffen\\
+    15.05.19 & Autoencoder programmieren\\
+    20.05.19 & Face-Aligner programmieren\\
+    25.05.19 & Trainieren und Hyperparameter einstellen\\
+    15.06.19 & Anpassungen am Model?\\
+    15.07.19 & Autoencoder ausbauen? $\rightarrow$ VAE\\
+    01.09.19 & fertig schreiben\\
+    20.09.19 & Abbildungen in Ti\textit kZ machen\\
+    26.09.19 & Korrektur\\
+    27.09.19 & Abgabe Maturarbeit\\
+    10.12.19 & Präsentation vorbereiten\\
+    16.12.19 & MA-Präsentation\\
 
-\begin{center}
-    \begin{minipage}[t]{.5\textwidth}
-        \centering 
-        \subsubsection*{general cmds}
-        \begin{tabular}{c | l}
-            \textbf{ } & doesn't modify \\
-            \textbf{\#}\textit{comment} & comment \\
-            \textbf{q} & quits \\ 
-            \textbf{l} & prints pattern space (debugging) \\ 
-        \end{tabular}\\
-
-    \end{minipage}%
-    \begin{minipage}[t]{.5\textwidth}
-        \centering
-        \subsubsection*{moving cmds}
-        \begin{tabular}{r | l}
-            \textbf{p} & pattern $\rightarrow$ output \\
-            \textbf{P} & first line pattern $\rightarrow$ output \\
-            \textbf{n} & pattern $\rightarrow$ output; next line \\
-            \textbf{N} & input $\rightarrow$ pattern; next line \\
-            \textbf{w} \textit{file} & pattern $\rightarrow$ \textit{file} \\
-            \textbf{x} & pattern $\leftrightarrow$ hold \\
-            \textbf{h} & pattern $\rightarrow$ hold \\
-            \textbf{H} & pattern $\rightarrow$+ hold \\
-            \textbf{G} & hold $\rightarrow$+ pattern \\
-        \end{tabular}\\
-
-    \end{minipage}
-\end{center}
+\end{tabular}\\
 
 \end{document}
