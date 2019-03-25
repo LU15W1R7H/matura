@@ -32,7 +32,7 @@ Ein Modell ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \m
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen. Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Paramtern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
 
-Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls es ein einfachen linearen Zusammenhang zwischen den Features und den Labels besteht.
+Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls ein einfacher linearen Zusammenhang zwischen den Features und den Labels besteht.
 $y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden. 
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}. Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
@@ -57,9 +57,23 @@ Eine Kostenfunktion $c(y_i,\hat{y}_i)$ sollte folgende Eigenschaften aufweisen:
 \end{itemize}
 
 Eine beliebte Kostenfunktion ist der ``Mean Squared Error''
-\subsubsection{Gradient descent}
+\pagebreak
+\subsubsection{Gradientenverfahren (engl.: Gradient descent)}
+
+Ziel minimieren einer Funktion $\mathit{f}: \mathbb{R}^k \to \mathbb{R}$\\
+$\displaystyle\min_{x\in \mathbb{R}^k}f(x)$\\
+
+$\vec{v}_{j+1} = \vec{v}_j - \eta \cdot \nabla \mathit{f}(\vec{v}_j)$
+
+$\vec{\nabla} f = 
+ \begin{pmatrix}
+     \frac{\partial f}{\partial x} \\[6pt]
+     \frac{\partial f}{\partial y} \\[6pt]
+     \frac{\partial f}{\partial z} \\
+ \end{pmatrix}$
 
 \subsection{Neural Networks}
+\subsubsection{Backpropagation}
 \subsubsection{Feedforward Neural Network}
 \subsubsection{Convolutional Neural Networks}
 \subsubsection{Autoencoder}
