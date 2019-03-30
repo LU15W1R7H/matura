@@ -57,22 +57,74 @@ Eine Kostenfunktion $c(y_i,\hat{y}_i)$ sollte folgende Eigenschaften aufweisen:
 \end{itemize}
 
 Eine beliebte Kostenfunktion ist der ``Mean Squared Error''
-\pagebreak
+
+
 \subsubsection{Gradientenverfahren (engl.: Gradient descent)}
+Nun gilt es ein Optimierungsproblem zu loesen, konkret: Die Fehlerfunktion $C(\vec{y},\vec{\hat{y}})$ muss minimiert werden.
+Hierfuer verwendet man das sogennante \textbf{Gradientenverfahren}.
+\footnote{
+    Im Gymnasium lernt man die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem man die erste Ableitung $f'$ gleich null setzt.
+    Dies ist hier nicht moeglich, da die Funktion $C'$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb braucht man das Gradientenverfahren.
+}\par
+\medskip
+Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \cdots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ minimiert werden.
+Dies beschieht, in dem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen Komponenten den Input von $f$ darstellt, gewaehlt wird.
+Nun werden iterativ neue Punkte $\vec{p_z}$ gesucht, welche immer naeher beim lokalen Minimun liegen, also Punkte die den Funktionswert $f(\vec{p}_z)$ immer kleiner werden lassen.
+Dies wird durchgeführt, bis der Punkt genug nahe beim lokalen Minimun ist.
+\par
+\medskip
+Dafuer muss ein Vektor $\vec{b}_z$ bestimmt werden, welcher auf den Punkt $\vec{p}_z$ draufaddiert einen neuen Punkt $\vec{p}_{z+1}$ bildet,
+bei dem der Funktionswert $f(\vec{p}_{z+1})$ kleiner ist als der von $f(\vec{p}_z)$.
+Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerksten Funktionswertabnahme zeigt.
 
-Ziel minimieren einer Funktion $\mathit{f}: \mathbb{R}^k \to \mathbb{R}$\\
-$\displaystyle\min_{x\in \mathbb{R}^k}f(x)$\\
+Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$.\\
 
-$\vec{v}_{j+1} = \vec{v}_j - \eta \cdot \nabla \mathit{f}(\vec{v}_j)$
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+ \tikzstyle{fancytitle} = [fill=red, text=white]
 
-$\vec{\nabla} f = 
- \begin{pmatrix}
-     \frac{\partial f}{\partial x} \\[6pt]
-     \frac{\partial f}{\partial y} \\[6pt]
-     \frac{\partial f}{\partial z} \\
- \end{pmatrix}$
+\noindent \begin{tikzpicture}
+     \node [mybox] (box) {%
+             \begin{minipage}{1.0\textwidth}
 
-\subsection{Neural Networks}
+             Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
+             Der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ bei einem Punkt $\vec{p}$ ist ein Vektor, welcher in die Richtung des steilsten Anstieg von $f$ zeigt.
+             Sein Magnitude ist ein Mass fuer die Starke der Zunahme. Somit ist er eine Erweiterung der Ableitung auf $n$-dimensionale Funktionen.\\
+                $grad(f)=\vec{\nabla}f=
+                \begin{pmatrix}
+                    \frac{\partial f}{\partial x_1} \\
+                    \vdots \\
+                    \frac{\partial f}{\partial x_2} \\
+                \end{pmatrix}$
+
+            Bei den $\frac{\partial f}{\partial x_i}$ handelt es sich um partielle Ableitungen.
+
+
+
+             \end{minipage}
+     };
+    \node[fancytitle,right=10pt] at (box.north west) {Gradient};
+\end{tikzpicture}
+
+
+\noindent \begin{tikzpicture}
+    \node [mybox] (box) {%
+            \begin{minipage}{1.0\textwidth}
+
+
+            \end{minipage}
+
+    };
+    \node[fancytitle,right=10pt] at (box.north west) {Partielle Ableitungen};
+
+\end{tikzpicture}
+
+Somit ist der Vektor $\vec{b}_z$ einfach ein skalierter negativer Gradient der Funktion $f$ im Punkt $\vec{p}_z$.
+Also kann jetzt das iterative Annahern des lokalen Minimums so beschreiben werden:\\
+$\vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)$, wobei $\eta$ die Schrittgroesse festlegt.
+
+
+
+ \subsection{Neural Networks}
 \subsubsection{Backpropagation}
 \subsubsection{Feedforward Neural Network}
 \subsubsection{Convolutional Neural Networks}

@@ -1,7 +1,6 @@
 \documentclass[12pt, a4paper]{article}
 
 \usepackage[T1]{fontenc}
-
 \usepackage[german]{babel}
 
 % for formulas
@@ -13,9 +12,9 @@
 % for bibliography
 \usepackage[style=science]{biblatex}
 \addbibresource{references.bib}
-
-
 \usepackage{csquotes}
+
+
 
 % for graphics
 \usepackage{graphicx}
@@ -28,6 +27,22 @@
 
 % for the multifile structure
 \usepackage{subfiles}
+
+% for page layout
+\usepackage[a4paper, portrait, margin=2cm]{geometry}
+
+% footer and header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{2pt}
+\rhead{Luis Wirth}
+\lhead{Maturarbeit}
+\chead{Machine Learning}
+\cfoot{\thepage}
+
+% footnote at bottom
+\usepackage[bottom]{footmisc}
 
 \usepackage{background}
 
