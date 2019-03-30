@@ -9,13 +9,19 @@ Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrel
 
 \subsection{Daten}
 
-Der Trainingsdatensatz beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten. Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
-Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat. Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
+Der Trainingsdatensatz beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
+Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
+Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
+Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
-Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt, sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
-Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen. Dies garantiert, dass kein Auswendiglernen moeglich ist.
+Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
+sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
 
-Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=(y_1,y_2,...,y_m)$ zusammengefasst.  Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)$ bezeichnet werden.
+Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
+Dies garantiert, dass kein Auswendiglernen moeglich ist.
+
+Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=(y_1,y_2,...,y_m)$ zusammengefasst.
+Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)$ bezeichnet werden.
 
 
 \begin{figure}[h!]
@@ -30,12 +36,15 @@ Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)$ und die O
 \subsection{Modelle (allgemein)}
 Ein Modell ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
-Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$. Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen. Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Paramtern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
+Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
+Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
+Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Paramtern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
 
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls ein einfacher linearen Zusammenhang zwischen den Features und den Labels besteht.
 $y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden. 
 
-Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}. Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
+Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
+Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
 
 BEISPIELMODELL (in der Art: Note anhand Lernstunden vorhersagen)
 
@@ -56,11 +65,13 @@ Eine Kostenfunktion $c(y_i,\hat{y}_i)$ sollte folgende Eigenschaften aufweisen:
     \item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
 \end{itemize}
 
-Eine beliebte Kostenfunktion ist der ``Mean Squared Error''
+Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.: mean squared error).
 
 
 \subsubsection{Gradientenverfahren (engl.: Gradient descent)}
-Nun gilt es ein Optimierungsproblem zu loesen, konkret: Die Fehlerfunktion $C(\vec{y},\vec{\hat{y}})$ muss minimiert werden.
+Unser Modell ist dann am besten, wenn die Fehlerfunktion am kleinsten ist.
+Deshalb gilt es nun ein Optimierungsproblem zu loesen, konkret: Die Fehlerfunktion $C$ muss minimiert werden.
+Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Outputs und Labels betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparamtern. $C(\phi_1, \phi_2, \cdots, \phi_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
 Hierfuer verwendet man das sogennante \textbf{Gradientenverfahren}.
 \footnote{
     Im Gymnasium lernt man die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem man die erste Ableitung $f'$ gleich null setzt.
@@ -87,13 +98,13 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$.\\
              \begin{minipage}{1.0\textwidth}
 
              Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
-             Der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ bei einem Punkt $\vec{p}$ ist ein Vektor, welcher in die Richtung des steilsten Anstieg von $f$ zeigt.
+             Der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ ist ein Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
              Sein Magnitude ist ein Mass fuer die Starke der Zunahme. Somit ist er eine Erweiterung der Ableitung auf $n$-dimensionale Funktionen.\\
-                $grad(f)=\vec{\nabla}f=
+                $\displaystyle grad(f)=\vec{\nabla}f=
                 \begin{pmatrix}
                     \frac{\partial f}{\partial x_1} \\
                     \vdots \\
-                    \frac{\partial f}{\partial x_2} \\
+                    \frac{\partial f}{\partial x_n} \\
                 \end{pmatrix}$
 
             Bei den $\frac{\partial f}{\partial x_i}$ handelt es sich um partielle Ableitungen.
@@ -110,6 +121,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$.\\
     \node [mybox] (box) {%
             \begin{minipage}{1.0\textwidth}
 
+                $\displaystyle\frac{\partial f}{\partial x_i}(a) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}$
 
             \end{minipage}
 
@@ -120,8 +132,10 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$.\\
 
 Somit ist der Vektor $\vec{b}_z$ einfach ein skalierter negativer Gradient der Funktion $f$ im Punkt $\vec{p}_z$.
 Also kann jetzt das iterative Annahern des lokalen Minimums so beschreiben werden:\\
-$\vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)$, wobei $\eta$ die Schrittgroesse festlegt.
+$\displaystyle\vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)$,\\
+wobei $\eta$ die Schrittgroesse festlegt.
 
+\textbf{Lernrate $\eta$}
 
 
  \subsection{Neural Networks}
