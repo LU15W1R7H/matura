@@ -92,11 +92,12 @@ Sie erfuellt alle anforderungen, denn:
 Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu $(\hat{y}-y)^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(\hat{y}-y)$
 
 
-\subsubsection{Gradientenverfahren (engl.: Gradient descent)}
+\subsubsection{Gradientenverfahren allgemein}
 Unser Modell ist dann am besten, wenn die Fehlerfunktion am kleinsten ist.
 Deshalb gilt es nun ein Optimierungsproblem zu loesen, um das Modell zu trainieren, konkret: Die Fehlerfunktion $C$ muss minimiert werden.
-Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Outputs und Labels betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparamtern. $C(\phi_1, \phi_2, \cdots, \phi_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
-Hierfuer verwendet man das sogennante \textbf{Gradientenverfahren}.
+Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Outputs und Labels betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
+$C(\phi_1, \phi_2, \cdots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
+Hierfuer verwendet man das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent).
 \footnote{
     Im Gymnasium lernt man die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem man die erste Ableitung $f'$ gleich null setzt.
     Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \cdots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb braucht man das Gradientenverfahren.
@@ -161,27 +162,23 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
     \node[fancytitle,right=10pt] at (box.north west) {Gradient};
 \end{tikzpicture}
 
-
-
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben werden:\\
 \begin{equation}\label{eq:gradientdescent}
     \displaystyle\vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
 \end{equation}
 
-Beim Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
+Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
 Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr tiefes Minimum zu finden.
-Nach dem erfolgreichen Gradientenabstieg bedeutet dass fuer unser Modell, dass die Komponenten von $\vec{p}_n$ optimalen Modellparamteter, welche den Fehler des Modells
-minimieren, darstellen. Somit wurde das Modell erfolgreich trainiert.
 
 Die sogennante \textbf{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
 Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgroesse des Gradientenabstieg bestimmt. Sie muss je nach zu minimierender Funktion anderst gewaehlt werden.
 Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Probleme beim Training:
 \begin{itemize}
     \item{Falls $\eta$ zu klein ist, verlaueft das Trainings unnotig langsam und braucht sehr lange.
-        Ausserdem kann es passieren, dass man bei einem Sattelpunkt oder einem hohen lokalen Minimum stecken bleibt.}
+        Ausserdem kann es passieren, dass man bei einem hohen lokalen Minimum stecken bleibt.}
 
-    \item{Falls $\eta$ zu gross ist, passiert es, dass man ueber das lokale Minimum hinaus schiesst und nur darum herum sprint.}
+    \item{Falls $\eta$ zu gross ist, passiert es, dass man ueber das lokale Minimum hinaus schiesst und nur darum herum springt.}
 
 \end{itemize}
 \begin{figure}[h!]
@@ -190,7 +187,17 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
 \par\medskip
 
-\subsubsection{Stochastic Gradient Descent}
+\subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
+Also wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
+Konkret wird die Kostenfunktion $C(\phi_0,\cdots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
+Dafuer muesste man den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
+Dies waere ein sehr exakter Prozess aber ein extrem langsamer zugleich.
+Bei grossen Datensetzen wuerde es eine Ewigkeit dauern bis das Modell nur annahernd guete Vorhersagen machen wuerde.
+\par\medskip
+Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
+Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient pro Mini-Batch berechnet.
+Dadurch finden deutlich mehr Iterationen statt in einer Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen trainiert. 
+Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegen gut.
 
 \subsection{Neural Networks}
 \subsubsection{Backpropagation}
