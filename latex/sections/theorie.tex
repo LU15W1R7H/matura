@@ -2,6 +2,15 @@
 
 \begin{document}
 
+\section{Konventionen und Notation}
+
+NOTATION ERKLAEREN (Vektor, Matrix, etc.)
+\par\bigskip
+Falls ein (Zeilen- oder Spalten-)Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
+dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
+$f(\vec{v})=f(v_1,\cdots,v_n)$
+
+\section{Machinelles Lernen - die Theorie}
 
 Der Themenbereich des Machinellen Lernens beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.: hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
@@ -25,8 +34,8 @@ Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)^T$ und die
 Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)^T$ bezeichnet werden.
 \par \medskip
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
-Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen).
-Die Features sind die spezifischen RGB-Werte fuer ein Bild. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
+Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
+Die Features sind die spezifischen RGB-Werte aller Pixel. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
 Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H=(1,0)^T$ reprasentiert werden und Katze als $\vec{l}_K=(0,1)^T$.
 
 \begin{figure}[h!]
