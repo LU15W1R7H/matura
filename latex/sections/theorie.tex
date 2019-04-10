@@ -12,14 +12,14 @@ $f(\vec{v})=f(v_1,\cdots,v_n)$
 
 \section{Machinelles Lernen - die Theorie}
 
-Der Themenbereich des Machinellen Lernens beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
+Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.: hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
 Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen. 
 
 \subsection{Daten}
 
-Der Trainingsdatensatz beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
+Der \textbf{Trainingsdatensatz} beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
 Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
 Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
 Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
@@ -48,7 +48,7 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht
 \end{figure}
 
 \subsection{Modelle (allgemein)}
-Ein Modell ist eine differenzierbare mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Ein \textbf{Modell} ist eine differenzierbare mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
 Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
@@ -69,7 +69,7 @@ BEISPIELMODELL (in der Art: Note anhand Lernstunden vorhersagen)
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
-Dafuer gibt es sogennante Kosten-, Verlust- oder Fehlerfunktionen. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
+Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
 Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. \ref{eq:errorfunc}\\
 Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. \ref{eq:meanerrorfunc}\\
@@ -174,7 +174,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben werden:\\
 \begin{equation}\label{eq:gradientdescent}
-    \displaystyle\vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
+    \vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
 \end{equation}
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
@@ -200,13 +200,32 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 Also wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\phi_0,\cdots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
 Dafuer muesste man den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
-Dies waere ein sehr exakter Prozess aber ein extrem langsamer zugleich.
-Bei grossen Datensetzen wuerde es eine Ewigkeit dauern bis das Modell nur annahernd guete Vorhersagen machen wuerde.
+Dies waere zwar ein exakter Prozess aber ein extrem langsamer zugleich.
+Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
 \par\medskip
 Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
-Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient pro Mini-Batch berechnet.
-Dadurch finden deutlich mehr Iterationen statt in einer Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen trainiert. 
+Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient pro Mini-Batch berechnet und damit werden wiederum Anpassungen der Parameter vorgenommen.
+Dadurch finden deutlich mehr Iterationen statt in \textit{einer} Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen lang trainiert. 
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegen gut.
+Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
+\par\medskip
+Folgende Gleichung rechtfertigt die Approximation des Gradienten mithilfe von Mini-Batches.
+Das arithmetische Mittel der Ableitugen der Kostenfunktion approximiert.
+Somit wird der Gradient folgendermassen approximiert:
+\begin{equation}\label{eq:minibatch_deriv}
+    \frac{\partial\bar{C}}{\partial\phi_n} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_n}
+\end{equation}
+
+Aktualisierung analog zu Gleichung (\ref{eq:gradientdescent}):
+\begin{equation}\label{eq:sgd}
+    \phi_{n,t+1} = \phi_{n,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{n,t}}
+\end{equation}
+
+
+ZUSAMMENFASSUNG TRAININGSALGORITHMUS
+
+
+$\vec{AB}$
 
 \subsection{Neural Networks}
 \subsubsection{Backpropagation}
