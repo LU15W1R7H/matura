@@ -71,8 +71,8 @@ BEISPIELMODELL (in der Art: Note anhand Lernstunden vorhersagen)
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
 Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
-Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. \ref{eq:errorfunc}\\
-Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. \ref{eq:meanerrorfunc}\\
+Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
+Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).\\
 %
 \begin{minipage}[t]{0.5\textwidth}
     \centering
@@ -88,7 +88,7 @@ Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel
 \end{minipage}
 
 %
-Eine Kostenfunktion $c(y_i,\hat{y}_i)$ sollte folgende Eigenschaften aufweisen:
+Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
     \item{$c$ ist $0$, wenn $y = \hat{y}$}
     \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
@@ -102,14 +102,15 @@ Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu $(\hat{y}-y)^2$ und ihre 
 
 
 \subsubsection{Gradientenverfahren allgemein}
-Unser Modell ist dann am besten, wenn die Fehlerfunktion am kleinsten ist.
-Deshalb gilt es nun ein Optimierungsproblem zu loesen, um das Modell zu trainieren, konkret: Die Fehlerfunktion $C$ muss minimiert werden.
+Um ein Modell nun zu trainieren, gilt es zu verstehen, das es sich um ein Optimierungsproblem handelt.
+Das Modell ist am besten, also macht die besten Vorraussagen, wenn die Fehlerfunktion am kleinsten ist.
+Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Outputs und Labels betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
 $C(\phi_1, \phi_2, \cdots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
-Hierfuer verwendet man das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent).
+Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
-    Im Gymnasium lernt man die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem man die erste Ableitung $f'$ gleich null setzt.
-    Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \cdots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb braucht man das Gradientenverfahren.
+    Im Gymnasium wird beigebracht die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
+    Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \cdots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
 }\par
 \medskip
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \cdots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
@@ -154,8 +155,6 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
 
              Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
              Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
-             Der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ ist der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
-             Seine Magnitude gibt die Staerke des Anstiegs an.
              \par\medskip
                 $\displaystyle grad(f)=\vec{\nabla}f=
                 \begin{pmatrix}
@@ -163,6 +162,9 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
                     \vdots \\
                     \frac{\partial f}{\partial x_n} \\
                 \end{pmatrix}$
+            \par\medskip
+             Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
+             Seine Magnitude gibt die Staerke des Anstiegs an.
 
 
 
@@ -197,40 +199,41 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 \par\medskip
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
-Also wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
+Wie vorhin gesagt, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\phi_0,\cdots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
-Dafuer muesste man den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
+Dafuer muesste man eigentlich den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
 Dies waere zwar ein exakter Prozess aber ein extrem langsamer zugleich.
 Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
 \par\medskip
 Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
-Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient pro Mini-Batch berechnet und damit werden wiederum Anpassungen der Parameter vorgenommen.
+Dabei wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingsbeispiel approximiert.
+Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet. 
 Dadurch finden deutlich mehr Iterationen statt in \textit{einer} Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen lang trainiert. 
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegen gut.
 Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \par\medskip
-Folgende Gleichung rechtfertigt die Approximation des Gradienten mithilfe von Mini-Batches.
-Das arithmetische Mittel der Ableitugen der Kostenfunktion approximiert.
-Somit wird der Gradient folgendermassen approximiert:
+Die partiellen Ableitungen der gesamten Trainingsdaten wird mit dem arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Groesse $q$ approximiert. Siehe Gleichung (\ref{eq:minibatch_deriv}).
 \begin{equation}\label{eq:minibatch_deriv}
     \frac{\partial\bar{C}}{\partial\phi_n} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_n}
 \end{equation}
 
-Aktualisierung analog zu Gleichung (\ref{eq:gradientdescent}):
+Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (\ref{eq:gradientdescent}) folgendermassen durchgefuehrt:
 \begin{equation}\label{eq:sgd}
     \phi_{n,t+1} = \phi_{n,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{n,t}}
 \end{equation}
 
 
+
+\subsubsection{Adam Optimizer}
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
-
-$\vec{AB}$
-
 \subsection{Neural Networks}
+
+
 \subsubsection{Backpropagation}
 \subsubsection{Feedforward Neural Network}
 \subsubsection{Convolutional Neural Networks}
+Conv2D, MaxPooling2D, UpSampling2D
 \subsubsection{Autoencoder}
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
