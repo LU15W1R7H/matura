@@ -17,7 +17,9 @@ Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.: hard c
 Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen. 
 
-\subsection{Daten}
+\subsection{Allgemeine Begriffe}
+
+\subsubsection{Daten}
 
 Der \textbf{Trainingsdatensatz} beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
 Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
@@ -47,7 +49,7 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht
     \caption{eine Veranschaulichung eines Machine Learning Modells}
 \end{figure}
 
-\subsection{Modelle (allgemein)}
+\subsubsection{Modelle}
 Ein \textbf{Modell} ist eine differenzierbare mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
@@ -72,22 +74,21 @@ Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learnin
 Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
 Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
-Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).\\
-%
-\begin{minipage}[t]{0.5\textwidth}
+Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
+\\
+\begin{minipage}[h!]{0.5\textwidth}
     \centering
     \begin{equation}\label{eq:errorfunc}
         C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)
     \end{equation}
 \end{minipage}
-\begin{minipage}[t]{0.5\textwidth}
+\begin{minipage}[h!]{0.5\textwidth}
     \centering
     \begin{equation}\label{eq:meanerrorfunc}
         \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)
     \end{equation}
 \end{minipage}
-
-%
+\\
 Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
     \item{$c$ ist $0$, wenn $y = \hat{y}$}
@@ -101,7 +102,7 @@ Sie erfuellt alle anforderungen, denn:
 Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu $(\hat{y}-y)^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(\hat{y}-y)$
 
 
-\subsubsection{Gradientenverfahren allgemein}
+\subsubsection{Gradientenverfahren}
 Um ein Modell nun zu trainieren, gilt es zu verstehen, das es sich um ein Optimierungsproblem handelt.
 Das Modell ist am besten, also macht die besten Vorraussagen, wenn die Fehlerfunktion am kleinsten ist.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
@@ -227,11 +228,34 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 \subsubsection{Adam Optimizer}
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
-\subsection{Neural Networks}
+\subsection{Künstliche Neuronale Netze und Deep Learning}
+Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \textbf{Kuenstliche Neuronale Netz} (eng.: Neural Network).
+Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \textbf{Deep Learning} zusammen.
 
+\subsubsection{Perzeptron}
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \path (3,0) node [circle,draw](neuron){neuron};
+        \path[blue] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
+        \path[red] (5,0) node(y1){$y_1$};
+        \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
+        \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
+        \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
+        \draw[->] (neuron) -- (y1);
+
+
+    \end{tikzpicture}
+    \caption{ein Perzeptron}
+
+\end{figure}
 
 \subsubsection{Backpropagation}
 \subsubsection{Feedforward Neural Network}
+\subsubsection{Deep Learning}
+Laengliche Neuronale Netze
+
+\subsection{Autoencoder und Convolutional NN}
 \subsubsection{Convolutional Neural Networks}
 Conv2D, MaxPooling2D, UpSampling2D
 \subsubsection{Autoencoder}
