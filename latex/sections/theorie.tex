@@ -28,10 +28,10 @@ Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
 Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
-
+\par\medskip
 Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
-
+\par\medskip
 Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)^T$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=(y_1,y_2,...,y_m)^T$ zusammengefasst.
 Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)^T$ bezeichnet werden.
 \par \medskip
@@ -55,14 +55,13 @@ Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
 Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
-
+\par\medskip
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls ein einfacher linearen Zusammenhang zwischen den Features und den Labels besteht.
 $y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden. 
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
-\par
-\medskip
+\par\medskip
 Es gibt die verschiedensten Modelle. Einige der bekanntesten sind: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend auf Neuronale Netze beziehen.
 
@@ -75,7 +74,7 @@ Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie 
 \par\medskip
 Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
 Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
-\\
+\par\medskip
 \begin{minipage}[h!]{0.5\textwidth}
     \centering
     \begin{equation}\label{eq:errorfunc}
@@ -88,7 +87,7 @@ Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel
         \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)
     \end{equation}
 \end{minipage}
-\\
+\par\medskip
 Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
     \item{$c$ ist $0$, wenn $y = \hat{y}$}
@@ -112,14 +111,13 @@ Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.:
 \footnote{
     Im Gymnasium wird beigebracht die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
     Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \cdots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
-}\par
-\medskip
+}
+\par\medskip
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \cdots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
 Dies beschieht, in dem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen Komponenten den Input von $f$ darstellt, gewaehlt wird.
 Nun werden iterativ neue Punkte $\vec{p_z}$ gesucht, welche immer naeher beim lokalen Minimun liegen, also Punkte die den Funktionswert $f(\vec{p}_z)$ immer kleiner werden lassen.
 Dies wird durchgeführt, bis der Punkt genug nahe beim lokalen Minimun ist.
-\par
-\medskip
+\par\medskip
 Dafuer muss ein Vektor $\vec{b}_z$ bestimmt werden, welcher auf den Punkt $\vec{p}_z$ draufaddiert einen neuen Punkt $\vec{p}_{z+1}$ bildet,
 bei dem der Funktionswert $f(\vec{p}_{z+1})$ kleiner ist als der von $f(\vec{p}_z)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerksten Funktionswertabnahme zeigt.
@@ -182,7 +180,7 @@ Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben we
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
 Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr tiefes Minimum zu finden.
-
+\par\medskip
 Die sogennante \textbf{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
 Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgroesse des Gradientenabstieg bestimmt. Sie muss je nach zu minimierender Funktion anderst gewaehlt werden.
 Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Probleme beim Training:
@@ -229,16 +227,23 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
 \subsection{Künstliche Neuronale Netze und Deep Learning}
-Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \textbf{Kuenstliche Neuronale Netz} (eng.: Neural Network).
+Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \textbf{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
 Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \textbf{Deep Learning} zusammen.
+
+Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglcih eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
+Es gibt nicht \textit{das} Neuronale Netz, es gibt die verschiedenesten Architekturen, welche fuer unterschiedeliche Aufgaben geeignet sind.
+
+\subsubsection{Biologische Analogie}
+
+Ein KNN ist aus verschieden Teilen aufgebaut, sogennanten kuenstlichen Neuronen.
 
 \subsubsection{Perzeptron}
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
-        \path (3,0) node [circle,draw](neuron){neuron};
-        \path[blue] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
-        \path[red] (5,0) node(y1){$y_1$};
+        \path (3,0) node [circle,draw](neuron){Neuron};
+        \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
+        \path[black!40!green] (5,0) node(y1){$y_1$};
         \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
         \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
         \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
@@ -254,6 +259,8 @@ Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unte
 \subsubsection{Feedforward Neural Network}
 \subsubsection{Deep Learning}
 Laengliche Neuronale Netze
+\subsubsection{Universal Approximation Theorem}
+Neural Network kann alles erlernen
 
 \subsection{Autoencoder und Convolutional NN}
 \subsubsection{Convolutional Neural Networks}
