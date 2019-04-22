@@ -50,7 +50,7 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht
 \end{figure}
 
 \subsubsection{Modelle}
-Ein \textbf{Modell} ist eine differenzierbare mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
 Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
@@ -62,10 +62,29 @@ $y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werde
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
 \par\medskip
-Es gibt die verschiedensten Modelle. Einige der bekanntesten sind: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
-Diese Arbeit wird sich vorwiegend auf Neuronale Netze beziehen.
+Fuer Machine Learning haben sich gewisse Modelle besonders guet etabliert,
+darunter waeren: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
+Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
+\par\medskip
+Um den Modellbegriff noch etwas zu festigen wird ein Beispielmodell erlautert:\\
+Das Modell soll Vorhersagen zum Wetter machen. Anhand von Luftfeuchtigkeit und
+Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
 
-BEISPIELMODELL (in der Art: Note anhand Lernstunden vorhersagen)
+\begin{figure}[h!]
+  \centering
+
+  \begin{tikzpicture}
+    \path (3,0) node [rect,draw](neuron){Neuron};
+        \path[red] (0,-0.5) node(T){$T$} (0,0.5) node(H){$H$};
+        \path[black!40!green] (5,0) node(y1){$y_1$};
+        \draw[->] (T) -- node[above,sloped]{$w_1$} (neuron);
+        \draw[->] (H) -- node[above,sloped]{$w_2$} (neuron);
+        \draw[->] (neuron) -- (y1);
+
+  \end{tikzpicture}
+
+  \caption{Darstellung des Modells}
+\end{figure}
 
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
@@ -271,3 +290,8 @@ Conv2D, MaxPooling2D, UpSampling2D
 
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:
