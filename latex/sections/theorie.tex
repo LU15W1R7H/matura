@@ -74,8 +74,8 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
   \centering
 
   \begin{tikzpicture}
-    \path (3,0) node [rect,draw](neuron){Neuron};
-        \path[red] (0,-0.5) node(T){$T$} (0,0.5) node(H){$H$};
+    \path (3,0) node [draw,thick,minimum width=2cm,minimum height=3cm](neuron){Modell};
+        \path[red] (0,0.5) node(T){$T$} (0,-0.5) node(H){$H$};
         \path[black!40!green] (5,0) node(y1){$y_1$};
         \draw[->] (T) -- node[above,sloped]{$w_1$} (neuron);
         \draw[->] (H) -- node[above,sloped]{$w_2$} (neuron);
@@ -150,10 +150,10 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
     \node [mybox] (box) {%
             \begin{minipage}{1.0\textwidth}
 
-                Partielle Ableitungen sind eine Erweiterung der ''normalen`` Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
+                Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
                 Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
                 Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-                Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ''normalen`` Ableitung folgendermassen definiert:
+                Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
                 \par\medskip
                 $\displaystyle\frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}$
                 \par\medskip
@@ -208,11 +208,29 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
         Ausserdem kann es passieren, dass man bei einem hohen lokalen Minimum stecken bleibt.}
 
     \item{Falls $\eta$ zu gross ist, passiert es, dass man ueber das lokale Minimum hinaus schiesst und nur darum herum springt.}
-
 \end{itemize}
+
 \begin{figure}[h!]
-    \caption{Visualiesierung verschiedener Lernraten}
+  \centering
+  \begin{tikzpicture}
+    \draw[gray] (0,0) grid[step=0.5cm] (5,5);
+    \draw[ultra thick,black,->] (-0.5,0) -- (5.5,0);
+    \draw[ultra thick,black,->] (0,-0.5) -- (0,5.5);
+    \draw[red] (0,0) arc (180:90:1cm);
+    \coordinate (A) at (2,1);
+    \fill[red] (A) circle (1mm);
+    \coordinate (B) at (3,2);
+    \fill[orange] (B) circle (2mm);
+
+    \fill[blue] ($3*(A) - (B)$) circle (1mm);
+    \draw[green] (0,0) parabola (1.5, 2.25);
+
+    \draw[red,scale=0.3] plot[domain=-2:2] (\x,{\x*\x*\x });
+  \end{tikzpicture}
+  \caption{Visualiesierung verschiedener Lernraten}
 \end{figure}
+
+\foreach \c in {L, U, I, S} {[\c]}
 
 \par\medskip
 
