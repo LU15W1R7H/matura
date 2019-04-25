@@ -109,7 +109,7 @@ Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel
 \par\medskip
 Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
-    \item{$c$ ist $0$, wenn $y = \hat{y}$}
+    \item{$c$ ist minimal, wenn $y = \hat{y}$}
     \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
     \item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
 \end{itemize}
@@ -124,7 +124,7 @@ Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu $(\hat{y}-y)^2$ und ihre 
 Um ein Modell nun zu trainieren, gilt es zu verstehen, das es sich um ein Optimierungsproblem handelt.
 Das Modell ist am besten, also macht die besten Vorraussagen, wenn die Fehlerfunktion am kleinsten ist.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
-Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Outputs und Labels betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
+Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Inputs betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
 $C(\phi_1, \phi_2, \cdots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
@@ -259,7 +259,6 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 \end{equation}
 
 
-
 \subsubsection{Adam Optimizer}
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
@@ -268,19 +267,113 @@ Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles 
 Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \textbf{Deep Learning} zusammen.
 
 Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglcih eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
-Es gibt nicht \textit{das} Neuronale Netz, es gibt die verschiedenesten Architekturen, welche fuer unterschiedeliche Aufgaben geeignet sind.
+Es gibt nicht nur eine Art von Neuralem Netz, sondern es exisitieren die
+verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden muessen.
 
-\subsubsection{Biologische Analogie}
-
-Ein KNN ist aus verschieden Teilen aufgebaut, sogennanten kuenstlichen Neuronen.
 
 \subsubsection{Perzeptron}
+Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netz besser zu
+verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \textbf{Perzeptron}.
+\par\medskip
+Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
+besteht aus einem einzigen Kuenstlichen Neuron. Ein Kuenstliches Neuron in der
+Informatik hat mehrere Inputs und einen einzigen Output. Es besitzt ausserdem
+mehrere \textbf{Gewichte} $w_1, \cdots, w_n$.
+Die Gewichtete Summe der Inputs mit den Gewichten
+wird mit $\tilde{z}$ bezeichnet. Sie ist das
+gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.\\
+$\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$.\quad
+Das Perzeptron besitzt ausserdem einen \textbf{Schwellenwert} $\tilde{b}$.
+Zusammen mit den Gewichten, bildet er die Modellparameter.
+Der Output des Perzeptron kann nur entweder 0 oder 1 sein. Falls die Gewichtete
+Summe groesser als der Schwellwert ist, betraegt er 1 ansonsten 0. Siehe erster Teil
+der Gleichung (\ref{eq:perzeptron_1}).
+Es ist gaengig die Ungleichung der Bedingung in die Normalform zu bringen und $\tilde{b}$ mit
+$b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
+> 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet.
+
+\begin{equation}\label{eq:perzeptron_1}
+  p(\vec{x}) =
+  \begin{cases}
+    1 & \quad \text{falls } \tilde{z} > \tilde{b}\\
+    0 & \quad \text{ansonsten}
+  \end{cases}
+  \quad =
+  \begin{cases}
+    1 & \quad \text{falls } \tilde{z} + b > 0\\
+    0 & \quad \text{ansonsten}
+  \end{cases}
+  \quad =
+  \begin{cases}
+    1 & \quad \text{falls } z > 0\\
+    0 & \quad \text{ansonsten}
+  \end{cases}
+\end{equation}
+
+Mithilfe von $z$ kann der Begriff der \textbf{Aktivierung} $a$ eingefuehrt
+werden. Sie ist das Resultat der \textbf{Aktivierungsfunktion} angewandt auf $z$.
+$a = a(z).$ Um das Verhalten des Perzeptron zu erhalten muss man als
+Aktivierungsfunktion die sogennante\\
+Heaviside-Funktion $\Theta$ verwendet werden.
+Sie ist eine Stufenfunktion mit einer einzigen Stufe bei $x=0$ von 0 auf 1.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.3\textwidth}
+    \begin{equation}
+      \Theta(z) =
+      \begin{cases}
+        1 & \quad z \geq 0\\
+        0 & \quad z < 0
+      \end{cases}
+  \end{equation}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.7\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=2.5]
+
+        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+        \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+        \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+        \foreach \x in {-1,-0.5,0.5,1}
+        \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+
+        \foreach \y in {0.5,1}
+        \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+        \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+        \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
+        \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
+        \draw[red,ultra thick,dashed] (0,0) -- (0,1); % y-red
+        \draw[draw=red,fill=white] (0,0) circle (0.05);
+        \draw[draw=red,fill=red] (0,1) circle (0.05);
+
+      \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
+\end{figure}
+
+
+Hier nochmals alles in einer Gleichung zusammengefasst.
+\begin{equation}
+  p(\vec{x}) =
+  \begin{cases}
+    1 & \quad\text{falls } \vec{w} \cdot \vec{x} + b > 0\\
+    0 & \quad\text{ansonsten}
+  \end{cases}
+\end{equation}
+
+In Abbildung (\ref{fi:perzeptron}) ist ein Perzeptron mit drei Inputs dargestellt.
+
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
         \path (3,0) node [circle,draw](neuron){Neuron};
         \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
-        \path[black!40!green] (5,0) node(y1){$y_1$};
+        \path[black!40!green] (5,0) node(y1){$y$};
         \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
         \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
         \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
@@ -288,14 +381,21 @@ Ein KNN ist aus verschieden Teilen aufgebaut, sogennanten kuenstlichen Neuronen.
 
 
     \end{tikzpicture}
-    \caption{ein Perzeptron}
-
+    \caption{ein Perzeptron mit drei Inputs}
+    \label{fi:perzeptron}
 \end{figure}
 
+\pagebreak
+\subsubsection{Biologische Analogie}
+
+Hebbsche Lernregel
+
+\subsubsection{Kuenstliche Neuronale Netze}
+Schichten: Input, Zwischen(Deep), Output; Feedforward
+Die Grundstruktur eines 
+
+\subsubsection{Lineare Algebra}
 \subsubsection{Backpropagation}
-\subsubsection{Feedforward Neural Network}
-\subsubsection{Deep Learning}
-Laengliche Neuronale Netze
 \subsubsection{Universal Approximation Theorem}
 Neural Network kann alles erlernen
 
@@ -303,6 +403,7 @@ Neural Network kann alles erlernen
 \subsubsection{Convolutional Neural Networks}
 Conv2D, MaxPooling2D, UpSampling2D
 \subsubsection{Autoencoder}
+\subsubsection{Bedeutung von Autoencodern}
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
 
