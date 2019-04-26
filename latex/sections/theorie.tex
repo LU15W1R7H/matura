@@ -277,20 +277,25 @@ verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \textbf{Perzep
 \par\medskip
 Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
 besteht aus einem einzigen Kuenstlichen Neuron. Ein Kuenstliches Neuron in der
-Informatik hat mehrere Inputs und einen einzigen Output. Es besitzt ausserdem
-mehrere \textbf{Gewichte} $w_1, \cdots, w_n$.
-Die Gewichtete Summe der Inputs mit den Gewichten
+Informatik hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
+bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
+kann. Es besitzt ausserdem mehrere \textbf{Gewichte} $w_1, \cdots, w_n \in \mathbb{R}$.
+Die \textbf{Gewichtete Summe} der Inputs mit den Gewichten
 wird mit $\tilde{z}$ bezeichnet. Sie ist das
 gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.\\
 $\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$.\quad
 Das Perzeptron besitzt ausserdem einen \textbf{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bildet er die Modellparameter.
-Der Output des Perzeptron kann nur entweder 0 oder 1 sein. Falls die Gewichtete
-Summe groesser als der Schwellwert ist, betraegt er 1 ansonsten 0. Siehe erster Teil
-der Gleichung (\ref{eq:perzeptron_1}).
-Es ist gaengig die Ungleichung der Bedingung in die Normalform zu bringen und $\tilde{b}$ mit
+Falls die Gewichtete Summe groesser als der Schwellwert ist, feuert das Neuron,
+also betraegt der Output 1. Ansonsten ist er 0.
+Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
+Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
+und $\tilde{b}$ durch die \textbf{Neigung} (engl.: Bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
-> 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet.
+> 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet. Siehe Rest der Gleichung (\ref{eq:perzeptron_1}).
+Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Ein hohes $b$
+laesst ein Neuron auch trotz einigen Nullen in den Inputs feuern, waehrend ein
+tiefes $b$ es nicht feuern lassen wuerde.
 
 \begin{equation}\label{eq:perzeptron_1}
   p(\vec{x}) =
@@ -318,17 +323,17 @@ Heaviside-Funktion $\Theta$ verwendet werden.
 Sie ist eine Stufenfunktion mit einer einzigen Stufe bei $x=0$ von 0 auf 1.
 
 \begin{figure}[h!]
-  \begin{minipage}[h!]{0.3\textwidth}
+  \begin{minipage}[h!]{0.4\textwidth}
     \begin{equation}
       \Theta(z) =
       \begin{cases}
-        1 & \quad z \geq 0\\
-        0 & \quad z < 0
+        1 & \quad \text{falls } z \geq 0\\
+        0 & \quad \text{falls } z < 0
       \end{cases}
   \end{equation}
 
   \end{minipage}
-  \begin{minipage}[h!]{0.7\textwidth}
+  \begin{minipage}[h!]{0.6\textwidth}
       \centering
       \begin{tikzpicture}[scale=2.5]
 
@@ -356,17 +361,16 @@ Sie ist eine Stufenfunktion mit einer einzigen Stufe bei $x=0$ von 0 auf 1.
   \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
 \end{figure}
 
-
-Hier nochmals alles in einer Gleichung zusammengefasst.
-\begin{equation}
+In Gleichung (\ref{eq:perzeptron_2}) ist nochmals alles zusammengefasst. Um das
+Perzeptron zu trainiern, muesste einfach das Gradientenverfahren auf die
+Gewichte und die Neigung angewendet werden.
+\begin{equation}\label{eq:perzeptron_2}
   p(\vec{x}) =
   \begin{cases}
     1 & \quad\text{falls } \vec{w} \cdot \vec{x} + b > 0\\
     0 & \quad\text{ansonsten}
   \end{cases}
 \end{equation}
-
-In Abbildung (\ref{fi:perzeptron}) ist ein Perzeptron mit drei Inputs dargestellt.
 
 \begin{figure}[h!]
     \centering
@@ -385,14 +389,57 @@ In Abbildung (\ref{fi:perzeptron}) ist ein Perzeptron mit drei Inputs dargestell
     \label{fi:perzeptron}
 \end{figure}
 
-\pagebreak
 \subsubsection{Biologische Analogie}
 
 Hebbsche Lernregel
 
 \subsubsection{Kuenstliche Neuronale Netze}
-Schichten: Input, Zwischen(Deep), Output; Feedforward
-Die Grundstruktur eines 
+Wie das Perzeptron auch, besteht ein KNN aus Neuronen, in diesem Fall aber
+mehreren. Es sind jedoch nicht ganz die gleichen Neuronen, denn fuer KNN
+verwendet man sogennante \textbf{Sigmoide-Neuronen}, aber dazu spaeter mehr. Diese Neuronen sind in verschieden Schichten (engl.: Layers)
+arangiert. Die erste ist die \textbf{Inputschicht}. Sie behinhalten die
+Inputneuronen mit jeweils einem Inputwert. Dies sind eigentlich keine richtigen
+Neuronen sondern eher Platzhalter fuer die Inputs. Als letztes kommt die
+\textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert
+besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
+beliebig viele geben und in ihnen bliebig viele Neuronen.
+Jedes Neuron aus einer Schicht ist mit jeden Neuron aus der naechsten Schicht ueber
+Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
+Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
+Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
+Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle
+Werte nur nach vorne propagiert werden.
+
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    
+    \newcommand{\hiddenlayers}{3}
+    \newcommand{\inputs}{4}
+    \newcommand{\hiddens}{3}
+    \newcommand{\outputs}{2}
+    \newcommand{\radius}{1cm}
+    \coordinate (spacev) at (0,-1cm);
+    \coordinate (spaceh) at (1cm,0);
+    \coordinate (spaceb) at (2cm,0);
+    
+    \foreach \j in {1,...,\inputs}
+    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:0:\j) {$x_{\j}$};
+
+    \foreach \l in {1,...,\hiddenlayers}
+    \foreach \j in {1,...,\hiddens}
+    \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:\l:\j) {$h_{\j}^{\l}$};
+
+    \foreach \j in {1,...,\outputs}
+    \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:0:\j) {$y_{\j}$};
+
+  \end{tikzpicture}
+  \label{fi:nn_layers}
+  \caption{eine Darstellung der Schichtung eines KNN}
+\end{figure}
+
+Tiefe Neuronalsnetze -> viele Hiddenlayers -> Deep Learning.
 
 \subsubsection{Lineare Algebra}
 \subsubsection{Backpropagation}
