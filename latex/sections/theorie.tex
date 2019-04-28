@@ -425,14 +425,20 @@ Werte nur nach vorne propagiert werden.
     \coordinate (spaceb) at (2cm,0);
     
     \foreach \j in {1,...,\inputs}
-    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:0:\j) {$x_{\j}$};
+    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (l0n\j) {$x_{\j}$};
 
     \foreach \l in {1,...,\hiddenlayers}
     \foreach \j in {1,...,\hiddens}
-    \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:\l:\j) {$h_{\j}^{\l}$};
+    \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
 
     \foreach \j in {1,...,\outputs}
-    \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (n:0:\j) {$y_{\j}$};
+    \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
+
+    % \foreach \j in {1,...,\inputs}
+    % \foreach \k in {1,...,\hiddens}
+    % \draw[->] (n:0:\j) -- (n:1:\k);
+
+    \draw[->] (l0n1) -- (l1n1);
 
   \end{tikzpicture}
   \label{fi:nn_layers}

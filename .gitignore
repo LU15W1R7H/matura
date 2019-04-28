@@ -5,3 +5,9 @@
 *.synctex.gz
 *.bcf
 *.toc
+*.blg
+*.dvi
+*.lof
+*.lot
+*.run.xml
+*.bbl
