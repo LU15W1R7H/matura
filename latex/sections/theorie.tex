@@ -480,9 +480,9 @@ jedoch minimal 0 sein darf und maximal 1.
     \begin{equation}
       \varphi^{\text{pwl}}(z) =
       \begin{cases}
-        1 & \quad \text{wenn } z > \frac{1}{2}\\
-        z + \frac{1}{2} & \quad \text{wenn } -\frac{1}{2} < z < \frac{1}{2}\\
-        0 & \quad \text{wenn } z < \frac{1}{2}
+        1 & \quad \text{falls } z > \frac{1}{2}\\
+        z + \frac{1}{2} & \quad \text{falls } -\frac{1}{2} < z < \frac{1}{2}\\
+        0 & \quad \text{falls } z < \frac{1}{2}
       \end{cases}
     \end{equation}
 
@@ -505,7 +505,10 @@ jedoch minimal 0 sein darf und maximal 1.
 
       \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
       \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
-      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % 1-red
+      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % d-red
+
+      \draw[draw=red,fill=red] (-0.5,0) circle (0.03);
+      \draw[draw=red,fill=red] (0.5,1) circle (0.03);
 
 
     \end{tikzpicture}
@@ -519,6 +522,9 @@ jedoch minimal 0 sein darf und maximal 1.
 Da KNN bestehend aus linearen Neuronen nur lineare Zusammenhaenge modellieren
 koennen, waere es sinnvoll eine zweite Erweiterung auf nicht-lineare Neuronen zu machen.
 Es gaengig dafuer sind sogennante Sigmoide Neuronen.
+Sie erhalten ihren Namen, von ihrer Aktivierungsfunktion, der Sigmoid-Funktion $\sigma$.
+Sie ist eine kontinuierliche Funktion mit einer Asymptote fuer $x \to -\infty$ mit $y=0$
+und eine zweite fuer $x \to\infty$ mit $y=1$.
 
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
