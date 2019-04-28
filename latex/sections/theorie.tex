@@ -10,6 +10,7 @@ Falls ein (Zeilen- oder Spalten-)Vektor $\vec{v}$ als Argument in eine Funktion 
 dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
 $f(\vec{v})=f(v_1,\cdots,v_n)$
 
+\pagebreak
 \section{Machinelles Lernen - die Theorie}
 
 Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
@@ -86,6 +87,7 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
   \caption{Darstellung des Modells}
 \end{figure}
 
+\pagebreak
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
@@ -230,10 +232,6 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
   \caption{Visualiesierung verschiedener Lernraten}
 \end{figure}
 
-\foreach \c in {L, U, I, S} {[\c]}
-
-\par\medskip
-
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin gesagt, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\phi_0,\cdots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
@@ -262,11 +260,12 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 \subsubsection{Adam Optimizer}
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
+\pagebreak
 \subsection{Künstliche Neuronale Netze und Deep Learning}
 Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \textbf{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
 Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \textbf{Deep Learning} zusammen.
 
-Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglcih eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
+Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglich eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
 Es gibt nicht nur eine Art von Neuralem Netz, sondern es exisitieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden muessen.
 
@@ -276,17 +275,19 @@ Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netz besser zu
 verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \textbf{Perzeptron}.
 \par\medskip
 Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
-besteht aus einem einzigen Kuenstlichen Neuron. Ein Kuenstliches Neuron in der
-Informatik hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
+besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron 
+hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
-kann. Es besitzt ausserdem mehrere \textbf{Gewichte} $w_1, \cdots, w_n \in \mathbb{R}$.
+kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \cdots, w_n \in \mathbb{R}$.
+Diese sind reele Zahlen, welche das Verhalten des Perzeptron erheblich beeinflussen.
 Die \textbf{Gewichtete Summe} der Inputs mit den Gewichten
 wird mit $\tilde{z}$ bezeichnet. Sie ist das
 gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.\\
 $\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$.\quad
-Das Perzeptron besitzt ausserdem einen \textbf{Schwellenwert} $\tilde{b}$.
+Zusaetzlich besitzt das Perzeptron einen \textbf{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bildet er die Modellparameter.
-Falls die Gewichtete Summe groesser als der Schwellwert ist, feuert das Neuron,
+Das Perzeptron verhaltet sich, dass falls die Gewichtete Summe groesser als der
+Schwellwert ist, das Neuron feuert,
 also betraegt der Output 1. Ansonsten ist er 0.
 Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
 Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
@@ -315,51 +316,6 @@ tiefes $b$ es nicht feuern lassen wuerde.
   \end{cases}
 \end{equation}
 
-Mithilfe von $z$ kann der Begriff der \textbf{Aktivierung} $a$ eingefuehrt
-werden. Sie ist das Resultat der \textbf{Aktivierungsfunktion} angewandt auf $z$.
-$a = a(z).$ Um das Verhalten des Perzeptron zu erhalten muss man als
-Aktivierungsfunktion die sogennante\\
-Heaviside-Funktion $\Theta$ verwendet werden.
-Sie ist eine Stufenfunktion mit einer einzigen Stufe bei $x=0$ von 0 auf 1.
-
-\begin{figure}[h!]
-  \begin{minipage}[h!]{0.4\textwidth}
-    \begin{equation}
-      \Theta(z) =
-      \begin{cases}
-        1 & \quad \text{falls } z \geq 0\\
-        0 & \quad \text{falls } z < 0
-      \end{cases}
-  \end{equation}
-
-  \end{minipage}
-  \begin{minipage}[h!]{0.6\textwidth}
-      \centering
-      \begin{tikzpicture}[scale=2.5]
-
-        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
-        \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-        \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
-
-        \foreach \x in {-1,-0.5,0.5,1}
-        \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
-
-        \foreach \y in {0.5,1}
-        \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
-
-        \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
-
-        \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
-        \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
-        \draw[red,ultra thick,dashed] (0,0) -- (0,1); % y-red
-        \draw[draw=red,fill=white] (0,0) circle (0.05);
-        \draw[draw=red,fill=red] (0,1) circle (0.05);
-
-      \end{tikzpicture}
-  \end{minipage}
-
-  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
-\end{figure}
 
 In Gleichung (\ref{eq:perzeptron_2}) ist nochmals alles zusammengefasst. Um das
 Perzeptron zu trainiern, muesste einfach das Gradientenverfahren auf die
@@ -389,6 +345,12 @@ Gewichte und die Neigung angewendet werden.
     \label{fi:perzeptron}
 \end{figure}
 
+Was kann ein Perzeptron erlernen? -> Linearer Klassifikator
+
+Lernregel?
+
+\cite{wiki:perzeptron}
+
 \subsubsection{Biologische Analogie}
 
 Hebbsche Lernregel
@@ -414,7 +376,7 @@ Werte nur nach vorne propagiert werden.
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}
-    
+
     \newcommand{\hiddenlayers}{3}
     \newcommand{\inputs}{4}
     \newcommand{\hiddens}{3}
@@ -423,29 +385,182 @@ Werte nur nach vorne propagiert werden.
     \coordinate (spacev) at (0,-1cm);
     \coordinate (spaceh) at (1cm,0);
     \coordinate (spaceb) at (2cm,0);
-    
+
     \foreach \j in {1,...,\inputs}
     \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (l0n\j) {$x_{\j}$};
 
-    \foreach \l in {1,...,\hiddenlayers}
-    \foreach \j in {1,...,\hiddens}
-    \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
+    % \foreach \l in {1,...,\hiddenlayers}
+    % \foreach \j in {1,...,\hiddens}
+    % \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
 
-    \foreach \j in {1,...,\outputs}
-    \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
+    % \foreach \j in {1,...,\outputs}
+    % \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
 
     % \foreach \j in {1,...,\inputs}
     % \foreach \k in {1,...,\hiddens}
     % \draw[->] (n:0:\j) -- (n:1:\k);
 
-    \draw[->] (l0n1) -- (l1n1);
+    % \draw[->] (l0n1) -- (l1n1);
 
   \end{tikzpicture}
   \label{fi:nn_layers}
   \caption{eine Darstellung der Schichtung eines KNN}
 \end{figure}
 
-Tiefe Neuronalsnetze -> viele Hiddenlayers -> Deep Learning.
+
+\subsubsection{Bessere Kuenstliche Neuronen}
+\paragraph{Kuenstliche Neuronen im Allgemeinen}
+Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
+haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
+$w_i$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
+Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
+die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Neurons.
+Die Aktivierung $a$, ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
+auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
+sich fast nur in ihrer Aktivierungsfunktion.
+
+
+\paragraph{Kuenstliche Neuronenen im Perzeptron}
+Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
+Neuronen, besteht darin, dass seine Inputs und Outputs nur binaere Werte
+annehmen koennen. Um das schwellenartige Verhalten des Perzeptron zu erhalten,
+muss eine spezielle Aktivierungfunktion verwendet werden: die Heaviside-Funktion $\Theta$.
+Sie ist eine Stufenfunktion mit einem einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{\text{hlim}}(z) = \Theta(z) =
+      \begin{cases}
+        1 & \quad \text{falls } z \geq 0\\
+        0 & \quad \text{falls } z < 0
+      \end{cases}
+  \end{equation}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=2.5]
+
+        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+        \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+        \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+        \foreach \x in {-1,-0.5,0.5,1}
+        \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+
+        \foreach \y in {0.5,1}
+        \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+        \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+        \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
+        \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
+        \draw[red,ultra thick,dashed] (0,0) -- (0,1); % y-red
+        \draw[draw=red,fill=white] (0,0) circle (0.05);
+        \draw[draw=red,fill=red] (0,1) circle (0.05);
+
+      \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
+\end{figure}
+
+\paragraph{Stueckweise lineare Neuronen}
+Die Binaritaet des Perzeptron schrenkt es sehr in seinen Fahigkeiten ein.
+Dadurch koennen sie auch nur fuer lineare Klassifizierungen verwednet werden.
+Es ist deshalb sinnvoll eine Erweiterung auf stueckweise lineare Neuronen durchzufuehren.
+Die Inputs muessen jetzt nicht mehr 0 oder 1 betragen, sondern koennen eine
+beliebige Reele Zahlen zwischen 0 und 1 sein. Nun muss eine passende
+Aktivierungsfunktion gewaehlt werden. Naheliegend waere eine lineare, welche
+jedoch minimal 0 sein darf und maximal 1.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{\text{pwl}}(z) =
+      \begin{cases}
+        1 & \quad \text{wenn } z > \frac{1}{2}\\
+        z + \frac{1}{2} & \quad \text{wenn } -\frac{1}{2} < z < \frac{1}{2}\\
+        0 & \quad \text{wenn } z < \frac{1}{2}
+      \end{cases}
+    \end{equation}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x in {-1,-0.5,0.5,1}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
+      \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
+      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % 1-red
+
+
+    \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Formel und der Plot einer stueckweisen linearen Funktion}
+\end{figure}
+
+
+\paragraph{Sigmoide Neuronen}
+Da KNN bestehend aus linearen Neuronen nur lineare Zusammenhaenge modellieren
+koennen, waere es sinnvoll eine zweite Erweiterung auf nicht-lineare Neuronen zu machen.
+Es gaengig dafuer sind sogennante Sigmoide Neuronen.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{\text{sig}}(z) = \sigma(z) = \frac{1}{1 + e^{-z}}
+    \end{equation}
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\xtext$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+
+      \draw[red,ultra thick,x=0.25cm] plot[domain=-6.0:6.0] (\x,{1/(1+exp(-\x)) });
+
+    \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Formel und der Plot der Sigmoid-Funktion $\sigma$}
+\end{figure}
+
+\subsubsection{Vorwaertspropagierung}
+
+Nun muessen einige Konventionen zur Beschriftung der Teil eines KNN getroffen
+werden.
+\begin{itemize}
+  \item{$a_n^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
+  \item{$w_{n,m}^l$ ist das Gewicht der Verbindung zweischen dem $n$-ten Neuron
+      in der $l$-ten Schicht und dem $m$-ten Neuron in der $l+1$-ten Schicht. }
+    
+\end{itemize}
 
 \subsubsection{Lineare Algebra}
 \subsubsection{Backpropagation}
@@ -453,9 +568,7 @@ Tiefe Neuronalsnetze -> viele Hiddenlayers -> Deep Learning.
 Neural Network kann alles erlernen
 
 \subsection{Autoencoder und Convolutional NN}
-\subsubsection{Convolutional Neural Networks}
-Conv2D, MaxPooling2D, UpSampling2D
-\subsubsection{Autoencoder}
+
 \subsubsection{Bedeutung von Autoencodern}
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
