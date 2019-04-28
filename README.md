@@ -14,7 +14,7 @@ Gesichtern generiert werden?”
 Machine Learning ist momentan ein sehr aktueller Themenbereich der viele neue
 Möglichkeiten bietet. Es vereint die beiden Gebiete der Informatik und der Mathematik, um
 komplexe Problemstellungen zu lösen. Die vorliegende Arbeit soll beispielhaft eine konkrete
-Anwendungvon Machine Learning aufzeigen, namentlich die künstliche Bildgenerierung von
+Anwendung von Machine Learning aufzeigen, namentlich die künstliche Bildgenerierung von
 menschlichen Gesichtern.
 
 Zu diesem Zweck gelangen künstliche Neuronale Netze zum Einsatz. Dabei wird
@@ -24,7 +24,7 @@ zu verstehen, wird die relevante Theorie erläutert.
 ## Fachliche Verfahren
 
 Für das Programmieren der Applikation, welche die Bildgenerierung ausführen soll, wird
-Python3 verwendet. Mithilfe vonTensorflow, ein von Google entwickeltes Framework für
+Python3 verwendet. Mithilfe von Tensorflow, ein von Google entwickeltes Framework für
 datenstromorientierte Programmierung, wird das Neuronale Netz implementiert. Keras, eine
 Schnittstelle von Tensorflow, wird das Erstellen des Computational Graphs des Neuronalen
 Netzes erleichtern.
@@ -55,10 +55,10 @@ eines konkreten Anwendungsbeispiel darzulegen. Dabei soll ebenfalls aufgezeigt w
 welcher Aufwand mit einem solchen Projekt verbunden ist. Die Arbeit kann deshalb als
 Orientierungshilfe für ähnliche Projekte dienen.
 
-Gleichzeitig soll verdeutlicht werden, dass es auch für programmieraffine Laien grund-
-sätzlich möglich ist, Machine Learning auf komplexe Problemstellungen anzuwenden.
+Gleichzeitig soll verdeutlicht werden, dass es auch für programmieraffine Laien grundsätzlich möglich ist,
+Machine Learning auf komplexe Problemstellungen anzuwenden.
 
 Durch die Identifikation von verbindenen Merkmalen eines Datensatzes, ist es möglich,
-neueDaten mit den gleichen Merkmalen zu generieren. Dieses Prinzip hat unzählige Anwen-
-dungsmöglichkeiten! Einige davon werden in der Arbeit erläutert werden. Autoencoder weisen
+neue Daten mit den gleichen Merkmalen zu generieren. Dieses Prinzip hat unzählige Anwendungsmöglichkeiten!
+Einige davon werden in der Arbeit erläutert werden. Autoencoder weisen
 zudem weitere interessante Aspekte auf, von denen einige in der Arbeit behandelt werden.
