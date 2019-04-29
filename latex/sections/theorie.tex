@@ -1,5 +1,4 @@
 \documentclass[../main]{subfiles}
-
 \begin{document}
 
 \section{Konventionen und Notation}
@@ -16,7 +15,7 @@ $f(\vec{v})=f(v_1,\ldots,v_n)$
 Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.:\ hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
 Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
-Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen. 
+Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen.
 
 \subsection{Allgemeine Begriffe}
 
@@ -42,12 +41,12 @@ Die Features sind die spezifischen RGB-Werte aller Pixel. Die Outputdaten sind d
 Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H={(1,0)}^T$ reprasentiert werden und Katze als $\vec{l}_K={(0,1)}^T$.
 
 \begin{figure}[h!]
-    \centering
-    \begin{tikzpicture}[node distance=5cm,auto]
-        
-    \end{tikzpicture}
-    
-    \caption{eine Veranschaulichung eines Machine Learning Modells}
+  \centering
+  \begin{tikzpicture}[node distance=5cm,auto]
+
+  \end{tikzpicture}
+
+  \caption{eine Veranschaulichung eines Machine Learning Modells}
 \end{figure}
 
 \subsubsection{Modelle}
@@ -55,10 +54,10 @@ Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2,\ldots$.
 Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
-Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
+Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewunschte Resultat liefern.
 \par\medskip
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls ein einfacher linearen Zusammenhang zwischen den Features und den Labels besteht.
-$y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden. 
+$y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden.
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
@@ -76,11 +75,11 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
 
   \begin{tikzpicture}
     \path (3,0) node [draw,thick,minimum width=2cm,minimum height=3cm](neuron){Modell};
-        \path[red] (0,0.5) node(T){$T$} (0,-0.5) node(H){$H$};
-        \path[black!40!green] (5,0) node(y1){$y_1$};
-        \draw[->] (T) -- node[above,sloped]{$w_1$} (neuron);
-        \draw[->] (H) -- node[above,sloped]{$w_2$} (neuron);
-        \draw[->] (neuron) -- (y1);
+    \path[red] (0,0.5) node(T){$T$} (0,-0.5) node(H){$H$};
+    \path[black!40!green] (5,0) node(y1){$y_1$};
+    \draw[->] (T) -- node[above,sloped]{$w_1$} (neuron);
+    \draw[->] (H) -- node[above,sloped]{$w_2$} (neuron);
+    \draw[->] (neuron) -- (y1);
 
   \end{tikzpicture}
 
@@ -97,23 +96,23 @@ Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer g
 Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
 \par\medskip
 \begin{minipage}[h!]{0.5\textwidth}
-    \centering
-    \begin{equation}\label{eq:errorfunc}
-        C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)
-    \end{equation}
+  \centering
+  \begin{equation}\label{eq:errorfunc}
+    C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)
+  \end{equation}
 \end{minipage}
 \begin{minipage}[h!]{0.5\textwidth}
-    \centering
-    \begin{equation}\label{eq:meanerrorfunc}
-        \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)
-    \end{equation}
+  \centering
+  \begin{equation}\label{eq:meanerrorfunc}
+    \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)
+  \end{equation}
 \end{minipage}
 \par\medskip
 Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
-    \item{$c$ ist minimal, wenn $y = \hat{y}$}
-    \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
-    \item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
+\item{$c$ ist minimal, wenn $y = \hat{y}$}
+\item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
+\item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
 \end{itemize}
 
 Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.:\ mean squared error).\\
@@ -130,8 +129,8 @@ Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Inputs betrachtet w
 $C(\phi_1, \phi_2, \ldots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
-    Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
-    Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \ldots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
+  Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
+  Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \ldots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
 }
 \par\medskip
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
@@ -146,57 +145,57 @@ Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerkste
 Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.\\
 
 \tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
- \tikzstyle{fancytitle} = [fill=red, text=white]
+\tikzstyle{fancytitle} = [fill=red, text=white]
 
 \noindent \begin{tikzpicture}
-    \node [mybox] (box) {%
-            \begin{minipage}{1.0\textwidth}
+  \node [mybox] (box) {%
+    \begin{minipage}{1.0\textwidth}
 
-                Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
-                Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
-                Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-                Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
-                \par\medskip
-                $\displaystyle\frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}$
-                \par\medskip
-                Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
+      Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
+      Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
+      Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
+      Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
+      \par\medskip
+      $\displaystyle\frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}$
+      \par\medskip
+      Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
 
 
-            \end{minipage}
+    \end{minipage}
 
-    };
-    \node[fancytitle,right=10pt] at (box.north west) {Partielle Ableitungen};
+  };
+  \node[fancytitle,right=10pt] at (box.north west) {Partielle Ableitungen};
 
 \end{tikzpicture}
 
 \noindent \begin{tikzpicture}
-     \node [mybox] (box) {%
-             \begin{minipage}{1.0\textwidth}
+  \node [mybox] (box) {%
+    \begin{minipage}{1.0\textwidth}
 
-             Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
-             Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
-             \par\medskip
-                $\displaystyle grad(f)=\vec{\nabla}f=
-                \begin{pmatrix}
-                    \frac{\partial f}{\partial x_1} \\
-                    \vdots \\
-                    \frac{\partial f}{\partial x_n} \\
-                \end{pmatrix}$
-            \par\medskip
-             Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
-             Seine Magnitude gibt die Staerke des Anstiegs an.
+      Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
+      Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
+      \par\medskip
+      $\displaystyle grad(f)=\vec{\nabla}f=
+      \begin{pmatrix}
+        \frac{\partial f}{\partial x_1} \\
+        \vdots \\
+        \frac{\partial f}{\partial x_n} \\
+      \end{pmatrix}$
+      \par\medskip
+      Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
+      Seine Magnitude gibt die Staerke des Anstiegs an.
 
 
 
-             \end{minipage}
-     };
-    \node[fancytitle,right=10pt] at (box.north west) {Gradient};
+    \end{minipage}
+  };
+  \node[fancytitle,right=10pt] at (box.north west) {Gradient};
 \end{tikzpicture}
 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben werden:\\
 \begin{equation}\label{eq:gradientdescent}
-    \vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
+  \vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
 \end{equation}
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
@@ -206,10 +205,10 @@ Die sogennante \textbf{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent})
 Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgroesse des Gradientenabstieg bestimmt. Sie muss je nach zu minimierender Funktion anderst gewaehlt werden.
 Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Probleme beim Training:
 \begin{itemize}
-    \item{Falls $\eta$ zu klein ist, verlaueft das Trainings unnotig langsam und braucht sehr lange.
-        Ausserdem kann es passieren, dass man bei einem hohen lokalen Minimum stecken bleibt.}
+\item{Falls $\eta$ zu klein ist, verlaueft das Trainings unnotig langsam und braucht sehr lange.
+    Ausserdem kann es passieren, dass man bei einem hohen lokalen Minimum stecken bleibt.}
 
-    \item{Falls $\eta$ zu gross ist, passiert es, dass man ueber das lokale Minimum hinaus schiesst und nur darum herum springt.}
+\item{Falls $\eta$ zu gross ist, passiert es, dass man ueber das lokale Minimum hinaus schiesst und nur darum herum springt.}
 \end{itemize}
 
 \begin{figure}[h!]
@@ -241,19 +240,19 @@ Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur anna
 \par\medskip
 Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
 Dabei wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingsbeispiel approximiert.
-Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet. 
-Dadurch finden deutlich mehr Iterationen statt in \textit{einer} Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen lang trainiert. 
+Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
+Dadurch finden deutlich mehr Iterationen statt in \textit{einer} Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen lang trainiert.
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegen gut.
 Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \par\medskip
 Die partiellen Ableitungen der gesamten Trainingsdaten wird mit dem arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Groesse $q$ approximiert. Siehe Gleichung (\ref{eq:minibatch_deriv}).
 \begin{equation}\label{eq:minibatch_deriv}
-    \frac{\partial\bar{C}}{\partial\phi_n} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_n}
+  \frac{\partial\bar{C}}{\partial\phi_n} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_n}
 \end{equation}
 
 Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (\ref{eq:gradientdescent}) folgendermassen durchgefuehrt:
 \begin{equation}\label{eq:sgd}
-    \phi_{n,t+1} = \phi_{n,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{n,t}}
+  \phi_{n,t+1} = \phi_{n,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{n,t}}
 \end{equation}
 
 
@@ -267,7 +266,8 @@ Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unte
 
 Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglich eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
 Es gibt nicht nur eine Art von Neuralem Netz, sondern es exisitieren die
-verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden muessen.
+verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden
+muessen. Diese Arbeit wird sich spaeter vorallem mit sogennanten Autoencodern auseinandersetzen.
 
 
 \subsubsection{Perzeptron}
@@ -275,20 +275,20 @@ Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netz besser zu
 verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \textbf{Perzeptron}.
 \par\medskip
 Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
-besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron 
+besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron
 hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
-kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \ldots, w_n \in \mathbb{R}$.
-Diese sind reele Zahlen, welche das Verhalten des Perzeptron erheblich beeinflussen.
-Die \textbf{Gewichtete Summe} der Inputs mit den Gewichten
-wird mit $\tilde{z}$ bezeichnet. Sie ist das
-gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.\\
-$\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$.\quad
+kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \ldots,
+w_n \in \mathbb{R}$. Fuer jeden Input ein Gewicht.
+Diese sind reele Zahlen, welche das Verhalten des Perzeptron bestimmen.
+Die \textbf{Gewichtete Summe}, also die Summe aller Produkte der Inputs mit
+ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
+Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.
+$\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$\\
 Zusaetzlich besitzt das Perzeptron einen \textbf{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bildet er die Modellparameter.
-Das Perzeptron verhaltet sich, dass falls die Gewichtete Summe groesser als der
-Schwellwert ist, das Neuron feuert,
-also betraegt der Output 1. Ansonsten ist er 0.
+Das Perzeptron verhaltet sich so, dass falls die Gewichtete Summe groesser als der
+Schwellwert ist, das Neuron feuert, d.h.\ der Output betraegt Output 1. Andernfalls ist er 0.
 Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
 Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \textbf{Neigung} (engl.: Bias)
@@ -311,59 +311,246 @@ tiefes $b$ es nicht feuern lassen wuerde.
   \end{cases}
   \quad =
   \begin{cases}
-    1 & \quad \text{falls } z > 0\\
-    0 & \quad \text{ansonsten}
-  \end{cases}
-\end{equation}
-
-
-In Gleichung (\ref{eq:perzeptron_2}) ist nochmals alles zusammengefasst. Um das
-Perzeptron zu trainiern, muesste einfach das Gradientenverfahren auf die
-Gewichte und die Neigung angewendet werden.
-\begin{equation}\label{eq:perzeptron_2}
-  p(\vec{x}) =
-  \begin{cases}
     1 & \quad\text{falls } \vec{w} \cdot \vec{x} + b > 0\\
     0 & \quad\text{ansonsten}
   \end{cases}
 \end{equation}
 
 \begin{figure}[h!]
-    \centering
-    \begin{tikzpicture}
-        \path (3,0) node [circle,draw](neuron){Neuron};
-        \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
-        \path[black!40!green] (5,0) node(y1){$y$};
-        \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
-        \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
-        \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
-        \draw[->] (neuron) -- (y1);
-    \end{tikzpicture}
-    \label{fi:perzeptron}
-    \caption{ein Perzeptron mit drei Inputs}
+  \centering
+  \begin{tikzpicture}
+    \path (3,0) node [circle,draw](neuron){Neuron};
+    \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
+    \path[black!40!green] (5,0) node(y1){$y$};
+    \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
+    \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
+    \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
+    \draw[->] (neuron) -- (y1);
+  \end{tikzpicture}
+  \caption{ein Perzeptron mit drei Inputs}
+  \label{fi:perzeptron}
 \end{figure}
 
-Was kann ein Perzeptron erlernen? -> Linearer Klassifikator
+Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
+aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
+werden. Der Grund dafuer sollte spaeter einlauchtend sein.
+\par\medskip
+Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
+Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form $y=w_1x_1+\ldots+w_nx_n$.
+Es kann die Features in zwei Klassen einordnen 0 oder 1.
+Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
+der Klasse 0.
+Jedoch muessen diese Klassen linear separierbar sein.
+Das bedeutet dass, die Inputvektoren $\vec{x}$ durch eine Hyperebene trennbar
+sein muessen.
+Bei zwei Features (zwei Inputs) handelt es sich bei der Hyperebene um eine
+Gerade welche die Vektoren auftrennt. Siehe Abbildung (\ref{fig:linearer_Klassifikator}).
+Fuer drei Featuers ist es eine Ebene.
 
-Lernregel?
+Eine Funktionen, welche nicht linear separierbar ist (z.B\ XOR-Verknuepfungen),
+kann von einem Perzeptron nicht erlernt werden.
+
+\begin{figure}[h!]
+
+  \caption{erfolgreiche lineare Separierung (links) und das Versagen bei XOR (rechts)}
+  \label{fig:linearer_Klassifikator}
+\end{figure}
 
 \cite{wiki:perzeptron}
 
 \subsubsection{Biologische Analogie}
+-------------------------
+Gewicht entscheidet ob inhibitorisch oder exaktorisch.
+Schwellenwert: Das Addieren eines Schwellenwerts  zur Netzeingabe verschiebt die gewichteten Eingaben. Die Bezeichnung bestimmt sich aus der Verwendung einer Schwellenwertfunktion als Aktivierungsfunktion, bei der das Neuron aktiviert wird, wenn der Schwellenwert überschritten ist. Die biologische Motivierung dabei ist das Schwellenpotential bei Nervenzellen. Mathematisch gesehen wird die Trennebene, die den Merkmalsraum auftrennt, durch einen Schwellenwert mit einer Translation verschoben.
 
 Hebbsche Lernregel
 
+\subsubsection{Erweiterung der Kuenstlichen Neuronen}
+Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage lineare Klassifikationen
+durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
+ausgebaut werden. Ausserdem brauchen wir ein Kuenstliches Neuron, welches sich
+besonders gut als Baustein fuer KNNs eignet.
+
+\paragraph{Kuenstliche Neuronen im Allgemeinen}
+Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
+haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
+$w_{ji}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
+Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
+die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Neurons.
+Die Aktivierung $a$, ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
+auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
+sich fast nur in ihrer Aktivierungsfunktion.
+
+\paragraph{Perzeptronen als Kuenstliche Neuronen}
+Zuerst nocheinmal ein Blick auf das Perzeptron in Betracht der Aktivierungsfunktion.
+Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
+Neuronen, besteht darin, dass seine Inputs und Outputs nur binaere Werte
+annehmen koennen. Um dieses Verhalten des Perzeptron zu erhalten,
+muss eine Stufenfunktion als Aktivierungfunktion verwendet werden: die Heaviside-Funktion $\Theta$.
+Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1. Siehe Abb. (\ref{fig:heaviside}).
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{\text{hlim}}(z) = \Theta(z) =
+      \begin{cases}
+        1 & \quad \text{falls } z \geq 0\\
+        0 & \quad \text{falls } z < 0
+      \end{cases}
+    \end{equation}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x in {-1,-0.5,0.5,1}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+      \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
+      \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
+      \draw[red,ultra thick,dashed] (0,0) -- (0,1); % y-red
+      \draw[draw=red,fill=white] (0,0) circle (0.05);
+      \draw[draw=red,fill=red] (0,1) circle (0.05);
+
+    \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
+  \label{fig:heaviside}
+\end{figure}
+
+\paragraph{Stueckweise lineare Neuronen}
+Der naechste Schritt nach dem binaeren Perzeptron, sind sogenannte stueckweise
+lineare Neuronen.
+Sie verwenden eine stueckweise lineare Aktivierungsfunktion. Diese bildet ein
+beschraenktes Intervall linear ab. Die Werte ausserhalb werden auf die
+konstanten Werte 0 oder 1 abbgebildet. Siehe Abb. (\ref{fig:stueckweiselinear}).
+\par\medskip
+Die Inputs koennen jetzt beliebige Reele Zahlen sein (vorzugsweise in der Naehe
+von 0 und 1).
+Ein KNN aus aussschliesslich linearen Neuronen bestehend, sind ziemlich nutzlos, da jedliche Komposition von
+linearen Funktion auch durch eine einzige lineare Funktion dargestellt werden
+koennte. Somit hat ein KNN gegenueber einem einzelnen Neuron keinen Mehrwert.
+Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{\text{pwl}}(z) =
+      \begin{cases}
+        1 & \quad \text{falls } z > \frac{1}{2}\\
+        z + \frac{1}{2} & \quad \text{falls } -\frac{1}{2} < z < \frac{1}{2}\\
+        0 & \quad \text{falls } z < \frac{1}{2}
+      \end{cases}
+    \end{equation}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x in {-1,-0.5,0.5,1}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
+      \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
+      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % d-red
+
+      \draw[draw=red,fill=red] (-0.5,0) circle (0.03);
+      \draw[draw=red,fill=red] (0.5,1) circle (0.03);
+
+
+    \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Formel und der Plot einer stueckweisen linearen Funktion}
+  \label{fig:stueckweiselinear}
+\end{figure}
+
+
+\paragraph{Sigmoide Neuronen}
+Die logische naechste Erweiterung sind nicht-lineare Neuronen.
+Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
+Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
+Eine sehr relevant Eigenschaft von ihr ist, dass sie im Gegensatz zu den vorhin
+genannten Aktivierungsfunktion, ueberall differenzierbar ist. Dies ist eine
+Voraussetzung fuer das Gradientenverfahren und somit fuer das ganze Training.
+Zugleich ist sie monoton steigend und das sehr glatt. 
+Auch andere Funktion erfuellen diese Bedingungnen. Die Sogmoidfunktion wird
+einfach bevorzusagt, da ihre Ableitung sehr simpel ist, siehe Abb. (\ref{fig:sigmoid}).
+Ihre nicht-linearitaet ermoeglicht ein erlernen von deutlich komplexeren Sachverhalten.
+Und wie spaeter erlautert, ist es moeglich mit der Kompostion von nicht-linearen
+Funktionen jede belibige Funktion zu approximieren! 
+\par\medskip
+Die Simgmoid-Funktion besitzt eine einzige Wendestelle bei $x=0$ und hat zwei Asymptote, eine fuer $x \to -\infty$ mit $y=0$
+und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{align}
+      \varphi^{\text{sig}}(z) &= \sigma(z) = \frac{1}{1 + e^{-z}}\\
+      \sigma'(z)&=\sigma(z)(1-\sigma(z))
+    \end{align}
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,ystep=0.5,xstep=0.25] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\xtext$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+
+
+      \draw[red,ultra thick,x=0.25cm] plot[domain=-6.0:6.0] (\x,{1/(1+exp(-\x)) });
+
+    \end{tikzpicture}
+  \end{minipage}
+
+  \caption{die Formel und der Plot der Sigmoid-Funktion $\sigma$}
+  \label{fig:sigmoid}
+\end{figure}
+
+
+
+
 \subsubsection{Kuenstliche Neuronale Netze}
-Wie das Perzeptron auch, besteht ein KNN aus Neuronen, in diesem Fall aber
-mehreren. Es sind jedoch nicht ganz die gleichen Neuronen, denn fuer KNN
-verwendet man sogennante \textbf{Sigmoide-Neuronen}, aber dazu spaeter mehr. Diese Neuronen sind in verschieden Schichten (engl.: Layers)
+Nun sollen diese Neuronen miteinander verbunden werden und ein Netz bilden,
+aehnlich wie ein Nervensystem.
+Diese Neuronen sind in verschieden Schichten (engl.: Layers)
 arangiert. Die erste ist die \textbf{Inputschicht}. Sie behinhalten die
 Inputneuronen mit jeweils einem Inputwert. Dies sind eigentlich keine richtigen
 Neuronen sondern eher Platzhalter fuer die Inputs. Als letztes kommt die
 \textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert
 besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
 beliebig viele geben und in ihnen bliebig viele Neuronen.
-Jedes Neuron aus einer Schicht ist mit jeden Neuron aus der naechsten Schicht ueber
+Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ueber
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
@@ -406,165 +593,16 @@ Werte nur nach vorne propagiert werden.
 \end{figure}
 
 
-\subsubsection{Bessere Kuenstliche Neuronen}
-\paragraph{Kuenstliche Neuronen im Allgemeinen}
-Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
-haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
-$w_i$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
-Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
-die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Neurons.
-Die Aktivierung $a$, ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
-auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
-sich fast nur in ihrer Aktivierungsfunktion.
-
-
-\paragraph{Kuenstliche Neuronenen im Perzeptron}
-Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
-Neuronen, besteht darin, dass seine Inputs und Outputs nur binaere Werte
-annehmen koennen. Um das schwellenartige Verhalten des Perzeptron zu erhalten,
-muss eine spezielle Aktivierungfunktion verwendet werden: die Heaviside-Funktion $\Theta$.
-Sie ist eine Stufenfunktion mit einem einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1.
-
-\begin{figure}[h!]
-  \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation}
-      \varphi^{\text{hlim}}(z) = \Theta(z) =
-      \begin{cases}
-        1 & \quad \text{falls } z \geq 0\\
-        0 & \quad \text{falls } z < 0
-      \end{cases}
-  \end{equation}
-
-  \end{minipage}
-  \begin{minipage}[h!]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}[scale=2.5]
-
-        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
-        \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-        \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
-
-        \foreach \x in {-1,-0.5,0.5,1}
-        \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
-
-        \foreach \y in {0.5,1}
-        \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
-
-        \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
-
-        \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
-        \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
-        \draw[red,ultra thick,dashed] (0,0) -- (0,1); % y-red
-        \draw[draw=red,fill=white] (0,0) circle (0.05);
-        \draw[draw=red,fill=red] (0,1) circle (0.05);
-
-      \end{tikzpicture}
-  \end{minipage}
-
-  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
-\end{figure}
-
-\paragraph{Stueckweise lineare Neuronen}
-Die Binaritaet des Perzeptron schrenkt es sehr in seinen Fahigkeiten ein.
-Dadurch koennen sie auch nur fuer lineare Klassifizierungen verwednet werden.
-Es ist deshalb sinnvoll eine Erweiterung auf stueckweise lineare Neuronen durchzufuehren.
-Die Inputs muessen jetzt nicht mehr 0 oder 1 betragen, sondern koennen eine
-beliebige Reele Zahlen zwischen 0 und 1 sein. Nun muss eine passende
-Aktivierungsfunktion gewaehlt werden. Naheliegend waere eine lineare, welche
-jedoch minimal 0 sein darf und maximal 1.
-
-\begin{figure}[h!]
-  \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation}
-      \varphi^{\text{pwl}}(z) =
-      \begin{cases}
-        1 & \quad \text{falls } z > \frac{1}{2}\\
-        z + \frac{1}{2} & \quad \text{falls } -\frac{1}{2} < z < \frac{1}{2}\\
-        0 & \quad \text{falls } z < \frac{1}{2}
-      \end{cases}
-    \end{equation}
-
-  \end{minipage}
-  \begin{minipage}[h!]{0.5\textwidth}
-    \centering
-    \begin{tikzpicture}[scale=2.5]
-
-      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
-      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
-
-      \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
-
-      \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
-
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
-
-      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
-      \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
-      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % d-red
-
-      \draw[draw=red,fill=red] (-0.5,0) circle (0.03);
-      \draw[draw=red,fill=red] (0.5,1) circle (0.03);
-
-
-    \end{tikzpicture}
-  \end{minipage}
-
-
-  \caption{die Formel und der Plot einer stueckweisen linearen Funktion}
-\end{figure}
-
-
-\paragraph{Sigmoide Neuronen}
-Da KNN bestehend aus linearen Neuronen nur lineare Zusammenhaenge modellieren
-koennen, waere es sinnvoll eine zweite Erweiterung auf nicht-lineare Neuronen zu machen.
-Es gaengig dafuer sind sogennante Sigmoide Neuronen.
-Sie erhalten ihren Namen, von ihrer Aktivierungsfunktion, der Sigmoid-Funktion $\sigma$.
-Sie ist eine kontinuierliche Funktion mit einer Asymptote fuer $x \to -\infty$ mit $y=0$
-und eine zweite fuer $x \to\infty$ mit $y=1$.
-
-\begin{figure}[h!]
-  \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation}
-      \varphi^{\text{sig}}(z) = \sigma(z) = \frac{1}{1 + e^{-z}}
-    \end{equation}
-  \end{minipage}
-  \begin{minipage}[h!]{0.5\textwidth}
-    \centering
-    \begin{tikzpicture}[scale=2.5]
-
-      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
-      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-      \draw[style=help lines,ystep=0.5,xstep=0.25] (-1.4,0) grid (1.4, 1.1);
-
-      \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\xtext$};
-
-      \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
-
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
-
-
-      \draw[red,ultra thick,x=0.25cm] plot[domain=-6.0:6.0] (\x,{1/(1+exp(-\x)) });
-
-    \end{tikzpicture}
-  \end{minipage}
-
-  \caption{die Formel und der Plot der Sigmoid-Funktion $\sigma$}
-\end{figure}
 
 \subsubsection{Vorwaertspropagierung}
 
 Nun muessen einige Konventionen zur Beschriftung der Teil eines KNN getroffen
 werden.
 \begin{itemize}
-  \item{$a_n^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
-  \item{$w_{n,m}^l$ ist das Gewicht der Verbindung zweischen dem $n$-ten Neuron
-      in der $l$-ten Schicht und dem $m$-ten Neuron in der $l+1$-ten Schicht. }
-    
+\item{$a_n^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
+\item{$w_{n,m}^l$ ist das Gewicht der Verbindung zweischen dem $n$-ten Neuron
+    in der $l$-ten Schicht und dem $m$-ten Neuron in der $l+1$-ten Schicht. }
+
 \end{itemize}
 
 \subsubsection{Lineare Algebra}
@@ -584,4 +622,4 @@ Neural Network kann alles erlernen
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"
-%%% End:
+%%% End:s
