@@ -77,8 +77,8 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
     \path (3,0) node [draw,thick,minimum width=2cm,minimum height=3cm](neuron){Modell};
     \path[red] (0,0.5) node(T){$T$} (0,-0.5) node(H){$H$};
     \path[black!40!green] (5,0) node(y1){$y_1$};
-    \draw[->] (T) -- node[above,sloped]{$w_1$} (neuron);
-    \draw[->] (H) -- node[above,sloped]{$w_2$} (neuron);
+    \draw[->] (T) -- (neuron);
+    \draw[->] (H) -- (neuron);
     \draw[->] (neuron) -- (y1);
 
   \end{tikzpicture}
@@ -86,7 +86,6 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
   \caption{Darstellung des Modells}
 \end{figure}
 
-\pagebreak
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
@@ -217,16 +216,7 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
     \draw[gray] (0,0) grid[step=0.5cm] (5,5);
     \draw[ultra thick,black,->] (-0.5,0) -- (5.5,0);
     \draw[ultra thick,black,->] (0,-0.5) -- (0,5.5);
-    \draw[red] (0,0) arc (180:90:1cm);
-    \coordinate (A) at (2,1);
-    \fill[red] (A) circle (1mm);
-    \coordinate (B) at (3,2);
-    \fill[orange] (B) circle (2mm);
 
-    \fill[blue] ($3*(A) - (B)$) circle (1mm);
-    \draw[green] (0,0) parabola (1.5, 2.25);
-
-    \draw[red,scale=0.3] plot[domain=-2:2] (\x,{\x*\x*\x });
   \end{tikzpicture}
   \caption{Visualiesierung verschiedener Lernraten}
 \end{figure}
@@ -540,23 +530,26 @@ und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
 
 
 
-\subsubsection{Kuenstliche Neuronale Netze}
-Nun sollen diese Neuronen miteinander verbunden werden und ein Netz bilden,
+\subsubsection{Aufbau von Kuenstlichen Neuronalen Netzen}
+Nun sollen diese Neuronen als Bausteine verwendet werden, um ein Kuenstliches
+Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
 Diese Neuronen sind in verschieden Schichten (engl.: Layers)
 arangiert. Die erste ist die \textbf{Inputschicht}. Sie behinhalten die
-Inputneuronen mit jeweils einem Inputwert. Dies sind eigentlich keine richtigen
-Neuronen sondern eher Platzhalter fuer die Inputs. Als letztes kommt die
+Inputneuronen. Dies sind eigentlich keine richtigen
+Neuronen sondern eher Platzhalter fuer ihren jeweiligen Inputwert $x_i$. Als letztes kommt die
 \textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert
 besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
 beliebig viele geben und in ihnen bliebig viele Neuronen.
+Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes, es
+handelt sich dabei um Hyperparameter.
+\par\medskip
 Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ueber
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
 Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle
 Werte nur nach vorne propagiert werden.
-
 
 \begin{figure}[h!]
   \centering
@@ -593,26 +586,40 @@ Werte nur nach vorne propagiert werden.
 \end{figure}
 
 
-
-\subsubsection{Vorwaertspropagierung}
-
-Nun muessen einige Konventionen zur Beschriftung der Teil eines KNN getroffen
-werden.
+\subsubsection{Forwardpropagation mit Linearer Algebra}
+Um nun die Vorwaertspropagierung und somit die Berechnung der Outputs zu
+erklaeren muessen einige Konventionen zur Bennung der Teile des KNN getroffen werden:
 \begin{itemize}
-\item{$a_n^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
-\item{$w_{n,m}^l$ ist das Gewicht der Verbindung zweischen dem $n$-ten Neuron
-    in der $l$-ten Schicht und dem $m$-ten Neuron in der $l+1$-ten Schicht. }
+
+\item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
+\item{$z_j^l$ ist die Gewichtete Summe}
+\item{$a_j^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
+\item{$w_{j,k}^l$ ist das Gewicht der Verbindung vom $k$-ten Neuron
+    in der $l-1$-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht. }
+\item{$L$ soll die Anzahl der Schichten sein}
 
 \end{itemize}
 
-\subsubsection{Lineare Algebra}
+Da es nicht unueblich ist, dass ein KNN ueber 1000 Neuronen besitzt und ueber
+10000 Gewichte ist es wichtig nicht den Ueberblick zu verlieren. Deshalb ist es
+hilfreich mit Matrixen aus der lienaren Algebra zu arbeiten. + Performance GPU etc.
+
+$\mathbf{w}$ ist die Gewichtsmatrix.
 \subsubsection{Backpropagation}
+Das Gradientenverfahren fuer KNN bezeichnet man als Backpropagation.
 \subsubsection{Universal Approximation Theorem}
 Neural Network kann alles erlernen
 
-\subsection{Autoencoder und Convolutional NN}
-
+\subsection{Autoencoder und Convolutional KNN}
+\subsubsection{Autoencoder}
 \subsubsection{Bedeutung von Autoencodern}
+\paragraph{Datenkompression}
+~Hauptkomponentenanalyse und Dimensionalitatsreduktion
+\paragraph{Datengenerierung}
+\paragraph{Eigenschaften erkennen}
+
+\subsubsection{Convolutional KNN}
+
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
 
