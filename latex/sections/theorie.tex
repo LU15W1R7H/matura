@@ -6,15 +6,15 @@
 
 NOTATION ERKLAEREN (Vektor, Matrix, etc.)
 \par\bigskip
-Falls ein (Zeilen- oder Spalten-)Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
+Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
 dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
-$f(\vec{v})=f(v_1,\cdots,v_n)$
+$f(\vec{v})=f(v_1,\ldots,v_n)$
 
 \pagebreak
 \section{Machinelles Lernen - die Theorie}
 
 Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
-Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.: hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
+Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.:\ hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
 Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen. 
 
@@ -33,13 +33,13 @@ sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassi
 Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \par\medskip
-Die Inputs/Features werden in einem Vektor $\vec{x}=(x_1,x_2,...,x_n)^T$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=(y_1,y_2,...,y_m)^T$ zusammengefasst.
-Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=(\hat{y}_1,\hat{y_2},...,\hat{y}_m)^T$ bezeichnet werden.
+Die Inputs/Features werden in einem Vektor $\vec{x}={(x_1,x_2,\ldots,x_n)}^T$ und die Outputs/Vohersagen in einem Vektor $\vec{y}={(y_1,y_2,\ldots,y_m)}^T$ zusammengefasst.
+Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}={(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}^T$ bezeichnet werden.
 \par \medskip
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
 Die Features sind die spezifischen RGB-Werte aller Pixel. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
-Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H=(1,0)^T$ reprasentiert werden und Katze als $\vec{l}_K=(0,1)^T$.
+Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H={(1,0)}^T$ reprasentiert werden und Katze als $\vec{l}_K={(0,1)}^T$.
 
 \begin{figure}[h!]
     \centering
@@ -53,7 +53,7 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw. einem One-Hot-Vektor gemacht
 \subsubsection{Modelle}
 Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
-Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2, ...$.
+Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2,\ldots$.
 Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewunschte Resultat liefern. 
 \par\medskip
@@ -116,10 +116,10 @@ Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
     \item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
 \end{itemize}
 
-Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.: mean squared error).\\
-$\displaystyle C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}(\hat{y}_i - y_i)^2 = \frac{1}{2n}(\vec{\hat{y}} - \vec{y})^2$
+Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.:\ mean squared error).\\
+$\displaystyle C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2$
 Sie erfuellt alle anforderungen, denn:
-Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu $(\hat{y}-y)^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(\hat{y}-y)$
+Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu ${(\hat{y}-y)}^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(\hat{y}-y)$
 
 
 \subsubsection{Gradientenverfahren}
@@ -127,14 +127,14 @@ Um ein Modell nun zu trainieren, gilt es zu verstehen, das es sich um ein Optimi
 Das Modell ist am besten, also macht die besten Vorraussagen, wenn die Fehlerfunktion am kleinsten ist.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Inputs betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
-$C(\phi_1, \phi_2, \cdots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
+$C(\phi_1, \phi_2, \ldots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
-    Im Gymnasium wird beigebracht die lokalen Extrema (inkl. lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
-    Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \cdots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
+    Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
+    Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \ldots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
 }
 \par\medskip
-Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \cdots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
+Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
 Dies beschieht, in dem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen Komponenten den Input von $f$ darstellt, gewaehlt wird.
 Nun werden iterativ neue Punkte $\vec{p_z}$ gesucht, welche immer naeher beim lokalen Minimun liegen, also Punkte die den Funktionswert $f(\vec{p}_z)$ immer kleiner werden lassen.
 Dies wird durchgeführt, bis der Punkt genug nahe beim lokalen Minimun ist.
@@ -234,7 +234,7 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin gesagt, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
-Konkret wird die Kostenfunktion $C(\phi_0,\cdots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
+Konkret wird die Kostenfunktion $C(\phi_0,\ldots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
 Dafuer muesste man eigentlich den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
 Dies waere zwar ein exakter Prozess aber ein extrem langsamer zugleich.
 Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
@@ -278,7 +278,7 @@ Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. D
 besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron 
 hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
-kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \cdots, w_n \in \mathbb{R}$.
+kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \ldots, w_n \in \mathbb{R}$.
 Diese sind reele Zahlen, welche das Verhalten des Perzeptron erheblich beeinflussen.
 Die \textbf{Gewichtete Summe} der Inputs mit den Gewichten
 wird mit $\tilde{z}$ bezeichnet. Sie ist das
@@ -338,11 +338,9 @@ Gewichte und die Neigung angewendet werden.
         \draw[->] (x2) -- node[above,sloped]{$w_2$} (neuron);
         \draw[->] (x3) -- node[above,sloped]{$w_3$} (neuron);
         \draw[->] (neuron) -- (y1);
-
-
     \end{tikzpicture}
-    \caption{ein Perzeptron mit drei Inputs}
     \label{fi:perzeptron}
+    \caption{ein Perzeptron mit drei Inputs}
 \end{figure}
 
 Was kann ein Perzeptron erlernen? -> Linearer Klassifikator
@@ -514,6 +512,7 @@ jedoch minimal 0 sein darf und maximal 1.
     \end{tikzpicture}
   \end{minipage}
 
+
   \caption{die Formel und der Plot einer stueckweisen linearen Funktion}
 \end{figure}
 
@@ -538,7 +537,7 @@ und eine zweite fuer $x \to\infty$ mit $y=1$.
 
       \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
       \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+      \draw[style=help lines,ystep=0.5,xstep=0.25] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
       \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\xtext$};
