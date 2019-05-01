@@ -5,9 +5,34 @@
 
 NOTATION ERKLAEREN (Vektor, Matrix, etc.)
 \par\bigskip
-Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
-dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
-$f(\vec{v})=f(v_1,\ldots,v_n)$
+
+\begin{itemize}
+
+  \item{ 
+      Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
+      dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
+      \begin{equation}
+        f(\vec{v})=f(v_1,\ldots,v_n)
+      \end{equation}
+    }
+
+    \item{Falls die Klammern in denen der Vektor $\vec{v}$ steht als eckige
+        Klammern [] geschrieben sind, ist zu verstehene, dass die Funktion auf
+        jeden der Vektorkomponenten angewandt wird.
+        \begin{equation}
+        f[\vec{v}]=
+        \begin{pmatrix}
+          f(v_1)\\
+          \vdots \\
+          f(v_n)\\
+        \end{pmatrix}
+        \end{equation}
+    }
+
+\end{itemize}
+
+ERWEITERN
+
 
 \pagebreak
 \section{Machinelles Lernen - die Theorie}
@@ -37,7 +62,7 @@ Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}={(\hat{y}_1
 \par \medskip
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
-Die Features sind die spezifischen RGB-Werte aller Pixel. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
+Die Features sind die spezifischen RGB-Werte der Pixel fuer die einzelnen Bilder. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
 Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H={(1,0)}^T$ reprasentiert werden und Katze als $\vec{l}_K={(0,1)}^T$.
 
 \begin{figure}[h!]
@@ -46,7 +71,7 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemach
 
   \end{tikzpicture}
 
-  \caption{eine Veranschaulichung eines Machine Learning Modells}
+  \caption{eine Veranschaulichung des beschriebenen Machine Learning Modells}
 \end{figure}
 
 \subsubsection{Modelle}
@@ -66,9 +91,10 @@ Fuer Machine Learning haben sich gewisse Modelle besonders guet etabliert,
 darunter waeren: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \par\medskip
-Um den Modellbegriff noch etwas zu festigen wird ein Beispielmodell erlautert:\\
-Das Modell soll Vorhersagen zum Wetter machen. Anhand von Luftfeuchtigkeit und
-Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
+BEISPIELMODELL?
+% Um den Modellbegriff noch etwas zu festigen wird ein Beispielmodell erlautert:\\
+% Das Modell soll Vorhersagen zum Wetter machen. Anhand von Luftfeuchtigkeit und
+% Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
 
 \begin{figure}[h!]
   \centering
@@ -83,7 +109,7 @@ Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
 
   \end{tikzpicture}
 
-  \caption{Darstellung des Modells}
+  \caption{Darstellung eines Modells}
 \end{figure}
 
 \subsection{Training}
@@ -92,7 +118,8 @@ Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learnin
 Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
 Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
-Der Fehler eines Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen Mittel der Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
+Der Fehler des gesamten Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen
+Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
 \par\medskip
 \begin{minipage}[h!]{0.5\textwidth}
   \centering
@@ -117,7 +144,7 @@ Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.:\ mean squared error).\\
 $\displaystyle C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2$
 Sie erfuellt alle anforderungen, denn:
-Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu ${(\hat{y}-y)}^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(\hat{y}-y)$
+Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu ${(\hat{y}-y)}^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(y-\hat{y})$
 
 
 \subsubsection{Gradientenverfahren}
@@ -166,6 +193,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
   \node[fancytitle,right=10pt] at (box.north west) {Partielle Ableitungen};
 
 \end{tikzpicture}
+
 
 \noindent \begin{tikzpicture}
   \node [mybox] (box) {%
@@ -326,7 +354,9 @@ aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter einlauchtend sein.
 \par\medskip
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
-Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form $y=w_1x_1+\ldots+w_nx_n$.
+Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form
+$y=w_1x_1+\cdots+w
+_nx_n$.
 Es kann die Features in zwei Klassen einordnen 0 oder 1.
 Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
@@ -349,11 +379,11 @@ kann von einem Perzeptron nicht erlernt werden.
 \cite{wiki:perzeptron}
 
 \subsubsection{Biologische Analogie}
--------------------------
-Gewicht entscheidet ob inhibitorisch oder exaktorisch.
-Schwellenwert: Das Addieren eines Schwellenwerts  zur Netzeingabe verschiebt die gewichteten Eingaben. Die Bezeichnung bestimmt sich aus der Verwendung einer Schwellenwertfunktion als Aktivierungsfunktion, bei der das Neuron aktiviert wird, wenn der Schwellenwert überschritten ist. Die biologische Motivierung dabei ist das Schwellenpotential bei Nervenzellen. Mathematisch gesehen wird die Trennebene, die den Merkmalsraum auftrennt, durch einen Schwellenwert mit einer Translation verschoben.
+SCHREIBEN
+% Gewicht entscheidet ob inhibitorisch oder exaktorisch.
+% Schwellenwert: Das Addieren eines Schwellenwerts  zur Netzeingabe verschiebt die gewichteten Eingaben. Die Bezeichnung bestimmt sich aus der Verwendung einer Schwellenwertfunktion als Aktivierungsfunktion, bei der das Neuron aktiviert wird, wenn der Schwellenwert überschritten ist. Die biologische Motivierung dabei ist das Schwellenpotential bei Nervenzellen. Mathematisch gesehen wird die Trennebene, die den Merkmalsraum auftrennt, durch einen Schwellenwert mit einer Translation verschoben.
 
-Hebbsche Lernregel
+% Hebbsche Lernregel
 
 \subsubsection{Erweiterung der Kuenstlichen Neuronen}
 Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage lineare Klassifikationen
@@ -530,7 +560,7 @@ und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
 
 
 
-\subsubsection{Aufbau von Kuenstlichen Neuronalen Netzen}
+\subsubsection{Topologie der Kuenstlichen Neuronalen Netzen}
 Nun sollen diese Neuronen als Bausteine verwendet werden, um ein Kuenstliches
 Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
@@ -626,7 +656,8 @@ Neural Network kann alles erlernen
 
 \end{document}
 
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"
-%%% End:s
+%%% End:
