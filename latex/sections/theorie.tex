@@ -3,35 +3,47 @@
 
 \section{Konventionen und Notation}
 
-NOTATION ERKLAEREN (Vektor, Matrix, etc.)
-\par\bigskip
+\subsection*{Beschriftung}
+
+\begin{tabular}{rl}
+  $\vec{v}$ & ein Vektor \\
+  $\mat{M}$ & eine Matrix \\
+
+\end{tabular}
+
+
+\subsection*{Konventionen}
 
 \begin{itemize}
 
-  \item{ 
-      Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
-      dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
-      \begin{equation*}
-        f(\vec{v})=f(v_1,\ldots,v_n)
-      \end{equation*}
-    }
+\item{
+    Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
+    dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
+    \begin{equation*}
+      f(\vec{v})=f(v_1,\ldots,v_n)
+    \end{equation*}
+  }
 
-    \item{Falls die Klammern in denen der Vektor $\vec{v}$ steht als eckige
-        Klammern [] geschrieben sind, ist zu verstehene, dass es sich um die
-        Vektorisierung einer Funktion $f$ handelt, somit wird die Funktion auf
-        jede Vektorkomponente angewandt.
-        \begin{equation*}
-        f[\vec{v}]=
-        \begin{pmatrix}
-          f(v_1)\\
-          \vdots \\
-          f(v_n)\\
-        \end{pmatrix}
-        \end{equation*}
-    }
+\item{
+    Falls die Klammern in denen der Vektor $\vec{v}$ steht als eckige
+    Klammern [] geschrieben sind, ist zu verstehene, dass es sich um die
+    Vektorisierung einer Funktion $f$ handelt, somit wird die Funktion auf
+    jede Vektorkomponente angewandt.
+    \begin{equation*}
+      f[\vec{v}]=
+      \begin{pmatrix}
+        f(v_1)\\
+        \vdots \\
+        f(v_n)\\
+      \end{pmatrix}
+    \end{equation*}
+  }
 
-    \item{Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
-        $j$ der hoechstmoegliche Index.}
+\item{
+    Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
+    $j$ der hoechstmoegliche Index.
+  }
+
 
 \end{itemize}
 
@@ -212,7 +224,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
           \vdots \\
           \frac{\partial f}{\partial x_n} \\
         \end{pmatrix}
-        \end{equation*}
+      \end{equation*}
       Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
       Seine Magnitude gibt die Staerke des Anstiegs an.
     \end{minipage}
@@ -523,7 +535,7 @@ Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere. D
 einfach bevorzusagt, da ihre Ableitung sehr simpel ist, siehe Abb. (\ref{fig:sigmoid}).
 Ihre nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
 Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Kompostion von nicht-linearen
-Funktionen jede belibige Funktion zu approximieren! 
+Funktionen jede belibige Funktion zu approximieren!
 \par\medskip
 Die Simgmoid-Funktion besitzt eine einzige Wendestelle bei $x=0$ und hat zwei Asymptoten, eine fuer $x \to -\infty$ mit $y=0$
 und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
@@ -628,14 +640,14 @@ verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getro
 \item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
 \item{$z_j^l$ ist die Gewichtete Summe des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
-  \item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
+\item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$w_{j,k}^l$ (man beachte die vertauschten Indizes) ist das Gewicht der Verbindung vom $k$-ten Neuron
     in der ($l-1$)-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht.
     \footnote{
       Diese Konvention scheint auf den ersten Blick unintuitiv, macht jedoch
       Sinn fuer die spaeteren mathematischen Operationen mit Matrizen.
-}}
-  
+    }}
+
 \item{$L$ soll die gesamte Anzahl der Schichten sein.}
 
 \end{itemize}
@@ -651,7 +663,7 @@ etc auch Tensorflow
 Dabei ist die Summe ueber alle Neuronen in der ($l-1$)-ten Schicht.
 
 Um nun lineare Algebra ins Spiel zu bringen, wird eine Gewichtsmatrxi
-$\mathbf{w}^l$ fuer jede Schicht $l$ definiert.
+$\mat{W}^l$ fuer jede Schicht $l$ definiert.
 Die Eintraege dieser Matrix sind einfach die Gewichte welche zu den Neuronen der
 $l$-ten Schicht verlaufen. Das heisst der Eintrag in der $j$-ten Zeile und in
 der $k$-ten Spalte ist $w_{j,k}^l$ (Siehe Gl. (\ref{eq:gewichtsmatrix})). Ebenfalls werden alle Neigung $b_j^l$ in
@@ -660,7 +672,7 @@ Letzt wird ein Aktivierungsvektor $\vec{a}^l$, welcher alle Aktiverungen $a_j^l$
 einer Schicht $l$ einfaengt.
 
 \begin{equation}\label{eq:gewichtsmatrix}
-  \mathbf{w}^l =
+  \mat{W}^l =
   \begin{pmatrix}
     w_{1,1}^l & w_{1,2}^l & \cdots & w_{1,K}^l \\[0.3em]
     w_{2,1}^l & w_{2,2}^l & \cdots & w_{2,K}^l \\[0.3em]
@@ -696,11 +708,11 @@ muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
 Nun kann die Matrixschreibweise eingefuehrt werden.
 
 \begin{equation}\label{eq:activierung_matrix}
-  \vec{a}^{\,l} = \sigma \left(\mathbf{w}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
+  \vec{a}^{\,l} = \sigma \left(\mat{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
 \end{equation}
 
 Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
-$\vec{z}^{\,l} = \mathbf{w}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
+$\vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
 
 \subsubsection{Backpropagation}
 Das Gradientenverfahren fuer KNN bezeichnet man als Backpropagation.
@@ -710,14 +722,37 @@ Das Gradientenverfahren fuer KNN bezeichnet man als Backpropagation.
   \node [mybox] (box) {%
     \begin{minipage}{1.0\textwidth}
 
-      \begin{equation*}
-        \vec{v} \odot \vec{w} =
-        \begin{pmatrix}
-          v_1 w_1 \\
-          \vdots \\
-          v_n w_n
-        \end{pmatrix}
-      \end{equation*}
+      Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen.
+      Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
+
+      \begin{minipage}{0.5\textwidth}
+        \begin{equation*}
+          \mat{A} \odot \mat{B} =
+          \begin{pmatrix}
+            a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
+            \vdots & \ddots & \vdots \\[0.3em]
+            a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
+          \end{pmatrix}
+          \in \mathbb{R}^{m \times n}
+        \end{equation*}
+      \end{minipage}
+     % 
+      \begin{minipage}{0.5\textwidth}
+        \begin{equation*}
+          \vec{v} \odot \vec{w} =
+          \begin{pmatrix}
+            v_1 w_1 \\
+            \vdots \\
+            v_n w_n
+          \end{pmatrix}
+        \end{equation*}
+
+      \end{minipage}
+      
+
+
+
+
 
     \end{minipage}
 
