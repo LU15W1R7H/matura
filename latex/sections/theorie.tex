@@ -11,23 +11,27 @@ NOTATION ERKLAEREN (Vektor, Matrix, etc.)
   \item{ 
       Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
       dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
-      \begin{equation}
+      \begin{equation*}
         f(\vec{v})=f(v_1,\ldots,v_n)
-      \end{equation}
+      \end{equation*}
     }
 
     \item{Falls die Klammern in denen der Vektor $\vec{v}$ steht als eckige
-        Klammern [] geschrieben sind, ist zu verstehene, dass die Funktion auf
-        jeden der Vektorkomponenten angewandt wird.
-        \begin{equation}
+        Klammern [] geschrieben sind, ist zu verstehene, dass es sich um die
+        Vektorisierung einer Funktion $f$ handelt, somit wird die Funktion auf
+        jede Vektorkomponente angewandt.
+        \begin{equation*}
         f[\vec{v}]=
         \begin{pmatrix}
           f(v_1)\\
           \vdots \\
           f(v_n)\\
         \end{pmatrix}
-        \end{equation}
+        \end{equation*}
     }
+
+    \item{Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
+        $j$ der hoechstmoegliche Index.}
 
 \end{itemize}
 
@@ -130,7 +134,7 @@ Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}
 \begin{minipage}[h!]{0.5\textwidth}
   \centering
   \begin{equation}\label{eq:meanerrorfunc}
-    \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\Big(\vec{y}_j,\vec{\hat{y}}_j\Big)
+    \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\left(\vec{y}_j,\vec{\hat{y}}_j\right)
   \end{equation}
 \end{minipage}
 \par\medskip
@@ -168,12 +172,12 @@ Dafuer muss ein Vektor $\vec{b}_z$ bestimmt werden, welcher auf den Punkt $\vec{
 bei dem der Funktionswert $f(\vec{p}_{z+1})$ kleiner ist als der von $f(\vec{p}_z)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerksten Funktionswertabnahme zeigt.
 
-Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.\\
+Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
+\par\medskip
 
 \tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
 \tikzstyle{fancytitle} = [fill=red, text=white]
-
-\noindent \begin{tikzpicture}
+\begin{tikzpicture}
   \node [mybox] (box) {%
     \begin{minipage}{1.0\textwidth}
 
@@ -181,9 +185,9 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
       Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
       Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
       Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
-      \par\medskip
-      $\displaystyle\frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}$
-      \par\medskip
+      \begin{equation*}
+        \frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
+      \end{equation*}
       Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
 
 
@@ -194,30 +198,28 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
 
 \end{tikzpicture}
 
-
-\noindent \begin{tikzpicture}
+\par\medskip
+\begin{tikzpicture}
   \node [mybox] (box) {%
     \begin{minipage}{1.0\textwidth}
 
       Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
       Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
-      \par\medskip
-      $\displaystyle grad(f)=\vec{\nabla}f=
-      \begin{pmatrix}
-        \frac{\partial f}{\partial x_1} \\
-        \vdots \\
-        \frac{\partial f}{\partial x_n} \\
-      \end{pmatrix}$
-      \par\medskip
+      \begin{equation*}
+        grad(f)=\vec{\nabla}f=
+        \begin{pmatrix}
+          \frac{\partial f}{\partial x_1} \\
+          \vdots \\
+          \frac{\partial f}{\partial x_n} \\
+        \end{pmatrix}
+        \end{equation*}
       Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
       Seine Magnitude gibt die Staerke des Anstiegs an.
-
-
-
     \end{minipage}
   };
   \node[fancytitle,right=10pt] at (box.north west) {Gradient};
 \end{tikzpicture}
+\par\medskip
 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben werden:\\
@@ -411,13 +413,13 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1. Siehe Abb. (\ref
 
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation}
+    \begin{equation*}
       \varphi^{\text{hlim}}(z) = \Theta(z) =
       \begin{cases}
         1 & \quad \text{falls } z \geq 0\\
         0 & \quad \text{falls } z < 0
       \end{cases}
-    \end{equation}
+    \end{equation*}
 
   \end{minipage}
   \begin{minipage}[h!]{0.5\textwidth}
@@ -465,14 +467,14 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
 
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation}
+    \begin{equation*}
       \varphi^{\text{pwl}}(z) =
       \begin{cases}
         1 & \quad \text{falls } z > \frac{1}{2}\\
         z + \frac{1}{2} & \quad \text{falls } -\frac{1}{2} < z < \frac{1}{2}\\
         0 & \quad \text{falls } z < \frac{1}{2}
       \end{cases}
-    \end{equation}
+    \end{equation*}
 
   \end{minipage}
   \begin{minipage}[h!]{0.5\textwidth}
@@ -512,24 +514,26 @@ Die logische naechste Erweiterung sind nicht-lineare Neuronen.
 Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
 Eine sehr relevant Eigenschaft von ihr ist, dass sie im Gegensatz zu den vorhin
-genannten Aktivierungsfunktion, ueberall differenzierbar ist. Dies ist eine
-Voraussetzung fuer das Gradientenverfahren und somit fuer das ganze Training.
-Zugleich ist sie monoton steigend und das sehr glatt. 
-Auch andere Funktion erfuellen diese Bedingungnen. Die Sogmoidfunktion wird
+genannten Aktivierungsfunktion, ueberall differenzierbar und strikt monoton
+steigend ist. Erst fuer diese Aktivierungsfunktion, kann das Gradientenverfahren
+angewendet werden und somit das KNN trainiert werden. Die anderen
+Funktionen haben Stellen bei welchen die Ableitungsfunktion null
+betraegt, somit kann das lokale Minimum nicht gefunden werden.
+Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere. Die Sogmoidfunktion wird
 einfach bevorzusagt, da ihre Ableitung sehr simpel ist, siehe Abb. (\ref{fig:sigmoid}).
-Ihre nicht-linearitaet ermoeglicht ein erlernen von deutlich komplexeren Sachverhalten.
-Und wie spaeter erlautert, ist es moeglich mit der Kompostion von nicht-linearen
+Ihre nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
+Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Kompostion von nicht-linearen
 Funktionen jede belibige Funktion zu approximieren! 
 \par\medskip
-Die Simgmoid-Funktion besitzt eine einzige Wendestelle bei $x=0$ und hat zwei Asymptote, eine fuer $x \to -\infty$ mit $y=0$
+Die Simgmoid-Funktion besitzt eine einzige Wendestelle bei $x=0$ und hat zwei Asymptoten, eine fuer $x \to -\infty$ mit $y=0$
 und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
 
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
-    \begin{align}
+    \begin{align*}
       \varphi^{\text{sig}}(z) &= \sigma(z) = \frac{1}{1 + e^{-z}}\\
       \sigma'(z)&=\sigma(z)(1-\sigma(z))
-    \end{align}
+    \end{align*}
   \end{minipage}
   \begin{minipage}[h!]{0.5\textwidth}
     \centering
@@ -561,16 +565,16 @@ und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
 
 
 \subsubsection{Topologie der Kuenstlichen Neuronalen Netzen}
-Nun sollen diese Neuronen als Bausteine verwendet werden, um ein Kuenstliches
+Nun sollten diese Sigmoiden-Neuronen als Bausteine verwendet werden, um ein Kuenstliches
 Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
 Diese Neuronen sind in verschieden Schichten (engl.: Layers)
 arangiert. Die erste ist die \textbf{Inputschicht}. Sie behinhalten die
 Inputneuronen. Dies sind eigentlich keine richtigen
 Neuronen sondern eher Platzhalter fuer ihren jeweiligen Inputwert $x_i$. Als letztes kommt die
-\textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert
+\textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
 besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
-beliebig viele geben und in ihnen bliebig viele Neuronen.
+beliebig viele geben und in ihnen beliebig viele Neuronen.
 Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes, es
 handelt sich dabei um Hyperparameter.
 \par\medskip
@@ -578,8 +582,8 @@ Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ue
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
-Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle
-Werte nur nach vorne propagiert werden.
+Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle Werte
+ausschliesslich nach vorne propagiert werden.
 
 \begin{figure}[h!]
   \centering
@@ -617,27 +621,112 @@ Werte nur nach vorne propagiert werden.
 
 
 \subsubsection{Forwardpropagation mit Linearer Algebra}
-Um nun die Vorwaertspropagierung und somit die Berechnung der Outputs zu
-erklaeren muessen einige Konventionen zur Bennung der Teile des KNN getroffen werden:
+Um nun die Vorwaertspropagierung und somit das Funktionsweise des Modells zu
+verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getroffen werden:
 \begin{itemize}
 
 \item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
-\item{$z_j^l$ ist die Gewichtete Summe}
-\item{$a_j^l$ ist die Aktivierung des $n$-ten Neurons in der $l$-ten Schicht.}
-\item{$w_{j,k}^l$ ist das Gewicht der Verbindung vom $k$-ten Neuron
-    in der $l-1$-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht. }
-\item{$L$ soll die Anzahl der Schichten sein}
+\item{$z_j^l$ ist die Gewichtete Summe des $j$-ten Neuron in der $l$-ten Schicht.}
+\item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
+  \item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
+\item{$w_{j,k}^l$ (man beachte die vertauschten Indizes) ist das Gewicht der Verbindung vom $k$-ten Neuron
+    in der ($l-1$)-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht.
+    \footnote{
+      Diese Konvention scheint auf den ersten Blick unintuitiv, macht jedoch
+      Sinn fuer die spaeteren mathematischen Operationen mit Matrizen.
+}}
+  
+\item{$L$ soll die gesamte Anzahl der Schichten sein.}
 
 \end{itemize}
 
 Da es nicht unueblich ist, dass ein KNN ueber 1000 Neuronen besitzt und ueber
-10000 Gewichte ist es wichtig nicht den Ueberblick zu verlieren. Deshalb ist es
-hilfreich mit Matrixen aus der lienaren Algebra zu arbeiten. + Performance GPU etc.
+10000 Gewichte ist es wichtig nicht den Ueberblick zu verlieren (zu viele Indizes). Deshalb ist es
+hilfreich mit Matrixen aus der lienaren Algebra zu arbeiten. + Performance GPU
+etc auch Tensorflow
 
-$\mathbf{w}$ ist die Gewichtsmatrix.
+\begin{equation}\label{eq:aktivierung_normal}
+  a_j^l = \sigma\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right)
+\end{equation}
+Dabei ist die Summe ueber alle Neuronen in der ($l-1$)-ten Schicht.
+
+Um nun lineare Algebra ins Spiel zu bringen, wird eine Gewichtsmatrxi
+$\mathbf{w}^l$ fuer jede Schicht $l$ definiert.
+Die Eintraege dieser Matrix sind einfach die Gewichte welche zu den Neuronen der
+$l$-ten Schicht verlaufen. Das heisst der Eintrag in der $j$-ten Zeile und in
+der $k$-ten Spalte ist $w_{j,k}^l$ (Siehe Gl. (\ref{eq:gewichtsmatrix})). Ebenfalls werden alle Neigung $b_j^l$ in
+einer Schicht $l$ zu einem Vektor $\vec{b}^l$ zusammmen gefasst. Und zu guter
+Letzt wird ein Aktivierungsvektor $\vec{a}^l$, welcher alle Aktiverungen $a_j^l$
+einer Schicht $l$ einfaengt.
+
+\begin{equation}\label{eq:gewichtsmatrix}
+  \mathbf{w}^l =
+  \begin{pmatrix}
+    w_{1,1}^l & w_{1,2}^l & \cdots & w_{1,K}^l \\[0.3em]
+    w_{2,1}^l & w_{2,2}^l & \cdots & w_{2,K}^l \\[0.3em]
+    \vdots & \vdots & \ddots & \vdots \\[0.3em]
+    w_{J,1}^l & w_{J,2}^l & \cdots & w_{J,K}^l
+  \end{pmatrix}
+\end{equation}
+
+Um nun Gleichung (\ref{eq:aktivierung_normal}) in der Matrixform zu schreiben,
+muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
+\par\medskip
+\begin{tikzpicture}
+  \node [mybox] (box) {%
+    \begin{minipage}{1.0\textwidth}
+
+      Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine neue Funktion, welche die Funktion $f$ auf jede Vektorkomponente anwendet und einen neuen Vektor als Rueckgabewert hat.
+      \begin{equation*}
+        f[\vec{v}]=
+        \begin{pmatrix}
+          f(v_1)\\
+          \vdots \\
+          f(v_n)\\
+        \end{pmatrix}
+      \end{equation*}
+
+    \end{minipage}
+
+  };
+  \node[fancytitle,right=10pt] at (box.north west) {Vektoriserung einer Funktion};
+\end{tikzpicture}
+\par\medskip
+
+Nun kann die Matrixschreibweise eingefuehrt werden.
+
+\begin{equation}\label{eq:activierung_matrix}
+  \vec{a}^{\,l} = \sigma \left(\mathbf{w}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
+\end{equation}
+
+Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
+$\vec{z}^{\,l} = \mathbf{w}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
+
 \subsubsection{Backpropagation}
 Das Gradientenverfahren fuer KNN bezeichnet man als Backpropagation.
-\subsubsection{Universal Approximation Theorem}
+
+\par\medskip
+\begin{tikzpicture}
+  \node [mybox] (box) {%
+    \begin{minipage}{1.0\textwidth}
+
+      \begin{equation*}
+        \vec{v} \odot \vec{w} =
+        \begin{pmatrix}
+          v_1 w_1 \\
+          \vdots \\
+          v_n w_n
+        \end{pmatrix}
+      \end{equation*}
+
+    \end{minipage}
+
+  };
+  \node[fancytitle,right=10pt] at (box.north west) {Das Hadamard-Produkt};
+\end{tikzpicture}
+\par\medskip
+
+\subsubsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
 
 \subsection{Autoencoder und Convolutional KNN}
