@@ -140,7 +140,7 @@ Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}
 \begin{minipage}[h!]{0.5\textwidth}
   \centering
   \begin{equation}\label{eq:errorfunc}
-    C(\vec{y},\vec{\hat{y}})=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)
+    C \left(\vec{y},\vec{\hat{y}} \right)=\displaystyle\sum_{i=1}^{m} c(y_i, \hat{y}_i)
   \end{equation}
 \end{minipage}
 \begin{minipage}[h!]{0.5\textwidth}
@@ -218,7 +218,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
       Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
       Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
       \begin{equation*}
-        grad(f)=\vec{\nabla}f=
+        \vec{grad}(f)=\vec{\nabla}f=
         \begin{pmatrix}
           \frac{\partial f}{\partial x_1} \\
           \vdots \\
@@ -658,7 +658,7 @@ hilfreich mit Matrixen aus der lienaren Algebra zu arbeiten. + Performance GPU
 etc auch Tensorflow
 
 \begin{equation}\label{eq:aktivierung_normal}
-  a_j^l = \sigma\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right)
+  a_j^l = \varphi\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right)
 \end{equation}
 Dabei ist die Summe ueber alle Neuronen in der ($l-1$)-ten Schicht.
 
@@ -674,10 +674,10 @@ einer Schicht $l$ einfaengt.
 \begin{equation}\label{eq:gewichtsmatrix}
   \mat{W}^l =
   \begin{pmatrix}
-    w_{1,1}^l & w_{1,2}^l & \cdots & w_{1,K}^l \\[0.3em]
-    w_{2,1}^l & w_{2,2}^l & \cdots & w_{2,K}^l \\[0.3em]
+    w_{1,1}^l & w_{1,2}^l & \cdots & w_{1,n}^l \\[0.3em]
+    w_{2,1}^l & w_{2,2}^l & \cdots & w_{2,n}^l \\[0.3em]
     \vdots & \vdots & \ddots & \vdots \\[0.3em]
-    w_{J,1}^l & w_{J,2}^l & \cdots & w_{J,K}^l
+    w_{m,1}^l & w_{m,2}^l & \cdots & w_{m,n}^l
   \end{pmatrix}
 \end{equation}
 
@@ -708,7 +708,7 @@ muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
 Nun kann die Matrixschreibweise eingefuehrt werden.
 
 \begin{equation}\label{eq:activierung_matrix}
-  \vec{a}^{\,l} = \sigma \left(\mat{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
+  \vec{a}^{\,l} = \varphi \left(\mat{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
 \end{equation}
 
 Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
