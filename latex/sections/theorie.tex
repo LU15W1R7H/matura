@@ -365,7 +365,7 @@ tiefes $b$ es nicht feuern lassen wuerde.
 
 Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
-werden. Der Grund dafuer sollte spaeter einlauchtend sein.
+werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einlauchtend sein.
 \par\medskip
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form
@@ -399,7 +399,7 @@ SCHREIBEN
 
 % Hebbsche Lernregel
 
-\subsubsection{Erweiterung der Kuenstlichen Neuronen}
+\subsubsection{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage lineare Klassifikationen
 durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
 ausgebaut werden. Ausserdem brauchen wir ein Kuenstliches Neuron, welches sich
@@ -641,12 +641,14 @@ verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getro
 \item{$z_j^l$ ist die Gewichtete Summe des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
 \item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
-\item{$w_{j,k}^l$ (man beachte die vertauschten Indizes) ist das Gewicht der Verbindung vom $k$-ten Neuron
-    in der ($l-1$)-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht.
+\item{$w_{j,k}^l$ ist das Gewicht der Verbindung vom $k$-ten Neuron
+    in der ($l-1$)-ten Schicht zum $j$-ten Neuron in der $l$-ten Schicht (man
+    beachte die Reihenfolge)
     \footnote{
       Diese Konvention scheint auf den ersten Blick unintuitiv, macht jedoch
-      Sinn fuer die spaeteren mathematischen Operationen mit Matrizen.
-    }}
+      Sinn fuer die spaeteren mathematischen Operationen mit Matrizen in Sektion
+      (\ref{sec:backpropagation}).
+    }.}
 
 \item{$L$ soll die gesamte Anzahl der Schichten sein.}
 
@@ -662,7 +664,7 @@ etc auch Tensorflow
 \end{equation}
 Dabei ist die Summe ueber alle Neuronen in der ($l-1$)-ten Schicht.
 
-Um nun lineare Algebra ins Spiel zu bringen, wird eine Gewichtsmatrxi
+Um nun lineare Algebra ins Spiel zu bringen, wird eine \textbf{Gewichtsmatrix}
 $\mat{W}^l$ fuer jede Schicht $l$ definiert.
 Die Eintraege dieser Matrix sind einfach die Gewichte welche zu den Neuronen der
 $l$-ten Schicht verlaufen. Das heisst der Eintrag in der $j$-ten Zeile und in
@@ -714,8 +716,8 @@ Nun kann die Matrixschreibweise eingefuehrt werden.
 Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
 $\vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
 
-\subsubsection{Backpropagation}
-Das Gradientenverfahren fuer KNN bezeichnet man als Backpropagation.
+\subsubsection{Backpropagation}\label{sec:backpropagation}
+Das Gradientenverfahren fuer KNN bezeichnet man als \textbf{Backpropagation}.
 
 \par\medskip
 \begin{tikzpicture}
