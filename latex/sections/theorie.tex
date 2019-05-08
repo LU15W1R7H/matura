@@ -652,7 +652,7 @@ ausschliesslich nach vorne propagiert werden.
 \end{figure}
 
 
-\subsubsection{Forwardpropagation mit Linearer Algebra}
+\subsubsection{Vorwaertspropagierung}
 Um nun die Vorwaertspropagierung und somit das Funktionsweise des Modells zu
 verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getroffen werden:
 \begin{itemize}
@@ -736,8 +736,50 @@ Nun kann die Matrixschreibweise eingefuehrt werden.
 Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
 $\vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
 
-\subsubsection{Backpropagation}\label{sec:backpropagation}
-Das Gradientenverfahren fuer KNN bezeichnet man als \textbf{Backpropagation}.
+\subsubsection{Rueckwaertspropagierung}\label{sec:backpropagation}
+Das Gradientenverfahren fuer KNN bezeichnet man als
+\textbf{Rueckwaertspropagierung} (engl.: Backpropagation).
+
+Das Ziel dieses Algorithmus ist es die beiden Partiellen Ableitungen
+$\frac{\partial C}{\partial w_{j,k}^l}$ und $\frac{\partial C}{\partial b_j^l}$
+zu bestimmen. Hierfuer ist es sinnvoll eine Zwischenwert, welchen wir Fehler
+$\delta_j^l$ nennen.
+\begin{equation}
+  \delta_j^l \coloneqq \frac{\partial C}{\partial z_j^l}
+\end{equation}
+
+Viel Kettenregel.
+
+\begin{equation}
+  \frac{\partial C}{\partial w_{j,k}} = \frac{\partial C}{\partial a_k} \frac{\partial a_k}{\partial z_k} \frac{\partial z_k}{\partial w_{j,k}}
+\end{equation}
+
+Die vier magischen Gleichungen:
+
+Der Fehler in der Outputschicht
+\begin{equation}\tag{BP1}
+  \delta_j^L = \frac{\partial C}{\partial a_j^L} \sigma'(z_j^L)
+\end{equation}
+
+Matrixform
+\begin{equation}\tag{BP1a}
+  \delta^L = \nabla_aC \odot \sigma'(z^L)
+\end{equation}
+
+Fehler anhand des Fehlers der naechsten Schicht
+\begin{equation}\tag{BP2}
+  \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)
+\end{equation}
+
+\begin{equation}\tag{BP3}
+  \frac{\partial C}{\partial b_j^l} = \delta_j^l
+\end{equation}
+
+\begin{equation}\tag{BP4}
+  \frac{\partial C}{\partial w_{j,k}^l} = a_k^{l-1} \delta_j^l
+\end{equation}
+
+
 
 \par\medskip
 \begin{tikzpicture}
