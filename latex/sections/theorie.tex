@@ -1,12 +1,19 @@
 \documentclass[../main]{subfiles}
 \begin{document}
 
+\newcommand{\refsec}[1]{
+  \begin{tikzpicture}
+  \node[rounded corners,fill=red] (0,0) {#1};
+\end{tikzpicture}
+}
+
+
 \section{Konventionen und Notation}
 
 \subsection*{Beschriftung}
 
 \begin{tabular}{rl}
-  $\vec{v}$ & ein Vektor \\
+  $\vec{v}$ & ein Vektor \refsec{Test} \\
   $\mat{M}$ & eine Matrix \\
 
 \end{tabular}
@@ -17,7 +24,8 @@
 \begin{itemize}
 
 \item{
-    Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine Funktion $f$ gegeben wird, ist zu verstehen,
+    Falls ein (Zeilen- oder Spalten-) Vektor $\vec{v}$ als Argument in eine
+    Funktion $f$ gegeben wird, bedeutet dies,
     dass die einzelnen Komponenten des Vektors die Parameter der Funktion sind.
     \begin{equation*}
       f(\vec{v})=f(v_1,\ldots,v_n)
@@ -25,8 +33,8 @@
   }
 
 \item{
-    Falls die Klammern in denen der Vektor $\vec{v}$ steht als eckige
-    Klammern [] geschrieben sind, ist zu verstehene, dass es sich um die
+    Falls die Klammern, in denen der Vektor $\vec{v}$ steht, als eckige
+    Klammern [] geschrieben sind, bedeutet dies, dass es sich um die
     Vektorisierung einer Funktion $f$ handelt, somit wird die Funktion auf
     jede Vektorkomponente angewandt.
     \begin{equation*}
@@ -40,7 +48,7 @@
   }
 
 \item{
-    Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
+    RAUSNEHMEN? Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
     $j$ der hoechstmoegliche Index.
   }
 
@@ -51,26 +59,26 @@ ERWEITERN
 
 
 \pagebreak
-\section{Machinelles Lernen - die Theorie}
+\section{Machinelles Lernen - Theorie}
 
 Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.:\ hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
-Dabei wird das Modell mit Trainingsdaten befuettern, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
+Dabei wird das Modell mit Trainingsdaten befuettert, mithilfe eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen.
 
 \subsection{Allgemeine Begriffe}
 
 \subsubsection{Daten}
 
-Der \textbf{Trainingsdatensatz} beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
+Der \textbf{Trainingsdatensatz} $\mathbb{T}$ beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
 Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
 Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
 Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
 Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
-sondern ein Generalisieren des Zusammenhangs, anhand von Mustern und Gesetzmassigkeiten.
+sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassigkeiten.
 \par\medskip
-Um eine Endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
+Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \par\medskip
 Die Inputs/Features werden in einem Vektor $\vec{x}={(x_1,x_2,\ldots,x_n)}^T$ und die Outputs/Vohersagen in einem Vektor $\vec{y}={(y_1,y_2,\ldots,y_m)}^T$ zusammengefasst.
@@ -79,7 +87,9 @@ Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}={(\hat{y}_1
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
 Die Features sind die spezifischen RGB-Werte der Pixel fuer die einzelnen Bilder. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
-Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das Label aktiv ist, ist die Komponent 1 ansonsten 0. Also Hund koennte als $\vec{l}_H={(1,0)}^T$ reprasentiert werden und Katze als $\vec{l}_K={(0,1)}^T$.
+Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor
+gemacht. Jeder Labelart wird eine eigene Vektorkomponente zugewiesen. Falls das
+Label aktiv ist, ist die Komponent 1 ansonsten 0. Somit kann Hund als $\vec{l}_H={(1,0)}^T$ reprasentiert werden und Katze als $\vec{l}_K={(0,1)}^T$.
 
 \begin{figure}[h!]
   \centering
@@ -91,14 +101,16 @@ Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor gemach
 \end{figure}
 
 \subsubsection{Modelle}
-Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$ welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2,\ldots$.
-Das Ziel ist es die Modellparameter so einzustellen, dass die Vorherrsagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
-Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewunschte Resultat liefern.
+Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
+Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewuenschte Resultat liefern.
 \par\medskip
-Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist angemessen, falls ein einfacher linearen Zusammenhang zwischen den Features und den Labels besteht.
-$y=\phi_1x + \phi_0$. Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden.
+Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist
+angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\phi_1x +
+\phi_0$ zwischen den Features und den Labels besteht.
+Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden.
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
@@ -130,11 +142,14 @@ BEISPIELMODELL?
 
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
-Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Models bewertet werden.
-Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie soll ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
+Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
+Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie sollen ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
-Die Fehler der einzlnen Outputs $c_i$ werden aufsummiert um den Fehler C einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
-Der Fehler des gesamten Datensatzen $\bar{C}$ ergibt sich aus dem arithmetischen
+Die Fehler der einzelnen Outputs $c(y_i,\hat{y}_i)$ werden aufsummiert um den
+Fehler $C(\vec{y}_j,\vec{\hat{y}}_j)$ (wobei $\vec{y}_j$ die Vorhersagen sind und
+$\vec{\hat{y}}_j$ die Labels sind) einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
+Der Fehler $\bar{C}(\mathbb{T})$ eines ganzen Datensatzes $\mathbb{T}$, der
+Groesse $p$ ergibt sich aus dem arithmetischen
 Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
 \par\medskip
 \begin{minipage}[h!]{0.5\textwidth}
@@ -146,7 +161,7 @@ Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}
 \begin{minipage}[h!]{0.5\textwidth}
   \centering
   \begin{equation}\label{eq:meanerrorfunc}
-    \bar{C} = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\left(\vec{y}_j,\vec{\hat{y}}_j\right)
+    \bar{C}(\mathbb{T}) = \frac{1}{p}\displaystyle\sum_{j=1}^{p} C\left(\vec{y}_j,\vec{\hat{y}}_j\right)
   \end{equation}
 \end{minipage}
 \par\medskip
@@ -154,21 +169,22 @@ Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
 \item{$c$ ist minimal, wenn $y = \hat{y}$}
 \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
-\item{$C$ ist nach jedem $y_n$ partiell differenzierbar}
+\item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklaert in Sektion (\ref{sec:partielle_ableitungen}))}
 \end{itemize}
 
 Eine beliebte Kostenfunktion ist die ``Mittlere quadratische Abweichung'' (engl.:\ mean squared error).\\
-$\displaystyle C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2$
+$\displaystyle C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2$.
 Sie erfuellt alle anforderungen, denn:
 Sie ist $0$ falls $y=\hat{y}$. Sie ist proportional zu ${(\hat{y}-y)}^2$ und ihre Ableitung nach $y$ lautet: $C'=\frac{1}{n}(y-\hat{y})$
 
 
 \subsubsection{Gradientenverfahren}
-Um ein Modell nun zu trainieren, gilt es zu verstehen, das es sich um ein Optimierungsproblem handelt.
-Das Modell ist am besten, also macht die besten Vorraussagen, wenn die Fehlerfunktion am kleinsten ist.
+Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
+Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
+Funktionswerte der Fehlerfunktion am kleinsten sind.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
-Hierbei muss die Funktion $C$ nicht mehr in Abhangigkeit der Inputs betrachtet werden, sondern stattdessen in Abhangigkeit von den Modellparametern,
-$C(\phi_1, \phi_2, \ldots, \phi_n)$ denn diese sollen angepasst werden, um das Modell zu verbessern.
+Hierbei muss die Funktion $C$ nicht mehr in Abhaengigkeit der Inputs betrachtet werden, sondern in Abhaengigkeit von den Modellparametern
+$C(\phi_1, \phi_2, \ldots, \phi_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
   Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
@@ -176,8 +192,8 @@ Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.:
 }
 \par\medskip
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
-Dies beschieht, in dem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen Komponenten den Input von $f$ darstellt, gewaehlt wird.
-Nun werden iterativ neue Punkte $\vec{p_z}$ gesucht, welche immer naeher beim lokalen Minimun liegen, also Punkte die den Funktionswert $f(\vec{p}_z)$ immer kleiner werden lassen.
+Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen Komponenten den Input von $f$ darstellt, gewaehlt wird.
+Nun werden iterativ neue Punkte $\vec{p_z}$ gesucht, welche immer naeher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_z)$ immer kleiner werden lassen.
 Dies wird durchgeführt, bis der Punkt genug nahe beim lokalen Minimun ist.
 \par\medskip
 Dafuer muss ein Vektor $\vec{b}_z$ bestimmt werden, welcher auf den Punkt $\vec{p}_z$ draufaddiert einen neuen Punkt $\vec{p}_{z+1}$ bildet,
@@ -189,16 +205,16 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
 
 \tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
 \tikzstyle{fancytitle} = [fill=red, text=white]
-\begin{tikzpicture}
+\begin{tikzpicture}\label{sec:partielle_ableitungen}
   \node [mybox] (box) {%
     \begin{minipage}{1.0\textwidth}
 
       Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
       Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
       Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-      Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variabel $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
+      Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
       \begin{equation*}
-        \frac{\partial f}{\partial x_i}(\vec{a}) := \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
+        \frac{\partial f}{\partial x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
       \end{equation*}
       Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
 
@@ -218,7 +234,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
       Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
       Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
       \begin{equation*}
-        \vec{grad}(f)=\vec{\nabla}f=
+        \vec{\nabla}f=
         \begin{pmatrix}
           \frac{\partial f}{\partial x_1} \\
           \vdots \\
@@ -226,7 +242,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
         \end{pmatrix}
       \end{equation*}
       Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
-      Seine Magnitude gibt die Staerke des Anstiegs an.
+      Sein Betrag gibt die Staerke des Anstiegs an.
     \end{minipage}
   };
   \node[fancytitle,right=10pt] at (box.north west) {Gradient};
@@ -234,13 +250,14 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
 \par\medskip
 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
-Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben werden:\\
+Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben
+werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
 \begin{equation}\label{eq:gradientdescent}
   \vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
 \end{equation}
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
-Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr tiefes Minimum zu finden.
+Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr niedriges Minimum zu finden.
 \par\medskip
 Die sogennante \textbf{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
 Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgroesse des Gradientenabstieg bestimmt. Sie muss je nach zu minimierender Funktion anderst gewaehlt werden.
@@ -264,27 +281,29 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 \end{figure}
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
-Wie vorhin gesagt, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
-Konkret wird die Kostenfunktion $C(\phi_0,\ldots,\phi_n)$ minimieren, indem die Parameter angepasst werden, dadurch macht das Modell immer bessere Vorhersagen.
-Dafuer muesste man eigentlich den Gradieten fuer den gesamten Trainingsdatensatz bestimmen, um nur eine Iteration des Gradientenabstiegs durchzufuehren.
+Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
+Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}|\phi_0,\ldots,\phi_n)$ (Die $\phi$ sind die Modellparameter) minimieren, indem die Parameter angepasst werden. Dadurch macht das Modell immer bessere Vorhersagen.
+Fuer nur eine Iteration des Gradientenverfahren, muesste man den Gradienten fuer den
+\textit{gesamten} Trainingsdatensatz berechnen.
 Dies waere zwar ein exakter Prozess aber ein extrem langsamer zugleich.
 Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
 \par\medskip
 Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
-Dabei wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingsbeispiel approximiert.
-Dabei wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
-Dadurch finden deutlich mehr Iterationen statt in \textit{einer} Durchkaemmung der Trainingsdaten, welche man \textbf{Epoche} nennt. Oft wird mehrere Epochen lang trainiert.
-Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegen gut.
+Hierfuer wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingsbeispiel approximiert.
+Dazu wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
+Als Konsequenz finden deutlich mehr Iterationen statt in \textit{einer}
+Durchkaemmung der Trainingsdaten, welche man als \textbf{Epoche} bezeichnet. Oft wird mehrere Epochen lang trainiert.
+Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegend gut.
 Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \par\medskip
 Die partiellen Ableitungen der gesamten Trainingsdaten wird mit dem arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Groesse $q$ approximiert. Siehe Gleichung (\ref{eq:minibatch_deriv}).
 \begin{equation}\label{eq:minibatch_deriv}
-  \frac{\partial\bar{C}}{\partial\phi_n} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_n}
+  \frac{\partial\bar{C}}{\partial\phi_k} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_k}
 \end{equation}
 
 Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (\ref{eq:gradientdescent}) folgendermassen durchgefuehrt:
 \begin{equation}\label{eq:sgd}
-  \phi_{n,t+1} = \phi_{n,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{n,t}}
+  \phi_{k,t+1} = \phi_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{k,t}}
 \end{equation}
 
 
@@ -311,24 +330,24 @@ besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron
 hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
 kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \ldots,
-w_n \in \mathbb{R}$. Fuer jeden Input ein Gewicht.
-Diese sind reele Zahlen, welche das Verhalten des Perzeptron bestimmen.
-Die \textbf{Gewichtete Summe}, also die Summe aller Produkte der Inputs mit
+w_n \in \mathbb{R}$, fuer jeden Input ein Gewicht.
+Diese sind reelle Zahlen, welche das Verhalten des Perzeptron bestimmen.
+Die \textbf{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
 ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
-Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.
+Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor:
 $\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$\\
 Zusaetzlich besitzt das Perzeptron einen \textbf{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bildet er die Modellparameter.
-Das Perzeptron verhaltet sich so, dass falls die Gewichtete Summe groesser als der
-Schwellwert ist, das Neuron feuert, d.h.\ der Output betraegt Output 1. Andernfalls ist er 0.
+Das Perzeptron verhaelt sich so, dass falls die gewichtete Summe groesser als der
+Schwellwert ist, das Neuron feuert, d.h.\ der Output betraegt 1. Andernfalls ist er 0.
 Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
 Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \textbf{Neigung} (engl.: Bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet. Siehe Rest der Gleichung (\ref{eq:perzeptron_1}).
 Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Ein hohes $b$
-laesst ein Neuron auch trotz einigen Nullen in den Inputs feuern, waehrend ein
-tiefes $b$ es nicht feuern lassen wuerde.
+laesst ein Neuron auch trotz einigen Nullen in den Inputs feuern, waehrend es
+fuer ein tiefes $b$ nicht feuern lassen wuerde.
 
 \begin{equation}\label{eq:perzeptron_1}
   p(\vec{x}) =
@@ -365,21 +384,22 @@ tiefes $b$ es nicht feuern lassen wuerde.
 
 Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
-werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einlauchtend sein.
+werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
 \par\medskip
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form
 $y=w_1x_1+\cdots+w
 _nx_n$.
-Es kann die Features in zwei Klassen einordnen 0 oder 1.
+Es kann die Features in zwei Klassen 0 oder 1 einordnen.
 Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
 Jedoch muessen diese Klassen linear separierbar sein.
-Das bedeutet dass, die Inputvektoren $\vec{x}$ durch eine Hyperebene trennbar
+Das bedeutet, dass die Inputvektoren $\vec{x}$ durch eine Hyperebene trennbar
 sein muessen.
 Bei zwei Features (zwei Inputs) handelt es sich bei der Hyperebene um eine
 Gerade welche die Vektoren auftrennt. Siehe Abbildung (\ref{fig:linearer_Klassifikator}).
 Fuer drei Featuers ist es eine Ebene.
+ZU ABSTRAKT -> BEISPIEL
 
 Eine Funktionen, welche nicht linear separierbar ist (z.B\ XOR-Verknuepfungen),
 kann von einem Perzeptron nicht erlernt werden.
@@ -400,7 +420,7 @@ SCHREIBEN
 % Hebbsche Lernregel
 
 \subsubsection{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
-Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage lineare Klassifikationen
+Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage, lineare Klassifikationen
 durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
 ausgebaut werden. Ausserdem brauchen wir ein Kuenstliches Neuron, welches sich
 besonders gut als Baustein fuer KNNs eignet.
@@ -411,12 +431,12 @@ haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
 $w_{ji}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
 Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
 die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Neurons.
-Die Aktivierung $a$, ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
+Die Aktivierung $a$ ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
 auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
 
 \paragraph{Perzeptronen als Kuenstliche Neuronen}
-Zuerst nocheinmal ein Blick auf das Perzeptron in Betracht der Aktivierungsfunktion.
+Zuerst noch einmal ein Blick auf das Perzeptron in Betracht der Aktivierungsfunktion.
 Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
 Neuronen, besteht darin, dass seine Inputs und Outputs nur binaere Werte
 annehmen koennen. Um dieses Verhalten des Perzeptron zu erhalten,
@@ -459,20 +479,20 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1. Siehe Abb. (\ref
     \end{tikzpicture}
   \end{minipage}
 
-  \caption{die Definition und der Plot der Heaviside-Funktion $\Theta$}
+  \caption{die Definition und der Graph der Heaviside-Funktion $\Theta$}
   \label{fig:heaviside}
 \end{figure}
 
 \paragraph{Stueckweise lineare Neuronen}
-Der naechste Schritt nach dem binaeren Perzeptron, sind sogenannte stueckweise
+Der naechste Schritt nach dem binaeren Perzeptron sind sogenannte stueckweise
 lineare Neuronen.
 Sie verwenden eine stueckweise lineare Aktivierungsfunktion. Diese bildet ein
 beschraenktes Intervall linear ab. Die Werte ausserhalb werden auf die
 konstanten Werte 0 oder 1 abbgebildet. Siehe Abb. (\ref{fig:stueckweiselinear}).
 \par\medskip
-Die Inputs koennen jetzt beliebige Reele Zahlen sein (vorzugsweise in der Naehe
+Die Inputs koennen jetzt beliebige reelle Zahlen sein (vorzugsweise in der Naehe
 von 0 und 1).
-Ein KNN aus aussschliesslich linearen Neuronen bestehend, sind ziemlich nutzlos, da jedliche Komposition von
+Ein KNN aus ausschliesslich linearen Neuronen ist ziemlich nutzlos, da jedliche Verkettung von
 linearen Funktion auch durch eine einzige lineare Funktion dargestellt werden
 koennte. Somit hat ein KNN gegenueber einem einzelnen Neuron keinen Mehrwert.
 Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
@@ -516,7 +536,7 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
     \end{tikzpicture}
   \end{minipage}
 
-  \caption{die Formel und der Plot einer stueckweisen linearen Funktion}
+  \caption{die Formel und der Graph einer stueckweisen linearen Funktion}
   \label{fig:stueckweiselinear}
 \end{figure}
 
@@ -525,15 +545,15 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
 Die logische naechste Erweiterung sind nicht-lineare Neuronen.
 Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
-Eine sehr relevant Eigenschaft von ihr ist, dass sie im Gegensatz zu den vorhin
-genannten Aktivierungsfunktion, ueberall differenzierbar und strikt monoton
+Eine sehr wichtige Eigenschaft von ihr ist, dass sie - im Gegensatz zu den vorhin
+genannten Aktivierungsfunktion - ueberall differenzierbar und strikt monoton
 steigend ist. Erst fuer diese Aktivierungsfunktion, kann das Gradientenverfahren
 angewendet werden und somit das KNN trainiert werden. Die anderen
 Funktionen haben Stellen bei welchen die Ableitungsfunktion null
 betraegt, somit kann das lokale Minimum nicht gefunden werden.
-Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere. Die Sogmoidfunktion wird
-einfach bevorzusagt, da ihre Ableitung sehr simpel ist, siehe Abb. (\ref{fig:sigmoid}).
-Ihre nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
+Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere. Die Sigmoidfunktion wird
+bevorzugt, da ihre Ableitung sehr simpel ist, siehe Abb. (\ref{fig:sigmoid}).
+Die Nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
 Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Kompostion von nicht-linearen
 Funktionen jede belibige Funktion zu approximieren!
 \par\medskip
@@ -569,7 +589,7 @@ und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
     \end{tikzpicture}
   \end{minipage}
 
-  \caption{die Formel und der Plot der Sigmoid-Funktion $\sigma$}
+  \caption{die Formel und der Graph der Sigmoid-Funktion $\sigma$}
   \label{fig:sigmoid}
 \end{figure}
 
@@ -638,7 +658,7 @@ verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getro
 \begin{itemize}
 
 \item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
-\item{$z_j^l$ ist die Gewichtete Summe des $j$-ten Neuron in der $l$-ten Schicht.}
+\item{$z_j^l$ ist die gewichtete Summe der Inputs des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
 \item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$w_{j,k}^l$ ist das Gewicht der Verbindung vom $k$-ten Neuron
