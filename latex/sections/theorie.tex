@@ -8,13 +8,16 @@
 }
 
 
+
+
 \section{Konventionen und Notation}
 
 \subsection*{Beschriftung}
 
-\begin{tabular}{rl}
+\begin{tabular}{ll}
   $\vec{v}$ & ein Vektor \refsec{Test} \\
   $\mat{M}$ & eine Matrix \\
+  $\trs{\mat{M}}$ & eine transponierte Matrix \\
 
 \end{tabular}
 
@@ -47,12 +50,6 @@
     \end{equation*}
   }
 
-\item{
-    RAUSNEHMEN? Im Allgemeinen ist die grossgeschriebene Variante $J$ eines Indizes
-    $j$ der hoechstmoegliche Index.
-  }
-
-
 \end{itemize}
 
 ERWEITERN
@@ -81,9 +78,10 @@ sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassig
 Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \par\medskip
-Die Inputs/Features werden in einem Vektor $\vec{x}={(x_1,x_2,\ldots,x_n)}^T$ und die Outputs/Vohersagen in einem Vektor $\vec{y}={(y_1,y_2,\ldots,y_m)}^T$ zusammengefasst.
-Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}={(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}^T$ bezeichnet werden.
+Die Inputs/Features werden in einem Vektor $\vec{x}=\trs{(x_1,x_2,\ldots,x_n)}$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=\trs{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
+Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=\trs{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ bezeichnet werden.
 \par \medskip
+BESSERS BEISPIEL -> UM SPAETER KONKRETES MODELL ZU ERKLAEREN
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
 Die Features sind die spezifischen RGB-Werte der Pixel fuer die einzelnen Bilder. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
@@ -119,7 +117,7 @@ Fuer Machine Learning haben sich gewisse Modelle besonders guet etabliert,
 darunter waeren: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \par\medskip
-BEISPIELMODELL?
+BEISPIELMODELL GLEICHES WIE VORHIN
 % Um den Modellbegriff noch etwas zu festigen wird ein Beispielmodell erlautert:\\
 % Das Modell soll Vorhersagen zum Wetter machen. Anhand von Luftfeuchtigkeit und
 % Temperatur muss es eine Aussage treffen, ob es gerade regnet oder nicht.
@@ -203,51 +201,33 @@ Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerkste
 Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
 \par\medskip
 
-\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-\tikzstyle{fancytitle} = [fill=red, text=white]
-\begin{tikzpicture}\label{sec:partielle_ableitungen}
-  \node [mybox] (box) {%
-    \begin{minipage}{1.0\textwidth}
-
-      Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
-      Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
-      Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-      Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
-      \begin{equation*}
-        \frac{\partial f}{\partial x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
-      \end{equation*}
-      Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
-
-
-    \end{minipage}
-
-  };
-  \node[fancytitle,right=10pt] at (box.north west) {Partielle Ableitungen};
-
-\end{tikzpicture}
-
+\begin{defbox}{Partielle Ableitungen}
+  Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
+  Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
+  Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
+  Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
+  \begin{equation*}
+    \frac{\partial f}{\partial x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
+  \end{equation*}
+  Geometisch ist dies die Steigung der Tangente im Punkt $\vec{a}$ in Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
+\end{defbox}
+    
 \par\medskip
-\begin{tikzpicture}
-  \node [mybox] (box) {%
-    \begin{minipage}{1.0\textwidth}
 
-      Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
-      Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
-      \begin{equation*}
-        \vec{\nabla}f=
-        \begin{pmatrix}
-          \frac{\partial f}{\partial x_1} \\
-          \vdots \\
-          \frac{\partial f}{\partial x_n} \\
-        \end{pmatrix}
-      \end{equation*}
-      Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
-      Sein Betrag gibt die Staerke des Anstiegs an.
-    \end{minipage}
-  };
-  \node[fancytitle,right=10pt] at (box.north west) {Gradient};
-\end{tikzpicture}
-\par\medskip
+\begin{defbox}{Gradient}
+  Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
+  Dabei fasst man alle partiellen Ableitungen einer Funktion $f$ in einem Vektor zusammen.
+  \begin{equation*}
+    \vec{\nabla}f=
+    \begin{pmatrix}
+      \frac{\partial f}{\partial x_1} \\
+      \vdots \\
+      \frac{\partial f}{\partial x_n} \\
+    \end{pmatrix}
+  \end{equation*}
+  Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
+  Sein Betrag gibt die Staerke des Anstiegs an.
+\end{defbox}
 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_z$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_z$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben
@@ -255,6 +235,14 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
 \begin{equation}\label{eq:gradientdescent}
   \vec{p}_{z+1} = \vec{p}_z - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_z)
 \end{equation}
+
+BEISPIEL FUER GRADIENTENVERFAHREN MIT ABBILDUNG
+
+\begin{figure}[h!]
+  \centering
+
+  \caption{Darstellung des Gradientenabstiegs}
+\end{figure}
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
 Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr niedriges Minimum zu finden.
@@ -282,10 +270,12 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
-Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}|\phi_0,\ldots,\phi_n)$ (Die $\phi$ sind die Modellparameter) minimieren, indem die Parameter angepasst werden. Dadurch macht das Modell immer bessere Vorhersagen.
+Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}|\phi_0,\ldots,\phi_n)$
+($\phi$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
+die Labels) minimieren, indem die Parameter angepasst werden. Dadurch macht das Modell immer bessere Vorhersagen.
 Fuer nur eine Iteration des Gradientenverfahren, muesste man den Gradienten fuer den
 \textit{gesamten} Trainingsdatensatz berechnen.
-Dies waere zwar ein exakter Prozess aber ein extrem langsamer zugleich.
+Dies waere zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
 Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
 \par\medskip
 Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
@@ -672,12 +662,24 @@ verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getro
 
 \item{$L$ soll die gesamte Anzahl der Schichten sein.}
 
+\item{$\varphi$ ist die gewaehlte Aktivierungsfunktion (grundsaetzlich ist diese
+    immer die Sigmoidfunktion $\sigma$).}
+
 \end{itemize}
 
-Da es nicht unueblich ist, dass ein KNN ueber 1000 Neuronen besitzt und ueber
-10000 Gewichte ist es wichtig nicht den Ueberblick zu verlieren (zu viele Indizes). Deshalb ist es
-hilfreich mit Matrixen aus der lienaren Algebra zu arbeiten. + Performance GPU
-etc auch Tensorflow
+Da KNNs weit verbreitet sind in der Bilderkennung und Spracherkennung, ist es
+nicht unueblich, dass diese sehr viele Neuronen und Verbindungen (ueber 100'000) besitzen.
+Um hierbei nicht den Ueberblick zu verlieren und um nicht in den Indizes zu
+ertrinken, greift man auf \textbf{Lineare Algebra} zurueck. Man verwendet
+Matrizen und Vektoren um die vielen Variabeln zusammen zu fassen.
+Ausserdem koennen Computer deutlich schneller Matrixoperationen ausfuehren, als
+alle Zahlen einzeln zu verrechnen. Dies beschleunigt das Training der Modelle um
+ein Vielfaches. Dies wird spaeter in Sektion
+(\ref{sec:tensorflow}) noch mehr erlauetert.
+
+\par\bigskip
+
+TEXT
 
 \begin{equation}\label{eq:aktivierung_normal}
   a_j^l = \varphi\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right)
@@ -706,25 +708,19 @@ einer Schicht $l$ einfaengt.
 Um nun Gleichung (\ref{eq:aktivierung_normal}) in der Matrixform zu schreiben,
 muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
 \par\medskip
-\begin{tikzpicture}
-  \node [mybox] (box) {%
-    \begin{minipage}{1.0\textwidth}
 
-      Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine neue Funktion, welche die Funktion $f$ auf jede Vektorkomponente anwendet und einen neuen Vektor als Rueckgabewert hat.
-      \begin{equation*}
-        f[\vec{v}]=
-        \begin{pmatrix}
-          f(v_1)\\
-          \vdots \\
-          f(v_n)\\
-        \end{pmatrix}
-      \end{equation*}
+\begin{defbox}{Vektoriesierung einer Funktion}
+  Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine neue Funktion, welche die Funktion $f$ auf jede Vektorkomponente anwendet und einen neuen Vektor als Rueckgabewert hat.
+  \begin{equation*}
+    f[\vec{v}]=
+    \begin{pmatrix}
+      f(v_1)\\
+      \vdots \\
+      f(v_n)\\
+    \end{pmatrix}
+  \end{equation*}
+\end{defbox}
 
-    \end{minipage}
-
-  };
-  \node[fancytitle,right=10pt] at (box.north west) {Vektoriserung einer Funktion};
-\end{tikzpicture}
 \par\medskip
 
 Nun kann die Matrixschreibweise eingefuehrt werden.
@@ -735,6 +731,8 @@ Nun kann die Matrixschreibweise eingefuehrt werden.
 
 Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
 $\vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
+
+\subsubsection{Gewichte und Neigungen initalisieren*}
 
 \subsubsection{Rueckwaertspropagierung}\label{sec:backpropagation}
 Das Gradientenverfahren fuer KNN bezeichnet man als
@@ -768,7 +766,7 @@ Matrixform
 
 Fehler anhand des Fehlers der naechsten Schicht
 \begin{equation}\tag{BP2}
-  \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)
+  \delta^l = (\trs{(w^{l+1})} \delta^{l+1}) \odot \sigma'(z^l)
 \end{equation}
 
 \begin{equation}\tag{BP3}
@@ -782,47 +780,36 @@ Fehler anhand des Fehlers der naechsten Schicht
 
 
 \par\medskip
-\begin{tikzpicture}
-  \node [mybox] (box) {%
-    \begin{minipage}{1.0\textwidth}
 
-      Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen.
-      Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
+\begin{defbox}{Hadamard-Produkt}
+  Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen.
+  Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
 
-      \begin{minipage}{0.5\textwidth}
-        \begin{equation*}
-          \mat{A} \odot \mat{B} =
-          \begin{pmatrix}
-            a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
-            \vdots & \ddots & \vdots \\[0.3em]
-            a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
-          \end{pmatrix}
-          \in \mathbb{R}^{m \times n}
-        \end{equation*}
-      \end{minipage}
-     % 
-      \begin{minipage}{0.5\textwidth}
-        \begin{equation*}
-          \vec{v} \odot \vec{w} =
-          \begin{pmatrix}
-            v_1 w_1 \\
-            \vdots \\
-            v_n w_n
-          \end{pmatrix}
-        \end{equation*}
+  \begin{minipage}{0.5\textwidth}
+    \begin{equation*}
+      \mat{A} \odot \mat{B} =
+      \begin{pmatrix}
+        a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
+        \vdots & \ddots & \vdots \\[0.3em]
+        a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
+      \end{pmatrix}
+      \in \mathbb{R}^{m \times n}
+    \end{equation*}
+  \end{minipage}
+  %
+  \begin{minipage}{0.5\textwidth}
+    \begin{equation*}
+      \vec{v} \odot \vec{w} =
+      \begin{pmatrix}
+        v_1 w_1 \\
+        \vdots \\
+        v_n w_n
+      \end{pmatrix}
+    \end{equation*}
 
-      \end{minipage}
-      
+  \end{minipage}
+\end{defbox}
 
-
-
-
-
-    \end{minipage}
-
-  };
-  \node[fancytitle,right=10pt] at (box.north west) {Das Hadamard-Produkt};
-\end{tikzpicture}
 \par\medskip
 
 \subsubsection{Universal Approximation Theorem}\label{sec:UAT}

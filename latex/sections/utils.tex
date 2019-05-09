@@ -2,8 +2,50 @@
 \let\oldvec\vec
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
+%transpose
+\newcommand{\trs}[1]{#1^\mathrm{T}}
+
 
 % \renewcommand{\vec}[1]{\vv{#1}}
+
+% ----------- TIKZ ---------------
+
+
+\NewEnviron{defbox}[1]
+{
+  
+  \tikzstyle{mybox} = [draw=red, fill=blue!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{fancytitle} = [fill=red, text=white]
+  \begin{tikzpicture}
+    \node [mybox] (box) {%
+      \begin{minipage}{1.0\textwidth}
+        \BODY
+      \end{minipage}
+
+    };
+    \node[fancytitle,right=10pt] at (box.north west) {#1};
+
+  \end{tikzpicture}
+}
+
+\NewEnviron{infobox}[1]
+{
+  
+  \tikzstyle{mybox} = [draw=blue, fill=green!20, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{fancytitle} = [fill=blue, text=white]
+  \begin{tikzpicture}
+    \node [mybox] (box) {%
+      \begin{minipage}{1.0\textwidth}
+        \BODY
+      \end{minipage}
+
+    };
+    \node[fancytitle,right=10pt] at (box.north west) {#1};
+
+  \end{tikzpicture}
+}
+
+
 
 %%% Local Variables:
 %%% mode: latex
