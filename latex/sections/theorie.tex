@@ -643,8 +643,9 @@ ausschliesslich nach vorne propagiert werden.
 
 
 \subsubsection{Vorwaertspropagierung}
-Um nun die Vorwaertspropagierung und somit das Funktionsweise des Modells zu
-verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getroffen werden:
+Nachdem nun der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
+des Modells erklaert werden. Hierfuer muessen einige Konventionen zur
+Bezeichnung der Teile eines KNNs getroffen werden:
 \begin{itemize}
 
 \item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
@@ -666,7 +667,27 @@ verstehen, muessen einige Konventionen zur Bezeichnung der Teile eines KNN getro
     immer die Sigmoidfunktion $\sigma$).}
 
 \end{itemize}
+\par\bigskip
+Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche mit ihren
+Inputwerten befuettert werden. Diese werden fuer eine konsistente Nomenklatur
+gleich wie die Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
+$j$ der Index des Neurons ist.\par
+Die restlichen Aktivierungen der Neuronen werden rekursiv anhand der
+Aktivierungen der voherigen Schicht berechnet (siehe Gleichung
+(\ref{eq:aktivierung_normal})).\par
+Zuerst wird die gewichtete Summe der Aktivierungen $a_k^{l-1}$ der vorherigen Schicht
+mit den assozierten Gewichten $w_{j,k}^l$ gebildet. Dazu gehoert
+auch die jeweilige Neigung $b_j^l$. Auf diese Summe wird dann die
+Aktivierungsfunktion $\varphi$ angewandt. Das ist dann die Aktivierung des Neurons.
 
+\begin{equation}\label{eq:gewichtete_summe_normal}
+  z_j^l = \sum_k w_{j,k}^l a_k^{l-1} + b_j^l
+\end{equation}
+\par
+\begin{equation}\label{eq:aktivierung_normal}
+  a_j^l = \varphi\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right) = \varphi \left( z_j^l \right)
+\end{equation}
+\par\bigskip
 Da KNNs weit verbreitet sind in der Bilderkennung und Spracherkennung, ist es
 nicht unueblich, dass diese sehr viele Neuronen und Verbindungen (ueber 100'000) besitzen.
 Um hierbei nicht den Ueberblick zu verlieren und um nicht in den Indizes zu
@@ -676,16 +697,7 @@ Ausserdem koennen Computer deutlich schneller Matrixoperationen ausfuehren, als
 alle Zahlen einzeln zu verrechnen. Dies beschleunigt das Training der Modelle um
 ein Vielfaches. Dies wird spaeter in Sektion
 (\ref{sec:tensorflow}) noch mehr erlauetert.
-
-\par\bigskip
-
-TEXT
-
-\begin{equation}\label{eq:aktivierung_normal}
-  a_j^l = \varphi\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right)
-\end{equation}
-Dabei ist die Summe ueber alle Neuronen in der ($l-1$)-ten Schicht.
-
+\par\medskip
 Um nun lineare Algebra ins Spiel zu bringen, wird eine \textbf{Gewichtsmatrix}
 $\mat{W}^l$ fuer jede Schicht $l$ definiert.
 Die Eintraege dieser Matrix sind einfach die Gewichte welche zu den Neuronen der
@@ -723,14 +735,19 @@ muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
 
 \par\medskip
 
-Nun kann die Matrixschreibweise eingefuehrt werden.
-
-\begin{equation}\label{eq:activierung_matrix}
-  \vec{a}^{\,l} = \varphi \left(\mat{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right)
+Nun kann die Matrixschreibweise eingefuehrt werden (siehe Gleichung (\ref{eq:aktivierung_matrix})).\par
+Zuerst wird eine Matrixmultiplikation der Gewichtsmatrix $\mat{W}^l$ mit dem
+Aktivierungsvektor $\vec{a}^{l-1}$ der vorherigen Schicht durchgefuehrt. Darauf
+wird der Neigunsvektor addiert. Und zu guter Letzt wird die vektorisierte
+Aktivierungsfunktion $\varphi$ angewandt.
+\begin{equation}\label{eq:aktivierung_matrix}
+  \vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}
+\end{equation}
+\par
+\begin{equation}\label{eq:aktivierung_matrix}
+  \vec{a}^{\,l} = \varphi \left[\mat{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l} \right] = \varphi \left[ \vec{z}^l \right]
 \end{equation}
 
-Ebenfalls wird der Zwischenwert $\vec{z}^{\,l}$ auf dem Weg mitberechnet.
-$\vec{z}^{\,l} = \mathbf{W}^{\,l} \vec{a}^{\,l-1} + \vec{b}^{\,l}$
 
 \subsubsection{Gewichte und Neigungen initalisieren*}
 
@@ -742,6 +759,38 @@ Das Ziel dieses Algorithmus ist es die beiden Partiellen Ableitungen
 $\frac{\partial C}{\partial w_{j,k}^l}$ und $\frac{\partial C}{\partial b_j^l}$
 zu bestimmen. Hierfuer ist es sinnvoll eine Zwischenwert, welchen wir Fehler
 $\delta_j^l$ nennen.
+
+\par\medskip
+\begin{defbox}{Hadamard-Produkt}
+  Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen.
+  Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
+
+  \begin{minipage}{0.5\textwidth}
+    \begin{equation*}
+      \mat{A} \odot \mat{B} =
+      \begin{pmatrix}
+        a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
+        \vdots & \ddots & \vdots \\[0.3em]
+        a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
+      \end{pmatrix}
+      \in \mathbb{R}^{m \times n}
+    \end{equation*}
+  \end{minipage}
+  % 
+  \begin{minipage}{0.5\textwidth}
+    \begin{equation*}
+      \vec{v} \odot \vec{w} =
+      \begin{pmatrix}
+        v_1 w_1 \\
+        \vdots \\
+        v_n w_n
+      \end{pmatrix}
+    \end{equation*}
+
+  \end{minipage}
+\end{defbox}
+\par\medskip
+
 \begin{equation}
   \delta_j^l \coloneqq \frac{\partial C}{\partial z_j^l}
 \end{equation}
@@ -778,39 +827,6 @@ Fehler anhand des Fehlers der naechsten Schicht
 \end{equation}
 
 
-
-\par\medskip
-
-\begin{defbox}{Hadamard-Produkt}
-  Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen.
-  Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
-
-  \begin{minipage}{0.5\textwidth}
-    \begin{equation*}
-      \mat{A} \odot \mat{B} =
-      \begin{pmatrix}
-        a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
-        \vdots & \ddots & \vdots \\[0.3em]
-        a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
-      \end{pmatrix}
-      \in \mathbb{R}^{m \times n}
-    \end{equation*}
-  \end{minipage}
-  %
-  \begin{minipage}{0.5\textwidth}
-    \begin{equation*}
-      \vec{v} \odot \vec{w} =
-      \begin{pmatrix}
-        v_1 w_1 \\
-        \vdots \\
-        v_n w_n
-      \end{pmatrix}
-    \end{equation*}
-
-  \end{minipage}
-\end{defbox}
-
-\par\medskip
 
 \subsubsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
