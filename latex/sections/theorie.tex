@@ -611,35 +611,93 @@ ausschliesslich nach vorne propagiert werden.
   \centering
   \begin{tikzpicture}
 
-    \newcommand{\hiddenlayers}{3}
+    \tikzstyle{neuronstyle} = [inner sep=0,minimum size=1cm,circle,draw]
+
+    \newcommand{\hiddenlayers}{2}
     \newcommand{\inputs}{4}
     \newcommand{\hiddens}{3}
     \newcommand{\outputs}{2}
     \newcommand{\radius}{1cm}
-    \coordinate (spacev) at (0,-1cm);
-    \coordinate (spaceh) at (1cm,0);
+    \coordinate (spacev) at (0,-1.25cm);
+    \coordinate (spaceh) at (2cm,0);
     \coordinate (spaceb) at (2cm,0);
 
     \foreach \j in {1,...,\inputs}
-    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (l0n\j) {$x_{\j}$};
+    \draw ($\j*(spacev)$) node[neuronstyle] (l0n\j) {$x_{\j}$};
 
-    % \foreach \l in {1,...,\hiddenlayers}
-    % \foreach \j in {1,...,\hiddens}
-    % \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
+    \foreach \l in {1,...,\hiddenlayers}
+    \foreach \j in {1,...,\hiddens}
+    \draw ($(spaceb) + \j*(spacev) + \l*(spaceh)$) node[neuronstyle] (l\l n\j) {$h_{\j}^{\l}$};
 
-    % \foreach \j in {1,...,\outputs}
-    % \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
+    \foreach \j in {1,...,\outputs}
+    \draw ($2*(spaceb) + \hiddenlayers*(spaceh) + \j*(spacev)$) node[neuronstyle] (l3n\j) {$y_{\j}$};
 
-    % \foreach \j in {1,...,\inputs}
-    % \foreach \k in {1,...,\hiddens}
-    % \draw[->] (n:0:\j) -- (n:1:\k);
+    \foreach \j in {1,...,\inputs}
+    \foreach \k in {1,...,\hiddens}
+    \draw[->] (l0n\j) -- (l1n\k);
 
-    % \draw[->] (l0n1) -- (l1n1);
+    \foreach \j in {1,...,\hiddens}
+    \foreach \k in {1,...,\hiddens}
+    \draw[->] (l1n\j) -- (l2n\k);
+
+    \foreach \j in {1,...,\hiddens}
+    \foreach \k in {1,...,\outputs}
+    \draw[->] (l2n\j) -- (l3n\k);
+
 
   \end{tikzpicture}
   \label{fi:nn_layers}
   \caption{eine Darstellung der Schichtung eines KNN}
 \end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[
+    % styles
+    clear/.style={draw=none,fill=none},
+    net/.style={matrix of nodes,nodes={draw,circle,inner sep=10pt},nodes in empty cell,column sep=2cm,row sep=-9pt},
+    >=latex
+    ]
+
+    \matrix[net] (mat)
+    {
+      |[clear]| \parbox{1.3cm}{\centering Input\\layer}
+      & |[clear]| \parbox{1.3cm}{\centering Hidden\\layer}
+      & |[clear]| \parbox{1.3cm}{\centering Output \\layer} \\
+
+      $\alpha_{0}^{0}$  & |[clear]|        & |[clear]| \\
+      |[clear]|         & $\alpha_{0}^{1}$ & |[clear]| \\
+      $\alpha_{1}^{0}$  & |[clear]|        & |[clear]| \\
+      |[clear]|         & |[clear]|        & |[clear]| \phantom{$a_{0}^{0}$} \\
+      $\alpha_{2}^{0}$  & $\alpha_{1}^{1}$ & $\alpha_{0}^{2}$ \\
+      |[clear]|         & |[clear]|        & |[clear]|  \phantom{$a_{0}^{0}$} \\
+      $\alpha_{3}^{0}$  & |[clear]|        & |[clear]| \\
+      |[clear]|         & $\alpha_{2}^{1}$ & |[clear]| \\
+      $\alpha_{4}^{0}$  & |[clear]|        & |[clear]| \\ 
+    };
+
+    % left most lines into input layers
+    \foreach \ai in {2,4,...,10}
+    \draw[<-] (mat-\ai-1) -- +(-2cm,0);
+
+    % lines from a_{i}^{0} to each a_{j}^{1}
+    \foreach \ai in {2,4,...,10} {
+      \foreach \aii in {3,6,9}
+      \draw[->] (mat-\ai-1) -- (mat-\aii-2);
+    }
+
+    % lines from a_{i}^{1} to a_{0}^{2}
+    \foreach \ai in {3,6,9}
+    \draw[->] (mat-\ai-2) -- (mat-6-3);
+    
+    % right most line with Output label
+    \draw[->] (mat-6-3) -- node[above] {Output} +(2cm,0);
+   }
+
+  \end{tikzpicture}
+  \caption{Test}
+\end{figure}
+
 
 
 \subsubsection{Vorwaertspropagierung}
