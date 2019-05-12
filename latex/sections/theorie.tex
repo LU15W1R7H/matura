@@ -646,6 +646,7 @@ ausschliesslich nach vorne propagiert werden.
 Nachdem nun der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
 des Modells erklaert werden. Hierfuer muessen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden:
+
 \begin{itemize}
 
 \item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
@@ -663,29 +664,70 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 
 \item{$L$ soll die gesamte Anzahl der Schichten sein.}
 
+\item{$N_l$ ist die Anzahl Neuronen in der $l$-ten Schicht.} 
+
 \item{$\varphi$ ist die gewaehlte Aktivierungsfunktion (grundsaetzlich ist diese
     immer die Sigmoidfunktion $\sigma$).}
 
 \end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+
+    \newcommand{\hiddenlayers}{3}
+    \newcommand{\inputs}{4}
+    \newcommand{\hiddens}{3}
+    \newcommand{\outputs}{2}
+    \newcommand{\radius}{1cm}
+    \coordinate (spacev) at (0,-1cm);
+    \coordinate (spaceh) at (1cm,0);
+    \coordinate (spaceb) at (2cm,0);
+
+    \foreach \j in {1,...,\inputs}
+    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (l0n\j) {$a_{\j}^0$};
+
+    % \foreach \l in {1,...,\hiddenlayers}
+    % \foreach \j in {1,...,\hiddens}
+    % \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
+
+    % \foreach \j in {1,...,\outputs}
+    % \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
+
+    % \foreach \j in {1,...,\inputs}
+    % \foreach \k in {1,...,\hiddens}
+    % \draw[->] (n:0:\j) -- (n:1:\k);
+
+    % \draw[->] (l0n1) -- (l1n1);
+
+  \end{tikzpicture}
+  \label{fi:nn_layers}
+  \caption{Abbildung zum Verstaentniss der Nomenklatur}
+\end{figure}
+
 \par\bigskip
 Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche mit ihren
-Inputwerten befuettert werden. Diese werden fuer eine konsistente Nomenklatur
+Inputwerten befuettert werden. Diese werden, um eine kohaerente Nomenklatur zu haben,
 gleich wie die Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
 $j$ der Index des Neurons ist.\par
 Die restlichen Aktivierungen der Neuronen werden rekursiv anhand der
-Aktivierungen der voherigen Schicht berechnet (siehe Gleichung
-(\ref{eq:aktivierung_normal})).\par
-Zuerst wird die gewichtete Summe der Aktivierungen $a_k^{l-1}$ der vorherigen Schicht
-mit den assozierten Gewichten $w_{j,k}^l$ gebildet. Dazu gehoert
-auch die jeweilige Neigung $b_j^l$. Auf diese Summe wird dann die
-Aktivierungsfunktion $\varphi$ angewandt. Das ist dann die Aktivierung des Neurons.
+Aktivierungen der voherigen Schicht berechnet. Und zwar folgendermassen:\par
+Zuerst laueft eine Summe ueber alle Neuronen $n_k^{l-1}$ der voherigen Schicht
+($l-1$). Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l-1}$ mit den
+assozierten Gewichten $w_{j,k}^l$ gebildet, dabei ist das Gewicht jenes, welches das
+$k$-te Neuron der ($l-1$)-ten Schicht mit dem $j$-ten Neuron der $l$-ten Schicht verbindet.
+Zu der gewichteten Summe gehoert auch die jeweilige Neigung $b_j^l$, welche
+dazuaddiert wird. Diese gewichtete Summe wird mit $z_j^l$ bezeichnet.
 
 \begin{equation}\label{eq:gewichtete_summe_normal}
-  z_j^l = \sum_k w_{j,k}^l a_k^{l-1} + b_j^l
+  z_j^l = \sum_{k=1}^{N_l} w_{j,k}^l a_k^{l-1} + b_j^l
 \end{equation}
-\par
+
+Auf diese Summe wird dann die Aktivierungsfunktion $\varphi$ angewandt.
+Das ist dann die Aktivierung des Neurons.
+
 \begin{equation}\label{eq:aktivierung_normal}
-  a_j^l = \varphi\left(\sum_k w_{j,k}^l a_k^{l-1} + b_j^l \right) = \varphi \left( z_j^l \right)
+  a_j^l = \varphi\left(\sum_{k=1}^{N_l} w_{j,k}^l a_k^{l-1} + b_j^l \right) = \varphi \left( z_j^l \right)
 \end{equation}
 \par\bigskip
 Da KNNs weit verbreitet sind in der Bilderkennung und Spracherkennung, ist es
@@ -721,7 +763,7 @@ Um nun Gleichung (\ref{eq:aktivierung_normal}) in der Matrixform zu schreiben,
 muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
 \par\medskip
 
-\begin{defbox}{Vektoriesierung einer Funktion}
+\begin{defbox}{Vektorisierung einer Funktion}
   Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine neue Funktion, welche die Funktion $f$ auf jede Vektorkomponente anwendet und einen neuen Vektor als Rueckgabewert hat.
   \begin{equation*}
     f[\vec{v}]=
@@ -812,6 +854,8 @@ Matrixform
 \begin{equation}\tag{BP1a}
   \delta^L = \nabla_aC \odot \sigma'(z^L)
 \end{equation}
+Das tiefgestellte $_a$ des Nablas, gibt an, dass es sich um den Gradienten mit den partiellen
+Ableitungen bezueglich den Aktivierungen $a$ handelt.
 
 Fehler anhand des Fehlers der naechsten Schicht
 \begin{equation}\tag{BP2}
