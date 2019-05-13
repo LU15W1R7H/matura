@@ -15,9 +15,15 @@
 \subsection*{Beschriftung}
 
 \begin{tabular}{ll}
-  $\vec{v}$ & ein Vektor \refsec{Test} \\
+  $x$ & ein Skalar (Zahl) \\
+  $\vec{v}$ & ein Vektor \\
   $\mat{M}$ & eine Matrix \\
   $\trs{\mat{M}}$ & eine transponierte Matrix \\
+  $\mathbb{B}$ & eine Menge \\
+  $\mathcal{A,B,C,D,E,\cdots}$ & ein Funktionenraum \\
+  $\mathfrak{A,B,C,D,E,\cdots}$ & ? \\
+  $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & ? \\
+
 
 \end{tabular}
 
@@ -600,6 +606,7 @@ beliebig viele geben und in ihnen beliebig viele Neuronen.
 Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes, es
 handelt sich dabei um Hyperparameter.
 \par\medskip
+
 Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ueber
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
@@ -652,33 +659,31 @@ ausschliesslich nach vorne propagiert werden.
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[
-    % styles
-    clear/.style={draw=none,fill=none},
-    net/.style={matrix of nodes,nodes={draw,circle,inner sep=10pt},nodes in empty cell,column sep=2cm,row sep=-9pt},
-    >=latex
-    ]
+  \begin{tikzpicture}
 
-    \matrix[net] (mat)
+    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},nodes in empty cell,column sep=2cm,row sep=-9pt]
+    \tikzstyle{clear} = [draw=none,fill=none]
+
+    \matrix[netstyle] (mat)
     {
-      |[clear]| \parbox{1.3cm}{\centering Input\\layer}
-      & |[clear]| \parbox{1.3cm}{\centering Hidden\\layer}
-      & |[clear]| \parbox{1.3cm}{\centering Output \\layer} \\
+      |[clear]| \parbox{1.3cm}{\centering Inputschicht}
+      & |[clear]| \parbox{1.3cm}{\centering Zwischenschichten}
+      & |[clear]| \parbox{1.3cm}{\centering Outputschicht} \\
 
-      $\alpha_{0}^{0}$  & |[clear]|        & |[clear]| \\
-      |[clear]|         & $\alpha_{0}^{1}$ & |[clear]| \\
-      $\alpha_{1}^{0}$  & |[clear]|        & |[clear]| \\
+      $x_{1}$  & |[clear]| & |[clear]|        & |[clear]| \\
+      |[clear]| & $h_0^1$ & |[clear]| & |[clear]| \\
+      $x_{2}$  & |[clear]| & $h_0^2$        & |[clear]| \\
       |[clear]|         & |[clear]|        & |[clear]| \phantom{$a_{0}^{0}$} \\
-      $\alpha_{2}^{0}$  & $\alpha_{1}^{1}$ & $\alpha_{0}^{2}$ \\
+      $x_{3}$  & $\alpha_{1}^{1}$ & $\alpha_{0}^{2}$ \\
       |[clear]|         & |[clear]|        & |[clear]|  \phantom{$a_{0}^{0}$} \\
-      $\alpha_{3}^{0}$  & |[clear]|        & |[clear]| \\
+      $x_{4}$  & |[clear]|        & |[clear]| \\
       |[clear]|         & $\alpha_{2}^{1}$ & |[clear]| \\
-      $\alpha_{4}^{0}$  & |[clear]|        & |[clear]| \\ 
+      |[clear]| $\vdots$ & |[clear]|        & |[clear]| \\ 
     };
 
     % left most lines into input layers
-    \foreach \ai in {2,4,...,10}
-    \draw[<-] (mat-\ai-1) -- +(-2cm,0);
+    % \foreach \ai in {2,4,...,10}
+    % \draw[<-] (mat-\ai-1) -- +(-2cm,0);
 
     % lines from a_{i}^{0} to each a_{j}^{1}
     \foreach \ai in {2,4,...,10} {
@@ -852,7 +857,15 @@ Aktivierungsfunktion $\varphi$ angewandt.
 \subsubsection{Gewichte und Neigungen initalisieren*}
 
 \subsubsection{Rueckwaertspropagierung}\label{sec:backpropagation}
-Das Gradientenverfahren fuer KNN bezeichnet man als
+Die wahre Herausforderung besteht beim Gradientenverfahren darin,
+die partiellen Ableitungen der Modellparameter,
+also die Komponenten des Gradienten, zu bestimmen.
+Anderst gesamt muessen alle
+$\frac{\partial C}{\partial w_{j,k}^l}$ wie auch alle $\frac{\partial
+  C}{\partial b_k^l}$
+berechnet werden. 
+Das Verfahren zum bestimmen dieser Ausdruecke ist so spezfisch und aufwendig,
+dass das Gradientenverfahren fuer KNNs einen eigen Namen hat: die
 \textbf{Rueckwaertspropagierung} (engl.: Backpropagation).
 
 Das Ziel dieses Algorithmus ist es die beiden Partiellen Ableitungen
@@ -935,9 +948,24 @@ Neural Network kann alles erlernen
 
 \subsection{Autoencoder und Convolutional KNN}
 \subsubsection{Autoencoder}
+Lernen effiziente Datenrepraesenationen. Komprimierung. Unsupervised.
+Dimensionalitaetsreduktion.
+
+Mathematik:
+
+
+\begin{gather}
+  \phi: \mathcal{X} \to \mathcal{F}\\
+  \psi: \mathcal{F} \to \mathcal{X}\\
+  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\phi,\psi} \parallel {X - (\phi \circ \psi)X \parallel}^2
+\end{gather}
+
 \subsubsection{Bedeutung von Autoencodern}
 \paragraph{Datenkompression}
-~Hauptkomponentenanalyse und Dimensionalitatsreduktion
+Falls ein Autoencoder nur aus linearen Neuronen besteht, ist die
+Dimensionsreduktion sehr aehnlich zu der Hauptkomponentenanalyse.
+
+Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 \paragraph{Datengenerierung}
 \paragraph{Eigenschaften erkennen}
 
