@@ -616,94 +616,63 @@ ausschliesslich nach vorne propagiert werden.
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[>=latex]
 
-    \tikzstyle{neuronstyle} = [inner sep=0,minimum size=1cm,circle,draw]
-
-    \newcommand{\hiddenlayers}{2}
-    \newcommand{\inputs}{4}
-    \newcommand{\hiddens}{3}
-    \newcommand{\outputs}{2}
-    \newcommand{\radius}{1cm}
-    \coordinate (spacev) at (0,-1.25cm);
-    \coordinate (spaceh) at (2cm,0);
-    \coordinate (spaceb) at (2cm,0);
-
-    \foreach \j in {1,...,\inputs}
-    \draw ($\j*(spacev)$) node[neuronstyle] (l0n\j) {$x_{\j}$};
-
-    \foreach \l in {1,...,\hiddenlayers}
-    \foreach \j in {1,...,\hiddens}
-    \draw ($(spaceb) + \j*(spacev) + \l*(spaceh)$) node[neuronstyle] (l\l n\j) {$h_{\j}^{\l}$};
-
-    \foreach \j in {1,...,\outputs}
-    \draw ($2*(spaceb) + \hiddenlayers*(spaceh) + \j*(spacev)$) node[neuronstyle] (l3n\j) {$y_{\j}$};
-
-    \foreach \j in {1,...,\inputs}
-    \foreach \k in {1,...,\hiddens}
-    \draw[->] (l0n\j) -- (l1n\k);
-
-    \foreach \j in {1,...,\hiddens}
-    \foreach \k in {1,...,\hiddens}
-    \draw[->] (l1n\j) -- (l2n\k);
-
-    \foreach \j in {1,...,\hiddens}
-    \foreach \k in {1,...,\outputs}
-    \draw[->] (l2n\j) -- (l3n\k);
-
-
-  \end{tikzpicture}
-  \label{fi:nn_layers}
-  \caption{eine Darstellung der Schichtung eines KNN}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-  \begin{tikzpicture}
-
-    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},nodes in empty cell,column sep=2cm,row sep=-9pt]
+    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
     \tikzstyle{clear} = [draw=none,fill=none]
+    \tikzstyle{heading} = [clear,text width=15mm,text centered]
 
     \matrix[netstyle] (mat)
     {
-      |[clear]| \parbox{1.3cm}{\centering Inputschicht}
-      & |[clear]| \parbox{1.3cm}{\centering Zwischenschichten}
-      & |[clear]| \parbox{1.3cm}{\centering Outputschicht} \\
-
-      $x_{1}$  & |[clear]| & |[clear]|        & |[clear]| \\
-      |[clear]| & $h_0^1$ & |[clear]| & |[clear]| \\
-      $x_{2}$  & |[clear]| & $h_0^2$        & |[clear]| \\
-      |[clear]|         & |[clear]|        & |[clear]| \phantom{$a_{0}^{0}$} \\
-      $x_{3}$  & $\alpha_{1}^{1}$ & $\alpha_{0}^{2}$ \\
-      |[clear]|         & |[clear]|        & |[clear]|  \phantom{$a_{0}^{0}$} \\
-      $x_{4}$  & |[clear]|        & |[clear]| \\
-      |[clear]|         & $\alpha_{2}^{1}$ & |[clear]| \\
-      |[clear]| $\vdots$ & |[clear]|        & |[clear]| \\ 
+      $x_1$     & |[clear]| & |[clear]| & $h_1^2$ & |[clear]| & |[clear]| & $y_1$ \\
+      |[clear]| & |[clear]| & $h_1^1$   & |[clear]| & $h_1^3$ & |[clear]| & |[clear]| \\
+      $x_2$     & |[clear]| & |[clear]| & $h_2^2$ & |[clear]| & |[clear]| & $y_2$ \\
+      |[clear]| & |[clear]| & $h_2^1$   & |[clear]| & $h_2^3$ & |[clear]| & |[clear]| \\
+      $x_3$     & |[clear]| & |[clear]| & $h_3^2$ & |[clear]| & |[clear]| & $y_3$ \\
+      |[clear]| & |[clear]| & $h_3^1$   & |[clear]| & $h_3^3$ & |[clear]| & |[clear]| \\
+      $x_4$     & |[clear]| & |[clear]| & $h_4^2$ & |[clear]| & |[clear]| & $y_4$ \\
     };
 
-    % left most lines into input layers
-    % \foreach \ai in {2,4,...,10}
-    % \draw[<-] (mat-\ai-1) -- +(-2cm,0);
+    % titels
+    \node [yshift=1cm] at (mat-1-1) {Inputschicht};
+    \node [yshift=1cm] at (mat-1-4) {Zwischenschichten};
+    \node [yshift=1cm] at (mat-1-7) {Outputschicht};
 
-    % lines from a_{i}^{0} to each a_{j}^{1}
-    \foreach \ai in {2,4,...,10} {
-      \foreach \aii in {3,6,9}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-2);
+    % dots
+    \node [yshift=-1cm,scale=2] at (mat-7-1) {$\vdots$}; % for inputs
+    \node [yshift=-1cm,scale=2] at (mat-6-3) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-7-4) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-6-5) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-7-7) {$\vdots$}; % for outputs
+
+    % input -> hidden1
+    \foreach \ai in {1,3,...,7} {
+      \foreach \aii in {2,4,6}
+      \draw[->] (mat-\ai-1) -- (mat-\aii-3);
     }
 
-    % lines from a_{i}^{1} to a_{0}^{2}
-    \foreach \ai in {3,6,9}
-    \draw[->] (mat-\ai-2) -- (mat-6-3);
-    
-    % right most line with Output label
-    \draw[->] (mat-6-3) -- node[above] {Output} +(2cm,0);
-   }
+    % hidden1 -> hidden2
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {1,3,...,7}
+      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
+    }
+
+    % hidden2 -> hidden3
+    \foreach \ai in {1,3,...,7} {
+      \foreach \aii in {2,4,6}
+      \draw[->] (mat-\ai-4) -- (mat-\aii-5);
+    }
+
+    % hidden3 -> output
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {1,3,...,7}
+      \draw[->] (mat-\ai-5) -- (mat-\aii-7);
+    }
 
   \end{tikzpicture}
-  \caption{Test}
+  \label{fi:nn_layers}
+  \caption{eine Darsetllung der Schichtung eines KNNs}
 \end{figure}
-
-
 
 \subsubsection{Vorwaertspropagierung}
 Nachdem nun der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
@@ -736,36 +705,62 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[>=latex]
 
-    \newcommand{\hiddenlayers}{3}
-    \newcommand{\inputs}{4}
-    \newcommand{\hiddens}{3}
-    \newcommand{\outputs}{2}
-    \newcommand{\radius}{1cm}
-    \coordinate (spacev) at (0,-1cm);
-    \coordinate (spaceh) at (1cm,0);
-    \coordinate (spaceb) at (2cm,0);
+    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
+    \tikzstyle{clear} = [draw=none,fill=none]
+    \tikzstyle{heading} = [clear,text width=15mm,text centered]
 
-    \foreach \j in {1,...,\inputs}
-    \draw ($\j*(spacev)$) node[inner sep=0,minimum size=1cm,circle,draw] (l0n\j) {$a_{\j}^0$};
+    \matrix[netstyle] (mat)
+    {
+      $a_1^0$     & |[clear]| & |[clear]| & $h_1^2$ & |[clear]| & |[clear]| & $y_1$ \\
+      |[clear]| & |[clear]| & $h_1^1$   & |[clear]| & $h_1^3$ & |[clear]| & |[clear]| \\
+      $a_2^0$     & |[clear]| & |[clear]| & $h_2^2$ & |[clear]| & |[clear]| & $y_2$ \\
+      |[clear]| & |[clear]| & $h_2^1$   & |[clear]| & $h_2^3$ & |[clear]| & |[clear]| \\
+      $a_3^0$     & |[clear]| & |[clear]| & $h_3^2$ & |[clear]| & |[clear]| & $y_3$ \\
+      |[clear]| & |[clear]| & $h_3^1$   & |[clear]| & $h_3^3$ & |[clear]| & |[clear]| \\
+      $a_4^0$     & |[clear]| & |[clear]| & $h_4^2$ & |[clear]| & |[clear]| & $y_4$ \\
+    };
 
-    % \foreach \l in {1,...,\hiddenlayers}
-    % \foreach \j in {1,...,\hiddens}
-    % \draw ($\j*(spacev) + \l*(spaceh) + (spaceb)$) node[inner sep=0,minimum size=1cm,circle,draw] (l\ln\j) {$h_{\j}^{\l}$};
+    % titels
+    \node [yshift=1cm] at (mat-1-1) {Inputschicht};
+    \node [yshift=1cm] at (mat-1-4) {Zwischenschichten};
+    \node [yshift=1cm] at (mat-1-7) {Outputschicht};
 
-    % \foreach \j in {1,...,\outputs}
-    % \draw ($\j*(spacev) + 2*(spaceb) + \hiddenlayers*(spaceh)$) node[inner sep=0,minimum size=1cm,circle,draw] (l8n\j) {$y_{\j}$};
+    % dots
+    \node [yshift=-1cm,scale=2] at (mat-7-1) {$\vdots$}; % for inputs
+    \node [yshift=-1cm,scale=2] at (mat-6-3) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-7-4) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-6-5) {$\vdots$};
+    \node [yshift=-1cm,scale=2] at (mat-7-7) {$\vdots$}; % for outputs
 
-    % \foreach \j in {1,...,\inputs}
-    % \foreach \k in {1,...,\hiddens}
-    % \draw[->] (n:0:\j) -- (n:1:\k);
+    % input -> hidden1
+    \foreach \ai in {1,3,...,7} {
+      \foreach \aii in {2,4,6}
+      \draw[->] (mat-\ai-1) -- (mat-\aii-3);
+    }
 
-    % \draw[->] (l0n1) -- (l1n1);
+    % hidden1 -> hidden2
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {1,3,...,7}
+      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
+    }
+
+    % hidden2 -> hidden3
+    \foreach \ai in {1,3,...,7} {
+      \foreach \aii in {2,4,6}
+      \draw[->] (mat-\ai-4) -- (mat-\aii-5);
+    }
+
+    % hidden3 -> output
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {1,3,...,7}
+      \draw[->] (mat-\ai-5) -- (mat-\aii-7);
+    }
 
   \end{tikzpicture}
   \label{fi:nn_layers}
-  \caption{Abbildung zum Verstaentniss der Nomenklatur}
+  \caption{eine Abbildung zum Verstaentniss der Nomenklatur}
 \end{figure}
 
 \par\bigskip
