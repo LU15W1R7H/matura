@@ -107,14 +107,14 @@ Label aktiv ist, ist die Komponent 1 ansonsten 0. Somit kann Hund als $\vec{l}_H
 \subsubsection{Modelle}
 Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
-Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\phi_1, \phi_2,\ldots$.
+Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\lambda_1, \lambda_2,\ldots$.
 Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewuenschte Resultat liefern.
 \par\medskip
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist
-angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\phi_1x +
-\phi_0$ zwischen den Features und den Labels besteht.
-Nun muessten nur noch $\phi_0$ und $\phi_1$ bestimmt werden.
+angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\lambda_1x +
+\lambda_0$ zwischen den Features und den Labels besteht.
+Nun muessten nur noch $\lambda_0$ und $\lambda_1$ bestimmt werden.
 
 Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
@@ -188,11 +188,11 @@ Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
 Funktionswerte der Fehlerfunktion am kleinsten sind.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhaengigkeit der Inputs betrachtet werden, sondern in Abhaengigkeit von den Modellparametern
-$C(\phi_1, \phi_2, \ldots, \phi_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
+$C(\lambda_1, \lambda_2, \ldots, \lambda_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
   Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
-  Dies ist hier nicht moeglich, da die Funktion $C'(\phi_1,\phi_2, \ldots, \phi_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
+  Dies ist hier nicht moeglich, da die Funktion $C'(\lambda_1,\lambda_2, \ldots, \lambda_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
 }
 \par\medskip
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\mathbb{R}^n \to \mathbb{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
@@ -276,8 +276,8 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
-Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}|\phi_0,\ldots,\phi_n)$
-($\phi$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
+Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}|\lambda_0,\ldots,\lambda_n)$
+($\lambda$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
 die Labels) minimieren, indem die Parameter angepasst werden. Dadurch macht das Modell immer bessere Vorhersagen.
 Fuer nur eine Iteration des Gradientenverfahren, muesste man den Gradienten fuer den
 \textit{gesamten} Trainingsdatensatz berechnen.
@@ -294,12 +294,12 @@ Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperpar
 \par\medskip
 Die partiellen Ableitungen der gesamten Trainingsdaten wird mit dem arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Groesse $q$ approximiert. Siehe Gleichung (\ref{eq:minibatch_deriv}).
 \begin{equation}\label{eq:minibatch_deriv}
-  \frac{\partial\bar{C}}{\partial\phi_k} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\phi_k}
+  \frac{\partial\bar{C}}{\partial\lambda_k} \approx \frac{1}{q}\sum_{i=1}^{q} \frac{\partial C_i}{\partial\lambda_k}
 \end{equation}
 
 Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (\ref{eq:gradientdescent}) folgendermassen durchgefuehrt:
 \begin{equation}\label{eq:sgd}
-  \phi_{k,t+1} = \phi_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \phi_{k,t}}
+  \lambda_{k,t+1} = \lambda_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \frac{\partial C_i}{\partial \lambda_{k,t}}
 \end{equation}
 
 
@@ -965,7 +965,7 @@ Mathematik:
 \begin{gather}
   \phi: \mathcal{X} \to \mathcal{F}\\
   \psi: \mathcal{F} \to \mathcal{X}\\
-  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\phi,\psi} \parallel {X - (\phi \circ \psi)X \parallel}^2
+  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\lambda,\psi} \parallel {X - (\lambda \circ \psi)X \parallel}^2
 \end{gather}
 
 \subsubsection{Bedeutung von Autoencodern}
