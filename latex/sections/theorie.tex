@@ -459,12 +459,12 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1. Siehe Abb. (\ref
       \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\x$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
 
       \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
       \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
@@ -514,12 +514,12 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
       \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\x$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\x$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
 
       \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
       \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
@@ -572,12 +572,12 @@ und eine zweite fuer $x \to\infty$ mit $y=1$. Siehe Abb. (\ref{fig:sigmoid}).
       \draw[style=help lines,ystep=0.5,xstep=0.25] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=white] {$\xtext$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\xtext$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=white] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=white] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
 
 
       \draw[red,ultra thick,x=0.25cm] plot[domain=-6.0:6.0] (\x,{1/(1+exp(-\x)) });
@@ -626,9 +626,9 @@ hat sogar 4 Neuronen.
     \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!50]
-    \tikzstyle{hid} = [fill=blue!50]
-    \tikzstyle{ou} = [fill=green!50]
+    \tikzstyle{inp} = [fill=red!70!black]
+    \tikzstyle{hid} = [fill=blue!70!black]
+    \tikzstyle{ou} = [fill=green!70!black]
 
     \matrix[netstyle] (mat)
     {
@@ -719,9 +719,9 @@ Bezeichnung der Teile eines KNNs getroffen werden:
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{sy} = [cl,font=\LARGE]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!50]
-    \tikzstyle{hid} = [fill=blue!50]
-    \tikzstyle{ou} = [fill=green!50]
+    \tikzstyle{inp} = [fill=red!70!black]
+    \tikzstyle{hid} = [fill=blue!70!black]
+    \tikzstyle{ou} = [fill=green!70!black]
 
     \matrix[netstyle] (mat)
     {
@@ -978,6 +978,16 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 \paragraph{Eigenschaften erkennen}
 
 \subsubsection{Convolutional KNN}
+
+Eine Convolutution:
+Filter (z.B. 3x3 Matrix) auf Pixel und seine Nachbarn anwenden.
+Daraus ergeben sich neue Bilder, welche gewisse Features (Ecken und Kanten)
+hervorheben.
+Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
+
+Pooling:
+Komprimierung des Bildes. Durchschnitt von 2x2 Pixeln berchnen -> ein Pixel des
+gepoolten Bild. -> 75\% Informationsreduktion ``MaxPooling2D''.
 
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
