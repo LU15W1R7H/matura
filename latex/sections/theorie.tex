@@ -211,7 +211,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
   Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
   Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
   Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-  Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\vec{a}=(a_1,\cdots,a_n)^T$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
+  Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\trs{\vec{a}=(a_1,\cdots,a_n)}$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
   \begin{equation*}
     \frac{\partial f}{\partial x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
   \end{equation*}
@@ -603,12 +603,12 @@ Neuronen sondern eher Platzhalter fuer ihren jeweiligen Inputwert $x_i$. Als let
 \textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
 besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
 beliebig viele geben und in ihnen beliebig viele Neuronen.
-Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes, es
-handelt sich dabei um Hyperparameter.
+Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes. Die
+Topologie umfasst viele Hyperparameter. Darunter sind zum Beispiel die Anzahl Zwischenschichten, wie auch
+die Anzahl Neuronen pro Schicht.
 \par\medskip
-
 Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ueber
-Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zum
+Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zu den Inputs des
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
 Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle Werte
@@ -618,6 +618,7 @@ In Abbildung (\ref{fi:nn_layers}) ist ein Beispiel eines Neuronalen Netzes
 abgebildet. In diesem Fall besitz es sowohl 4 Inputs, wie auch 4 Outputs. Es hat
 ausserdem 3 Zwischenschichten. Die zwei aueserren Zwischenschichten haben 3 Neuronen und die dazwischen
 hat sogar 4 Neuronen.
+\\ABBILDUNG MIT BESCHRIFTUNG DER GEWICHTE
 
 \begin{figure}[h!]
   \centering
@@ -683,13 +684,13 @@ hat sogar 4 Neuronen.
 \end{figure}
 
 \subsubsection{Vorwaertspropagierung}
-Nachdem nun der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
+Jetzt, da der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
 des Modells erklaert werden. Hierfuer muessen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden:
 
 \begin{itemize}
 
-\item{$n_j^l$ bezeichnet das $j$-te Neuron in der $l$-ten Schicht.}
+\item{$n_j^l$ ist das $j$-te Neuron in der $l$-ten Schicht.}
 \item{$z_j^l$ ist die gewichtete Summe der Inputs des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
 \item{$b_j^l$ ist die Neigung des $j$-ten Neuron in der $l$-ten Schicht.}
@@ -711,6 +712,7 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 
 \end{itemize}
 
+ABBILDUNG MIT GEWICHTEBESCHRIFTUNGEN (KORREKT!)
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -729,9 +731,7 @@ Bezeichnung der Teile eines KNNs getroffen werden:
       |[cl]| & |[cl]| & |[hid]|$a_1^1$   & |[sy]| $\cdots$ & |[hid]|$a_1^{L-1}$ & |[cl]| & |[cl]| \\
       |[inp]|$a_2^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_2^L$ \\
       |[cl]| & |[cl]| & |[hid]|$a_2^1$   & |[sy]| $\cdots$ & |[hid]|$a_2^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$a_3^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_3^L$ \\
-      |[cl]| & |[cl]| & |[hid]|$a_3^1$   & |[sy]| $\cdots$ & |[hid]|$a_3^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$a_4^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$a_4^L$ \\
+      |[inp]|$a_3^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$a_3^L$ \\
       |[sy]| $\vdots$ & |[cl]| & |[hid]|$a_{N_1}^1$ & |[sy]|$\cdots$ & |[hid]|$a_{N_{L-1}}^{L-1}$ & |[cl]| & |[sy]| $\vdots$ \\
       |[inp]|$a_{N_0}^0$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_{N_L}^L$ \\
     };
@@ -742,14 +742,14 @@ Bezeichnung der Teile eines KNNs getroffen werden:
     \node [yshift=1.5cm] at (mat-1-7) {Outputschicht};
 
     % input -> hidden1
-    \foreach \ai in {1,3,...,9} {
-      \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-3);
+    \foreach \ai in {1,3,...,7} {
+      \foreach \aii in {2,4}
+      \draw[->] (mat-\ai-1) -- node[above,sloped]{$w_{\aii,\ai}^1$} (mat-\aii-3);
     }
 
     % hidden1 ->...
-    \foreach \ai in {2,4,...,8} {
-      \foreach \aii in {2,4,...,8} {
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {2,4,...,6} {
         \node (A) at (mat-\ai-3) {};
         \node (B) at (mat-\aii-5) {};
         \draw[left color=black,right color=white] (mat-\ai-3) -- ($(A)!0.3!(B)$);
@@ -757,8 +757,8 @@ Bezeichnung der Teile eines KNNs getroffen werden:
     }
 
     % ...-> hidden2
-    \foreach \ai in {2,4,...,8} {
-      \foreach \aii in {2,4,...,8} {
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {2,4,...,6} {
         \node (A) at (mat-\ai-3) {};
         \node (B) at (mat-\aii-5) {};
         \draw[left color=black,right color=white] ($(A)!0.7!(B)$) -- (mat-\aii-5);
@@ -766,9 +766,9 @@ Bezeichnung der Teile eines KNNs getroffen werden:
     }
 
     % hidden3 -> output
-    \foreach \ai in {2,4,...,8} {
-      \foreach \aii in {1,3,...,9}
-      \draw[->] (mat-\ai-5) -- (mat-\aii-7);
+    \foreach \ai in {2,4,...,6} {
+      \foreach \aii in {1,3,...,7}
+      \draw[->] (mat-\ai-5) -- node[above,sloped]{$w_{\aii,\ai}^L$} (mat-\aii-7);
     }
 
   \end{tikzpicture}
@@ -777,17 +777,18 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 \end{figure}
 
 \par\bigskip
-Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche mit ihren
-Inputwerten befuettert werden. Diese werden, um eine kohaerente Nomenklatur zu haben,
+Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche jeweils
+einen Inputwert in sich tragen. Diese werden, um fuer eine kohaerente Nomenklatur zu sorgen,
 gleich wie die Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
 $j$ der Index des Neurons ist.\par
-Die restlichen Aktivierungen der Neuronen werden rekursiv anhand der
-Aktivierungen der voherigen Schicht berechnet. Und zwar folgendermassen:\par
+Nun muessen die restlichen Aktivierungen der Neuronen berechnet werden. Dies geschieht rekursiv, anhand der
+Aktivierungen der voherigen Schicht. Und zwar folgendermassen (ersichtlich in
+Gleichung (\ref{eq:gewichtete_summe_normal})):\par
 Zuerst laueft eine Summe ueber alle Neuronen $n_k^{l-1}$ der voherigen Schicht
 ($l-1$). Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l-1}$ mit den
-assozierten Gewichten $w_{j,k}^l$ gebildet, dabei ist das Gewicht jenes, welches das
+assozierten Gewichten $w_{j,k}^l$ gebildet. Hierbei ist das Gewicht jenes, welches das
 $k$-te Neuron der ($l-1$)-ten Schicht mit dem $j$-ten Neuron der $l$-ten Schicht verbindet.
-Zu der gewichteten Summe gehoert auch die jeweilige Neigung $b_j^l$, welche
+Zusaetzlich gehoert zu der gewichteten Summe auch die jeweilige Neigung $b_j^l$, welche
 dazuaddiert wird. Diese gewichtete Summe wird mit $z_j^l$ bezeichnet.
 
 \begin{equation}\label{eq:gewichtete_summe_normal}
@@ -795,7 +796,7 @@ dazuaddiert wird. Diese gewichtete Summe wird mit $z_j^l$ bezeichnet.
 \end{equation}
 
 Auf diese Summe wird dann die Aktivierungsfunktion $\varphi$ angewandt.
-Das ist dann die Aktivierung des Neurons.
+Das ist dann die Aktivierung $a_j^l$ des Neurons.
 
 \begin{equation}\label{eq:aktivierung_normal}
   a_j^l = \varphi\left(\sum_{k=1}^{N_l} w_{j,k}^l a_k^{l-1} + b_j^l \right) = \varphi \left( z_j^l \right)
@@ -965,7 +966,7 @@ Mathematik:
 \begin{gather}
   \phi: \mathcal{X} \to \mathcal{F}\\
   \psi: \mathcal{F} \to \mathcal{X}\\
-  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\lambda,\psi} \parallel {X - (\lambda \circ \psi)X \parallel}^2
+  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\phi,\psi} \parallel {X - (\lambda \circ \psi)X \parallel}^2
 \end{gather}
 
 \subsubsection{Bedeutung von Autoencodern}
