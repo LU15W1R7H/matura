@@ -627,9 +627,9 @@ hat sogar 4 Neuronen.
     \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!black]
-    \tikzstyle{hid} = [fill=blue!70!black]
-    \tikzstyle{ou} = [fill=green!70!black]
+    \tikzstyle{inp} = [fill=red!70!bgcolor]
+    \tikzstyle{hid} = [fill=blue!70!bgcolor]
+    \tikzstyle{ou} = [fill=green!70!bgcolor]
 
     \matrix[netstyle] (mat)
     {
@@ -721,9 +721,9 @@ ABBILDUNG MIT GEWICHTEBESCHRIFTUNGEN (KORREKT!)
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{sy} = [cl,font=\LARGE]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!black]
-    \tikzstyle{hid} = [fill=blue!70!black]
-    \tikzstyle{ou} = [fill=green!70!black]
+    \tikzstyle{inp} = [fill=red!70!bgcolor]
+    \tikzstyle{hid} = [fill=blue!70!bgcolor]
+    \tikzstyle{ou} = [fill=green!70!bgcolor]
 
     \matrix[netstyle] (mat)
     {
@@ -807,19 +807,23 @@ nicht unueblich, dass diese sehr viele Neuronen und Verbindungen (ueber 100'000)
 Um hierbei nicht den Ueberblick zu verlieren und um nicht in den Indizes zu
 ertrinken, greift man auf \textbf{Lineare Algebra} zurueck. Man verwendet
 Matrizen und Vektoren um die vielen Variabeln zusammen zu fassen.
-Ausserdem koennen Computer deutlich schneller Matrixoperationen ausfuehren, als
-alle Zahlen einzeln zu verrechnen. Dies beschleunigt das Training der Modelle um
+Ausserdem besteht ein weiterer Vorteil darin, dass Computer mithilfe von Vektor-
+und Matrixoperationen die Berechnungen parallisieren koennen und in kuerzerer
+Zeit und mit weniger Ressourcen viele Brechnungen gleichzeitig ausfuehren koennen.
+Dies beschleunigt das Training der Modelle um
 ein Vielfaches. Dies wird spaeter in Sektion
-(\ref{sec:tensorflow}) noch mehr erlauetert.
+(\ref{sec:tensorflow}) noch weiter thematisiert.
 \par\medskip
-Um nun lineare Algebra ins Spiel zu bringen, wird eine \textbf{Gewichtsmatrix}
-$\mat{W}^l$ fuer jede Schicht $l$ definiert.
-Die Eintraege dieser Matrix sind einfach die Gewichte welche zu den Neuronen der
+Die Inputs $\vec{x}$, Outputs $\vec{y}$ und Labels $\vec{\hat{y}}$ haben wir schon von Anfang an als Vektoren geschrieben.
+Nun sollen noch die Parameter und die restlichen Komponenten eines KNNs als Vektoren und Matrizen geschrieben werden.
+Sowohl alle gewichteten Summen $z_j^l$, wie auch alle Aktivierungen $a_j^l$
+einer Schicht $l$, werden in Vektoren $\vec{z}^l$ und $\vec{a}^l$ zusammengefasst.
+Alle Neigung $b_j^l$ einer Schicht $l$ bildet ebenfalls eines Vektor $\vec{b}^l$.
+Zu guter letzt, wird noch eine \textbf{Gewichtsmatrix} $\mat{W}^l$ fuer jede
+Schicht $l$ definiert.
+Die Eintraege dieser Matrix sind einfach die Gewichte welche \textit{zu} den Neuronen der
 $l$-ten Schicht verlaufen. Das heisst der Eintrag in der $j$-ten Zeile und in
-der $k$-ten Spalte ist $w_{j,k}^l$ (Siehe Gl. (\ref{eq:gewichtsmatrix})). Ebenfalls werden alle Neigung $b_j^l$ in
-einer Schicht $l$ zu einem Vektor $\vec{b}^l$ zusammmen gefasst. Und zu guter
-Letzt wird ein Aktivierungsvektor $\vec{a}^l$, welcher alle Aktiverungen $a_j^l$
-einer Schicht $l$ einfaengt.
+der $k$-ten Spalte ist $w_{j,k}^l$ (Siehe Gl. (\ref{eq:gewichtsmatrix})).
 
 \begin{equation}\label{eq:gewichtsmatrix}
   \mat{W}^l =
@@ -831,12 +835,15 @@ einer Schicht $l$ einfaengt.
   \end{pmatrix}
 \end{equation}
 
-Um nun Gleichung (\ref{eq:aktivierung_normal}) in der Matrixform zu schreiben,
-muss noch die Vektoriesierung einer Funktion eingefuehrt werden.
+Mit diesen Definitionen kann nun Gleichung (\ref{eq:aktivierung_normal}) in
+Matrixform geschrieben werden. Hierfuer muss noch ein weiteres mathematisches
+Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 \par\medskip
 
 \begin{defbox}{Vektorisierung einer Funktion}
-  Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine neue Funktion, welche die Funktion $f$ auf jede Vektorkomponente anwendet und einen neuen Vektor als Rueckgabewert hat.
+  Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine
+  neue Funktion, welche als Rueckgabewert einen Vektor hat, auf dessen
+  Komponenten jeweils immer die Funktion $f$ angewendet wird.
   \begin{equation*}
     f[\vec{v}]=
     \begin{pmatrix}
