@@ -18,7 +18,8 @@
   $x$ & ein Skalar (Zahl) \\
   $\vec{v}$ & ein Vektor \\
   $\mat{M}$ & eine Matrix \\
-  $\trs{\mat{M}}$ & eine transponierte Matrix \\
+  $\trans{\mat{M}}$ & eine transponierte Matrix \\
+  $\ten{T}$ & ein Tensor \\
   $\mathbb{B}$ & eine Menge \\
   $\mathcal{A,B,C,D,E,\cdots}$ & ein Funktionenraum \\
   $\mathfrak{A,B,C,D,E,\cdots}$ & ? \\
@@ -84,8 +85,8 @@ sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassig
 Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \par\medskip
-Die Inputs/Features werden in einem Vektor $\vec{x}=\trs{(x_1,x_2,\ldots,x_n)}$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=\trs{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
-Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=\trs{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ bezeichnet werden.
+Die Inputs/Features werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=\trans{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
+Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=\trans{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ bezeichnet werden.
 \par \medskip
 BESSERS BEISPIEL -> UM SPAETER KONKRETES MODELL ZU ERKLAEREN
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
@@ -211,7 +212,7 @@ Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man 
   Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf multidimensionale Funktionen $f(x_1,\cdots,x_n)$.
   Man leitet dabei nur nach einem Parameter $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
   Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-  Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\trs{\vec{a}=(a_1,\cdots,a_n)}$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
+  Die partielle Ableitung einer Funktion $f(x_1,\cdots,x_n)$ bezueglich der Variable $x_i$ in einem Punkt $\trans{\vec{a}=(a_1,\cdots,a_n)}$ ist analog zur ``normalen'' Ableitung folgendermassen definiert:
   \begin{equation*}
     \frac{\partial f}{\partial x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\cdots,a_i + h,\cdots,a_n)-f(a_1,\cdots,a_i,\cdots,a_n)}{h}
   \end{equation*}
@@ -946,7 +947,7 @@ Ableitungen bezueglich den Aktivierungen $a$ handelt.
 
 Fehler anhand des Fehlers der naechsten Schicht
 \begin{equation}\tag{BP2}
-  \delta^l = (\trs{(w^{l+1})} \delta^{l+1}) \odot \sigma'(z^l)
+  \delta^l = (\trans{(w^{l+1})} \delta^{l+1}) \odot \sigma'(z^l)
 \end{equation}
 
 \begin{equation}\tag{BP3}
@@ -962,7 +963,137 @@ Fehler anhand des Fehlers der naechsten Schicht
 \subsubsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
 
-\subsection{Autoencoder und Convolutional KNN}
+\subsection{Convolutional Neuronal Network}
+Convolutional Neural Networks (CNN) (zu deutsch etwa: ``faltendes neuronales
+Netz'') sind eine spezielle Architektur von einem KNN. Sie sind eine realtiv
+moderne Architektur, welche in der Industire weit verbreitet ist. Ihre Staerke liegt
+vorallem darin visuelle und autitive Daten zu verarbeiten. Sie sind sehr
+effektiv in der Bildklassifizierung, Gesichtserkennung und Spracherkennung.
+
+Wie bei dem Perzeptron und bei den KNNs ist die Architektur biologisch inspiriert.
+
+\begin{defbox}{Tensor}
+ ??? An dieser Stelle?
+\end{defbox}
+
+\subsubsection{Aufbau}
+CNNs sind im Grund wie normale KNNs. Sie haben jedoch noch weitere Arten von
+Schichten mit spezifischen Funktionen, welche sich fuer Bildverarbeitung und
+dergleichen eignet. Diese zusaetzlichen Schichten bestehen auch aus Neuronen,
+diese funktioniere aber grundsaetzlich anderst als Sigmoideneuronen.
+Ausserdem ist die Anordnung der Inputs bzw. der Neuronen anderst als bei den normalen KNNs, bei
+welchen eine Schicht einfach eine 1-dimensionale Reihe von Neuronen ist.
+Bei einem CNNs, welches graustufige Bilder verarbeitet, werden die Neuronen und ihre Werte
+als 2-dimensionales Raster angeordnet. Dies ist sinnvoll, da die Pixel eines
+Bildes, dessen Grauwerte den Input des Netzwerkes darstellen,
+auch so angeordet sind.
+Bei farbigen Bildern ist die Situation ein bisschen anderst. Dort besitzt jeder
+Pixel drei Komponenten (R, G und B). Deshalb werden dann die Neuronen als ein 3-dimensionales Volumen angeordnet.
+
+Daraus folgt, dass die Variabeln der Neuronen einer Schicht nicht mehr wie vorher als Vektoren
+zusammengefasst werden koennen, sondern als 2-dimensionale (fuer schwarz-weiss
+Bilder) bzw. 3-dimensionale (fuer farbige Bilder) Matrizen zusammengefasst
+werden muessen.
+
+
+---------------------
+Der Input ist eine Tensor der Form $\text{Bildbreite} \times \text{Bildhoehe}
+\times \text{Bildtiefe (Anzahl Komponenten eines Pixels)}$
+--------------------
+
+\begin{figure}
+
+  \caption{2-dimensionalen Schicht von Neuronen}
+\end{figure}
+
+Ein klassisches CNN besteht aus folgenden drei Typen von Schichten:
+Convolutional Schichten, Pooling Schichten und den bereits bekannten
+fully-connected Schichten. 
+Zuerst kommt immer eine oder mehrere Convolutional Schichten, direkt darauf
+folgt dann eine Pooling Schicht. Dieses Muster kann dann beliebig oft
+wiederholt werden, bis die gewuenschte Komplexitaet erreicht wurde.
+Bei Bedarf koennen vor oder hinter einem solchen Muster eine fully-connected
+Schicht eingefuegt werden.
+
+
+\begin{figure}
+
+  \caption{Schema eines CNNs}
+\end{figure}
+
+\subsubsection{Faltung / Convolution}
+
+\subsubsection{Filter}
+Input bereich eines Neurons wird als Receiptive FIeld bezeichnet.
+Wahrnehmungsfeld. Nicht wie bei fully-connected Layer. Receiptive FIeld ist Hyperparameter
+
+\subsubsection{Convolutional Schicht}
+Wie vorhin erwaehnt, werden die Inputs als zwei-dimensionale Matrix betrachtet,
+welche wir mit $\mat{X}$ bezeichnen. Dementsprechend sich auch die Neuronen
+angeordnet. Die Aktivierungsmatrix wird mit $\mat{A}$ bezeichnet.
+Die Aktivierung eines Neurons wird ueber eine diskrete Faltung (engl.
+Convolution) berechnet.
+
+Man kann sich das Verhalten einer Convolutional Schicht, wie einen Filter eines
+Bildbearbeitungsprogramm, wie Photoshop, vorstellen.
+
+Kernel/Filter ist auch Tensor. Breite und Hoehe sind Hyperparameter. Tiefe muess
+gleich sein wie Tiefe des Bilders.
+
+Filter/Kernel wird erlernt. Der Filter wird ueber das Inputvolumen gefaltet
+(convolved), dabei wird das Hadamard-Produkt zwischen dem Receptive-Field und
+der Filtermatrix berechnet.
+
+Eine Convolutution:
+Filter (z.B. 3x3 Matrix) auf Pixel und seine Nachbarn anwenden.
+Daraus ergeben sich neue Bilder, welche gewisse Features (Ecken und Kanten)
+hervorheben.
+Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
+
+-------------------
+Depth, Stride und zero-padding
+
+Depth des Outputvolumen bestimmt die Anzahl Neuronen, welche zur gleichen Region
+des Inputvolumen verbunden sind. Die Neuronen lernen die die verschiedenen
+Features der INputs zu aktivieren.
+
+Stride bestimmt wie die Tiefe-Kolumnen angeordet sind um die Breite und Laenge
+herum. Stride = 1 filter wird um einen Pixel pro Bewegung verschoben. -> Starkes
+eberlappen. Stride 2 bewegung um 2 Pixel.
+
+\subsubsection{Pooling Schicht}
+Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe von Neuronen
+der vorherigen Schicht zu einem einzigen Neuron der naechsten Schicht
+zusammengefasst wird.
+
+Local Pooling 2x2 Feld wird zu einem Neuron zusammengefasst. MaxPooling ->
+behaelt einfach maximalen Wert des Feld bei und verwirft den Rest. Average
+Pooling berechnet das arithmethische Mittel des Feldes und verwednet dieses.
+MaxPooling ist am effektivsten.
+
+Pooling:
+Komprimierung des Bildes. Durchschnitt von 2x2 Pixeln berchnen -> ein Pixel des
+gepoolten Bild. -> 75\% Informationsreduktion ``MaxPooling2D''.
+
+\subsubsection{Fully-connected Layer}
+
+\subsubsection{Eigenschaften von CNN}
+
+ERkennung von gewissen Features (Ecken und Kanten)
+Bewegungs-Invarianz (durch Translations-Invarianz), Helligkeit-Invarianz
+alles folgend von geteilten Gewichten
+
+Geteilte Gewichte
+
+Lokale Konnektivitaet
+
+Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
+
+\subsubsection{Biologische Motivation?}
+Gleiches verhalten wie im visuellen cortex. 
+
+\subsection{Autoencoder}
+
 \subsubsection{Autoencoder}
 Lernen effiziente Datenrepraesenationen. Komprimierung. Unsupervised.
 Dimensionalitaetsreduktion.
@@ -985,17 +1116,6 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 \paragraph{Datengenerierung}
 \paragraph{Eigenschaften erkennen}
 
-\subsubsection{Convolutional KNN}
-
-Eine Convolutution:
-Filter (z.B. 3x3 Matrix) auf Pixel und seine Nachbarn anwenden.
-Daraus ergeben sich neue Bilder, welche gewisse Features (Ecken und Kanten)
-hervorheben.
-Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
-
-Pooling:
-Komprimierung des Bildes. Durchschnitt von 2x2 Pixeln berchnen -> ein Pixel des
-gepoolten Bild. -> 75\% Informationsreduktion ``MaxPooling2D''.
 
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
