@@ -65,7 +65,7 @@ ERWEITERN
 \pagebreak
 \section{Machinelles Lernen - Theorie}
 
-Der Themenbereich des \textbf{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
+Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.:\ hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
 Dabei wird das Modell mit Trainingsdaten befuettert, mithilfe eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen.
@@ -74,9 +74,9 @@ Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell 
 
 \subsubsection{Daten}
 
-Der \textbf{Trainingsdatensatz} $\mathbb{T}$ beinhaltet gewisse \textbf{Attribute}, die Merkmalstypen der Inputdaten.
-Die \textbf{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
-Die sogenannten \textbf{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
+Der \keyword{Trainingsdatensatz} $\mathbb{T}$ beinhaltet gewisse \keyword{Attribute}, die Merkmalstypen der Inputdaten.
+Die \keyword{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
+Die sogenannten \keyword{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
 Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
 Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
@@ -106,9 +106,9 @@ Label aktiv ist, ist die Komponent 1 ansonsten 0. Somit kann Hund als $\vec{l}_H
 \end{figure}
 
 \subsubsection{Modelle}
-Ein \textbf{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{f}\colon \mathbb{R}^n \to \mathbb{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
-Das Verhalten dieses Modells wird bestimmt durch seine \textbf{Modellparameter} $\lambda_1, \lambda_2,\ldots$.
+Das Verhalten dieses Modells wird bestimmt durch seine \keyword{Modellparameter} $\lambda_1, \lambda_2,\ldots$.
 Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewuenschte Resultat liefern.
 \par\medskip
@@ -117,7 +117,7 @@ angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\lambda_1x +
 \lambda_0$ zwischen den Features und den Labels besteht.
 Nun muessten nur noch $\lambda_0$ und $\lambda_1$ bestimmt werden.
 
-Neben den gelernten Parametern, gibt es auch noch sogenannte \textbf{Hyperparameter}.
+Neben den gelernten Parametern, gibt es auch noch sogenannte \keyword{Hyperparameter}.
 Diese koennen nicht erlernt werden, sondern muessen manuell vor dem Training gewaehlt werden und koennen den Lernvorgang erheblich beeinflussen.
 \par\medskip
 Fuer Machine Learning haben sich gewisse Modelle besonders guet etabliert,
@@ -148,7 +148,7 @@ BEISPIELMODELL GLEICHES WIE VORHIN
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
-Dafuer gibt es sogennante \textbf{Kosten-, Verlust- oder Fehlerfunktionen}. Sie sollen ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
+Dafuer gibt es sogennante \keyword{Kosten-, Verlust- oder Fehlerfunktionen}. Sie sollen ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \par\medskip
 Die Fehler der einzelnen Outputs $c(y_i,\hat{y}_i)$ werden aufsummiert um den
 Fehler $C(\vec{y}_j,\vec{\hat{y}}_j)$ (wobei $\vec{y}_j$ die Vorhersagen sind und
@@ -190,7 +190,7 @@ Funktionswerte der Fehlerfunktion am kleinsten sind.
 Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhaengigkeit der Inputs betrachtet werden, sondern in Abhaengigkeit von den Modellparametern
 $C(\lambda_1, \lambda_2, \ldots, \lambda_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
-Fuer diese Optimiertung wird das sogennante \textbf{Gradientenverfahren} (engl.: Gradient descent) verwendet.
+Fuer diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
   Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
   Dies ist hier nicht moeglich, da die Funktion $C'(\lambda_1,\lambda_2, \ldots, \lambda_n)$ deutlich zu komplex ist, um die Nullstellen zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
@@ -205,7 +205,7 @@ Dafuer muss ein Vektor $\vec{b}_z$ bestimmt werden, welcher auf den Punkt $\vec{
 bei dem der Funktionswert $f(\vec{p}_{z+1})$ kleiner ist als der von $f(\vec{p}_z)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_z$ in die Richtung der staerksten Funktionswertabnahme zeigt.
 
-Hierzu braucht man den sogennanten \textbf{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
+Hierzu braucht man den sogennanten \keyword{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
 \par\medskip
 
 \begin{defbox}{Partielle Ableitungen}
@@ -254,7 +254,7 @@ BEISPIEL FUER GRADIENTENVERFAHREN MIT ABBILDUNG
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_z$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
 Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr niedriges Minimum zu finden.
 \par\medskip
-Die sogennante \textbf{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
+Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
 Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgroesse des Gradientenabstieg bestimmt. Sie muss je nach zu minimierender Funktion anderst gewaehlt werden.
 Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Probleme beim Training:
 \begin{itemize}
@@ -285,11 +285,11 @@ Fuer nur eine Iteration des Gradientenverfahren, muesste man den Gradienten fuer
 Dies waere zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
 Bei grossen Datensaetzen wuerde es eine Ewigkeit dauern, bis das Modell nur annahernd guete Vorhersagen machen wuerde.
 \par\medskip
-Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \textbf{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
+Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses Verfahren, naemlich das \keyword{Stochastische Gradientenverfahren} (engl.: Stochastic Gradient Descent).
 Hierfuer wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingsbeispiel approximiert.
-Dazu wird der Trainingsdatensatz in sogennante \textbf{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
+Dazu wird der Trainingsdatensatz in sogennante \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
 Als Konsequenz finden deutlich mehr Iterationen statt in \textit{einer}
-Durchkaemmung der Trainingsdaten, welche man als \textbf{Epoche} bezeichnet. Oft wird mehrere Epochen lang trainiert.
+Durchkaemmung der Trainingsdaten, welche man als \keyword{Epoche} bezeichnet. Oft wird mehrere Epochen lang trainiert.
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genuegend gut.
 Sowohl die Mini-Batch Groesse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \par\medskip
@@ -309,8 +309,8 @@ ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
 \pagebreak
 \subsection{Künstliche Neuronale Netze und Deep Learning}
-Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \textbf{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
-Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \textbf{Deep Learning} zusammen.
+Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \keyword{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
+Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \keyword{Deep Learning} zusammen.
 
 Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglich eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
 Es gibt nicht nur eine Art von Neuralem Netz, sondern es exisitieren die
@@ -320,26 +320,26 @@ muessen. Diese Arbeit wird sich spaeter vorallem mit sogennanten Autoencodern au
 
 \subsubsection{Perzeptron}
 Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netz besser zu
-verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \textbf{Perzeptron}.
+verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \keyword{Perzeptron}.
 \par\medskip
 Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
 besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron
 hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
-kann. Des weiteren besitzt es mehrere sogenannte \textbf{Gewichte} $w_1, \ldots,
+kann. Des weiteren besitzt es mehrere sogenannte \keyword{Gewichte} $w_1, \ldots,
 w_n \in \mathbb{R}$, fuer jeden Input ein Gewicht.
 Diese sind reelle Zahlen, welche das Verhalten des Perzeptron bestimmen.
-Die \textbf{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
+Die \keyword{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
 ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
 Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor:
 $\displaystyle \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}$\\
-Zusaetzlich besitzt das Perzeptron einen \textbf{Schwellenwert} $\tilde{b}$.
+Zusaetzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bildet er die Modellparameter.
 Das Perzeptron verhaelt sich so, dass falls die gewichtete Summe groesser als der
 Schwellwert ist, das Neuron feuert, d.h.\ der Output betraegt 1. Andernfalls ist er 0.
 Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
 Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
-und $\tilde{b}$ durch die \textbf{Neigung} (engl.: Bias)
+und $\tilde{b}$ durch die \keyword{Neigung} (engl.: Bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet. Siehe Rest der Gleichung (\ref{eq:perzeptron_1}).
 Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Ein hohes $b$
@@ -384,7 +384,7 @@ aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
 \par\medskip
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
-Das Perzeptron ist lediglich ein \textbf{Linearer Klassifikator} der Form
+Das Perzeptron ist lediglich ein \keyword{Linearer Klassifikator} der Form
 $y=w_1x_1+\cdots+w
 _nx_n$.
 Es kann die Features in zwei Klassen 0 oder 1 einordnen.
@@ -598,13 +598,13 @@ Nun sollten diese Sigmoiden-Neuronen als Bausteine verwendet werden, um ein Kuen
 Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
 Diese Neuronen sind in verschieden Schichten (engl.: Layers)
-arangiert. Die erste ist die \textbf{Inputschicht}. Sie behinhalten die
+arangiert. Die erste ist die \keyword{Inputschicht}. Sie behinhalten die
 Inputneuronen. Dies sind eigentlich keine richtigen
 Neuronen sondern eher Platzhalter fuer ihren jeweiligen Inputwert $x_i$. Als letztes kommt die
-\textbf{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
-besitzen. Dazwischen liegen die \textbf{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
+\keyword{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
+besitzen. Dazwischen liegen die \keyword{Zwischenschichten} (engl.: Hiddenlayer). Von ihnen kann es
 beliebig viele geben und in ihnen beliebig viele Neuronen.
-Der Aufbau eines KNN bezeichnet man als \textbf{Topologie} des Netzes. Die
+Der Aufbau eines KNN bezeichnet man als \keyword{Topologie} des Netzes. Die
 Topologie umfasst viele Hyperparameter. Darunter sind zum Beispiel die Anzahl Zwischenschichten, wie auch
 die Anzahl Neuronen pro Schicht.
 \par\medskip
@@ -612,7 +612,7 @@ Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der naechsten Schicht ue
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zu den Inputs des
 Perzeptron. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindung zu allen Neuronen der naechsten Schicht und dient als deren Input.
-Die soeben beschriebe Art von KNN nennt man \textbf{Feedforward-Netz}, da alle Werte
+Die soeben beschriebe Art von KNN nennt man \keyword{Feedforward-Netz}, da alle Werte
 ausschliesslich nach vorne propagiert werden.
 
 In Abbildung (\ref{fi:nn_layers}) ist ein Beispiel eines Neuronalen Netzes
@@ -806,7 +806,7 @@ Das ist dann die Aktivierung $a_j^l$ des Neurons.
 Da KNNs weit verbreitet sind in der Bilderkennung und Spracherkennung, ist es
 nicht unueblich, dass diese sehr viele Neuronen und Verbindungen (ueber 100'000) besitzen.
 Um hierbei nicht den Ueberblick zu verlieren und um nicht in den Indizes zu
-ertrinken, greift man auf \textbf{Lineare Algebra} zurueck. Man verwendet
+ertrinken, greift man auf \keyword{Lineare Algebra} zurueck. Man verwendet
 Matrizen und Vektoren um die vielen Variabeln zusammen zu fassen.
 Ausserdem besteht ein weiterer Vorteil darin, dass Computer mithilfe von Vektor-
 und Matrixoperationen die Berechnungen parallisieren koennen und in kuerzerer
@@ -820,7 +820,7 @@ Nun sollen noch die Parameter und die restlichen Komponenten eines KNNs als Vekt
 Sowohl alle gewichteten Summen $z_j^l$, wie auch alle Aktivierungen $a_j^l$
 einer Schicht $l$, werden in Vektoren $\vec{z}^l$ und $\vec{a}^l$ zusammengefasst.
 Alle Neigung $b_j^l$ einer Schicht $l$ bildet ebenfalls eines Vektor $\vec{b}^l$.
-Zu guter letzt, wird noch eine \textbf{Gewichtsmatrix} $\mat{W}^l$ fuer jede
+Zu guter letzt, wird noch eine \keyword{Gewichtsmatrix} $\mat{W}^l$ fuer jede
 Schicht $l$ definiert.
 Die Eintraege dieser Matrix sind einfach die Gewichte welche \textit{zu} den Neuronen der
 $l$-ten Schicht verlaufen. Das heisst der Eintrag in der $j$-ten Zeile und in
@@ -840,6 +840,7 @@ Mit diesen Definitionen kann nun Gleichung (\ref{eq:aktivierung_normal}) in
 Matrixform geschrieben werden. Hierfuer muss noch ein weiteres mathematisches
 Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 \par\medskip
+
 
 \begin{defbox}{Vektorisierung einer Funktion}
   Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine
@@ -883,7 +884,7 @@ $\frac{\partial C}{\partial w_{j,k}^l}$ wie auch alle $\frac{\partial
 berechnet werden.
 Das Verfahren zum bestimmen dieser Ausdruecke ist so spezfisch und aufwendig,
 dass das Gradientenverfahren fuer KNNs einen eigen Namen hat: die
-\textbf{Rueckwaertspropagierung} (engl.: Backpropagation).
+\keyword{Rueckwaertspropagierung} (engl.: Backpropagation).
 
 Das Ziel dieses Algorithmus ist es die beiden Partiellen Ableitungen
 $\frac{\partial C}{\partial w_{j,k}^l}$ und $\frac{\partial C}{\partial b_j^l}$
@@ -972,6 +973,18 @@ effektiv in der Bildklassifizierung, Gesichtserkennung und Spracherkennung.
 
 Wie bei dem Perzeptron und bei den KNNs ist die Architektur biologisch inspiriert.
 
+Motivation:
+Bilder sind gross (Beispiel 224x224x3 = 150'528 Features) -> 150 Mio. Gewichte
+fuer nur erste Schicht ?!
+-> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
+-> nicht jeder Pixel wichtig
+
+Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
+
+
+Wieso Convolutions:
+Parameter/Weight-Sharing
+
 \begin{defbox}{Tensor}
  ??? An dieser Stelle?
 \end{defbox}
@@ -1008,7 +1021,7 @@ Der Input ist eine Tensor der Form $\text{Bildbreite} \times \text{Bildhoehe}
 
 Ein klassisches CNN besteht aus folgenden drei Typen von Schichten:
 Convolutional Schichten, Pooling Schichten und den bereits bekannten
-fully-connected Schichten. 
+fully-connected Schichten.
 Zuerst kommt immer eine oder mehrere Convolutional Schichten, direkt darauf
 folgt dann eine Pooling Schicht. Dieses Muster kann dann beliebig oft
 wiederholt werden, bis die gewuenschte Komplexitaet erreicht wurde.
@@ -1022,17 +1035,130 @@ Schicht eingefuegt werden.
 \end{figure}
 
 \subsubsection{Faltung / Convolution}
+Idee der Convolution anhand von Randerkennung (Edge Detection).
+
+Detecting vertical edges. and horizontal edges
+
+3x3 Filter/Kernel matrix angewandt auf 6x6 Bild (Matrix)
+4x4 Bild kommt raus. Um Pixel (0,0) zu berechnen wird das Hadamard-Produkt des
+Filters mit der 3x3 Region oben links gebildet, danach wird die Summe der
+Elemente der Hadamard-Matrix gebildet.
+
+
+\begin{defbox}{Faltung}
+
+\end{defbox}
+
 
 \subsubsection{Filter}
 Input bereich eines Neurons wird als Receiptive FIeld bezeichnet.
 Wahrnehmungsfeld. Nicht wie bei fully-connected Layer. Receiptive FIeld ist Hyperparameter
 
-\subsubsection{Convolutional Schicht}
+Filter wird gelernt F = (w11, w12, w13, ...) Matrix. Die Elemente der
+Filtermatrix sind die Modellparameter.
+
+\subsubsection{Padding}
+Durch Convolution schrumpft Bild (am Rand). M(n x n) conv M(f x f) = M(n-f+1 x
+n-f+1).
+Problem nach ein paar Convolution ist Bild extrem klein -> M1x1
+2. Problem: Viel Overlapping in der Mitte (Bildmatrix Elemente mehrmals genutzt)
+an Raender jedoch nicht! -> Information verloren von den Raendern des Bildes
+Darum Padding (vor der Convolution)! Zusaetzlicher Rand hinzugefuegt zu Bild vor
+der Konvolution. Zusatz Elemente haben Wert 0. Padding = 1 bedeutet an allen
+Raendern wird eine Reihe hinzugefuegt. Ziel ist es Dimensionen beizubehalten
+
+Begrifflichkeit:
+'valid'-convolution: kein padding
+'same'-convolution: mit padding, so dass Groesse beibehalten wird
+Rechnung fuer outputdimension bei same: m = n + 2p - f + 1 => p = (f-1)/2
+
+f ist normalerweise eine ungerade Zahl, ansonsten waere das Padding unsymmetrisch.
+
+\subsubsection{Strided Convolutions}
+Stride ist Schrittgroesse der Filterbewegung
+-> Stride = 2 bedeutet, dass ein Schritt uebersprungen wird.
+Outputmatrix wird kleiner
+
+Rechnung fuer Outputdimension:
+m = (n + 2p - f)/s + 1; Abgerundet falls keine ganze Zahl
+
+\subsubsection{Exkurs: cross-correlation vs. covolution}
+Vor Convolution Operation: Neure Matrix bilden aus Filter, indem Filtermatrix
+vertikal und horizontal gespiegelt wird. Und erst mit dieser neuen Matrix wird
+dann das Hadamard-Produkt usw. gebildet
+
+Das wird im Machine learning nicht gemacht. Deshalb ist es mathematisch gesehen
+keine richtige Convolution sondern ehere eine cross-correlatoin.
+
+--> Vielleicht eine Fussnote wert
+
+\subsubsection{Convolutions fuer 3D-Volumen (RGB Bilder)}
+Bild ist Matrix (h x w x c)
+Bild wird du 3D-Tensor mit Tiefe 3 fuer R,G und B
+3D Filter noetig (f x f x c). Tiefe des Filters und des Bildes muss gleich sein.
+Output ist dann 2D-Matrix, da Filter nur entland der Hoehe und Breite des Bildes
+bewegt wird und nicht der Tiefe entlang, da die Tiefe des Filters gleich der
+Tiefe des Bildes ist.
+
+\subsubsection{Mehrere Filter}
+Beispiel mit 2 Filter.
+Filter1 wird angewandt auf Bild -> M1
+Filter2 wird angewandt auf Bild -> M2
+Beide Matrizen M1 und M2 werden hintereinander gestellt und formen einen
+3D-Tensor mit Dimension (fxfx2). Dieses Volumen kann dann erneut Convoluted werden.
+
+Hierfuer muessen alle Filter gleich gross sein.
+
+Zusammenfassung Rechnung:
+
+M(n x n x c) conv M(f x f x c) = M(n-f+1 x n-f+1 x anzahlfilter)
+
+\subsubsection{Convolution Schicht}
+Schritte:
+Convolution wird angewandt.
+Auf Outputmatrix wird Bias (Skalar) draufaddiert (auf jedes Element der gleiche Bias)
+Jeder Filter hat seinen eigenen Bias
+Nicht-lineare Aktivierungsfunktion wird auf Matrix angewandt
+Nun werden die verschieden Outputmatrizen der Filter ausgestackt zu einem
+3D-Tensor
+fertig!
+
+Beschriftung:
+Inputbilder werden wie Aktivierungen mit $a^l$ bezeichnet.
+Die Filter sind aehnlich zu den Gewichten und werden mit $W^l$ bezeichnet.
+Und der Bias bleibt aehnlich zum alten Bias $b$.
+
+Konventionen zur Beschriftung:
+$f^{[l]}$ ist Filter Groesse\\
+$p^{[l]}$ ist das padding\\
+$s^{l}$ ist stride\\
+Input-Dimension ist $n_H^{[l-1]} \times n_W^{[l-1]} \times n_C^{[l-1]}$\\
+Output-Dimension ist $n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$\\
+
+$n[l] = \frac{n^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} + 1$ jeweils fuer Hoehe
+und Breite\\
+
+$n_C^{l}$ ist Anzahl Filter\\
+
+Filter-Dimension ist: $f^{[l]} \times f^{[l]} \times n_C^{[l-1]}$\\
+Aktivierungen $a^{[l]}$ -> $n_H^{[l]} \times n_W^{[l]} \times n_c^{[l]}$\\
+Gewichte $w^{[l]}$ -> $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times
+n_c^{[l]}$ letzter Term ist ja gleich der Anzahl Filter\\
+Vektor Bias: $n_c^{[l]}$
+
+SchichtIndizes der Filter,Padding und stride sind gleich den Indizes des Output(aktivierungen)
+
+
+Flattening ist, wenn man einen Tensor zu einem Vektor umformt
+
+\subsubsection{Andere Notizen fuer Conv-Schicht}
 Wie vorhin erwaehnt, werden die Inputs als zwei-dimensionale Matrix betrachtet,
 welche wir mit $\mat{X}$ bezeichnen. Dementsprechend sich auch die Neuronen
 angeordnet. Die Aktivierungsmatrix wird mit $\mat{A}$ bezeichnet.
 Die Aktivierung eines Neurons wird ueber eine diskrete Faltung (engl.
 Convolution) berechnet.
+
+Basiert auf der matematischen Operation einer ``Convolution'' Faltung
 
 Man kann sich das Verhalten einer Convolutional Schicht, wie einen Filter eines
 Bildbearbeitungsprogramm, wie Photoshop, vorstellen.
@@ -1042,13 +1168,31 @@ gleich sein wie Tiefe des Bilders.
 
 Filter/Kernel wird erlernt. Der Filter wird ueber das Inputvolumen gefaltet
 (convolved), dabei wird das Hadamard-Produkt zwischen dem Receptive-Field und
-der Filtermatrix berechnet.
+der Filtermatrix berechnet. Die Elemente der Ausgangsmatrix werden dann
+aufaddiert und ergeben den Wert des Ausgangspixel.
 
 Eine Convolutution:
 Filter (z.B. 3x3 Matrix) auf Pixel und seine Nachbarn anwenden.
 Daraus ergeben sich neue Bilder, welche gewisse Features (Ecken und Kanten)
 hervorheben.
 Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
+
+\begin{figure}
+
+  \caption{eine Filtermatrix}
+\end{figure}
+
+\begin{figure}
+
+  \caption{Schema, wie ein Filter ueber ein Bild laueft}
+\end{figure}
+
+\begin{figure}
+
+  \caption{Filter (Sobel-Filter) angewandt auf Beispielsbild}
+\end{figure}
+-> Edge detection
+
 
 -------------------
 Depth, Stride und zero-padding
@@ -1060,6 +1204,11 @@ Features der INputs zu aktivieren.
 Stride bestimmt wie die Tiefe-Kolumnen angeordet sind um die Breite und Laenge
 herum. Stride = 1 filter wird um einen Pixel pro Bewegung verschoben. -> Starkes
 eberlappen. Stride 2 bewegung um 2 Pixel.
+
+
+Padding:
+Durch Konvolution schrumpft Bild an Raendern -> Nullen anhaengen (Padding
+genannt), um Dimensionen beizubehalten. Same-Padding
 
 \subsubsection{Pooling Schicht}
 Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe von Neuronen
@@ -1073,7 +1222,22 @@ MaxPooling ist am effektivsten.
 
 Pooling:
 Komprimierung des Bildes. Durchschnitt von 2x2 Pixeln berchnen -> ein Pixel des
-gepoolten Bild. -> 75\% Informationsreduktion ``MaxPooling2D''.
+gepoolten Bild. -> 75\% Informationsreduktion .
+
+Pooling als Filter betrachtet:
+MaxPooling mit 2x2 Feld. Filtergroesse $f=2$ und stride $s=2$. Dies sind die
+Hyperparamter des MaxPooling. Hat also zwar Hyperparameter aber keinerlei Modellparameter
+
+MaxPooling koennte auch andere Filtergroesse oder Stride haben. Formeln fuer
+Outputgroesse gelten auch hier.
+
+Bei 3D-Tensoren aendert sich die Depth nicht, da das Pooling auf jeden Channel
+einzeln angewandt wird.
+
+
+Es gibt zwei Konventionen:
+Entweder bezeichnet man die Einheit von einem ConvLayer und einem PoolLayer zu
+einer Schicht zusammengefasst werden oder sie werden als seperate Schichten betrachtet...
 
 \subsubsection{Fully-connected Layer}
 
@@ -1090,7 +1254,7 @@ Lokale Konnektivitaet
 Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
 
 \subsubsection{Biologische Motivation?}
-Gleiches verhalten wie im visuellen cortex. 
+Gleiches verhalten wie im visuellen cortex.
 
 \subsection{Autoencoder}
 
@@ -1104,7 +1268,7 @@ Mathematik:
 \begin{gather}
   \phi: \mathcal{X} \to \mathcal{F}\\
   \psi: \mathcal{F} \to \mathcal{X}\\
-  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\phi,\psi} \parallel {X - (\lambda \circ \psi)X \parallel}^2
+  \displaystyle\phi,\psi = \operatorname*{arg\,min}_{\phi,\psi} \parallel {X - (\phi \circ \psi)X \parallel}^2
 \end{gather}
 
 \subsubsection{Bedeutung von Autoencodern}

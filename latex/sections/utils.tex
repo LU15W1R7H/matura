@@ -6,6 +6,8 @@
 %transpose
 \newcommand{\trans}[1]{#1^\mathrm{T}}
 
+\newcommand{\keyword}[1]{\textbf{#1}}
+
 
 % \renewcommand{\vec}[1]{\vv{#1}}
 
@@ -15,7 +17,7 @@
 \NewEnviron{defbox}[1]
 {
   \centering
-  
+
   \tikzstyle{mybox} = [draw=red, fill=blue!40!bgcolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
   \tikzstyle{fancytitle} = [fill=red, text=white]
   \begin{tikzpicture}
@@ -24,7 +26,7 @@
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=red!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title) 
+    \node [right,inner xsep=1em,fill=red!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
     at ([shift={(-1em,0pt)}]box.north west) {#1};
     \fill[red!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
     \fill[red!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
@@ -34,7 +36,7 @@
 
 \NewEnviron{infobox}[1]
 {
-  
+
   \tikzstyle{mybox} = [draw=blue, fill=green!20!black, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
   \tikzstyle{fancytitle} = [fill=blue, text=white]
   \begin{tikzpicture}
