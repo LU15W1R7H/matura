@@ -17,7 +17,10 @@
 \begin{tabular}{ll}
   $x$ & ein Skalar (Zahl) \\
   $\vec{v}$ & ein Vektor \\
+  $v_i$ & $i$-te Vektorkomponente \\
   $\mat{M}$ & eine Matrix \\
+  $(\mat{M})_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  $m_{i,j}$ & '' \\
   $\trans{\mat{M}}$ & eine transponierte Matrix \\
   $\ten{T}$ & ein Tensor \\
   $\mathbb{B}$ & eine Menge \\
@@ -1001,7 +1004,7 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 \subsubsection{Bilder als 3D-Matrizen}
 Bei der Betrachtung von Bildern fuer Machine Learning, ist es sinnvoll, diese
 nicht als eine Anordnung von verschieden farbigen Pixeln zu interpretieren,
-sondern sie als 3D-Matrizen zu untersuchen.
+sondern sie als \keyword{3D-Matrizen} zu untersuchen.
 
 
 \begin{defbox}{3D-Matrix}
@@ -1041,14 +1044,16 @@ sondern sie als 3D-Matrizen zu untersuchen.
 
 \end{defbox}
 \para
-Ein Bild kann somit einfach als 3D-Matrix der Form $(\text{Bildbreite} \times
-\text{Bildhoehe} \times \text{Anzahl Farbkomponenten})$ betrachtet werden. Die
+Ein Bild kann somit einfach als 3D-Matrix, bezeichnet mit $\mat{B}_{h \times w
+  \times c}$ der Form $(\text{Bildhoehe} \times
+\text{Bildbreite} \times \text{Anzahl Farbkomponenten})$ betrachtet werden. Die
 Elemente der Matrix nehmen dann einfach die Werte der Pixelkomponenten an.
 Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
 Siehe Abb. (\ref{fig:bildmatrix}).
 \para
-Eine solche Bildmatrix stellt dann den Input eines CNNs dar und nicht mehr wie
+Eine solche \keyword{Bildmatrix} stellt dann den Input eines CNNs dar und nicht mehr wie
 voher ein Vektor.
+
 
 \begin{figure}[h!]
   \begin{tikzpicture}
@@ -1064,9 +1069,76 @@ voher ein Vektor.
 \end{figure}
 
 \subsubsection{Filter in der Bildverarbeitung}
+\keyword{Filter} sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
+von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
+CNNs machen Gebrauch von solchen Filtern um die Features eines Bildes zu
+erlernen. Zuerst werden wir 2D-Filter betrachten, welche sich fuer graustufige Bilder eignen.
+\para
+Filter sind einfach Regionen, deutlich kleiner als das verarbeitete Bild, welche
+ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild liefert.
+Mathematisch gesehen handelt es sich bei einem Filter einfach um eine Matrix,
+die sogennante \keyword{Filtermatrix} (siehe Abb. (\ref{fig:filtermatrix})),
+bezeichnet mit $\mat{F}$. Die Elemente von ihr bestimmen das
+Verhalten des Filters.
+
+\begin{figure}[h!]
+
+  \caption{eine Filtermatrix}
+  \label{fig:filtermatrix}
+\end{figure}
+\para
+Als Beispiel nehmen wir eine Filtermatrix $\mat{F}_{3 \times 3}$ der Form $3 \times 3$.
+Meistens beginnt der Filter oben links ueber das Bild $\mat{B}$ zu wandern.
+Wenn der Filter ueber der $3 \times 3$-Region des Bildes liegt, ist jedem
+Element des Filters ein Element der Bildmatrixregion $\tilde{\mat{B}}$ zugeordnet. Nun wird
+das Hadamard-Produkt (das elementweise Produkt) des Filters mit der
+Bildmatrixregion gebildet, welche eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
+\tilde{\mat{B}}$ ist. Nun werden alle Elemente der neuen Matrix $\mat{P}$
+aufaddiert. Diese Zahl ist dann der Grauwert des ersten Pixels des bearbeiteten
+Bildes $\mat{B}^*$.
+\begin{equation*}
+  (\mat{B}^*)_{1,1} = \sum_{i=1}^3 \sum_{j=1}^3 (\mat{P})_{i,j}
+\end{equation*}
+
+Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
+Prozedur angewendet, um den zweiten Pixel des neuen Bildes zu berechnen. Dies
+wird durchgezogen, bis die ganze erste Zeile der Bildmatrix durchstreift wurde.
+Danach wird der Filter wieder nach ganz rechts verschoben und er bewegt sich ein
+Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
+Dabei werden die Elemente des urspruenglichen Bildes durchaus mehrmals
+verrechnet, da es zu einer Ueberlappung des vorherigen Filter und des
+verschobenen Filters kommt.
+
+\begin{figure}[h!]
+
+  \caption{Schema, wie ein Filter ueber ein Bild laueft}
+\end{figure}
+\para
+Ein Filter kann auch andere Masse haben als $3 \times 3$. Jedoch ist ein Filter $\mat{F}_{f \times f}$
+immer quadratisch und seine Seitenlaenge, typischerweise mit $f$ bezeichent, sollte auch immer eine ungerade Zahl
+sein.
+\para
+Hier nochmals die Schritte mathematisch fuer allgemeine Masse zusammengefasst:
+\begin{equation}
+  \mat{P}_{f \times f} = \mat{F}_{f \times f} \odot \tilde{\mat{B}}_{f \times f}
+\end{equation}
+
+\begin{equation}
+  (\mat{B}_{h \times w}^*)_{1,1} = \sum_{i=1}^f \sum_{j=1}^f (\mat{P})_{i,j}
+\end{equation}
+NOCH ALLGEMEINERE GLEICHUNG -> BESCHRIFTUNG (REGION ANGEBEN)
+\para
+
+Um den Effekt eines Filters auf ein Bild zu zeigen, wird nun ein spezieller
+Filter, der Sobel-Filter erklaert.
+\begin{figure}[h!]
+
+  \caption{Sobel-Filter angewandt auf Beispielsbild}
+\end{figure}
+
+\subsubsection{Filter fuer CNNs und Convolutions}
 -> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
 -> nicht jeder Pixel wichtig
-
 Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
 
 Input bereich eines Neurons wird als Receiptive FIeld bezeichnet.
@@ -1074,23 +1146,6 @@ Wahrnehmungsfeld. Nicht wie bei fully-connected Layer. Receiptive FIeld ist Hype
 
 Filter wird gelernt F = (w11, w12, w13, ...) Matrix. Die Elemente der
 Filtermatrix sind die Modellparameter.
-
-\begin{figure}
-
-  \caption{eine Filtermatrix}
-\end{figure}
-
-\begin{figure}
-
-  \caption{Schema, wie ein Filter ueber ein Bild laueft}
-\end{figure}
-
-\begin{figure}
-
-  \caption{Filter (Sobel-Filter) angewandt auf Beispielsbild}
-\end{figure}
--> Edge detection
-\subsubsection{Filter fuer CNNs und Convolutions}
 
 Idee der Convolution anhand von Randerkennung (Edge Detection).
 
