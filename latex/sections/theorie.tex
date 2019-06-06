@@ -1,15 +1,6 @@
 \documentclass[../main]{subfiles}
 \begin{document}
 
-\newcommand{\refsec}[1]{
-  \begin{tikzpicture}
-    \node[rounded corners,fill=red] (0,0) {#1};
-  \end{tikzpicture}
-}
-
-
-
-
 \section{Konventionen und Notation}
 
 \subsection*{Beschriftung}
@@ -19,6 +10,7 @@
   $\vec{v}$ & ein Vektor \\
   $v_i$ & $i$-te Vektorkomponente \\
   $\mat{M}$ & eine Matrix \\
+  $\mat{M}_{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
   $(\mat{M})_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $m_{i,j}$ & '' \\
   $\trans{\mat{M}}$ & eine transponierte Matrix \\
@@ -969,6 +961,7 @@ Neural Network kann alles erlernen
 
 \pagebreak
 \subsection{Convolutional Neural Networks}
+\cite{deeplearning.ai:cnn}
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
 Audioverarbeitung, wie z.B Bildklassifizierung, Gesichterkennung oder
 Spracherkennung.
@@ -977,18 +970,18 @@ kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
 Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
 Um diesen Umstand zu erklaeren, wird nun ein kleines Beispielmodell erlauetert:
 \para
-Es soll ein KNN designed werden, welches auf einer Photographie klassifiezieren
+Es soll ein KNN designed werden, welche einer Photographie klassifiezieren
 soll, ob ein Hund darauf sichtbar ist oder nicht. Wir nehmen fuer dieses
 Beispiel bereits ein relativ niedrig aufgeloestes Bild mit $256 \times 256$
-Pixel, dies entspricht weniges als $0.07$ Megapixel (ein iPhone XS hat eine Kamera mit
+Pixel, dies entspricht weniger als $0.07$ Megapixel (ein iPhone XS hat eine Kamera mit
 12 Megapixel). Um Farben darzustellen besitzt jeder Pixel drei Komponten R, G
 und B. Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
 Komponenten. Jede Komponente ist ein Feature fuer dieses KNN. Somit bestuende
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
-nun mit seiner Nachbarsschicht zu verbinden, mit gleichen Dimensionen, braucht
+nun mit seiner Nachbarsschicht, welche gleiche Dimensionen besitzt, zu verbinden, braucht
 es $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich so
 viele Gewichte! Fuer ein Netwerke ohne eine einzige Zwischenschichten gaebe es
-also ueber 38 Milliarden Modellparamter zu erlernen! Das dies nicht realistisch ist,
+also ueber 38 Milliarden Modellparameter zu erlernen! Das dies nicht realistisch ist,
 sollte auf der Hand liegen.
 \para
 Nun sollte klar sein, dass eine andere Modellarchitektur noetig ist, um Machine
@@ -1013,36 +1006,12 @@ sondern sie als \keyword{3D-Matrizen} zu untersuchen.
   als ein Volumen dass Zahlen in einem Raster angeordnet hat.
   Die Zahlen sind dabei die Elemente der Matrix. Analog zum Volumen, bezeichnet
   man die Form der Matrix mit Hoehe, Breite und Tiefe.
-  Eine Matrix von der Form $3 \times 3 \times 3$ kann folgendermassen aussehen:
+  Eine Matrix von der Form $3 \times 3 \times 3$ koennte folgendermassen aussehen:
 
-  \begin{equation*}
-    \ten{T} = \begin{bmatrix}
-
-    \end{bmatrix}
-  \end{equation*}
+  TIKZPICTURE EINER 3D-Matrix
 
 \end{defbox}
 
-\begin{defbox}{Tensor}
-  Ein Tensor ist eine verallgemeinerung von Matrizen auf
-  $n$-dimensionale geometrische Objekte. Vorstellen kann man sich einen Tensor
-  als einen Hyperrechteck mit $n$ Dimensionen, innerhalb dessen die Zahlen in
-  einem Raster angeordnet sind. Diese Zahlen sind die Elemente des Tensors.
-  Dabei bezeichnet $n$ den sogennaten Rang oder die Stufe des Tensors.
-  Ein Tensor nullten Ranges ist ein Skalar, einer erster Stufe ein Vektor und
-  Rang 2 ist eine Matrix.
-  Tensoren haben noch viel weitreichendere Bedeutungen, vorallem fuer
-  multilineare Abbildungen. Diese sind aber hier nicht relevant.
-  \para
-  Ein Tensor dritten Ranges von der Form $(3 \times 3 \times 3)$ kann man sich
-  folgendermassen vorstellen:
-  \begin{equation*}
-    \ten{T} = \begin{bmatrix}
-
-    \end{bmatrix}
-  \end{equation*}
-
-\end{defbox}
 \para
 Ein Bild kann somit einfach als 3D-Matrix, bezeichnet mit $\mat{B}_{h \times w
   \times c}$ der Form $(\text{Bildhoehe} \times
@@ -1072,14 +1041,17 @@ voher ein Vektor.
 \keyword{Filter} sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 CNNs machen Gebrauch von solchen Filtern um die Features eines Bildes zu
-erlernen. Zuerst werden wir 2D-Filter betrachten, welche sich fuer graustufige Bilder eignen.
+erlernen. Zuerst werden wir 2D-Filter betrachten, welche sich fuer graustufige
+Bilder $\mat{B}_{h \times w}$ eignen.
 \para
 Filter sind einfach Regionen, deutlich kleiner als das verarbeitete Bild, welche
-ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild liefert.
+ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild
+$\mat{B}^*$ liefert.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um eine Matrix,
-die sogennante \keyword{Filtermatrix} (siehe Abb. (\ref{fig:filtermatrix})),
-bezeichnet mit $\mat{F}$. Die Elemente von ihr bestimmen das
-Verhalten des Filters.
+die sogennante \keyword{Filtermatrix} oder Faltungsmatrix (siehe Abb. (\ref{fig:filtermatrix})),
+bezeichnet mit $\mat{F}_{f \times f}$. Solche Filter sind immer quadratisch,
+wobei ihre Zeilen- bzw. Spaltenlaenge mit $f$ bezeichnet wird. Dabei ist $f$
+immer eine ungerade Zahl, damit ein Element immer im Zenturm des Filters liegt.
 
 \begin{figure}[h!]
 
@@ -1087,17 +1059,58 @@ Verhalten des Filters.
   \label{fig:filtermatrix}
 \end{figure}
 \para
-Als Beispiel nehmen wir eine Filtermatrix $\mat{F}_{3 \times 3}$ der Form $3 \times 3$.
-Meistens beginnt der Filter oben links ueber das Bild $\mat{B}$ zu wandern.
-Wenn der Filter ueber der $3 \times 3$-Region des Bildes liegt, ist jedem
-Element des Filters ein Element der Bildmatrixregion $\tilde{\mat{B}}$ zugeordnet. Nun wird
-das Hadamard-Produkt (das elementweise Produkt) des Filters mit der
-Bildmatrixregion gebildet, welche eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
-\tilde{\mat{B}}$ ist. Nun werden alle Elemente der neuen Matrix $\mat{P}$
+Das Verhalten des Filters wird durch seine Matrixeintraege bestimmt.
+Die Elemente koennen also so gewaehlt werden, dass wenn der Filter auf ein Bild
+angewandt wird, er bestimmte Features aus dem Bild heraushebt. Solche Features
+koennten zum Beispiel Raender oder Kanten sein, welche hervorgehoben werden.
+
+-> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
+-> nicht jeder Pixel wichtig
+Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
+\para
+Der Sobel-Filter ist ein typischer Kantendetektions-Filter mit einer
+Groesse von $f = 3$.
+
+\begin{figure}[h!]
+
+  \caption{Sobel-Filter angewandt auf Beispielsbild}
+\end{figure}
+\para
+
+\subsubsection{Filter als Faltungen (Convolutions)}
+ERWAEHNUNG VON CONVOLUTIONS
+
+\footnote{
+  Vor Convolution Operation: Neure Matrix bilden aus Filter, indem Filtermatrix
+  vertikal und horizontal gespiegelt wird. Und erst mit dieser neuen Matrix wird
+  dann das Hadamard-Produkt usw. gebildet
+
+  Das wird im Machine learning nicht gemacht. Deshalb ist es mathematisch gesehen
+  keine richtige Convolution sondern ehere eine cross-correlatoin.
+}
+
+
+
+Als Beispiel nehmen wir eine Filtermatrix $\mat{F}_{3 \times 3}$, bei welcher
+$f = 3$ gewaehlt wurde.
+Meistens beginnt der Filter oben links ueber das Bild $\mat{B}$ zu wandern. Der
+Filter wird so plaziert, dass er ueber einer ($3 \times 3$)-Region des Bildes liegt.
+Diese Region nennt man das Rezeptive Feld des Filters. Es ist eine Untermatrix $\tilde{\mat{B}}_{3 \times 3}$ der Bildmatrix
+$\mat{B}$, welche gleich gross wie der Filter ist.
+Diese Untermatrix wird mit
+$\tilde{\mat{B}}^{(2,2)}$ bezeichnet, wobei die hochgestellten Indizes $(2,2)$ die Position
+des Elements im Zentrum der Untermatrix innerhalb der Obermatrix $\mat{B}$
+darstellt.
+\para
+Da nun jedem Element des Filters ein Element der Bildmatrixregion
+zugeordnet ist, koennen diese jetzt verrechnet werden. Es wird
+das Hadamard-Produkt (das elementweise Produkt) des Filters $\mat{F}$ mit der
+Bildmatrixregion $\tilde{\mat{B}}^{(2,2)}$ gebildet, welche eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
+\tilde{\mat{B}}$ zurueckgibt. Nun werden alle Elemente der neuen Matrix $\mat{P}$
 aufaddiert. Diese Zahl ist dann der Grauwert des ersten Pixels des bearbeiteten
 Bildes $\mat{B}^*$.
 \begin{equation*}
-  (\mat{B}^*)_{1,1} = \sum_{i=1}^3 \sum_{j=1}^3 (\mat{P})_{i,j}
+  (\mat{B}^*)_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
 \end{equation*}
 
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
@@ -1113,33 +1126,38 @@ verschobenen Filters kommt.
 
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
-\para
-Ein Filter kann auch andere Masse haben als $3 \times 3$. Jedoch ist ein Filter $\mat{F}_{f \times f}$
-immer quadratisch und seine Seitenlaenge, typischerweise mit $f$ bezeichent, sollte auch immer eine ungerade Zahl
-sein.
-\para
-Hier nochmals die Schritte mathematisch fuer allgemeine Masse zusammengefasst:
-\begin{equation}
-  \mat{P}_{f \times f} = \mat{F}_{f \times f} \odot \tilde{\mat{B}}_{f \times f}
-\end{equation}
 
-\begin{equation}
-  (\mat{B}_{h \times w}^*)_{1,1} = \sum_{i=1}^f \sum_{j=1}^f (\mat{P})_{i,j}
-\end{equation}
+Es ist zu bemerken, dass das neue Bild $\mat{B}_{(h-2) \times (w-2)}^*$ nicht mehr die gleichen Masse
+hat, wie das Ursprungsbild $\mat{B}_{h \times w}$. BEGRUENDUNG
+\para
+
+Hier nochmals alle Schritte fuer allgemeine Masse zusammengefasst:
+
+
 NOCH ALLGEMEINERE GLEICHUNG -> BESCHRIFTUNG (REGION ANGEBEN)
 \para
 
-Um den Effekt eines Filters auf ein Bild zu zeigen, wird nun ein spezieller
-Filter, der Sobel-Filter erklaert.
-\begin{figure}[h!]
+\subsubsection{Filter fuer farbige Bilder}
 
-  \caption{Sobel-Filter angewandt auf Beispielsbild}
-\end{figure}
+\begin{equation}
+  \mat{P}^{(y,x)}_{f \times f} = \mat{F}_{f \times f} \odot \tilde{\mat{B}}^{(y,x)}_{f \times f} \quad \forall y \in \{1,\ldots,h\}, \forall y \in \{1,\ldots,w\}
+\end{equation}
+\begin{equation}
+  (\mat{B}_{(h-1) \times (w-1)}^*)_{y,x} = \sum_{i=1}^f \sum_{j=1}^f (\mat{P}^{(y,x)})_{i,j}
+\end{equation}
 
-\subsubsection{Filter fuer CNNs und Convolutions}
--> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
--> nicht jeder Pixel wichtig
-Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
+
+\subsubsection{Filter in CNNs}
+Tiefe des Filters muss gleich sein wie Tiefe des Bildes (Anzahl Channels)
+% \begin{equation*}
+%   \mat{F} = \begin{pmatrix}
+%     w_{1,1} & \cdots & w_{1,f} \\
+%     \vdots & \ddots & \vdots \\
+%     w_{f,1} & \cdots & w_{f,f}
+%   \end{pmatrix}
+% \end{equation*}
+
+
 
 Input bereich eines Neurons wird als Receiptive FIeld bezeichnet.
 Wahrnehmungsfeld. Nicht wie bei fully-connected Layer. Receiptive FIeld ist Hyperparameter
@@ -1151,20 +1169,6 @@ Idee der Convolution anhand von Randerkennung (Edge Detection).
 
 Detecting vertical edges. and horizontal edges
 
-3x3 Filter/Kernel matrix angewandt auf 6x6 Bild (Matrix)
-4x4 Bild kommt raus. Um Pixel (0,0) zu berechnen wird das Hadamard-Produkt des
-Filters mit der 3x3 Region oben links gebildet, danach wird die Summe der
-Elemente der Hadamard-Matrix gebildet.
-
-\paragraph{Exkurs: cross-correlation vs. covolution}
-Vor Convolution Operation: Neure Matrix bilden aus Filter, indem Filtermatrix
-vertikal und horizontal gespiegelt wird. Und erst mit dieser neuen Matrix wird
-dann das Hadamard-Produkt usw. gebildet
-
-Das wird im Machine learning nicht gemacht. Deshalb ist es mathematisch gesehen
-keine richtige Convolution sondern ehere eine cross-correlatoin.
-
---> Vielleicht eine Fussnote wert
 
 \paragraph{Padding}
 Durch Convolution schrumpft Bild (am Rand). M(n x n) conv M(f x f) = M(n-f+1 x
@@ -1189,7 +1193,6 @@ Outputmatrix wird kleiner
 
 Rechnung fuer Outputdimension:
 m = (n + 2p - f)/s + 1; Abgerundet falls keine ganze Zahl
-\paragraph{Title}
 
 \paragraph{Mehrere Filter}
 Beispiel mit 2 Filter.
@@ -1300,6 +1303,7 @@ ERkennung von gewissen Features (Ecken und Kanten)
 Bewegungs-Invarianz (durch Translations-Invarianz), Helligkeit-Invarianz
 alles folgend von geteilten Gewichten
 
+Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
 Geteilte Gewichte
 
 Lokale Konnektivitaet
@@ -1308,42 +1312,7 @@ Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
 
 \noindent\rule{\textwidth}{10pt}
 
-\subsubsection{Andere Notizen fuer Conv-Schicht}
-Basiert auf der matematischen Operation einer ``Convolution'' Faltung
-
-Kernel/Filter ist auch Tensor. Breite und Hoehe sind Hyperparameter. Tiefe muess
-gleich sein wie Tiefe des Bilders.
-
-Filter/Kernel wird erlernt. Der Filter wird ueber das Inputvolumen gefaltet
-(convolved), dabei wird das Hadamard-Produkt zwischen dem Receptive-Field und
-der Filtermatrix berechnet. Die Elemente der Ausgangsmatrix werden dann
-aufaddiert und ergeben den Wert des Ausgangspixel.
-
-Eine Convolutution:
-Filter (z.B. 3x3 Matrix) auf Pixel und seine Nachbarn anwenden.
-Daraus ergeben sich neue Bilder, welche gewisse Features (Ecken und Kanten)
-hervorheben.
-Somit reduziert man die Information aufs Wesentliche und vernachlaessigt die Noise.
-
-
-
--------------------
-Depth, Stride und zero-padding
-
-Depth des Outputvolumen bestimmt die Anzahl Neuronen, welche zur gleichen Region
-des Inputvolumen verbunden sind. Die Neuronen lernen die die verschiedenen
-Features der INputs zu aktivieren.
-
-Stride bestimmt wie die Tiefe-Kolumnen angeordet sind um die Breite und Laenge
-herum. Stride = 1 filter wird um einen Pixel pro Bewegung verschoben. -> Starkes
-eberlappen. Stride 2 bewegung um 2 Pixel.
-
-
-Padding:
-Durch Konvolution schrumpft Bild an Raendern -> Nullen anhaengen (Padding
-genannt), um Dimensionen beizubehalten. Same-Padding
-
-
+\pagebreak
 \subsection{Autoencoder}
 
 \subsubsection{Autoencoder}
@@ -1371,6 +1340,30 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 
 \subsubsection{Variational Autoencoder?}
 \subsubsection{Detangled Autoencoder?}
+
+\subsection{Programmiertools}
+
+\subsubsection{Tensorflow}
+\begin{defbox}{Tensor}
+  Ein Tensor ist eine verallgemeinerung von Matrizen auf
+  $n$-dimensionale geometrische Objekte. Vorstellen kann man sich einen Tensor
+  als einen Hyperrechteck mit $n$ Dimensionen, innerhalb dessen die Zahlen in
+  einem Raster angeordnet sind. Diese Zahlen sind die Elemente des Tensors.
+  Dabei bezeichnet $n$ den sogennaten Rang oder die Stufe des Tensors.
+  Ein Tensor nullten Ranges ist ein Skalar, einer erster Stufe ein Vektor und
+  Rang 2 ist eine Matrix.
+  Tensoren haben noch viel weitreichendere Bedeutungen, vorallem fuer
+  multilineare Abbildungen. Diese sind aber hier nicht relevant.
+  \para
+  Ein Tensor dritten Ranges von der Form $(3 \times 3 \times 3)$ kann man sich
+  folgendermassen vorstellen:
+  \begin{equation*}
+    \ten{T} = \begin{bmatrix}
+
+    \end{bmatrix}
+  \end{equation*}
+
+\end{defbox}
 
 
 \end{document}
