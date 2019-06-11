@@ -1,20 +1,32 @@
-\newcommand{\mat}[1]{\mathbf{#1}}
+% ---Notation macros---
+
+% math
 \let\oldvec\vec
 \renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vecelem}[1]{#1}
+\newcommand{\vecarrow}[1]{\vv{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\matelem}[1]{\mathit{#1}}
 \newcommand{\ten}[1]{\overline{\mathbf{#1}}}
+\newcommand{\set}[1]{\mathbb{#1}}
 
-%transpose
 \newcommand{\trans}[1]{#1^\mathrm{T}}
+\newcommand{\deriv}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\partderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ideriv}[2]{(\text{d}#1)/(\text{d}#2)}
+\newcommand{\ipartderiv}[2]{(\partial #1)/(\partial #2)}
 
+% machine learning
+\newcommand{\hyperp}{\lambda}
+
+
+% misc
 \newcommand{\keyword}[1]{\textbf{#1}}
-
 \newcommand{\para}{\par\medskip}
 
 
-% \renewcommand{\vec}[1]{\vv{#1}}
 
-% ----------- TIKZ ---------------
-
+% --- TIKZ ---
 
 \NewEnviron{defbox}[1]
 {
