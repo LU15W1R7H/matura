@@ -68,7 +68,7 @@ def other_way():
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dropout(0.5),
         #512 neuron hidden layer
-        tf.keras.layers.Dense(512,activation='relu'),
+       tf.keras.layers.Dense(512,activation='relu'),
         #output
         tf.keras.layers.Dense(3,activation='softmax')
     ])

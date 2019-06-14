@@ -38,67 +38,6 @@ def betterTFData():
 
 # CODE
 
-def loadImage(path):
-    img = cv2.imread(path, cv2.IMREAD_COLOR)
-    if img is None:
-        return None
-    img = cv2.resize(img, (512,512),interpolation=cv2.INTER_CUBIC)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # switch BGR encoding to RGB
-    return np.asarray(img)
-
-def loadImages(image_paths):
-    imgs = [loadImage(path) for path in image_paths]
-    return np.asarray(imgs)
-
-def loadGreyscaleImage(path):
-    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    if img is None:
-        return None
-    img = cv2.resize(img, (512,512),interpolation=cv2.INTER_CUBIC)
-    return img
-
-def loadImageDirectory(path):
-    imgs = []
-    for filename in os.listdir(path):
-        img = loadImage(os.path.join(path,filename))
-        if img is not None:
-            imgs.append(img)
-    return np.asarray(imgs)
-
-def loadImageDirectory_2(path):
-    imgs = []
-    for filepath in glob.glob(path + '*.jpg'):
-        img = loadImage(filepath)
-        imgs.append(img)
-    return imgs
-
-def formatImg(img):
-    for x in range(img.shape[0]):
-        for y in range(img.shape[1]):
-            for c in range(3):
-                img[x,y,c] /= 255. 
-
-def writeImage(img, path):
-    cv2.imwrite(path,img)
-
-def showCV2Image(img):
-    cv2.imshow('image', img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-def plotImages(imgs):
-    n=10
-    plt.figure(figsize=(20,4))
-    for i in range(len(imgs)):
-        ax = plt.subplot(2, n, i+1)
-        plt.imshow(imgs[i])
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-    plt.show()
-
-def transformImage(img):
-    return img.reshape(16,16)
 
 ### TF.DATA
 
@@ -253,8 +192,8 @@ def model_fn2(features, labels, mode, params):
     net = features["image"]
 
     net = tf.identity(net, name="input_tensor")
-    
-    net = tf.reshape(net, [-1, 224, 224, 3])    
+
+    net = tf.reshape(net, [-1, 224, 224, 3])
 
     net = tf.identity(net, name="input_tensor_after")
 
@@ -266,19 +205,19 @@ def model_fn2(features, labels, mode, params):
     net = tf.layers.conv2d(inputs=net, name='layer_conv2',
                            filters=64, kernel_size=3,
                            padding='same', activation=tf.nn.relu)
-    net = tf.layers.max_pooling2d(inputs=net, pool_size=2, strides=2)  
+    net = tf.layers.max_pooling2d(inputs=net, pool_size=2, strides=2)
 
     net = tf.layers.conv2d(inputs=net, name='layer_conv3',
                            filters=64, kernel_size=3,
                            padding='same', activation=tf.nn.relu)
-    net = tf.layers.max_pooling2d(inputs=net, pool_size=2, strides=2)    
+    net = tf.layers.max_pooling2d(inputs=net, pool_size=2, strides=2)
 
     net = tf.contrib.layers.flatten(net)
 
     net = tf.layers.dense(inputs=net, name='layer_fc1',
-                        units=128, activation=tf.nn.relu)  
-    
-    net = tf.layers.dropout(net, rate=0.5, noise_shape=None, 
+                        units=128, activation=tf.nn.relu)
+
+    net = tf.layers.dropout(net, rate=0.5, noise_shape=None,
                         seed=None, training=(mode == tf.estimator.ModeKeys.TRAIN))
 
     net = tf.layers.dense(inputs=net, name='layer_fc_2',
@@ -314,7 +253,7 @@ def model_fn2(features, labels, mode, params):
             loss=loss,
             train_op=train_op,
             eval_metric_ops=metrics)
-        
+
     return spec
 
 def createModelInstance():
@@ -339,5 +278,3 @@ def createModelInstance():
 #     createModel()
 #     trainModel()
 #     testModel()
-
-
