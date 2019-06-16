@@ -12,9 +12,6 @@
   $\mat{A}$ & eine Matrix \\
   $\mat{A}_{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
   $\ten{A}$ & ein Tensor \\
-  $\set{A}$ & eine Menge \\
-  $\set{R}$ & die Menge aller Reeller Zahlen \\
-  $\{a,b\}$ & eine Menge, welche Element $a$ und $b$ beinhaltet \\
   $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
   $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
 
@@ -100,6 +97,7 @@ Die Inputs/Features werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}
 Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=\trans{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ bezeichnet werden.
 \par \medskip
 BESSERS BEISPIEL -> UM SPAETER KONKRETES MODELL ZU ERKLAEREN
+AUTOPREIS SCHAETZEN (OKASSION) ANHAND VON GEFAHRENEN KILOMETERN
 Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
 Die Features sind die spezifischen RGB-Werte der Pixel fuer die einzelnen Bilder. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
@@ -155,6 +153,10 @@ BEISPIELMODELL GLEICHES WIE VORHIN
 
   \caption{beschriebenes Beispielmodells}
 \end{figure}
+
+\subsection{Lernarten}
+\subsubsection{Supervised Learning}
+\subsubsection{Unsupervised Learning}
 
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
@@ -976,22 +978,21 @@ Neural Network kann alles erlernen
 
 \pagebreak
 \subsection{Convolutional Neural Networks}
-\cite{deeplearning.ai:cnn}
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
-Audioverarbeitung, wie z.B Bildklassifizierung, Gesichterkennung oder
+Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
 Spracherkennung.
 Vorallem aber fuer hochaufloesende Bilder sind die KNNs, die wir soeben
 kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
 Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
 Um diesen Umstand zu erklaeren, wird nun ein kleines Beispielmodell erlauetert:
 \para{}
-Es soll ein KNN designed werden, welche einer Photographie klassifiezieren
-soll, ob ein Hund darauf sichtbar ist oder nicht. Wir nehmen fuer dieses
+Es soll ein KNN designed werden, welches einer Photographie danach klassifizieren
+soll, ob darauf ein Hund sichtbar ist oder nicht. Wir nehmen fuer dieses
 Beispiel bereits ein relativ niedrig aufgeloestes Bild mit $256 \times 256$
 Pixel, dies entspricht weniger als $0.07$ Megapixel (ein iPhone XS hat eine Kamera mit
-12 Megapixel). Um Farben darzustellen besitzt jeder Pixel drei Komponten R, G
+12 Megapixel). Um die verschiedenen Farben zu codieren besitzt jeder Pixel drei Komponten R, G
 und B. Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
-Komponenten. Jede Komponente ist ein Feature fuer dieses KNN. Somit bestuende
+Komponenten. Jede Komponente ist ein Feature welches das KNN zu verrechnen hat. Somit bestuende
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
 nun mit seiner Nachbarsschicht, welche gleiche Dimensionen besitzt, zu verbinden, braucht
 es $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich so
@@ -1007,7 +1008,7 @@ Bildverarbeitung, wie sie mit beispielsweise Photoshop gemacht werden kann.
 Wie beim Perzeptron und bei den klassischen KNNs auch, ist die Architektur
 biologisch inspiriert.
 Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
-
+\cite{deeplearning.ai:cnn}
 
 \subsubsection{Bilder als 3D-Matrizen}
 Bei der Betrachtung von Bildern fuer Machine Learning, ist es sinnvoll, diese
@@ -1017,7 +1018,7 @@ sondern sie als \keyword{3D-Matrizen} zu untersuchen.
 
 \begin{defbox}{3D-Matrix}
   Eine 3D-Matrix ist ein mathematischen Objekt und eine Erweiterung von Matrizen
-  fuer 3-dimensionale Zahlenanordnung. Vorstellen kann man sich eine 3D-Matrix
+  auf 3-dimensionale Zahlenanordnung. Vorstellen kann man sich eine 3D-Matrix
   als ein Volumen dass Zahlen in einem Raster angeordnet hat.
   Die Zahlen sind dabei die Elemente der Matrix. Analog zum Volumen, bezeichnet
   man die Form der Matrix mit Hoehe, Breite und Tiefe.
@@ -1033,10 +1034,11 @@ Ein Bild kann somit einfach als 3D-Matrix, bezeichnet mit $\mat{B}_{h \times w
 \text{Bildbreite} \times \text{Anzahl Farbkomponenten})$ betrachtet werden. Die
 Elemente der Matrix nehmen dann einfach die Werte der Pixelkomponenten an.
 Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
+Somit waere es eine normale 2D-Matrix $\mat{B}_{h \times w}$.
 Siehe Abb. (\ref{fig:bildmatrix}).
 \para{}
-Eine solche \keyword{Bildmatrix} stellt dann den Input eines CNNs dar und nicht mehr wie
-voher ein Vektor.
+Eine solche \keyword{Bildmatrix} stellt dann den Input $\mat{X}$ eines CNNs dar und nicht mehr wie
+voher ein Vektor von Inputs $\vec{x}$.
 
 
 \begin{figure}[h!]
@@ -1058,6 +1060,11 @@ von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 CNNs machen Gebrauch von solchen Filtern um die Features eines Bildes zu
 erlernen. Zuerst werden wir 2D-Filter betrachten, welche sich fuer graustufige
 Bilder $\mat{B}_{h \times w}$ eignen.
+\begin{figure}[h!]
+
+  \caption{der Instagramfilter: Blablabla}
+\end{figure}
+
 \para{}
 Filter sind einfach Regionen, deutlich kleiner als das verarbeitete Bild, welche
 ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild
@@ -1076,8 +1083,8 @@ immer eine ungerade Zahl, damit ein Element immer im Zenturm des Filters liegt.
 \para{}
 Das Verhalten des Filters wird durch seine Matrixeintraege bestimmt.
 Die Elemente koennen also so gewaehlt werden, dass wenn der Filter auf ein Bild
-angewandt wird, er bestimmte Features aus dem Bild heraushebt. Solche Features
-koennten zum Beispiel Raender oder Kanten sein, welche hervorgehoben werden.
+angewandt wird, er bestimmte Features aus dem Bild hervorhebt. Solche Features
+koennten zum Beispiel Raender oder Kanten sein, welche betont werden.
 
 -> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
 -> nicht jeder Pixel wichtig
@@ -1382,7 +1389,6 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 
 
 \end{document}
-
 
 %%% Local Variables:
 %%% mode: latex
