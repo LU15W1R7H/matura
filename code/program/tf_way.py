@@ -1,31 +1,13 @@
-from utils import *
-import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
+import glob
+import os
 
-IMAGE_WIDTH = 28
-IMAGE_HEIGHT = 28
-IMAGE_CHANNELS = 1
+import tensorflow as tf
 
-dirPaths = getFilePaths('../data/trainingSample/')
-paths = [getFilePaths(path) for path in dirPaths]
-paths = np.asarray(paths)
-paths = paths.ravel()
-
-imgs = loadImages(paths, greyscale=True)
-
-print(imgs[0])
-
-imgs = imgs.astype(float)
-
-for img in imgs:
-    for x in range(len(img)):
-        for y in range(len(img[x])):
-            img[x,y] /= 255.0
-
-print(imgs[0])
-# imgs = loadGreyscaleImageDirectory('../data/trainingSample/0/')
-# plotImages(img)
-
+IMAGE_WIDTH = 64
+IMAGE_HEIGHT = 64
+IMAGE_CHANNELS = 3
 
 learning_rate = 0.001
 
@@ -74,8 +56,9 @@ saver = tf.train.Saver()
 sess.run(tf.global_variables_initalizer())
 saver.restore(sess, "")
 
-for i, img in enumerate(imgs):
+for i, img in enumerate(images):
     imageio = readImage(img)
     imageio = imageio[:,:,0:3].reshape((1,64,64,3)) / 255.
     file_name = os.path.basename(img)
     denseRep = sess.run([encoded], feed_dict={inputs_layer: imageio, target_layer: imageio})
+
