@@ -24,6 +24,9 @@
 \newcommand{\keyword}[1]{\textbf{#1}}
 \newcommand{\para}{\par\medskip}
 
+\let\oldcite\cite
+\renewcommand{\cite}[1]{[\oldcite{#1}]}
+
 
 
 % --- TIKZ ---

@@ -22,6 +22,10 @@
 \begin{tabular}{cl}
   $\set{A}$ & eine Menge \\
   $\set{R}$ & die Menge aller Reeller Zahlen \\
+  $\set{Z}$ & die Menge aller ganzer Zahlen \\
+  $\set{N}$ & die Menge aller natuerlicher Zahlen \\
+  $\set{E}$ & die Menge aller gerader (engl.: even) Zahlen \\
+  $\set{O}$ & die Menge aller ungerader (engl.: odd) Zahlen \\
   $\{a,b\}$ & die Menge, welche aus Elementen $a$ und $b$ besteht \\
   $\{1,\ldots,n\}$ & Menge aller ganzen Zahlen von 1 bis $n$ \\
 
@@ -1008,6 +1012,7 @@ Bildverarbeitung, wie sie mit beispielsweise Photoshop gemacht werden kann.
 Wie beim Perzeptron und bei den klassischen KNNs auch, ist die Architektur
 biologisch inspiriert.
 Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
+\para{}
 \cite{deeplearning.ai:cnn}
 
 \subsubsection{Bilder als 3D-Matrizen}
@@ -1038,7 +1043,7 @@ Somit waere es eine normale 2D-Matrix $\mat{B}_{h \times w}$.
 Siehe Abb. (\ref{fig:bildmatrix}).
 \para{}
 Eine solche \keyword{Bildmatrix} stellt dann den Input $\mat{X}$ eines CNNs dar und nicht mehr wie
-voher ein Vektor von Inputs $\vec{x}$.
+voher ein Vektor $\vec{x}$.
 
 
 \begin{figure}[h!]
@@ -1055,10 +1060,10 @@ voher ein Vektor von Inputs $\vec{x}$.
 \end{figure}
 
 \subsubsection{Filter in der Bildverarbeitung}
-\keyword{Filter} sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
+\keyword{Filter} (engl. auch: Kernel) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
-CNNs machen Gebrauch von solchen Filtern um die Features eines Bildes zu
-erlernen. Zuerst werden wir 2D-Filter betrachten, welche sich fuer graustufige
+Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall um die Features eines Bildes zu
+erlernen. Aus diktaktischen Gruenden betrachten wir zuerst nur 2D-Filter, welche sich fuer graustufige
 Bilder $\mat{B}_{h \times w}$ eignen.
 \begin{figure}[h!]
 
@@ -1068,12 +1073,12 @@ Bilder $\mat{B}_{h \times w}$ eignen.
 \para{}
 Filter sind einfach Regionen, deutlich kleiner als das verarbeitete Bild, welche
 ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild
-$\mat{B}^*$ liefert.
+$\mat{B}^*$ liefern.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um eine Matrix,
 die sogennante \keyword{Filtermatrix} oder Faltungsmatrix (siehe Abb. (\ref{fig:filtermatrix})),
 bezeichnet mit $\mat{F}_{f \times f}$. Solche Filter sind immer quadratisch,
 wobei ihre Zeilen- bzw. Spaltenlaenge mit $f$ bezeichnet wird. Dabei ist $f$
-immer eine ungerade Zahl, damit ein Element immer im Zenturm des Filters liegt.
+immer eine ungerade Zahl, damit ein Element, das sogennante \keyword{Zentralelement}, immer im Zenturm des Filters liegt.
 
 \begin{figure}[h!]
 
@@ -1085,59 +1090,103 @@ Das Verhalten des Filters wird durch seine Matrixeintraege bestimmt.
 Die Elemente koennen also so gewaehlt werden, dass wenn der Filter auf ein Bild
 angewandt wird, er bestimmte Features aus dem Bild hervorhebt. Solche Features
 koennten zum Beispiel Raender oder Kanten sein, welche betont werden.
-
--> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
--> nicht jeder Pixel wichtig
-Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
 \para{}
-Der Sobel-Filter ist ein typischer Kantendetektions-Filter mit einer
-Groesse von $f = 3$.
+Ein gutes Beispiel ist der Sobel-Filter. Er ist ein typischer Kantendetektions-Filter mit einer
+Groesse von $f = 3$. Wir betrachten nun den Sobelfilter $\mat{G}_x$, welcher
+horizontale Kanten akzentuiert. Die Eintraege dieses Filters lauten wie folgt:
+\begin{equation*}
+  \mat{G}_x =
+  \begin{bmatrix}
+    -1 & 0 & +1 \\
+    -2 & 0 & +2 \\
+    -1 & 0 & +1 \\
+  \end{bmatrix}
+\end{equation*}
+
+Angewandt auf ein Bild, erhaelt man ein neues Bild, bei welchem alle Bereiche
+schwarz sind und die erkannten Kanten weiss eingefaerbt sind. Der Filter erkennt
+dabei jede Stelle als Kante, welche zwei Regionen mit genug grossem Kontrast
+voneinander trennt.
+In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
+Beispielbild angewandt. Links ist das Ursprungsbild und rechts ist das
+prozessierte Bild.
+
 
 \begin{figure}[h!]
 
   \caption{Sobel-Filter angewandt auf Beispielsbild}
+  \label{fig:sobel_filter}
 \end{figure}
+
 \para{}
+\cite{wiki:sobel_operator}\\
+\cite{deeplearning.ai:cnn}
 
-\subsubsection{Filter als Faltungen (Convolutions)}
-ERWAEHNUNG VON CONVOLUTIONS
-
+\subsubsection{Filter als Faltungen}
+\paragraph{Graustufige Bilder}
+Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
+Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
+graustufiges Bild $\mat{B}_{h \times w}$ erlauetert. Spaeter werden auch noch farbige
+Bilder erklaert.
+\para{}
+Grundsaetzlich handelt es sich bei einer Anwendung eines Filters auf ein Bild um
+eine spezifische mathematische Operation: eine \keyword{Faltung} (engl.:
+\keyword{Convolution}).
 \footnote{
-  Vor Convolution Operation: Neure Matrix bilden aus Filter, indem Filtermatrix
-  vertikal und horizontal gespiegelt wird. Und erst mit dieser neuen Matrix wird
-  dann das Hadamard-Produkt usw. gebildet
-
-  Das wird im Machine learning nicht gemacht. Deshalb ist es mathematisch gesehen
-  keine richtige Convolution sondern ehere eine cross-correlatoin.
+  Eigentlich ist die Filteroperation keine richtige Faltung im mathematischen
+  Sinne, sondern eher eine sogennante Kreuzkorrelation. Dennoch wird im Verlauf
+  dieser Arbeit der Begriff Faltung im Zusammenhang mit Filteroperationen verwendet.\\
+  Fuer Intressierte: Die Kreuzkorrelation funktioniert gleich wie eine Faltung,
+  jedoch wird die eine Matrix zuerst horizontal, wie auch vertikal gespiegelt,
+  bevor die eigentliche Faltung angewandt wird.
 }
-
-
-
-Als Beispiel nehmen wir eine Filtermatrix $\mat{F}_{3 \times 3}$, bei welcher
-$f = 3$ gewaehlt wurde.
-Meistens beginnt der Filter oben links ueber das Bild $\mat{B}$ zu wandern. Der
-Filter wird so plaziert, dass er ueber einer ($3 \times 3$)-Region des Bildes liegt.
-Diese Region nennt man das Rezeptive Feld des Filters. Es ist eine Untermatrix $\tilde{\mat{B}}_{3 \times 3}$ der Bildmatrix
-$\mat{B}$, welche gleich gross wie der Filter ist.
-Diese Untermatrix wird mit
-$\tilde{\mat{B}}^{(2,2)}$ bezeichnet, wobei die hochgestellten Indizes $(2,2)$ die Position
-des Elements im Zentrum der Untermatrix innerhalb der Obermatrix $\mat{B}$
-darstellt.
+Daher ruehrt auch der Name des Convolutional Neural Networks.
+Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
+betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
+Bedeutung der Faltung fuer Filter beschraenken.
 \para{}
-Da nun jedem Element des Filters ein Element der Bildmatrixregion
-zugeordnet ist, koennen diese jetzt verrechnet werden. Es wird
-das Hadamard-Produkt (das elementweise Produkt) des Filters $\mat{F}$ mit der
-Bildmatrixregion $\tilde{\mat{B}}^{(2,2)}$ gebildet, welche eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
-\tilde{\mat{B}}$ zurueckgibt. Nun werden alle Elemente der neuen Matrix $\mat{P}$
-aufaddiert. Diese Zahl ist dann der Grauwert des ersten Pixels des bearbeiteten
-Bildes $\mat{B}^*$.
+
+Eine Filteroperation ist nichts anderes als eine Filtermatrix $\mat{F}$, welche ueber eine
+Bildmatrix $\mat{B}$ gefaltet wird und somit eine eine neue Bildmatrix
+$\mat{B}^*$ bildet. Man schreibt: $\mat{B}^* = \mat{F} * \mat{B}$.\\
+Um nun diese Faltung zu verstehen, verwenden wir als Beispiel eine 2D-Filtermatrix $\mat{F}_{3 \times 3}$, bei welcher
+$f = 3$ gewaehlt wurde.
+Wie bereits vorhin erwaehnt wandern der Filter ueber das Bild. Dabei befindet
+sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
+wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
+Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
+\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})). Man schreibt dafuer
+$\tilde{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
+des Zentralelements im rezeptiven Feldes angiebt. Somit ist das rezeptiven Feld einfach eine
+Untermatrix $\tilde{\mat{B}}_{3 \times 3}$ des Obermatrix $\mat{B}$.
+
+\begin{figure}[h!]
+
+  % Zentralelement einzeichnen mit Beschriftung
+  \caption{ein Filter und sein rezeptives Feld}
+  \label{fig:receptive_field}
+\end{figure}
+
+\para{}
+Der Filter beginnt nun oben links ueber das Bild zu wandern. Somit
+hat der Filter zu beginn das rezeptive Feld $\tilde{\mat{B}}^{(2,2)}$.
+\footnote{Die Indizes lauten $(2,2)$, da das Zentralelement sich dort befindet.
+  Der Filter darf nunmal nicht ueber die Raender des Bildes hinaus gehen}
+Nun werden die Elemente der Filters mit den Elementen des rezeptiven Feldes
+verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird einfach das
+Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
+gebildet. Nun erhalten wir eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
+\tilde{\mat{B}}^{(2,2)}$.
+Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
+aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\mat{B}^*)_{1,1}$ des bearbeiteten
+Bildes.
 \begin{equation*}
   (\mat{B}^*)_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
 \end{equation*}
 
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
-Prozedur angewendet, um den zweiten Pixel des neuen Bildes zu berechnen. Dies
-wird durchgezogen, bis die ganze erste Zeile der Bildmatrix durchstreift wurde.
+Prozedur angewendet, um den zweiten Pixel zu berechnen. Dies
+wird durchgezogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
 Danach wird der Filter wieder nach ganz rechts verschoben und er bewegt sich ein
 Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
 Dabei werden die Elemente des urspruenglichen Bildes durchaus mehrmals
@@ -1150,17 +1199,27 @@ verschobenen Filters kommt.
 \end{figure}
 
 Es ist zu bemerken, dass das neue Bild $\mat{B}_{(h-2) \times (w-2)}^*$ nicht mehr die gleichen Masse
-hat, wie das Ursprungsbild $\mat{B}_{h \times w}$. BEGRUENDUNG
+hat, wie das Ursprungsbild $\mat{B}_{h \times w}$. Das liegt daran, dass pro
+Lage des Filters jeweils ein Pixel des neuen Bildes berechnet wird. Man kann
+sich vorstellen, dass an der Position des Zentralelements jeweils ein neuer
+Pixel entsteht. Dabei muss der Filter immer eine vollstaendige Region als
+rezeptives Feld haben. Dadurch liegt auf den Raendern niemals das Zentralelement
+und diese fallen somit weg.
 \para{}
+\cite{deeplearning.ai:cnn}
 
-Hier nochmals alle Schritte fuer allgemeine Masse zusammengefasst:
+\paragraph{Farbige Bilder}
+Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
+lediglich 3D-Matrizen anstatt 2D-Matizen verwendet. Wir betrachten die
+allgemeine Bildmatrix $\mat{B}_{h \times w \times c}$, wobei $c$ die
+Farbkomponenten (engl.: channels) sind.
+Nun benutzt man Filter $\mat{F}_{f \times f \times c}$ mit beliebiger Groesse
+$f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\mat{B}$.
 
 
-NOCH ALLGEMEINERE GLEICHUNG -> BESCHRIFTUNG (REGION ANGEBEN)
-\para{}
-
-\subsubsection{Filter fuer farbige Bilder}
-
+\paragraph{Zusammenfassung}
+Wikipedia tolle Beschreibung: Prozess der Aufsummierung aller elemente eines
+Bildes zu seinen lokalen Nachbarn, gewichtet durch den Filter
 \begin{equation}
   \mat{P}^{(y,x)}_{f \times f} = \mat{F}_{f \times f} \odot \tilde{\mat{B}}^{(y,x)}_{f \times f} \quad \forall y \in \{1,\ldots,h\}, \forall y \in \{1,\ldots,w\}
 \end{equation}
@@ -1168,28 +1227,33 @@ NOCH ALLGEMEINERE GLEICHUNG -> BESCHRIFTUNG (REGION ANGEBEN)
   (\mat{B}_{(h-1) \times (w-1)}^*)_{y,x} = \sum_{i=1}^f \sum_{j=1}^f (\mat{P}^{(y,x)})_{i,j}
 \end{equation}
 
+ALLGEMEINSTE FILTER GLEICHUNGEN
 
 \subsubsection{Filter in CNNs}
+Zuerst einmal stellt sich die Frage, weshalb sich Filter eignen fuer Machine
+Learning.
+Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
+eines Bildes hervorzuheben und die restlichen auszublenden. Dies ist der gleiche
+Gedanke wie bei einem normalen KNN mit Sigmoiden Neuronen, welche dann auch
+erlernen auf gewisse Features zu reagieren.
+Jedoch ist ein wichtiger Unterschied von Filtern im Gegensatz zu normalen
+Neuronen, dass sie Invarianzen aufweisen.
+-> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
+-> nicht jeder Pixel wichtig
+Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
 Tiefe des Filters muss gleich sein wie Tiefe des Bildes (Anzahl Channels)
-% \begin{equation*}
-%   \mat{F} = \begin{pmatrix}
-%     w_{1,1} & \cdots & w_{1,f} \\
-%     \vdots & \ddots & \vdots \\
-%     w_{f,1} & \cdots & w_{f,f}
-%   \end{pmatrix}
-% \end{equation*}
+
+Filter werden erlernt. Elementeintraege sind Modellparameter. Filtergroesse bzw.
+Groesse des Rezeptiven Feldes ist Hyperparameter.
+\begin{equation*}
+  \mat{F} = \begin{pmatrix}
+    w_{1,1} & \cdots & w_{1,f} \\
+    \vdots & \ddots & \vdots \\
+    w_{f,1} & \cdots & w_{f,f}
+  \end{pmatrix}
+\end{equation*}
 
 
-
-Input bereich eines Neurons wird als Receiptive FIeld bezeichnet.
-Wahrnehmungsfeld. Nicht wie bei fully-connected Layer. Receiptive FIeld ist Hyperparameter
-
-Filter wird gelernt F = (w11, w12, w13, ...) Matrix. Die Elemente der
-Filtermatrix sind die Modellparameter.
-
-Idee der Convolution anhand von Randerkennung (Edge Detection).
-
-Detecting vertical edges. and horizontal edges
 
 
 \paragraph{Padding}
@@ -1332,7 +1396,6 @@ Lokale Konnektivitaet
 
 Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
 
-\noindent\rule{\textwidth}{10pt}
 
 \pagebreak
 \subsection{Autoencoder}
