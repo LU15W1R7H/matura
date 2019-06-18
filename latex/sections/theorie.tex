@@ -1059,7 +1059,8 @@ voher ein Vektor $\vec{x}$.
   \caption{2-dimensionalen Schicht von Neuronen}
 \end{figure}
 
-\subsubsection{Filter in der Bildverarbeitung}
+\subsubsection{Filter}
+\paragraph{Filter in der Bildverarbeitung}
 \keyword{Filter} (engl. auch: Kernel) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall um die Features eines Bildes zu
@@ -1122,8 +1123,17 @@ prozessierte Bild.
 \cite{wiki:sobel_operator}\\
 \cite{deeplearning.ai:cnn}
 
-\subsubsection{Filter als Faltungen}
-\paragraph{Graustufige Bilder}
+\paragraph{Biologische Motivation?}
+Jedoch ist zu erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
+Auch unser Organismus hat diese Tatsache erkannt und deshalb spezielle Zellen
+ausgebildet (sogennante Ganglienzellen), welche sich mit der Vorverarbeitung von
+visuellen Informationen beschaeftigt. Diese Zellen und weitere fuehren auch eine
+Art von Kantendetektion durch mithilfe von Kontrastverstaerkung.
+
+\para{}
+\cite{Markl}
+
+\paragraph{Filteroperationen als Faltungen}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
 graustufiges Bild $\mat{B}_{h \times w}$ erlauetert. Spaeter werden auch noch farbige
@@ -1208,7 +1218,7 @@ und diese fallen somit weg.
 \para{}
 \cite{deeplearning.ai:cnn}
 
-\paragraph{Farbige Bilder}
+\paragraph{Allgemeine Filteroperation}
 Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
 lediglich 3D-Matrizen anstatt 2D-Matizen verwendet. Wir betrachten die
 allgemeine Bildmatrix $\mat{B}_{h \times w \times c}$, wobei $c$ die
@@ -1216,8 +1226,6 @@ Farbkomponenten (engl.: channels) sind.
 Nun benutzt man Filter $\mat{F}_{f \times f \times c}$ mit beliebiger Groesse
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\mat{B}$.
 
-
-\paragraph{Zusammenfassung}
 Wikipedia tolle Beschreibung: Prozess der Aufsummierung aller elemente eines
 Bildes zu seinen lokalen Nachbarn, gewichtet durch den Filter
 \begin{equation}
@@ -1229,22 +1237,34 @@ Bildes zu seinen lokalen Nachbarn, gewichtet durch den Filter
 
 ALLGEMEINSTE FILTER GLEICHUNGEN
 
-\subsubsection{Filter in CNNs}
-Zuerst einmal stellt sich die Frage, weshalb sich Filter eignen fuer Machine
-Learning.
-Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
-eines Bildes hervorzuheben und die restlichen auszublenden. Dies ist der gleiche
-Gedanke wie bei einem normalen KNN mit Sigmoiden Neuronen, welche dann auch
-erlernen auf gewisse Features zu reagieren.
-Jedoch ist ein wichtiger Unterschied von Filtern im Gegensatz zu normalen
-Neuronen, dass sie Invarianzen aufweisen.
--> Pixel sind wichtig im Kontext mit ihren Nachbarn (lokalisierte Features!)
--> nicht jeder Pixel wichtig
-Position Rotation und Format koennen sich aendern -> Invarianz gewuenscht
-Tiefe des Filters muss gleich sein wie Tiefe des Bildes (Anzahl Channels)
 
-Filter werden erlernt. Elementeintraege sind Modellparameter. Filtergroesse bzw.
-Groesse des Rezeptiven Feldes ist Hyperparameter.
+\paragraph{Wieso Filter?}
+Es stellt sich nun die Frage, weshalb sich Filter fuer Machine
+Learning eignen.
+Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
+eines Bildes hervorzuheben und die restlichen auszublenden. Genau die gleiche
+Aufgabe erfuellen die Neuronen in einem KNNs. Auch sie sollen Features der
+Inputsdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
+\para{}
+Jedoch ist zu erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
+Bildfeatures bzw. Pixel sind immer im Kontext von ihren Nachbarn wichtig. Denn
+ein Pixel ist erst eine Kante oder eine Ecke, wenn er zwei verschiedene
+Kontraste voneinander trennt. Oder um die Konturen eines Gegenstandes zu
+erkennen, muss man eine ganze Fuelle von Pixeln betrachten. Man bezeichnet
+dies als \keyword{lokalisierte Features}.
+\para{}
+Ein weiterer Aspekt besteht darin, dass Bildausschnitt nicht immer gleich
+orientiert sind. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es
+keine Rolle spielen, wo auf dem Bild es sich befindet, oder welche Groesse es
+hat. Es besteht der Wunsch nach \keyword{Invarianz}. Typische Invarianzen,
+welcher ein Filter erfuellt, sind: Translationinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
+
+
+\paragraph{Filter in CNNs}
+So nun betrachten wir Filter fuer CNNs. Der springende Punkt ist hierbei, dass
+die Filtereintraege Modellparameter sind und erlernt werden. Da sie die gleiche
+Funktion wie Gewichte in einem KNN einnehmen, bezeichnet man die Matrixelemente
+auch mit $w$.
 \begin{equation*}
   \mat{F} = \begin{pmatrix}
     w_{1,1} & \cdots & w_{1,f} \\
@@ -1253,25 +1273,56 @@ Groesse des Rezeptiven Feldes ist Hyperparameter.
   \end{pmatrix}
 \end{equation*}
 
-
-
+Die groesse des Filters bzw. das rezeptive Feld ist hierbei ein Hyperparameter.
 
 \paragraph{Padding}
-Durch Convolution schrumpft Bild (am Rand). M(n x n) conv M(f x f) = M(n-f+1 x
-n-f+1).
-Problem nach ein paar Convolution ist Bild extrem klein -> M1x1
-2. Problem: Viel Overlapping in der Mitte (Bildmatrix Elemente mehrmals genutzt)
-an Raender jedoch nicht! -> Information verloren von den Raendern des Bildes
-Darum Padding (vor der Convolution)! Zusaetzlicher Rand hinzugefuegt zu Bild vor
-der Konvolution. Zusatz Elemente haben Wert 0. Padding = 1 bedeutet an allen
-Raendern wird eine Reihe hinzugefuegt. Ziel ist es Dimensionen beizubehalten
+Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man ein Filter auf sie anwendet.
+Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelement nur ein Pixel
+des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
+Ursprungspixeln zu liegen kommt. Die Raender fallen so weg. Diese Groesse des
+Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei giltet die Formel fuer die
+neue Groesse des Bildes.
+\begin{equation}
+  s_{neu} = s_{alt} - f + 1
+\end{equation}
 
-Begrifflichkeit:
-'valid'-convolution: kein padding
-'same'-convolution: mit padding, so dass Groesse beibehalten wird
-Rechnung fuer outputdimension bei same: m = n + 2p - f + 1 => p = (f-1)/2
+\begin{equation}
+  \mat{B}_{s \times s} * \mat{F}_{f \times f} = \mat{B}^*_{s-f+1 \times s-f+1}
+\end{equation}
 
-f ist normalerweise eine ungerade Zahl, ansonsten waere das Padding unsymmetrisch.
+Das Problem hierbei ist, dass nach einigen Faltungen das Bild extrem geschrumpft
+ist und im Grenzfall kleiner als der Filter wird. Das darf natuerlich nicht
+passieren. Ausserdem geht dabei Information an den Raender verloren, da es im
+Innern des Bildes zu viel Overlapping der Filterlagen kommt und die Raeder nur
+sehr wenig einbezogen werden.
+\para{}
+Diese Probleme werden mit sogennantem \keyword{Padding} behoben. Padding ist ein
+Schritt, welcher vor der eigentlichen Faltung stattfindet. Dabei werden einfach
+zusatzliche Raender (Zeilen und Spalten) an das Ursprungsbild angebracht. Die
+Matrix wird an den Enden erweitert. Die neuen Elemente werden dabei auf den Wert
+$0$ gesetzt.
+
+\begin{figure}[h!]
+
+  \caption{Padding}
+\end{figure}
+
+Das Padding $p$ ist eine Zahl, welche angibt wieviele Elemente an allen Raendern
+hinzugefuegt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
+Reihe bzw. Spalte hinzugefuegt wird.
+Begrifflich unterscheidet man zwei Arten von Padding:
+\begin{itemize}
+\item{valid-Padding: Es werden keine zuesaezlichen Elemente. $f$ ist also 0.
+\item{same-Padding: Es werden so viele Reihen und Spalten angebracht, dass
+        sich die Groesse des Bildes bei der Faltung erhalten bleibt.
+\end{itemize}
+
+Um das Padding zu berechnen fuer same-Padding verwendet man folgende Formel:
+(Ursprungsformel: $m = n + 2p - f + 1$)
+\begin{equation}
+  p = \frac{f-1}{2}
+\end{equation}
+
 \paragraph{Stride}
 Stride ist Schrittgroesse der Filterbewegung
 -> Stride = 2 bedeutet, dass ein Schritt uebersprungen wird.
