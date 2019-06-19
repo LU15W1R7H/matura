@@ -38,13 +38,13 @@
   $(\mat{A})_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
-  $\mat{A}_{:,i}$ & Zeile $i$ der Matrix $\mat{A}$\ \\
+  $\mat{A}_{:,i}$ & Spalte $i$ der Matrix $\mat{A}$\ \\
 
 \end{tabular}
 
 \begin{center}\textbf{Lineare Algebra Operationen}\end{center}
 \begin{tabular}{cl}
-  $\trans{\mat{A}}$ & eine transponierte Matrix \\
+  $\trans{\mat{A}}$ & das Transponierte einer Matrix $\mat{A}$ \\
   $\mat{A} \odot \mat{B}$ & Elementeweises (Hadamard) Produkt \\
 
 \end{tabular}
@@ -79,7 +79,7 @@
 
 Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierzu werden keine expliziten Instruktionen fest einprogrammiert (engl.:\ hard coding), sondern das Modell wird trainiert und optimiert sich von selbst.
-Dabei wird das Modell mit Trainingsdaten befuettert, mithilfe eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
+Dabei wird das Modell mit Trainingsdaten befuettert, mithilfe dessen eine Korrelation zwischen den Inputdaten und den Outputdaten erlernt werden soll.
 Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell kann dann Vorhersagen fuer neue Daten machen.
 
 \subsection{Allgemeine Begriffe}
@@ -860,7 +860,7 @@ Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 
 
 \begin{defbox}{Vektorisierung einer Funktion}
-  Die Vektoriserung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine
+  Die Vektorisierung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine
   neue Funktion, welche als Rueckgabewert einen Vektor hat, auf dessen
   Komponenten jeweils immer die Funktion $f$ angewendet wird.
   \begin{equation*}
@@ -1312,9 +1312,9 @@ hinzugefuegt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefuegt wird.
 Begrifflich unterscheidet man zwei Arten von Padding:
 \begin{itemize}
-\item{valid-Padding: Es werden keine zuesaezlichen Elemente. $f$ ist also 0.
+\item{valid-Padding: Es werden keine zuesaezlichen Elemente. $f$ ist also 0.}
 \item{same-Padding: Es werden so viele Reihen und Spalten angebracht, dass
-        sich die Groesse des Bildes bei der Faltung erhalten bleibt.
+        sich die Groesse des Bildes bei der Faltung erhalten bleibt.}
 \end{itemize}
 
 Um das Padding zu berechnen fuer same-Padding verwendet man folgende Formel:
@@ -1324,35 +1324,46 @@ Um das Padding zu berechnen fuer same-Padding verwendet man folgende Formel:
 \end{equation}
 
 \paragraph{Stride}
-Stride ist Schrittgroesse der Filterbewegung
--> Stride = 2 bedeutet, dass ein Schritt uebersprungen wird.
-Outputmatrix wird kleiner
-
-Rechnung fuer Outputdimension:
-m = (n + 2p - f)/s + 1; Abgerundet falls keine ganze Zahl
+Bis jetzt haben wir bei den Filterfaltungen, den Filter pro Anwendung immer nur
+um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter sich
+auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
+man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
+Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
+Position uebersprungen. Zur Folge hat dies, dass das neue Bild $\mat{B}^*$
+deutlich kleiner geworden ist, denn das Zentralelement uebspringt somit auch
+diese Felder und bildet so deutlich weniger Pixel.
+\para{}
+Folgende Formel beschreibt die Dimensionen des neuen Bildes $\mat{B}^*$ unter
+beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
+\begin{equation}
+  m = \frac{n + 2p - f}{s} + 1
+\end{equation}
+Falls $m$ keine ganze Zahl ergibt, wird abgerundet.
 
 \paragraph{Mehrere Filter}
-Beispiel mit 2 Filter.
-Filter1 wird angewandt auf Bild -> M1
-Filter2 wird angewandt auf Bild -> M2
-Beide Matrizen M1 und M2 werden hintereinander gestellt und formen einen
-3D-Tensor mit Dimension (fxfx2). Dieses Volumen kann dann erneut Convoluted werden.
-
+Eine Filteroperation ist nicht auf einen einzigen Filter beschraenkt. Es koennen
+mehrere Filter auf das gleiche Ausgangsbild angewandt werden und zusammen ein
+Endbild erzeugen.
+\para{}
+Die Anzahl Filter bezeichnen wir mit $c$.
+Nun macht man pro Filter eine Faltung ueber das Ursprungsbild $\mat{B}$, wobei
+jede Faltung eine neue Matrix $\mat{B}^*_i$ liefert, wobei $i$ der Index des
+Filters ist. All diese Matrizen sind zweidimensional, unabhaengig davon, wieviel
+Komponten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
+Matrizen $\mat{B}^*_i$ aufeinander gelegt werden und somit eine grosse 3D-Endmatrix
+$\mat{B}^*$ bilden.
 Hierfuer muessen alle Filter gleich gross sein.
 
-Zusammenfassung Rechnung:
+Weil die Anzahl Filter der Tiefe $c$ des Endbildes, welche wir sonst als die
+Komponenten des Bildes bezeichnet haben, entspricht, verwendet man dafuer die gleiche Variable.
 
-M(n x n x c) conv M(f x f x c) = M(n-f+1 x n-f+1 x anzahlfilter)
+Mathematisch ausgedrueckt, bedeutet dies:
+\begin{equation}
+  \mat{B}_{n \times n \times c} * \mat{F_1}_{f \times f \times c} * \cdots * \mat{F_n}_{f \times f \times c} = \mat{B}_{(n-f+1) \times (n-f+1) \times n}
+\end{equation}
+
 
 \subsubsection{Convolutional Layer}
-Bild ist Matrix (h x w x c)
-Bild wird du 3D-Tensor mit Tiefe 3 fuer R,G und B
-3D Filter noetig (f x f x c). Tiefe des Filters und des Bildes muss gleich sein.
-Output ist dann 2D-Matrix, da Filter nur entland der Hoehe und Breite des Bildes
-bewegt wird und nicht der Tiefe entlang, da die Tiefe des Filters gleich der
-Tiefe des Bildes ist.
-
-Schritte:
 Convolution wird angewandt.
 Auf Outputmatrix wird Bias (Skalar) draufaddiert (auf jedes Element der gleiche Bias)
 Jeder Filter hat seinen eigenen Bias
@@ -1360,6 +1371,7 @@ Nicht-lineare Aktivierungsfunktion wird auf Matrix angewandt
 Nun werden die verschieden Outputmatrizen der Filter ausgestackt zu einem
 3D-Tensor
 fertig!
+
 \subsubsection{Pooling Layer}
 Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe von Neuronen
 der vorherigen Schicht zu einem einzigen Neuron der naechsten Schicht
