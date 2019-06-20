@@ -20,6 +20,7 @@
 
 \begin{center}\textbf{Mengen}\end{center}
 \begin{tabular}{cl}
+  $(a,b)$ & ein geordnetes Paar (2-Tupel) der Elemente $a$ und $b$ \\
   $\set{A}$ & eine Menge \\
   $\set{R}$ & die Menge aller Reeller Zahlen \\
   $\set{Z}$ & die Menge aller ganzer Zahlen \\
@@ -86,19 +87,34 @@ Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell 
 
 \subsubsection{Daten}
 
-Der \keyword{Trainingsdatensatz} $\set{X}$ beinhaltet gewisse \keyword{Attribute}, die Merkmalstypen der Inputdaten.
-Die \keyword{Features} sind dann die spezifischen Werte der Attribute eines Trainingssample.
-Die sogenannten \keyword{Labels} sind die erwarteten Outputs, welche der Algorithmus vorherzusagen hat.
-Diese Vorhersagen werden mit den Labels abgeglichen und so bewertet.
+Um ein Modell zu trainieren braucht man Daten.
+Diese Daten kommen in der Form eines \keyword{Trainingsdatensatz} $\set{X}$.
+Dabei handelt es sich um eine Menge von \keyword{Trainingssampeln},
+welche jeweils aus \keyword{Inputs} und gewuenschten Outputs.
+bestehen. Diese gewuenschten Outputs bezeichnet man auch als \keyword{Labels}.
+Diese Inputs werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}$ und
+die Labels in einem Vektor
+$\vec{\hat{y}}=\trans{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ zusammengefasst.
+Die Labels sind zu unterscheiden von den vorhergesagten \keyword{Outputs},
+welche der Algorithmus produziert. Auch diese Outputs werden in einem Vektor
+$\vec{y}=\trans{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
+Somit ist ein Trainingssample nichts anderes als ein Paar
+$(\vec{x}_i,\vec{y}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
+$\vec{\hat{y}}$.
+\para{}
+Die Inputs bestehen aus gewissen \keyword{Attributen}, welche die
+Merkmals\textit{typen} der Daten sind. Die sogennanten \keyword{Features} sind
+dann die spezifischen Werte der Attribute eines Samples. Der Algorithmus soll
+anhand dieser Attribute seine Vorhersagen machen.
+Diese Vorhersagen werden dann mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
 Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassigkeiten.
 \para{}
-Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
+Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz
+$\set{T}$, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \para{}
-Die Inputs/Features werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}$ und die Outputs/Vohersagen in einem Vektor $\vec{y}=\trans{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
-Das gleiche macht man mit den Labels, wobei diese mit $\vec{\hat{y}}=\trans{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ bezeichnet werden.
 \par \medskip
 BESSERS BEISPIEL -> UM SPAETER KONKRETES MODELL ZU ERKLAEREN
 AUTOPREIS SCHAETZEN (OKASSION) ANHAND VON GEFAHRENEN KILOMETERN
@@ -123,7 +139,8 @@ Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{f}\colon \set{R}^n
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \keyword{Modellparameter} $\hyperp_1, \hyperp_2,\ldots$.
 Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
-Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den Parametern vorgenommen werden, bis sie das gewuenschte Resultat liefern.
+Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den
+Parametern vorgenommen werden, bis das Modell die gewuenschten Resultate liefert.
 \para{}
 Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist
 angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\hyperp_1x +
@@ -158,9 +175,10 @@ BEISPIELMODELL GLEICHES WIE VORHIN
   \caption{beschriebenes Beispielmodells}
 \end{figure}
 
-\subsection{Lernarten}
+\subsection{Sonstiges}
 \subsubsection{Supervised Learning}
 \subsubsection{Unsupervised Learning}
+\subsubsection{Overfitting}
 
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
@@ -1359,7 +1377,7 @@ Komponenten des Bildes bezeichnet haben, entspricht, verwendet man dafuer die gl
 
 Mathematisch ausgedrueckt, bedeutet dies:
 \begin{equation}
-  \mat{B}_{n \times n \times c} * \mat{F_1}_{f \times f \times c} * \cdots * \mat{F_n}_{f \times f \times c} = \mat{B}_{(n-f+1) \times (n-f+1) \times n}
+  \mat{B}_{n \times n \times c} * \mat{F}_{1;f \times f \times c} * \cdots * \mat{F}_{n;f \times f \times c} = \mat{B}_{(n-f+1) \times (n-f+1) \times n}
 \end{equation}
 
 
