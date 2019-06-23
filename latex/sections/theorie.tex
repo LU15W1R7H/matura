@@ -90,16 +90,16 @@ Der Zusammenhang der Daten wird von den Modellen verallgemeinert und das Modell 
 Um ein Modell zu trainieren braucht man Daten.
 Diese Daten kommen in der Form eines \keyword{Trainingsdatensatz} $\set{X}$.
 Dabei handelt es sich um eine Menge von \keyword{Trainingssampeln},
-welche jeweils aus \keyword{Inputs} und gewuenschten Outputs.
-bestehen. Diese gewuenschten Outputs bezeichnet man auch als \keyword{Labels}.
-Diese Inputs werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}$ und
+welche jeweils aus \keyword{Inputs} und erwarteten Outputs.
+bestehen. Diese erwarteten Outputs bezeichnet man auch als \keyword{Labels}.
+Die Inputs werden in einem Vektor $\vec{x}=\trans{(x_1,x_2,\ldots,x_n)}$ und
 die Labels in einem Vektor
 $\vec{\hat{y}}=\trans{(\hat{y}_1,\hat{y_2},\ldots,\hat{y}_m)}$ zusammengefasst.
 Die Labels sind zu unterscheiden von den vorhergesagten \keyword{Outputs},
 welche der Algorithmus produziert. Auch diese Outputs werden in einem Vektor
 $\vec{y}=\trans{(y_1,y_2,\ldots,y_m)}$ zusammengefasst.
 Somit ist ein Trainingssample nichts anderes als ein Paar
-$(\vec{x}_i,\vec{y}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
+$(\vec{x}_i,\vec{\hat{y}}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
 $\vec{\hat{y}}$.
 \para{}
 Die Inputs bestehen aus gewissen \keyword{Attributen}, welche die
@@ -115,10 +115,9 @@ Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz
 $\set{T}$, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \para{}
-\par \medskip
-BESSERS BEISPIEL -> UM SPAETER KONKRETES MODELL ZU ERKLAEREN
-AUTOPREIS SCHAETZEN (OKASSION) ANHAND VON GEFAHRENEN KILOMETERN
-Am Beispiel eines Datensatz, welcher fuer Bilderkennung von Hunden und Katzen genutzt wird, werden diese Begriffe verdeutlicht.
+Um die soeben eingefuerten Begriffe zu verdeutlichen, betrachten wir nun ein Beispiel.
+Das Ziel ist es vorhersagen ueber den Preis eines occasion Autos zu machen,
+anhand der Anzahl gefahrener Kilometer und dem Alters des Autos.
 Die Inputdaten sind die Fotos von Hunden und Katzen. Deren Attribute sind die moeglichen RGB-Farbenwerte (drei Zahlen, welche von 0 bis 255 reichen) aller Pixel.
 Die Features sind die spezifischen RGB-Werte der Pixel fuer die einzelnen Bilder. Die Outputdaten sind die Labels, welche in diesem Fall angeben, ob ein Hund oder eine Katze auf dem Bild gezeigt wird.
 Dies wird meistens mit einer One-Hot-Kodierung bzw.\ einem One-Hot-Vektor
@@ -934,9 +933,9 @@ $\delta_j^l$ nennen.
     \begin{equation*}
       \mat{A} \odot \mat{B} =
       \begin{pmatrix}
-        a_{1,1} b_{1,1} & \cdots & a_{1,n} b_{1,n} \\[0.3em]
+        \matelem{A}_{1,1} \matelem{B}_{1,1} & \cdots & \matelem{A}_{1,n} \matelem{B}_{1,n} \\[0.3em]
         \vdots & \ddots & \vdots \\[0.3em]
-        a_{m,1} b_{m,1} & \cdots & a_{m,n} b_{m,n} \\[0.3em]
+        \matelem{A}_{m,1} \matelem{B}_{m,1} & \cdots & \matelem{A}_{m,n} \matelem{B}_{m,n} \\[0.3em]
       \end{pmatrix}
       \in \set{R}^{m \times n}
     \end{equation*}
@@ -1022,7 +1021,9 @@ viele Gewichte! Fuer ein Netwerke ohne eine einzige Zwischenschichten gaebe es
 also ueber 38 Milliarden Modellparameter zu erlernen! Das dies nicht realistisch ist,
 sollte auf der Hand liegen.
 \para{}
-Nun sollte klar sein, dass eine andere Modellarchitektur noetig ist, um Machine
+Nicht nur die Anzahl Modellparameter sind ein Problem fuer KNNs in der
+Bildverarbeitung, sondern es bestehen noch weiter Probleme.
+Trotzdem sollte nun klar sein, dass eine andere Modellarchitektur noetig ist, um Machine
 Learning auf Bilder anzuwenden. Fuer genau solche Anwendungen wurde eine modifizierte
 Version eines KNNs entwickelt: das \keyword{Convolutional Neural Network} (CNN).
 Diese Art von Netzwerk, macht Gebrauch von Konzepten aus der klassischen
@@ -1033,6 +1034,64 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 \para{}
 \cite{deeplearning.ai:cnn}
 
+\subsubsection{Topologie von CNNs}
+Ein CNN wirft nicht alle Ideen eines KNNs ueber Bord, stattdessen erweitert es
+das KNN viel mehr.
+Die Topologie eines KNNs wird in sofern beibehalten, dass ein CNN immernoch in
+Schichten aufgeteilt ist. Jedoch sind nicht mehr alle Schichten gleich, sondern
+man unterscheiden nun zwischen drei Arten von Schichten:
+\begin{itemize}
+\item{\keyword{Fully-connected Schichten},}
+\item{\keyword{Convolutional Schichten}, und}
+\item{\keyword{Pooling Schichten}.}
+\end{itemize}
+Die fully-connected Schicht ist altbekannt und ist einfach die klassischen Schicht
+eines KNNs, bestehend aus Neuronen.
+Die Convolutional Schicht und die Pooling Schicht sind zwei neuartige Schichten,
+welche eine Erweiterung fuer CNNs darstellen. Sie werden in diesem Kapitel erklaert.
+Diese beide neuen Arten von Schichten bildet gewissermassen eine Einheit, denn
+auf eine Convolutional Schicht folgt auch immer eine Pooling Schicht.
+\footnote{
+  Es koennten auch mehrere Convolutional Schichten aufeinanderfolgen bevor eine
+  Pooling Schicht kommt, dies wird aber selten gemacht.
+}.
+
+\para{}
+In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
+\begin{figure}[h!]
+
+  \caption{Schichtung eines CNNs}
+  \label{fig:cnn_topology}
+\end{figure}
+
+Beschriftung:
+Inputbilder werden wie Aktivierungen mit $a^l$ bezeichnet.
+Die Filter sind aehnlich zu den Gewichten und werden mit $W^l$ bezeichnet.
+Und der Bias bleibt aehnlich zum alten Bias $b$.
+
+Konventionen zur Beschriftung:
+$f^{[l]}$ ist Filter Groesse\\
+$p^{[l]}$ ist das padding\\
+$s^{l}$ ist stride\\
+Input-Dimension ist $n_H^{[l-1]} \times n_W^{[l-1]} \times n_C^{[l-1]}$\\
+Output-Dimension ist $n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$\\
+
+$n[l] = \frac{n^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} + 1$ jeweils fuer Hoehe
+und Breite\\
+
+$n_C^{l}$ ist Anzahl Filter\\
+
+Filter-Dimension ist: $f^{[l]} \times f^{[l]} \times n_C^{[l-1]}$\\
+Aktivierungen $a^{[l]}$ -> $n_H^{[l]} \times n_W^{[l]} \times n_c^{[l]}$\\
+Gewichte $w^{[l]}$ -> $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times
+n_c^{[l]}$ letzter Term ist ja gleich der Anzahl Filter\\
+Vektor Bias: $n_c^{[l]}$
+
+SchichtIndizes der Filter,Padding und stride sind gleich den Indizes des Output(aktivierungen)
+
+
+Flattening ist, wenn man einen Tensor zu einem Vektor umformt
+
 \subsubsection{Bilder als 3D-Matrizen}
 Bei der Betrachtung von Bildern fuer Machine Learning, ist es sinnvoll, diese
 nicht als eine Anordnung von verschieden farbigen Pixeln zu interpretieren,
@@ -1042,22 +1101,57 @@ sondern sie als \keyword{3D-Matrizen} zu untersuchen.
 \begin{defbox}{3D-Matrix}
   Eine 3D-Matrix ist ein mathematischen Objekt und eine Erweiterung von Matrizen
   auf 3-dimensionale Zahlenanordnung. Vorstellen kann man sich eine 3D-Matrix
-  als ein Volumen dass Zahlen in einem Raster angeordnet hat.
+  als ein Volumen, das Zahlen in einem Raster angeordnet hat.
   Die Zahlen sind dabei die Elemente der Matrix. Analog zum Volumen, bezeichnet
   man die Form der Matrix mit Hoehe, Breite und Tiefe.
-  Eine Matrix von der Form $3 \times 3 \times 3$ koennte folgendermassen aussehen:
+  Eine Matrix von der Form $3 \times 3 \times 3$ koennte folgendermassen
+  aussehen:
+  \para{}
 
-  TIKZPICTURE EINER 3D-Matrix
+  \newcommand{\arrayfilling}[2]{
+    \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
+    \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
+    \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
+}
+
+\begin{tikzpicture}[font=\ttfamily,
+  mymatrix/.style={
+    matrix of math nodes, inner sep=0pt, color=#1,
+    column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
+    nodes={anchor=center, minimum width=5mm,
+      minimum height=3mm, outer sep=0pt, inner sep=0pt,
+      text width=5mm, align=right,
+      draw=none, font=\small},
+  }
+  ]
+
+  \matrix (C) [mymatrix=green] at (6mm,5mm)
+  {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
+  \arrayfilling{C}{green}
+
+  \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
+  \arrayfilling{B}{red}
+
+  \matrix (A) [mymatrix=blue] at (0,0)
+  {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
+  \arrayfilling{A}{blue}
+
+  \foreach \i in {auxnw, auxne, auxse, auxsw}
+  \draw[brown, ultra thin] (A\i)--(C\i);
+
+  \node[left=1mm of B.west] {$\ten{M}_{3 \times 3 \times 3} =$};
+\end{tikzpicture}
 
 \end{defbox}
 
 \para{}
-Ein Bild kann somit einfach als 3D-Matrix, bezeichnet mit $\mat{B}_{h \times w
+Ein Bild kann somit einfach als 3D-Matrix, bezeichnet mit $\mat{B} \in \set{R}^{h \times w
   \times c}$ der Form $(\text{Bildhoehe} \times
 \text{Bildbreite} \times \text{Anzahl Farbkomponenten})$ betrachtet werden. Die
 Elemente der Matrix nehmen dann einfach die Werte der Pixelkomponenten an.
 Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
-Somit waere es eine normale 2D-Matrix $\mat{B}_{h \times w}$.
+Somit waere es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$.
 Siehe Abb. (\ref{fig:bildmatrix}).
 \para{}
 Eine solche \keyword{Bildmatrix} stellt dann den Input $\mat{X}$ eines CNNs dar und nicht mehr wie
@@ -1072,36 +1166,33 @@ voher ein Vektor $\vec{x}$.
   \label{fig:bildmatrix}
 \end{figure}
 
-\begin{figure}
-
-  \caption{2-dimensionalen Schicht von Neuronen}
-\end{figure}
-
 \subsubsection{Filter}
+Zuerst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
+Gebrauch von sogennanten Filtern. Diese werden in diesem Abschnitt behandelt.
 \paragraph{Filter in der Bildverarbeitung}
-\keyword{Filter} (engl. auch: Kernel) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
+\keyword{Filter} (auch Kern) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall um die Features eines Bildes zu
 erlernen. Aus diktaktischen Gruenden betrachten wir zuerst nur 2D-Filter, welche sich fuer graustufige
-Bilder $\mat{B}_{h \times w}$ eignen.
+Bilder $\mat{B} \in \set{R}^{h \times w}$ eignen.
 \begin{figure}[h!]
 
   \caption{der Instagramfilter: Blablabla}
 \end{figure}
 
 \para{}
-Filter sind einfach Regionen, deutlich kleiner als das verarbeitete Bild, welche
-ueber alle Pixel wandert und diese manipuliert und so wieder ein neues Bild
-$\mat{B}^*$ liefern.
+Ein Filter ist einfach eine Regionen, deutlich kleiner als das verarbeitete Bild, welche
+ueber alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
+$\mat{B}^*$ liefert.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um eine Matrix,
 die sogennante \keyword{Filtermatrix} oder Faltungsmatrix (siehe Abb. (\ref{fig:filtermatrix})),
-bezeichnet mit $\mat{F}_{f \times f}$. Solche Filter sind immer quadratisch,
+bezeichnet mit $\mat{F} \in \set{R}^{f \times f}$. Solche Filter sind immer quadratisch,
 wobei ihre Zeilen- bzw. Spaltenlaenge mit $f$ bezeichnet wird. Dabei ist $f$
-immer eine ungerade Zahl, damit ein Element, das sogennante \keyword{Zentralelement}, immer im Zenturm des Filters liegt.
+immer eine ungerade Zahl, damit ein Element, das sogennante \keyword{Zentralelement}, immer im Zentrum des Filters liegt.
 
 \begin{figure}[h!]
-
-  \caption{eine Filtermatrix}
+  % Zentralelement kennzeichnen
+  \caption{eine 2D-Filtermatrix}
   \label{fig:filtermatrix}
 \end{figure}
 \para{}
@@ -1151,14 +1242,14 @@ Art von Kantendetektion durch mithilfe von Kontrastverstaerkung.
 \para{}
 \cite{Markl}
 
-\paragraph{Filteroperationen als Faltungen}
+\paragraph{Filteroperationen als diskrete Faltungen}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
-graustufiges Bild $\mat{B}_{h \times w}$ erlauetert. Spaeter werden auch noch farbige
+graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlauetert. Spaeter werden auch noch farbige
 Bilder erklaert.
 \para{}
 Grundsaetzlich handelt es sich bei einer Anwendung eines Filters auf ein Bild um
-eine spezifische mathematische Operation: eine \keyword{Faltung} (engl.:
+eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.:
 \keyword{Convolution}).
 \footnote{
   Eigentlich ist die Filteroperation keine richtige Faltung im mathematischen
@@ -1177,13 +1268,14 @@ Bedeutung der Faltung fuer Filter beschraenken.
 Eine Filteroperation ist nichts anderes als eine Filtermatrix $\mat{F}$, welche ueber eine
 Bildmatrix $\mat{B}$ gefaltet wird und somit eine eine neue Bildmatrix
 $\mat{B}^*$ bildet. Man schreibt: $\mat{B}^* = \mat{F} * \mat{B}$.\\
-Um nun diese Faltung zu verstehen, verwenden wir als Beispiel eine 2D-Filtermatrix $\mat{F}_{3 \times 3}$, bei welcher
+Um nun diese Faltung zu verstehen, verwenden wir als Beispiel eine
+2D-Filtermatrix $\mat{F} \in \set{R}^{3 \times 3}$, bei welcher
 $f = 3$ gewaehlt wurde.
 Wie bereits vorhin erwaehnt wandern der Filter ueber das Bild. Dabei befindet
 sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
 wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
-\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})). Man schreibt dafuer
+\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})). Wir schreiben dafuer
 $\tilde{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
 des Zentralelements im rezeptiven Feldes angiebt. Somit ist das rezeptiven Feld einfach eine
 Untermatrix $\tilde{\mat{B}}_{3 \times 3}$ des Obermatrix $\mat{B}$.
@@ -1203,8 +1295,8 @@ hat der Filter zu beginn das rezeptive Feld $\tilde{\mat{B}}^{(2,2)}$.
 Nun werden die Elemente der Filters mit den Elementen des rezeptiven Feldes
 verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird einfach das
 Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
-gebildet. Nun erhalten wir eine neue Matrix $\mat{P}_{3 \times 3} = \mat{F} \odot
-\tilde{\mat{B}}^{(2,2)}$.
+gebildet. Nun erhalten wir eine neue Matrix $\mat{F} \odot
+\tilde{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
 Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
 aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\mat{B}^*)_{1,1}$ des bearbeiteten
 Bildes.
@@ -1226,8 +1318,8 @@ verschobenen Filters kommt.
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
 
-Es ist zu bemerken, dass das neue Bild $\mat{B}_{(h-2) \times (w-2)}^*$ nicht mehr die gleichen Masse
-hat, wie das Ursprungsbild $\mat{B}_{h \times w}$. Das liegt daran, dass pro
+Es ist zu bemerken, dass das neue Bild $\mat{B}^* \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
+hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
 Lage des Filters jeweils ein Pixel des neuen Bildes berechnet wird. Man kann
 sich vorstellen, dass an der Position des Zentralelements jeweils ein neuer
 Pixel entsteht. Dabei muss der Filter immer eine vollstaendige Region als
@@ -1255,6 +1347,35 @@ Bildes zu seinen lokalen Nachbarn, gewichtet durch den Filter
 
 ALLGEMEINSTE FILTER GLEICHUNGEN
 
+Allgemine Gleichung als Funktion geschrieben anstatt Matrix:
+
+
+
+\paragraph{GLEICHUNGEN!?}
+\begin{equation}
+  \mat{B}^*(x,y) = \mat{F} * \mat{B}(x,y) = \sum_{i=1}^n \sum_{j=1}^n \mat{B}(x-i+a, y-j+a)\mat{F}(i,j)
+\end{equation}
+$a$ ist die Kooridnate des Mittelpunkts der Faltungsmatrix und $k(i,j)$ ist das
+Element der Filtermatrix
+
+\begin{equation}
+  \begin{pmatrix}
+    \begin{bmatrix}
+      a & b & c \\
+      d & e & f \\
+      g & h & i \\
+    \end{bmatrix}
+    *
+    \begin{bmatrix}
+      1 & 2 & 3 \\
+      4 & 5 & 6 \\
+      7 & 8 & 9 \\
+    \end{bmatrix}
+  \end{pmatrix}
+  [2,2]
+  = (i \cdot 1) + (h \cdot 2) + (g \cdot 3) + (f \cdot 4) + (e \cdot 5) + (d \cdot 6) + (c \cdot 7) + (b \cdot 8) + (a \cdot 9)
+
+\end{equation}
 
 \paragraph{Wieso Filter?}
 Es stellt sich nun die Frage, weshalb sich Filter fuer Machine
@@ -1277,7 +1398,7 @@ keine Rolle spielen, wo auf dem Bild es sich befindet, oder welche Groesse es
 hat. Es besteht der Wunsch nach \keyword{Invarianz}. Typische Invarianzen,
 welcher ein Filter erfuellt, sind: Translationinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
 
-
+\keyword{Parameter Sharing}
 \paragraph{Filter in CNNs}
 So nun betrachten wir Filter fuer CNNs. Der springende Punkt ist hierbei, dass
 die Filtereintraege Modellparameter sind und erlernt werden. Da sie die gleiche
@@ -1301,11 +1422,7 @@ Ursprungspixeln zu liegen kommt. Die Raender fallen so weg. Diese Groesse des
 Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei giltet die Formel fuer die
 neue Groesse des Bildes.
 \begin{equation}
-  s_{neu} = s_{alt} - f + 1
-\end{equation}
-
-\begin{equation}
-  \mat{B}_{s \times s} * \mat{F}_{f \times f} = \mat{B}^*_{s-f+1 \times s-f+1}
+  n_1 = n_0 - f + 1
 \end{equation}
 
 Das Problem hierbei ist, dass nach einigen Faltungen das Bild extrem geschrumpft
@@ -1330,20 +1447,20 @@ hinzugefuegt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefuegt wird.
 Begrifflich unterscheidet man zwei Arten von Padding:
 \begin{itemize}
-\item{valid-Padding: Es werden keine zuesaezlichen Elemente. $f$ ist also 0.}
+\item{valid-Padding: Es werden keine zuesaezlichen Elemente angebracht. $f$ ist also 0.}
 \item{same-Padding: Es werden so viele Reihen und Spalten angebracht, dass
         sich die Groesse des Bildes bei der Faltung erhalten bleibt.}
 \end{itemize}
 
 Um das Padding zu berechnen fuer same-Padding verwendet man folgende Formel:
-(Ursprungsformel: $m = n + 2p - f + 1$)
+(Ursprungsformel: $n_1 = n_0 + 2p - f + 1$)
 \begin{equation}
   p = \frac{f-1}{2}
 \end{equation}
 
 \paragraph{Stride}
 Bis jetzt haben wir bei den Filterfaltungen, den Filter pro Anwendung immer nur
-um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter sich
+um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
 auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
@@ -1354,7 +1471,7 @@ diese Felder und bildet so deutlich weniger Pixel.
 Folgende Formel beschreibt die Dimensionen des neuen Bildes $\mat{B}^*$ unter
 beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 \begin{equation}
-  m = \frac{n + 2p - f}{s} + 1
+  n_1 = \frac{n_0 + 2p - f}{s} + 1
 \end{equation}
 Falls $m$ keine ganze Zahl ergibt, wird abgerundet.
 
@@ -1377,7 +1494,7 @@ Komponenten des Bildes bezeichnet haben, entspricht, verwendet man dafuer die gl
 
 Mathematisch ausgedrueckt, bedeutet dies:
 \begin{equation}
-  \mat{B}_{n \times n \times c} * \mat{F}_{1;f \times f \times c} * \cdots * \mat{F}_{n;f \times f \times c} = \mat{B}_{(n-f+1) \times (n-f+1) \times n}
+  \mat{B} * \mat{F}_1 * \cdots * \mat{F}_n = \mat{B} \in \set{R}^{(m-f+1) \times (m-f+1) \times n} \quad \mat{B} \in \set{R}^{m \times m \times c} \quad \mat{F}_i \in \set{R}^{f \times f \times c}
 \end{equation}
 
 
@@ -1421,48 +1538,6 @@ einer Schicht zusammengefasst werden oder sie werden als seperate Schichten betr
 
 \subsubsection{Fully-connected Layer}
 
-\subsubsection{Das Netzwerk und sein Aufbau}
-
-Ein klassisches CNN besteht aus folgenden drei Typen von Schichten:
-Convolutional Schichten, Pooling Schichten und den bereits bekannten
-fully-connected Schichten.
-Zuerst kommt immer eine oder mehrere Convolutional Schichten, direkt darauf
-folgt dann eine Pooling Schicht. Dieses Muster kann dann beliebig oft
-wiederholt werden, bis die gewuenschte Komplexitaet erreicht wurde.
-Bei Bedarf koennen vor oder hinter einem solchen Muster eine fully-connected
-Schicht eingefuegt werden.
-\begin{figure}
-
-  \caption{Schema eines CNNs}
-\end{figure}
-
-Beschriftung:
-Inputbilder werden wie Aktivierungen mit $a^l$ bezeichnet.
-Die Filter sind aehnlich zu den Gewichten und werden mit $W^l$ bezeichnet.
-Und der Bias bleibt aehnlich zum alten Bias $b$.
-
-Konventionen zur Beschriftung:
-$f^{[l]}$ ist Filter Groesse\\
-$p^{[l]}$ ist das padding\\
-$s^{l}$ ist stride\\
-Input-Dimension ist $n_H^{[l-1]} \times n_W^{[l-1]} \times n_C^{[l-1]}$\\
-Output-Dimension ist $n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$\\
-
-$n[l] = \frac{n^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} + 1$ jeweils fuer Hoehe
-und Breite\\
-
-$n_C^{l}$ ist Anzahl Filter\\
-
-Filter-Dimension ist: $f^{[l]} \times f^{[l]} \times n_C^{[l-1]}$\\
-Aktivierungen $a^{[l]}$ -> $n_H^{[l]} \times n_W^{[l]} \times n_c^{[l]}$\\
-Gewichte $w^{[l]}$ -> $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times
-n_c^{[l]}$ letzter Term ist ja gleich der Anzahl Filter\\
-Vektor Bias: $n_c^{[l]}$
-
-SchichtIndizes der Filter,Padding und stride sind gleich den Indizes des Output(aktivierungen)
-
-
-Flattening ist, wenn man einen Tensor zu einem Vektor umformt
 \subsubsection{Eigenschaften von CNNs}
 Parameter/Weight-Sharing
 
