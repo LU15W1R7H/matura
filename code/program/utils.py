@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 # loads image by path, boolean greyscale
 def loadImage(path,greyscale):
     if greyscale:
-        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        tmp = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        img = [[ [tmp[x,y] ] for y in range(len(tmp[x]))] for x in range(len(tmp))] # reshape [x,y] to [x,y,1]
     else:
         img = cv2.imread(path, cv2.IMREAD_COLOR)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # switch BGR encoding to RGB
