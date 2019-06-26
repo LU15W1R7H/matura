@@ -2,7 +2,8 @@
 
 % math
 \let\oldvec\vec
-\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\vec}[1]{\bm{\mathbf{#1}}} % \bm vs \mathbf
+\newcommand{\vecf}[1]{\bm{#1}} % \bm vs \mathbf
 \newcommand{\vecelem}[1]{#1}
 \newcommand{\vecarrow}[1]{\vv{#1}}
 \newcommand{\mat}[1]{\bm{#1}}
@@ -11,10 +12,11 @@
 \newcommand{\set}[1]{\mathbb{#1}}
 
 \newcommand{\trans}[1]{#1^\mathrm{T}}
+\newcommand{\ifrac}[2]{\sfrac{#1}{#2}}
 \newcommand{\deriv}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\partderiv}[2]{\frac{\partial #1}{\partial #2}}
-\newcommand{\ideriv}[2]{(\text{d}#1)/(\text{d}#2)}
-\newcommand{\ipartderiv}[2]{(\partial #1)/(\partial #2)}
+\newcommand{\ideriv}[2]{\ifrac{\text{d}#1}{\text{d}#2}}
+\newcommand{\ipartderiv}[2]{\ifrac{\partial #1}{\partial #2}}
 
 % machine learning
 \newcommand{\param}{\lambda}
@@ -26,7 +28,7 @@
 \newcommand{\ds}{\displaystyle}
 
 \let\oldcite\cite
-\renewcommand{\cite}[1]{\\{\color{red}(\oldcite{#1})}}
+\renewcommand{\cite}[1]{{\color{red}(\oldcite{#1})}\\}
 
 
 

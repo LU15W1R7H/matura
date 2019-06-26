@@ -1,4 +1,5 @@
 \documentclass[../main]{subfiles}
+
 \begin{document}
 
 \section{Konventionen und Notation}
@@ -25,10 +26,11 @@
   $\set{R}$ & die Menge aller Reeller Zahlen \\
   $\set{Z}$ & die Menge aller ganzer Zahlen \\
   $\set{N}$ & die Menge aller natuerlicher Zahlen \\
-  $\set{E}$ & die Menge aller gerader (engl.: even) Zahlen \\
-  $\set{O}$ & die Menge aller ungerader (engl.: odd) Zahlen \\
+  $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
+  $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
   $\{a,b\}$ & die Menge, welche aus Elementen $a$ und $b$ besteht \\
   $\{1,\ldots,n\}$ & Menge aller ganzen Zahlen von 1 bis $n$ \\
+  $\in$ & ... ist Element von ...
 
 \end{tabular}
 
@@ -36,7 +38,7 @@
 \begin{tabular}{cl}
   $\vecelem{a}_i$ & $i$-te Vektorkomponente mit Startindex 1 \\
   $\mat{A}_{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
-  $(\mat{A})_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  ${(\mat{A})}_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
   $\mat{A}_{:,i}$ & Spalte $i$ der Matrix $\mat{A}$\ \\
@@ -45,8 +47,10 @@
 
 \begin{center}\textbf{Lineare Algebra Operationen}\end{center}
 \begin{tabular}{cl}
+  $\vec{v} \cdot \vec{w}$ & Skalarprodukt von $\vec{v}$ mit $\vec{w}$ \\
   $\trans{\mat{A}}$ & das Transponierte einer Matrix $\mat{A}$ \\
   $\mat{A} \odot \mat{B}$ & Elementeweises (Hadamard) Produkt \\
+  $\mat{A} * \mat{B}$ & diskrete Faltung von $\mat{A}$ ueber $\mat{B}$
 
 \end{tabular}
 
@@ -54,8 +58,8 @@
 \begin{tabular}{cl}
   $\ds\deriv{y}{x}$ & Ableitung von $y$ bezueglich $x$ \\[2ex]
   $\ds\partderiv{y}{x}$ & Partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\nabla y$ & Gradient von $y$\\
-  $\nabla_{\vec{x}}y$ & Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
+  $\vecf{\nabla} y$ & Gradient von $y$\\
+  $\vecf{\nabla}_{\vec{x}}y$ & Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
 
 \end{tabular}
 
@@ -64,8 +68,9 @@
   $f: \set{A} \to \set{B}$ & Funktion $f$ mit Definitionsmenge $\set{A}$ und Zielmenge $\set{B}$ \\
   $f(x)$ & Funktion $f$ mit Argument $x$ (Skalar) \\
   $f(\vec{v})$ & Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
-  $f[\vec{v}]$ & Vektorisierte Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
+  $\vecf{f}[\vec{v}]$ & Vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
   $\mathcal{A}$ & ein Funktionenraum \\
+  $f * g$ & Faltung von $f$ ueber g \\
 
 \end{tabular}
 
@@ -77,14 +82,16 @@
   $\sigma^2$ & Varianz
 \end{tabular}
 
-\begin{center}\textbf{Machine Learning}\end{center}
+\begin{center}\textbf{Sonstiges}\end{center}
 \begin{tabular}{cl}
-
+  $\forall$ & ``fuer jedes ...'' \\
+  $\therefore$ & ``... daraus folgt, dass ...'' \\
+  $\exists$ & ``... existiert'' \\
 \end{tabular}
 
 
 \pagebreak
-\section{Machinelles Lernen - Theorie}
+\section{Machinelles Lernen --- Theorie}
 
 Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu loesen
@@ -99,7 +106,7 @@ kann das Modell \keyword{Vorhersagen} zu neuen Daten machen.
 Man unterscheiden zwischen zwei Arten von Maschinellen Lernen:
 \begin{itemize}
 \item{
-    \keyword{Ueberwachtes Lernen} (engl.: supervised learning) ist ein
+    \keyword{Ueberwachtes Lernen} (engl.:\ supervised learning) ist ein
     Lernverfahren, bei welchem die Daten aus zwei Teilen bestehen, aus Inputs und
     Outputs. Man bezeichnet dabei die Outputs als Labels. Die Aufgabe des Modells
     ist es eine \keyword{Korrelation} zwischen den Inputs und den Labels zu
@@ -115,7 +122,7 @@ Man unterscheiden zwischen zwei Arten von Maschinellen Lernen:
     Modell auch keine Vorhersagen machen und so auch nichts erlernen.
   }
 \item{
-    \keyword{Unueberwachtes Lernen} (engl.: unsupervised learning) ist ein anderes
+    \keyword{Unueberwachtes Lernen} (engl.:\ unsupervised learning) ist ein anderes
     Lernverfahren, bei welchem eben diese Labels nicht vorhanden sind. Dem
     Modell stehen nur die Inputdaten zur Verfuegung. Diese werden erneut analyisert
     und das Modell soll Muster herausextrahieren, welche sich von sonstigem
@@ -183,15 +190,6 @@ Um die soeben eingefuerten Begriffe zu verdeutlichen, betrachten wir unser Autob
 Die Inputdaten sind die Anzahl gefahrener Kilometer und die Alter von
 verschieden Autos. Sie stellen
 
-\begin{figure}[h!]
-  \centering
-  \begin{tikzpicture}[node distance=5cm,auto]
-
-  \end{tikzpicture}
-
-  \caption{das beschriebene Machine Learning Modells}
-\end{figure}
-
 
 \subsubsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{f}\colon \set{R}^n \to \set{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
@@ -224,25 +222,22 @@ BEISPIELMODELL GLEICHES WIE VORHIN
 \begin{figure}[h!]
   \centering
 
-  \begin{tikzpicture}
-    \path (3,0) node [draw,thick,minimum width=2cm,minimum height=3cm](neuron){Modell};
-    \path[red] (0,0.5) node(T){$T$} (0,-0.5) node(H){$H$};
-    \path[black!40!green] (5,0) node(y1){$y_1$};
-    \draw[->] (T) -- (neuron);
-    \draw[->] (H) -- (neuron);
-    \draw[->] (neuron) -- (y1);
 
-  \end{tikzpicture}
-
-  \caption{beschriebenes Beispielmodells}
+  \caption{Schema eines Modells}
 \end{figure}
 
+\begin{figure}[h!]
+  % Regressionsgerade
+  \caption{beschriebenes Beispielmodell}
+\end{figure}
 
 
 \subsection{Training}
 \subsubsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
-Dafuer gibt es sogennante \keyword{Kosten-, Verlust- oder Fehlerfunktionen}. Sie sollen ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
+Dafuer gibt es sogennante \keyword{Kostenfunktionen} (auch Verlust- oder
+Fehlerfunktionen).
+Sie sollen ein Mass fuer die Abweichung des Outputs $\vec{y}$ vom Label $\vec{\hat{y}}$ sein.
 \para{}
 Die Fehler der einzelnen Outputs $c(y_i,\hat{y}_i)$ werden aufsummiert um den
 Fehler $C(\vec{y}_j,\vec{\hat{y}}_j)$ (wobei $\vec{y}_j$ die Vorhersagen sind und
@@ -318,7 +313,7 @@ Dafuer muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{
 bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der staerksten Funktionswertabnahme zeigt.
 
-Hierzu braucht man den sogennanten \keyword{Gradient} $\vec{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
+Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
 \para{}
 
 \begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
@@ -335,26 +330,33 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vec{\nabla}$, wofür man
 \para{}
 
 \begin{defbox}{Gradient}
-  Der Gradient $\vec{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
+  Der Gradient $\vecf{\nabla}$ ist ein Differentialoperator, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
   Dabei fasst man alle partiellen Ableitungen einer Funktion $f$, nach jedem
   Argument $x_i$ in einem Vektor zusammen.
   \begin{equation*}
-    \vec{\nabla}f=
+    \vecf{\nabla}f=
     \begin{pmatrix}
       \partderiv{f}{x_1} \\
       \vdots \\
       \partderiv{f}{x_n} \\
     \end{pmatrix}
   \end{equation*}
-  Geometisch ist der Gradient $\vec{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
+  Geometisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
   Sein Betrag gibt die Staerke des Anstiegs an.
+
+
+
 \end{defbox}
+
+\begin{figure}[h!]
+  \caption{Skalarfeld mit zugehoerigem Gradientenfeld}
+\end{figure}
 
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_t$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben
 werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
 \begin{equation}\label{eq:gradientdescent}
-  \vec{p}_{t+1} = \vec{p}_t - \eta \cdot \vec{\nabla} \mathit{f}(\vec{p}_t)
+  \vec{p}_{t+1} = \vec{p}_t - \eta \cdot \vecf{\nabla} \mathit{f}(\vec{p}_t)
 \end{equation}
 
 BEISPIEL FUER GRADIENTENVERFAHREN MIT ABBILDUNG
@@ -503,11 +505,11 @@ fuer ein tiefes $b$ nicht feuern lassen wuerde.
 Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
-\para{}
+
+\paragraph{Was kann ein Perzeptron erlernen?}
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \keyword{Linearer Klassifikator} der Form
-$y=w_1x_1+\cdots+w
-_nx_n$.
+$y = w_1x_1 + \cdots + w_n x_n$.
 Es kann die Features in zwei Klassen 0 oder 1 einordnen.
 Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
@@ -537,6 +539,12 @@ SCHREIBEN
 
 % Hebbsche Lernregel
 
+\begin{figure}[h!]
+
+  \caption{Nervenzelle}
+\end{figure}
+
+
 \subsubsection{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage, lineare Klassifikationen
 durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
@@ -552,6 +560,11 @@ die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Ne
 Die Aktivierung $a$ ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
 auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
+
+\begin{figure}[h!]
+
+  \caption{ein kuenstliches Neuron und seine Bestandteile}
+\end{figure}
 
 \paragraph{Perzeptronen als Kuenstliche Neuronen}
 Zuerst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
@@ -754,6 +767,7 @@ geometrische Formen. Die dritte Schicht sollte dann schon komplexere
 geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase, aehneln. Die letzten Schichten sollte dann all diese
 Merkmale zusammensetzen und so ein Gesicht erkennen.
 
+SCHICHTENBESCHRIFTUNG HINZUFUEGEN; BIAS ALS EIGENES NEURON?
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -827,7 +841,7 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 \item{$n_j^l$ ist das $j$-te Neuron in der $l$-ten Schicht.}
 \item{$z_j^l$ ist die gewichtete Summe der Inputs des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
-\item{$b_j^l}$ ist die Neigung fuer das $j$-te Neuron in der $l+1$-ten Schicht ausgeht.
+\item{$b_j^l$ ist die Neigung fuer das $j$-te Neuron in der ($l+1$)-ten Schicht ausgeht.
   \footnote{
     Diese Konvention wurde gewaehlt, damit die folgenden Gleichungen simpler sind.
   }
@@ -889,8 +903,8 @@ beginnen mit 0 und ended mit L-1
 
     % input -> hidden1
     \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {2,4}
-      \draw[->] (mat-\ai-1) -- node[above,sloped]{$w_{\aii,\ai}^1$} (mat-\aii-3);
+      \foreach \aii in {2,4,...,6}
+      \draw[->] (mat-\ai-1) -- node[above,sloped]{} (mat-\aii-3);
     }
 
     % hidden1 ->...
@@ -914,13 +928,19 @@ beginnen mit 0 und ended mit L-1
     % hidden3 -> output
     \foreach \ai in {2,4,...,6} {
       \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-5) -- node[above,sloped]{$w_{\aii,\ai}^L$} (mat-\aii-7);
+      \draw[->] (mat-\ai-5) -- node[above,sloped]{} (mat-\aii-7);
     }
 
   \end{tikzpicture}
   \label{fi:nn_layers}
   \caption{zum Verstaentniss der Nomenklatur}
 \end{figure}
+
+\begin{figure}[h!]
+
+  \caption{Neuron mit Gewichtbeschriftungen und Neigung}
+\end{figure}
+
 
 \par\bigskip
 Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche jeweils
@@ -1016,11 +1036,11 @@ Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 \para{}
 
 \begin{defbox}{Vektorisierung einer Funktion}
-  Die Vektorisierung einer Funktion $f$, geschrieben als $f[\vec{v}]$ ist eine
+  Die Vektorisierung einer Funktion $f$, geschrieben als $\vecf{f}[\vec{v}]$ ist eine
   neue Funktion, welche als Rueckgabewert einen Vektor hat, auf dessen
   Komponenten jeweils immer die Funktion $f$ angewendet wird.
   \begin{equation*}
-    f[\vec{v}]=
+    \vecf{f}[\vec{v}]=
     \begin{pmatrix}
       f(v_1)\\
       \vdots \\
@@ -1030,11 +1050,11 @@ Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 \end{defbox}
 \para{}
 
-Nun kann ganz einfach die vektorisierte Aktivierungsfunktion $\varphi$ auf
+Nun kann ganz einfach die vektorisierte Aktivierungsfunktion $\vecf{\varphi}$ auf
 $\vec{z}^{l+1}$ angewandt werden.
 
 \begin{equation}\label{eq:aktivierung_matrix}
-  \vec{a}^{l+1} = \varphi \left[\mat{W}^{l} \vec{a}^{l} + \vec{b}^{l} \right] = \varphi \left[ \vec{z}^{l+1} \right]
+  \vec{a}^{l+1} = \vecf{\varphi} \left[\mat{W}^{l} \vec{a}^{l} + \vec{b}^{l} \right] = \vecf{\varphi} \left[ \vec{z}^{l+1} \right]
 \end{equation}
 
 \para{}
@@ -1048,7 +1068,7 @@ erheblich ueber die Leistungsfaehigkeit des Modells.
 \para{}
 Wie in Sektion (\ref{sec:gradientenverfahren}) gezeigt, muss am Anfang des
 Gradientenverfahrens ein Startpunkt $\vec{p}_0$ innerhalb des Gradientenfeldes
-$\vec{\nabla}$ gewaehlt werden, von welchem aus der Gradientenabstieg beginnt.
+$\vecf{\nabla}$ gewaehlt werden, von welchem aus der Gradientenabstieg beginnt.
 Da wir das Gradientenverfahren zur Optimierung der Modellparameter verwenden,
 ist unser Startpunkt, der Vektor aller Hyperparameter
 $\vec{\param} = \trans{\begin{pmatrix} \param_1 & \cdots & \param_n \end{pmatrix}}$.
@@ -1062,11 +1082,14 @@ liefern. Man muss ausprobieren, deshalb initalisert man gaengierweise die
 Hyperparameter mit Zufallswerten. Dafuer nimmt man aber nicht irgendwelche
 Zufallsvariablen sondern man benutzt die Gauss'sche Normalverteilung
 $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
-
-$$\ds \phi(x\ |\ \mu,\sigma^2) =
-\frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}$$
-
+\[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
+
+\begin{figure}[h!]
+
+  \caption{die Gauss'sche Glockenkurve}
+\end{figure}
+
 Um die Neigungen $b=0$ zu initalisieren benutzt man eine Normalverteilung
 $\mathcal{N}(0,1)$ mit Erwartungswert $\mu = 0$ und Varianz $\sigma^2 =
 1$. Um die Gewichte $w_{t=0}$ zu initalisieren benutzt man ebenfalls eine
@@ -1078,7 +1101,8 @@ einer Schicht eine Varianz von $\sigma^2_{tot} = 1$ hat.
   b_{t=0}^l &\sim \mathcal{N}(\mu = 0, \sigma^2 = 1)
 \end{align}
 
-WEITERE ERLAUETERUNGEN? SATURATION DER NEURONEN VERHINDERN DESHALB VARIANZ_{TOT}
+
+WEITERE ERLAUETERUNGEN? SATURATION DER NEURONEN VERHINDERN DESHALB TOTALE VARIANZ
 NUR 1
 
 \para{}
@@ -1100,6 +1124,8 @@ Da ein KNN, wie der Name es schon sagt, vernetzt ist, koennen die partiellen
 Ableitungen einer Schicht bezueglich seiner Nachbarsschichten berechnet werden.
 Hierfuer ist es sinnvoll eine Zwischenwert, welchen wir Fehler
 $\delta_j^l$ nennen.
+
+COMPUTATIONAL GRAPHS!
 
 \para{}
 \begin{defbox}{Hadamard-Produkt}
@@ -1152,14 +1178,14 @@ Der Fehler in der Outputschicht
 
 Matrixform
 \begin{equation}\tag{BP1a}
-  \delta^L = \nabla_{\vec{a}}C \odot \sigma'(z^L)
+  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}}C \odot \vecf{\sigma}'(\vec{z}^L)
 \end{equation}
-Das tiefgestellte $_a$ des Nablas, gibt an, dass es sich um den Gradienten mit den partiellen
+Das tiefgestellte $_{\vec{a}}$ des Nablas, gibt an, dass es sich um den Gradienten mit den partiellen
 Ableitungen bezueglich den Aktivierungen $a$ handelt.
 
 Fehler anhand des Fehlers der naechsten Schicht
 \begin{equation}\tag{BP2}
-  \delta^l = (\trans{(w^{l+1})} \delta^{l+1}) \odot \sigma'(z^l)
+  \vec{\delta}^l = (\trans{(\mat{W}^{l+1})} \vec{\delta}^{l+1}) \odot \vecf{\sigma}'(\vec{z}^l)
 \end{equation}
 
 \begin{equation}\tag{BP3}
@@ -1293,40 +1319,40 @@ sondern sie als \keyword{3D-Matrizen} zu untersuchen.
   aussehen:
   \para{}
 
-  \newcommand{\arrayfilling}[2]{
-    \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
-    \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
-    \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
-  }
+  % \newcommand{\arrayfilling}[2]{
+  %   \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
+  %   \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
+  %   \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
+  % }
 
-  \begin{tikzpicture}[font=\ttfamily,
-    mymatrix/.style={
-      matrix of math nodes, inner sep=0pt, color=#1,
-      column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
-      nodes={anchor=center, minimum width=5mm,
-        minimum height=3mm, outer sep=0pt, inner sep=0pt,
-        text width=5mm, align=right,
-        draw=none, font=\small},
-    }
-    ]
+  % \begin{tikzpicture}[font=\ttfamily,
+  %   mymatrix/.style={
+  %     matrix of math nodes, inner sep=0pt, color=#1,
+  %     column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
+  %     nodes={anchor=center, minimum width=5mm,
+  %       minimum height=3mm, outer sep=0pt, inner sep=0pt,
+  %       text width=5mm, align=right,
+  %       draw=none, font=\small},
+  %   }
+  %   ]
 
-    \matrix (C) [mymatrix=green] at (6mm,5mm)
-    {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
-    \arrayfilling{C}{green}
+  %   \matrix (C) [mymatrix=green] at (6mm,5mm)
+  %   {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
+  %   \arrayfilling{C}{green}
 
-    \matrix (B) [mymatrix=red] at (3mm,2.5mm)
-    {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
-    \arrayfilling{B}{red}
+  %   \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  %   {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
+  %   \arrayfilling{B}{red}
 
-    \matrix (A) [mymatrix=blue] at (0,0)
-    {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
-    \arrayfilling{A}{blue}
+  %   \matrix (A) [mymatrix=blue] at (0,0)
+  %   {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
+  %   \arrayfilling{A}{blue}
 
-    \foreach \i in {auxnw, auxne, auxse, auxsw}
-    \draw[brown, ultra thin] (A\i)--(C\i);
+  %   \foreach \i in {auxnw, auxne, auxse, auxsw}
+  %   \draw[brown, ultra thin] (A\i)--(C\i);
 
-    \node[left=1mm of B.west] {$\ten{M}_{3 \times 3 \times 3} =$};
-  \end{tikzpicture}
+  %   \node[left=1mm of B.west] {$\ten{M}_{3 \times 3 \times 3} =$};
+  % \end{tikzpicture}
 
 \end{defbox}
 
@@ -1562,7 +1588,6 @@ Element der Filtermatrix
   \end{pmatrix}
   [2,2]
   = (i \cdot 1) + (h \cdot 2) + (g \cdot 3) + (f \cdot 4) + (e \cdot 5) + (d \cdot 6) + (c \cdot 7) + (b \cdot 8) + (a \cdot 9)
-
 \end{equation}
 
 \begin{equation}
