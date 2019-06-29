@@ -56,6 +56,7 @@
 
 \begin{center}\textbf{Infinitesimalrechnung/Differentialrechnung}\end{center}
 \begin{tabular}{cl}
+  $f'(x)$ & Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
   $\ds\deriv{y}{x}$ & Ableitung von $y$ bezueglich $x$ \\[2ex]
   $\ds\partderiv{y}{x}$ & Partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
   $\vecf{\nabla} y$ & Gradient von $y$\\
@@ -285,6 +286,19 @@ Sie erfuellt alle Anforderungen an eine Kostenfunktion:
 \item{Ihre partielle Ableitung nach $y$ lautet: $C'=\frac{1}{n}(y-\hat{y})$}
 \end{itemize}
 
+\paragraph{Logistische Regression Kostenfunktion}
+
+Lossfunction:
+\begin{equation}
+  L_{LG} = -(y \log \hat{y} + (1-y) \log (1-\hat{y}))
+\end{equation}
+
+Costfunction:
+\begin{equation}
+  J(\vec{w},\vec{b}) = \frac{1}{m} \sum_{i=1}^m L(\vec{\hat{y}}_i,\vec{y}_i) = - \frac{1}{m} \sum_{i=1}^m \left[ y_i...  \right]
+\end{equation}
+
+
 
 \paragraph{Cross-entropy}
 
@@ -390,6 +404,49 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
   \end{tikzpicture}
   \caption{Auswirkungen verschiedener Lernraten}
 \end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      axis lines = left,
+      xlabel = $\param_1$,
+      ylabel= {$C(\param_1)$},
+      grid=major,
+      ]
+      \addplot [
+      domain=-10:10,
+      samples=100,
+      color=blue
+      ]
+      {x^2 - 2*x - 1};
+      \addlegendentry{$x^2 - 2x - 1$}
+
+      \draw (axis cs:-5,20) -- node[left]{Text} (axis cs:5,60);
+
+      \end{axis}
+  \end{tikzpicture}
+  \caption{Visualisierung verschiedener Lernraten}
+\end{figure}
+
+
+% \begin{tikzpicture}
+%   \begin{axis}[
+%     title=Exmple using the mesh parameter,
+%     hide axis,
+%     colormap/cool,
+%     ]
+%     \addplot3[
+%     mesh,
+%     samples=50,
+%     domain=-8:8,
+%     ]
+%     {sin(deg(sqrt(x^2+y^2)))/sqrt(x^2+y^2)};
+%     \addlegendentry{$\frac{sin(r)}{r}$}
+%   \end{axis}
+% \end{tikzpicture}
+
+
 
 \subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
@@ -1122,12 +1179,117 @@ dass das Gradientenverfahren fuer KNNs einen eigen Namen hat: die
 \para{}
 Da ein KNN, wie der Name es schon sagt, vernetzt ist, koennen die partiellen
 Ableitungen einer Schicht bezueglich seiner Nachbarsschichten berechnet werden.
-Hierfuer ist es sinnvoll eine Zwischenwert, welchen wir Fehler
-$\delta_j^l$ nennen.
-
-COMPUTATIONAL GRAPHS!
-
+Dies ist auch der namensgebende Grundgedanke der Rueckwaertsprogagierung: Man
+beginnt in der letzten Schicht die partiellen Ableitungen zu bestimmen und
+berechnet dann im Rueckwaertsgang Schicht fuer Schicht die vorherigen
+partiellen Ableitungen, bis nach vorne. \\
+Dies macht man mithilfe der Kettenregel der Ableitungen.
+Es ist sinnvoll fuer das Aufstellen dieser Gleichungen das Netzwerk als
+\keyword{Computation Graph} zu betrachten.
 \para{}
+
+Ein Computation Graph ist eine Darstellung einer Verkettung von Funktionen als Netzwerk von Operationen.
+Die Knoten im Graph stellen Variabeln dar und die Pfade, welche die Knoten
+verbinden, sind die Funktionen, welche die Variabeln aufeinander abbilden. Die
+Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Falls
+mehrere Pfade in einem Knoten enden, werden die einzelnen Wert der Pfade
+zusammenaddiert, um die Variable zu bilden. \\
+In Abbildung (\ref{fig:computation_graph}) ist ein Beispiel eines Computation
+Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
+
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}
+
+      \path (0,1) node [circle,draw](var_x){$x$};
+      \path (0,-1) node [circle,draw](var_y){$y$};
+      \path (2,0) node [circle,draw](var_a){$a$};
+      \path (4,0) node [circle,draw](var_z){$z$};
+      % \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
+      \draw[->] (var_x) -- node[above,sloped]{$\sin(x)$} (var_a);
+      \draw[->] (var_y) -- node[above,sloped]{$e^y$} (var_a);
+      \draw[->] (var_a) -- node[above,sloped]{$a^3$} (var_z);
+
+    \end{tikzpicture}
+
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{align*} % or align*
+      a(x,y) &= \sin(x) + e^y \\
+      z(a(x,y)) &= a^3(x,y) = \left(\sin(x) + e^y\right)^3 \\[3ex]
+      \partderiv{z}{x} &= \partderiv{a}{x} \cdot  \partderiv{z}{a} = \cos(x) \cdot 3a^2 \\[0.5ex]
+      \partderiv{z}{y} &= \partderiv{a}{y} \cdot \partderiv{z}{a} = e^y \cdot 3a^2
+    \end{align*}
+  \end{minipage}
+
+  \caption{Computation Graph einer exemplarischen Verkettung von Funktionen}
+  \label{fig:computation_graph}
+\end{figure}
+
+Der erste Schritt der Rueckwaertsprogagierung besteht darin, dass man die partiellen Ableitungen $\ipartderiv{C}{z_j^l}$
+der Kostenfunktion $C$ bezueglich den gewichteten Summen $z_j^l$ aller Schichten
+berechnet. Daraus laesst sich dann spaeter sehr einfach die partiellen Ableitungen
+bezueglich den Gewichten $\ipartderiv{C}{w_{j,k}^l}$ und bezueglich den Neigung
+$\ipartderiv{C}{b_j^l}$ berechnen.
+\para{}
+Fuer die Uebersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ fuer
+das $j$-te Neuron in der $l$-ten Schicht, welcher die partielle Ableitung bezueglich der
+gewichteten Summe ist. Ebenfalls definiert man analog einen Fehlervektor
+$\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ der Schicht $l$
+zusammenfasst. Nun heisst es diesen fuer jedes Neuron jeder Schicht zu
+berechnen.
+
+\begin{gather}
+  \tag{BP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
+  \tag{BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
+\end{gather}
+
+Da die Kostenfunktion unmittelbar auf die letzte Schicht angewandt wird, beginnt
+man auch mit der Berechnung des Fehlers in der letzten Schicht $L$.
+Wir stellen erneut einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
+\para{}
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \path (0,2) node [circle,draw](z1){$z_1^L$};
+    \path (0,0) node [circle,draw](z2){$z_2^L$};
+    \path (0,-2) node [circle,draw](z3){$z_3^L$};
+    \path (3,2) node [circle,draw](a1){$a_1^L$};
+    \path (3,0) node [circle,draw](a2){$a_2^L$};
+    \path (3,-2) node [circle,draw](a3){$a_3^L$};
+    \path (6,0) node [circle,draw](C){$C$};
+
+    \draw[->] (z1) -- node[above,sloped]{$\varphi(z_1^L)$} (a1);
+    \draw[->] (z2) -- node[above,sloped]{$\varphi(z_2^L)$} (a2);
+    \draw[->] (z3) -- node[above,sloped]{$\varphi(z_3^L)$} (a3);
+
+    \draw[->] (a1) -- node[above,sloped]{$c(a_1^L,\hat{y}_1$)} (C);
+    \draw[->] (a2) -- node[below,sloped]{$c(a_2^L,\hat{y}_2$)} (C);
+    \draw[->] (a3) -- node[below,sloped]{$c(a_3^L,\hat{y}_3$)} (C);
+   \end{tikzpicture}
+   \caption{Computation Graph zur Berechnung von $\delta_j^L$}
+   \label{fig:cg_L}
+\end{figure}
+Wir koennen dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
+in Abhaengigkeit von der letzten Aktivierung $a_j^L$ ist, welche wiederum in
+Abhaengigkeit von der gewichteten Summe $z_j^L$ berechnet wird.
+Somit koennen wir mithilfe der Kettenregel folgende Beziehung aufstellen:
+\begin{equation*}
+  \delta_j^L = \partderiv{C}{z_j^L} = \partderiv{a_j^L}{z_j^L} \cdot \partderiv{C}{a_j^L}
+\end{equation*}
+
+Dabei ist $\ipartderiv{a_j^L}{z_j^L}$ einfach die Ableitung der Aktivierungsfunktion
+$\varphi'(z_j^L)$. Also koennen wir schreiben:
+
+\begin{equation}\tag{BP1}
+  \delta_j^L = \partderiv{C}{a_j^L} \cdot \varphi'(z_j^L)
+\end{equation}
+
+Nun moechten wir diese Ausdruecke wieder in Matrixschreibweise realisieren. Dazu
+muss eine neue Operation eingefuehrt werden: das Hadamard-Produkt.
+
 \begin{defbox}{Hadamard-Produkt}
   Das Hadamard-Produkt ist ein spezielles Produkt zweier gleichgrossen Matrizen
   $\mat{A} \in \set{R}^{m \times n}$ und $\mat{B} \in \set{R}^{m \times n}$.
@@ -1159,10 +1321,70 @@ COMPUTATIONAL GRAPHS!
 \end{defbox}
 \para{}
 
-\begin{equation}
-  \delta_j^l \coloneqq \partderiv{C}{z_j^l}
+Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
+koenne wir den Fehlervektor der letzten Schicht so berechnen:
+
+\begin{equation*}
+  \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'(\vec{z}^L)
+\end{equation*}
+
+Dabei ist der erste Operand des Hadamard-Produkt, ist dabei nichts anderes als
+der Gradient $\vecf{\nabla}_{\vec{a}} C$ bezueglich dem Aktivierungsvektor
+$\vec{a}$ von den Kosten $C$. Daraus folgt folgende schoene Gleichung:
+
+\begin{equation}\tag{BP1a}
+  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}}C \odot \vecf{\varphi}'(\vec{z}^L)
 \end{equation}
 
+\para{}
+Nun muessen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
+der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetztigen Schicht
+erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \path (0,1) node [circle,draw](z1-){$z_1^{l-1}$};
+    \path (0,-1) node [circle,draw](z2-){$z_2^{l-1}$};
+    \path (3,1) node [circle,draw](a1-){$a_1^{l-1}$};
+    \path (3,-1) node [circle,draw](a2-){$a_2^{l-1}$};
+    \path (7,2) node [circle,draw](z1){$z_1^l$};
+    \path (7,0) node [circle,draw](z2){$z_2^l$};
+    \path (7,-2) node [circle,draw](z3){$z_3^l$};
+
+    \draw[->] (z1-) -- node[above,sloped]{$\varphi(z_1^L)$} (a1-);
+    \draw[->] (z2-) -- node[above,sloped]{$\varphi(z_2^L)$} (a2-);
+
+    \draw[->] (a1-) -- node[sloped,above]{$\times w_{1,1}$} (z1);
+    \draw[->] (a1-) -- node[sloped,above right]{$\times w_{2,1}$} (z2);
+    \draw[->] (a1-) -- node[sloped,above right]{$\times w_{3,1}$} (z3);
+    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{1,2}$} (z1);
+    \draw[->] (a2-) -- node[above,sloped]{$\times w_{2,2}$} (z2);
+    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{3,2}$} (z3);
+
+  \end{tikzpicture}
+  \caption{Computation Graph zur Berechnung von $\delta_j^L$}
+  \label{fig:cg_L}
+\end{figure}
+
+Es gilt erneut folgende Gleichung:
+\begin{equation*}
+  \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
+\end{equation*}
+
+Beim Uebergang der Schicht $l-1$ zur Schicht $l$ beinflusst jene Aktivierungen
+$a_j^{l-1}$ alle gewichtete Summen $z_k^l$, daher folgt mit der Kettenregel,
+dass die partielle Ableitung $\ipartderiv{C}{a_n^{l-1}}$ die Summe aller
+$\ipartderiv{z_k^L}{a_j^{l-1}} \cdot \ipartderiv{C}{z_k^l}$ sein muss.
+
+Somit erhalten wir:
+\begin{equation*}
+  \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{n=1}^{|l|} \left( \partderiv{C}{z_n^l} \cdot \partderiv{z_n^l}{a_j^{l-1}} \right)
+\end{equation*}
+
+\para{}
+
+\pagebreak
 Viel Kettenregel.
 
 \begin{equation}
@@ -1171,15 +1393,7 @@ Viel Kettenregel.
 
 Die vier magischen Gleichungen:
 
-Der Fehler in der Outputschicht
-\begin{equation}\tag{BP1}
-  \delta_j^L = \partderiv{C}{a_j^L} \sigma'(z_j^L)
-\end{equation}
-
 Matrixform
-\begin{equation}\tag{BP1a}
-  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}}C \odot \vecf{\sigma}'(\vec{z}^L)
-\end{equation}
 Das tiefgestellte $_{\vec{a}}$ des Nablas, gibt an, dass es sich um den Gradienten mit den partiellen
 Ableitungen bezueglich den Aktivierungen $a$ handelt.
 
@@ -1196,7 +1410,7 @@ Fehler anhand des Fehlers der naechsten Schicht
   \partderiv{C}{w_{j,k}^l} = a_k^{l-1} \delta_j^l
 \end{equation}
 
-
+\cite{Nielsen}
 
 \subsubsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
