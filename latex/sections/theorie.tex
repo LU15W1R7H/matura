@@ -10,8 +10,9 @@
 \begin{tabular}{cl}
   $a$ & ein Skalar (Zahl) \\
   $\vec{a}$ & ein Vektor \\
+  $\vec{a} \in \set{R}^{n}$ & Vektor mit $n$ Komponenten \\
   $\mat{A}$ & eine Matrix \\
-  $\mat{A}_{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
+  $\mat{A} \in \set{R}^{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
   $\ten{A}$ & ein Tensor \\
   $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
   $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
@@ -37,7 +38,6 @@
 \begin{center}\textbf{Indexierung}\end{center}
 \begin{tabular}{cl}
   $\vecelem{a}_i$ & $i$-te Vektorkomponente mit Startindex 1 \\
-  $\mat{A}_{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
   ${(\mat{A})}_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
@@ -424,7 +424,7 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
       \draw (axis cs:-5,20) -- node[left]{Text} (axis cs:5,60);
 
-      \end{axis}
+    \end{axis}
   \end{tikzpicture}
   \caption{Visualisierung verschiedener Lernraten}
 \end{figure}
@@ -899,10 +899,10 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 \item{$z_j^l$ ist die gewichtete Summe der Inputs des $j$-ten Neuron in der $l$-ten Schicht.}
 \item{$a_j^l$ ist die Aktivierung des $j$-ten Neurons in der $l$-ten Schicht.}
 \item{$b_j^l$ ist die Neigung fuer das $j$-te Neuron in der ($l+1$)-ten Schicht ausgeht.
-  \footnote{
-    Diese Konvention wurde gewaehlt, damit die folgenden Gleichungen simpler sind.
+    \footnote{
+      Diese Konvention wurde gewaehlt, damit die folgenden Gleichungen simpler sind.
+    }
   }
-}
 \item{$w_{j,k}^l$ ist das Gewicht der Verbindung vom $k$-ten Neuron
     in der $l$-ten Schicht zum $j$-ten Neuron in der ($l+1$)-ten Schicht.
     \footnote{
@@ -1142,10 +1142,43 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
 
-\begin{figure}[h!]
 
-  \caption{die Gauss'sche Glockenkurve}
+% \pgfplotsset{compat=1.15}
+% \pgfmathdeclarefunction{gauss}{2}{%
+% \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+% }
+%   \usetikzlibrary{arrows.meta}    % <--- added
+
+\begin{figure}[h!]
+  \centering
+  % \begin{tikzpicture}[
+  %   every pin/.style = {pin edge={Latex-,thin,black}}
+  %   ]
+  %   \begin{axis}[
+  %     width=15cm,height=6cm,
+  %     scale only axis,
+  %     axis lines=middle,
+  %     ymin=0,ymax=0.45,
+  %     axis line style = thick,
+  %     xtick={-3,-2,-1,1,2,3},
+  %     extra x ticks ={1.63},
+  %     extra x tick labels ={\color{blue}1.63},
+  %     x label style={anchor=west},
+  %     y label style={anchor=south},
+  %     xlabel={$x$},
+  %     ylabel={$\phi(x)$},
+  %     axis on top,
+  %     samples=50]
+  %     \addplot[fill=blue!25,draw=none,domain=-3.5:-1.63] {gauss(0,1)} \closedcycle;
+  %     \addplot[fill=blue!25,draw=none,domain=1.63:3.5]   {gauss(0,1)} \closedcycle;
+  %     \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
+  %     \node [pin= 60:$P_{val}/2$] at ( 2,0.02)   {};
+  %     \node [pin=120:$P_{val}/2$] at (-2,0.02)   {};
+  %   \end{axis}
+  % \end{tikzpicture}
+  \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit $X\sim\mathcal{N}(0,1)$}%
 \end{figure}
+
 
 Um die Neigungen $b=0$ zu initalisieren benutzt man eine Normalverteilung
 $\mathcal{N}(0,1)$ mit Erwartungswert $\mu = 0$ und Varianz $\sigma^2 =
@@ -1174,7 +1207,7 @@ Anderst gesamt muessen alle Terme
 $\ipartderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ipartderiv{C}{b_k^l}$
 berechnet werden.
 Das Verfahren zum bestimmen dieser Ausdruecke ist so spezfisch und aufwendig,
-dass das Gradientenverfahren fuer KNNs einen eigen Namen hat: die
+dass das Gradientenverfahren fuer KNNs einen eigenen Namen hat: die
 \keyword{Rueckwaertspropagierung} (engl.: Backpropagation) (auch Fehlerrueckfuehrung).
 \para{}
 Da ein KNN, wie der Name es schon sagt, vernetzt ist, koennen die partiellen
@@ -1192,7 +1225,7 @@ Ein Computation Graph ist eine Darstellung einer Verkettung von Funktionen als N
 Die Knoten im Graph stellen Variabeln dar und die Pfade, welche die Knoten
 verbinden, sind die Funktionen, welche die Variabeln aufeinander abbilden. Die
 Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Falls
-mehrere Pfade in einem Knoten enden, werden die einzelnen Wert der Pfade
+mehrere Pfade in einem Knoten enden, werden die einzelnen Werte der Pfade
 zusammenaddiert, um die Variable zu bilden. \\
 In Abbildung (\ref{fig:computation_graph}) ist ein Beispiel eines Computation
 Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
@@ -1247,7 +1280,7 @@ berechnen.
 
 Da die Kostenfunktion unmittelbar auf die letzte Schicht angewandt wird, beginnt
 man auch mit der Berechnung des Fehlers in der letzten Schicht $L$.
-Wir stellen erneut einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
+Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
 \para{}
 
 \begin{figure}[h!]
@@ -1268,9 +1301,24 @@ Wir stellen erneut einen Computation Graph auf, um die partiellen Ableitungen zu
     \draw[->] (a1) -- node[above,sloped]{$c(a_1^L,\hat{y}_1$)} (C);
     \draw[->] (a2) -- node[below,sloped]{$c(a_2^L,\hat{y}_2$)} (C);
     \draw[->] (a3) -- node[below,sloped]{$c(a_3^L,\hat{y}_3$)} (C);
-   \end{tikzpicture}
-   \caption{Computation Graph zur Berechnung von $\delta_j^L$}
-   \label{fig:cg_L}
+
+    % endings
+    \node (beg1) at (-3,2) {};
+    \node (beg2) at (-3,0) {};
+    \node (beg3) at (-3,-2) {};
+
+    \draw[dashed] ($(beg1)!0.6!(z1)$) -- (z1);
+    \draw[dashed] ($(beg1)!0.6!(z2)$) -- (z2);
+    \draw[dashed] ($(beg1)!0.6!(z3)$) -- (z3);
+    \draw[dashed] ($(beg2)!0.6!(z1)$) -- (z1);
+    \draw[dashed] ($(beg2)!0.6!(z2)$) -- (z2);
+    \draw[dashed] ($(beg2)!0.6!(z3)$) -- (z3);
+    \draw[dashed] ($(beg3)!0.6!(z1)$) -- (z1);
+    \draw[dashed] ($(beg3)!0.6!(z2)$) -- (z2);
+    \draw[dashed] ($(beg3)!0.6!(z3)$) -- (z3);
+  \end{tikzpicture}
+  \caption{Computation Graph zur Berechnung von $\delta_j^L$}
+  \label{fig:cg_L}
 \end{figure}
 Wir koennen dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
 in Abhaengigkeit von der letzten Aktivierung $a_j^L$ ist, welche wiederum in
@@ -1328,7 +1376,7 @@ koenne wir den Fehlervektor der letzten Schicht so berechnen:
   \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'(\vec{z}^L)
 \end{equation*}
 
-Dabei ist der erste Operand des Hadamard-Produkt, ist dabei nichts anderes als
+Dabei ist der erste Operand des Hadamard-Produkt, nichts anderes als
 der Gradient $\vecf{\nabla}_{\vec{a}} C$ bezueglich dem Aktivierungsvektor
 $\vec{a}$ von den Kosten $C$. Daraus folgt folgende schoene Gleichung:
 
@@ -1357,13 +1405,25 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf.
 
     \draw[->] (a1-) -- node[sloped,above]{$\times w_{1,1}$} (z1);
     \draw[->] (a1-) -- node[sloped,above right]{$\times w_{2,1}$} (z2);
-    \draw[->] (a1-) -- node[sloped,above right]{$\times w_{3,1}$} (z3);
+    \draw[->] (a1-) -- node[sloped,below right]{$\times w_{3,1}$} (z3);
     \draw[->] (a2-) -- node[sloped,above right]{$\times w_{1,2}$} (z1);
-    \draw[->] (a2-) -- node[above,sloped]{$\times w_{2,2}$} (z2);
-    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{3,2}$} (z3);
+    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{2,2}$} (z2);
+    \draw[->] (a2-) -- node[sloped,below]{$\times w_{3,2}$} (z3);
+
+    % endings
+    \node (beg1) at (-3,1) {};
+    \node (beg2) at (-3,-1) {};
+    \draw[dashed] ($(beg1)!0.6!(z1-)$) -- (z1-);
+    \draw[dashed] ($(beg1)!0.6!(z2-)$) -- (z2-);
+    \draw[dashed] ($(beg2)!0.6!(z1-)$) -- (z1-);
+    \draw[dashed] ($(beg2)!0.6!(z2-)$) -- (z2-);
+
+    \draw[dashed] (z1) -- ++(1.5,0);
+    \draw[dashed] (z2) -- ++(1.5,0);
+    \draw[dashed] (z3) -- ++(1.5,0);
 
   \end{tikzpicture}
-  \caption{Computation Graph zur Berechnung von $\delta_j^L$}
+  \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
   \label{fig:cg_L}
 \end{figure}
 
@@ -1372,9 +1432,9 @@ Es gilt erneut folgende Gleichung:
   \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
 \end{equation*}
 
-Beim Uebergang der Schicht $l-1$ zur Schicht $l$ beinflusst jene Aktivierungen
+Beim Uebergang der Schicht ($l-1$) zur Schicht $l$ beinflusst jene Aktivierungen
 $a_j^{l-1}$ alle gewichtete Summen $z_k^l$, daher folgt mit der Kettenregel,
-dass die partielle Ableitung $\ipartderiv{C}{a_n^{l-1}}$ die Summe aller
+dass die partielle Ableitung $\ipartderiv{C}{a_j^{l-1}}$ die Summe aller
 $\ipartderiv{z_k^L}{a_j^{l-1}} \cdot \ipartderiv{C}{z_k^l}$ sein muss.
 
 Somit erhalten wir:
@@ -1382,35 +1442,87 @@ Somit erhalten wir:
   \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{n=1}^{|l|} \left( \partderiv{C}{z_n^l} \cdot \partderiv{z_n^l}{a_j^{l-1}} \right)
 \end{equation*}
 
+Da bei der Bildung der gewichteten Summe $z_j^l$ wird die Aktivierung
+$a_k^{l-1}$ einfach mit der Gewicht $w_{n,j}^{l-1}$ multipliziert. Somit ist das
+Gewicht gerade die partielle Ableitung. Ausserdem ist der Term
+$\ipartderiv{C}{z_j^l}$ per Definition der Fehler $\delta_j^l$.
+
+\begin{equation}\tag{BP2}
+  \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{n=1}^{|l|} \left( w_{n,j}^{l-1} \cdot \delta_m^l \right)
+\end{equation}
+
+Auch diese Gleichung haetten wir gerne in der Matrixschreibweise. Wir beginnen
+mit der Erweiterung auf alle gewichteten Summen.
+
+\begin{equation*}
+  \vec{\delta}^{l-1} = \vecf{\varphi}'(\vec{z}^{l-1}) \odot \trans{\begin{pmatrix} \ds\sum_{n=1}^{|l|} w_{1,n}^{l-1} \cdot \delta_n^l & \cdots & \ds\sum_{n=1}^{|l|} w_{|l-1|,n} \cdot \delta_n^l \end{pmatrix}}
+\end{equation*}
+
+Der zweite Operant des Hadamard-Produkts ist hierbei gerade das Produkt der
+Matrixmultiplikation zwischen
+der transponierten Gewichtsmatrix $\trans{(\mat{W}^{l-1})}$ der Schicht ($l-1$)
+und dem Fehlers $\vec{\delta}^l$ der Schicht $l$.
+
+GEWICHTSMATRIX INDIZES STIMMEN WAHRSCHEINLICH NICHT
+\begin{gather*}
+  \trans{\begin{pmatrix} \ds\sum_{n=1}^{|l|} w_{1,n}^{l-1} \cdot \delta_n^l & \cdots & \ds\sum_{n=1}^{|l|} w_{|l-1|,n} \cdot \delta_n^l \end{pmatrix}} =
+  \begin{pmatrix}
+    w_{1,1}^{l-1} & w_{2,1}^{l-1} & \cdots & w_{|l-1|,1}^{l-1} \\
+    w_{1,2}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{|l-1|,2}^{l-1} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    w_{1,|l|}^{l-1} & w_{2,|l|}^{l-1} & \cdots & w_{|l-1|,|l|}^{l-1}
+  \end{pmatrix}
+  \trans{\begin{pmatrix} \delta_1^l & \cdots & \delta_{|l|}^l \end{pmatrix}} \\=
+  \begin{pmatrix}
+    w_{1,1}^{l-1} & w_{1,2}^{l-1} & \cdots & w_{1,|l|}^{l-1} \\
+    w_{2,1}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{2,|l|}^{l-1} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    w_{|l-1|,1}^{l-1} & w_{|l-1|,2}^{l-1} & \cdots & w_{|l-1|,|l|}^{l-1}
+  \end{pmatrix}
+  \vec{\delta}^l = \trans{(\mat{W}^{l-1})} \vec{\delta}^l
+\end{gather*}
+
+Alles in Allem erhalten wir:
+\begin{equation}\tag{BP2a}
+  \vec{\delta}^{l-1} = \vecf{\varphi}'(\vec{z}^{l-1}) \odot (\trans{(\mat{W}^{l-1})} \vec{\delta}^l)
+\end{equation}
+
 \para{}
 
-\pagebreak
-Viel Kettenregel.
-
-\begin{equation}
-  \partderiv{C}{w_{j,k}} = \partderiv{C}{a_k} \partderiv{a_k}{z_k} \partderiv{z_k}{w_{j,k}}
-\end{equation}
-
-Die vier magischen Gleichungen:
-
-Matrixform
-Das tiefgestellte $_{\vec{a}}$ des Nablas, gibt an, dass es sich um den Gradienten mit den partiellen
-Ableitungen bezueglich den Aktivierungen $a$ handelt.
-
-Fehler anhand des Fehlers der naechsten Schicht
-\begin{equation}\tag{BP2}
-  \vec{\delta}^l = (\trans{(\mat{W}^{l+1})} \vec{\delta}^{l+1}) \odot \vecf{\sigma}'(\vec{z}^l)
-\end{equation}
-
+Nun gilt es noch die partiellen Ableitungen fuer die Gewichte und die Neigungen
+durch den Fehler $\delta_j^l$ auszudruecken.
+Zuerst einmal fuer die Neigung gilt:
+\begin{equation*}
+  \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \partderiv{z_j^{l+1}}{b_k^l}
+\end{equation*}
+Der erste Term ist hierbei per Definition unser Fehler $\delta_j^l$ und der
+zweite Term laesst sich zu 1 evaluieren, da die Summe $z_k^{l+1}$ nur aus
+$b_k^l$ und sonstigen Konstanten Termen besteht.
+Somit ist die Ableitung der Neigung gerade unser Fehler:
 \begin{equation}\tag{BP3}
   \partderiv{C}{b_j^l} = \delta_j^l
 \end{equation}
-
-\begin{equation}\tag{BP4}
-  \partderiv{C}{w_{j,k}^l} = a_k^{l-1} \delta_j^l
+Somit ist der Kostengradient bezuglich der Neigung gerade der Fehlervektor.
+\begin{equation}\tag{BP3a}
+  \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^l
 \end{equation}
 
+Fuer die partiellen Ableitungen der Kosten nach dem Gewicht giltet:
+\begin{equation}\tag{BP4}
+  \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_k^{l+1}} \partderiv{z_k^{l+1}}{w_{j,k}^l} = \delta_k^{l+1} \cdot a_j^l
+\end{equation}
+
+Uns somit ist der Graidient der Kosten respektive einer Gewichtmatrix:
+UEBERPRUEFEN
+\begin{equation}\tag{BP4a}
+  \vecf{\nabla}_{\mat{M}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
+\end{equation}
+
+
+
 \cite{Nielsen}
+
+\pagebreak
 
 \subsubsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
@@ -1534,39 +1646,39 @@ sondern sie als \keyword{3D-Matrizen} zu untersuchen.
   \para{}
 
   % \newcommand{\arrayfilling}[2]{
-  %   \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
-  %   \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
-  %   \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
+  % \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
+  % \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
+  % \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
   % }
 
-  % \begin{tikzpicture}[font=\ttfamily,
-  %   mymatrix/.style={
+  %   \begin{tikzpicture}[font=\ttfamily,
+  %     mymatrix/.style={
   %     matrix of math nodes, inner sep=0pt, color=#1,
   %     column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
   %     nodes={anchor=center, minimum width=5mm,
-  %       minimum height=3mm, outer sep=0pt, inner sep=0pt,
-  %       text width=5mm, align=right,
-  %       draw=none, font=\small},
+  %     minimum height=3mm, outer sep=0pt, inner sep=0pt,
+  %     text width=5mm, align=right,
+  %     draw=none, font=\small},
   %   }
-  %   ]
+  %     ]
 
-  %   \matrix (C) [mymatrix=green] at (6mm,5mm)
-  %   {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
-  %   \arrayfilling{C}{green}
+  %     \matrix (C) [mymatrix=green] at (6mm,5mm)
+  %     {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
+  %     \arrayfilling{C}{green}
 
-  %   \matrix (B) [mymatrix=red] at (3mm,2.5mm)
-  %   {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
-  %   \arrayfilling{B}{red}
+  %     \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  %     {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
+  %     \arrayfilling{B}{red}
 
-  %   \matrix (A) [mymatrix=blue] at (0,0)
-  %   {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
-  %   \arrayfilling{A}{blue}
+  %     \matrix (A) [mymatrix=blue] at (0,0)
+  %     {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
+  %     \arrayfilling{A}{blue}
 
-  %   \foreach \i in {auxnw, auxne, auxse, auxsw}
-  %   \draw[brown, ultra thin] (A\i)--(C\i);
+  %     \foreach \i in {auxnw, auxne, auxse, auxsw}
+  %     \draw[brown, ultra thin] (A\i)--(C\i);
 
-  %   \node[left=1mm of B.west] {$\ten{M}_{3 \times 3 \times 3} =$};
-  % \end{tikzpicture}
+  %     \node[left=1mm of B.west] {$\ten{M}_{3 \times 3 \times 3} =$};
+  %   \end{tikzpicture}
 
 \end{defbox}
 
