@@ -1224,7 +1224,8 @@ Es ist sinnvoll fuer das Aufstellen dieser Gleichungen das Netzwerk als
 Ein Computation Graph ist eine Darstellung einer Verkettung von Funktionen als Netzwerk von Operationen.
 Die Knoten im Graph stellen Variabeln dar und die Pfade, welche die Knoten
 verbinden, sind die Funktionen, welche die Variabeln aufeinander abbilden. Die
-Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Falls
+Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Der Knoten
+in welchem der Pfad endet, nimmt dann den Funktionswert an. Falls
 mehrere Pfade in einem Knoten enden, werden die einzelnen Werte der Pfade
 zusammenaddiert, um die Variable zu bilden. \\
 In Abbildung (\ref{fig:computation_graph}) ist ein Beispiel eines Computation
@@ -1266,10 +1267,10 @@ berechnet. Daraus laesst sich dann spaeter sehr einfach die partiellen Ableitung
 bezueglich den Gewichten $\ipartderiv{C}{w_{j,k}^l}$ und bezueglich den Neigung
 $\ipartderiv{C}{b_j^l}$ berechnen.
 \para{}
-Fuer die Uebersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ fuer
-das $j$-te Neuron in der $l$-ten Schicht, welcher die partielle Ableitung bezueglich der
+Zur Uebersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ fuer
+jeder $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezueglich der
 gewichteten Summe ist. Ebenfalls definiert man analog einen Fehlervektor
-$\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ der Schicht $l$
+$\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
 zusammenfasst. Nun heisst es diesen fuer jedes Neuron jeder Schicht zu
 berechnen.
 
@@ -1321,21 +1322,23 @@ Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bi
   \label{fig:cg_L}
 \end{figure}
 Wir koennen dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
-in Abhaengigkeit von der letzten Aktivierung $a_j^L$ ist, welche wiederum in
-Abhaengigkeit von der gewichteten Summe $z_j^L$ berechnet wird.
+in Abhaengigkeit von den letzten Aktivierungen $a_j^L$ ist, welche wiederum in
+Abhaengigkeit von den gewichteten Summen $z_j^L$ berechnet werden.
 Somit koennen wir mithilfe der Kettenregel folgende Beziehung aufstellen:
 \begin{equation*}
   \delta_j^L = \partderiv{C}{z_j^L} = \partderiv{a_j^L}{z_j^L} \cdot \partderiv{C}{a_j^L}
 \end{equation*}
 
-Dabei ist $\ipartderiv{a_j^L}{z_j^L}$ einfach die Ableitung der Aktivierungsfunktion
-$\varphi'(z_j^L)$. Also koennen wir schreiben:
+Da $a_j^L$ durch die Anwendung der Aktivierungsfunktion $\varphi$ auf $z_j^L$
+gebildet wrid, ist $\ipartderiv{a_j^L}{z_j^L}$ einfach die Ableitung der Aktivierungsfunktion
+$\varphi'(z_j^L)$. Somit koennen wir schreiben:
 
 \begin{equation}\tag{BP1}
   \delta_j^L = \partderiv{C}{a_j^L} \cdot \varphi'(z_j^L)
 \end{equation}
 
-Nun moechten wir diese Ausdruecke wieder in Matrixschreibweise realisieren. Dazu
+Nun moechten wir diese Ausdruecke wieder in Matrixschreibweise realisieren,
+welche die ganze Schicht $L$ zusammenfasst. Dazu
 muss eine neue Operation eingefuehrt werden: das Hadamard-Produkt.
 
 \begin{defbox}{Hadamard-Produkt}
@@ -1377,11 +1380,15 @@ koenne wir den Fehlervektor der letzten Schicht so berechnen:
 \end{equation*}
 
 Dabei ist der erste Operand des Hadamard-Produkt, nichts anderes als
-der Gradient $\vecf{\nabla}_{\vec{a}} C$ bezueglich dem Aktivierungsvektor
-$\vec{a}$ von den Kosten $C$. Daraus folgt folgende schoene Gleichung:
+der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezueglich dem Aktivierungsvektor
+$\vec{a}^L$ der letzten Schicht. Dieser Gradient kann einfach berechnet werden, indem man die
+Ableitungsfunktion fuer die gewaehlte Kostenfunktion bildet. Wuerde man die
+Mittlere quadratischen Abweichung $C = \frac{1}{2}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion waehlen, haetten wir
+$\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}})$  \\
+Daraus folgt folgende kompakte Gleichung fuer den Fehler der ganzen letzten Schicht:
 
 \begin{equation}\tag{BP1a}
-  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}}C \odot \vecf{\varphi}'(\vec{z}^L)
+  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
 \end{equation}
 
 \para{}
@@ -1427,7 +1434,7 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf.
   \label{fig:cg_L}
 \end{figure}
 
-Es gilt erneut folgende Gleichung:
+Es gilt erneut folgende Gleichung fuer die Berechnung des Fehlers $\delta_j^{l-1}$:
 \begin{equation*}
   \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
 \end{equation*}
@@ -1484,7 +1491,7 @@ GEWICHTSMATRIX INDIZES STIMMEN WAHRSCHEINLICH NICHT
 
 Alles in Allem erhalten wir:
 \begin{equation}\tag{BP2a}
-  \vec{\delta}^{l-1} = \vecf{\varphi}'(\vec{z}^{l-1}) \odot (\trans{(\mat{W}^{l-1})} \vec{\delta}^l)
+  \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'(\vec{z}^{l-1})
 \end{equation}
 
 \para{}
@@ -1515,7 +1522,7 @@ Fuer die partiellen Ableitungen der Kosten nach dem Gewicht giltet:
 Uns somit ist der Graidient der Kosten respektive einer Gewichtmatrix:
 UEBERPRUEFEN
 \begin{equation}\tag{BP4a}
-  \vecf{\nabla}_{\mat{M}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
+  \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
 \end{equation}
 
 
@@ -1528,6 +1535,9 @@ UEBERPRUEFEN
 Neural Network kann alles erlernen
 
 \subsubsection{Vanishing Gradient Problem}
+
+Gleichung BP1 sagt uns, dass der Lernprozess langsam ist, falls $\varphi$ fast 0
+oder 1 ist. Sigmoid. Das Neuron ist saturiert und lernt nicht mehr. In letzter Schicht
 
 \paragraph{Kreuzentropie-Kostenfunktion}
 
