@@ -7,8 +7,7 @@ import matplotlib.pyplot as plt
 # loads image by path, boolean greyscale
 def loadImage(path,greyscale):
     if greyscale:
-        tmp = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        img = [[ [tmp[x,y] ] for y in range(len(tmp[x]))] for x in range(len(tmp))] # reshape [x,y] to [x,y,1]
+        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     else:
         img = cv2.imread(path, cv2.IMREAD_COLOR)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # switch BGR encoding to RGB
@@ -38,7 +37,11 @@ def plotImages(imgs):
 
 # loads images by list of paths
 def loadImages(image_paths, greyscale):
-    imgs = [loadImage(path,greyscale) for path in image_paths]
+    imgs=[]
+    for path in image_paths:
+        img = loadImage(path,greyscale)
+        if(img is not None):
+            imgs.append(img)
     return np.asarray(imgs)
 
 def getFilePaths(dirPath):

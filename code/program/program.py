@@ -9,12 +9,11 @@ IMAGE_HEIGHT = 28
 IMAGE_CHANNELS = 1
 
 dirPaths = getFilePaths('/home/luis/ml_data/')
-dirPaths = dirPaths[0:2]
+print(len(dirPaths))
+dirPaths = dirPaths[0:800]
 paths = [getFilePaths(path) for path in dirPaths]
-print(paths)
 paths = np.concatenate(paths).ravel()
 
-print(paths[0])
 
 # paths = np.asarray(paths)
 # paths = paths.ravel()
@@ -22,12 +21,11 @@ print(paths[0])
 imgs = loadImages(paths, greyscale=True)
 imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
 imgs = imgs.astype('float32') / 255.0 # normalize data
+imgs = imgs[...,np.newaxis]
 
-print(len(imgs))
-print(imgs[0].shape)
 
 # MODELL
-input_data = tf.keras.Input(shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS))
+input_data = tf.keras.Input(shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS)) # shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS)
 # encoder
 econv0 = tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(input_data) # input_shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS),
 maxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
@@ -55,7 +53,7 @@ autoencoder.compile(optimizer='adadelta',loss='binary_crossentropy')
 
 print(autoencoder.summary())
 
-autoencoder.fit(x=imgs,y=imgs,batch_size=128,epochs=2,shuffle=True,validation_data=None,callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/autoencoder')])
+autoencoder.fit(x=imgs,y=imgs,batch_size=128,epochs=25,shuffle=True,validation_data=None,callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/autoencoder')])
 
 generated_face = autoencoder.predict(imgs)
 
