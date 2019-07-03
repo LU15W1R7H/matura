@@ -1,4 +1,4 @@
-\chapter{Machinelles Lernen --- Theorie}
+\chapter{Machinelles Lernen}
 
 Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu loesen
@@ -70,11 +70,11 @@ Diese Daten fuer Training kommen in der Form eines \keyword{Trainingsdatensatz} 
 Dabei handelt es sich um eine Menge von \keyword{Samples},
 welche jeweils aus Inputs und Labels bestehen.
 Die Inputs werden in einem Vektor
-$\vec{x} = \trans{\begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix}}$
+\[ \vec{x} = \trans{\begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix}} \]
 und die Labels in einem Vektor
-$\vec{\hat{y}} = \trans{\begin{pmatrix} \hat{y}_1 & \hat{y_2} & \cdots & \hat{y}_m \end{pmatrix}}$
+\[ \vec{\hat{y}} = \trans{\begin{pmatrix} \hat{y}_1 & \hat{y_2} & \cdots & \hat{y}_m \end{pmatrix}} \]
 zusammengefasst. Auch die Vorhersagen werden in einem Vektor
-$\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_m \end{pmatrix}}$
+\[\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_m \end{pmatrix}} \]
 zusammengefasst.
 Somit ist ein Trainingssample nichts anderes als ein Paar
 $(\vec{x}_i,\vec{\hat{y}}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
@@ -391,7 +391,7 @@ ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 \subsection{Overfitting}
 
 \pagebreak
-\section{Künstliche Neuronale Netze und Deep Learning}
+\chapter{Deep Learning und Künstliche Neuronale Netze}
 Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \keyword{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
 Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \keyword{Deep Learning} zusammen.
 
@@ -1432,10 +1432,8 @@ UEBERPRUEFEN
 \end{equation}
 
 
-
 \cite{Nielsen}
 
-\pagebreak
 
 \subsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
@@ -1450,7 +1448,7 @@ oder 1 ist. Sigmoid. Das Neuron ist saturiert und lernt nicht mehr. In letzter S
 \subsubsection{ReLU}
 
 \pagebreak
-\section{Convolutional Neural Networks}
+\chapter{Convolutional Neural Networks}
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
 Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
 Spracherkennung.
@@ -2015,7 +2013,7 @@ Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
 
 
 \pagebreak
-\section{Autoencoder}
+\chapter{Autoencoder}
 Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Er wird
 benutzt um effiziente Codierungen von Daten unsupervised zu erlernen.
 

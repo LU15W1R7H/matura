@@ -21,9 +21,8 @@ backend=biber,
 citestyle=authortitle
 %style=science
 ]{biblatex}
-\addbibresource{references.bib}
+\addbibresource{tex/refs.bib}
 \usepackage{csquotes}
-
 
 % for graphics
 \usepackage{graphicx}
@@ -37,8 +36,6 @@ citestyle=authortitle
 \usepackage{pgfplots}
 \usepackage{xcolor}
 
-% for the multifile structure
-\usepackage{subfiles}
 
 % for page layout
 \usepackage{geometry}
@@ -67,8 +64,9 @@ contents={}
 \usepackage{url}
 
 % paragraph numbering and formatting
+\usepackage[]{appendix}
 \usepackage{titlesec}
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{3}
 
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
