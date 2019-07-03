@@ -1,0 +1,139 @@
+\backgroundsetup{
+  scale=1,
+  opacity=0.6,
+  angle=0,
+  % contents={\includegraphics[width=\paperwidth]{images/bild.jpg}}
+}
+
+\begin{titlepage}
+  \centering
+
+  {\scshape\LARGE Gymnasium Oberwil\par}
+  \vspace{1cm}
+  {\scshape\Large Maturarbeit\par}
+  \vspace{1.5cm}
+  {\huge\bfseries Bildsynthese von menschlichen Gesichtern mithilfe von Kuenstlicher Intelligenz\par}
+  \vspace{0.2cm}
+  {\large Eine Arbeit ueber Kuenstliche Neuronale Netze, Convolutional Neural
+    Networks, Autoencoders, Generative Modelle und Tensorflow/Keras \par}
+  \vspace{2cm}
+  {\Large\itshape Luis Wirth, 4a\par}
+  \vfill
+  Betreut von\par
+  Dr. Jonas \textsc{Gloor}
+
+  \vfill
+  {\large Abgegeben im September 2019\par}
+  \LaTeX{}
+\end{titlepage}
+
+
+\addcontentsline{toc}{chapter}{Inhaltsverzeichniss}
+\tableofcontents
+\pagebreak
+
+\chapter*{Vorwort}
+\addcontentsline{toc}{chapter}{Vorwort}
+\pagebreak
+
+\chapter*{Einleitung}
+\addcontentsline{toc}{chapter}{Einleitung}
+
+Die Leitfrage lautet: \textbf{Wie können mithilfe von Machine Learning Bilder von künstlichen meschlichen Gesichtern generiert werden?}
+\pagebreak
+
+\chapter*{Konvention und Notation}
+\addcontentsline{toc}{chapter}{Konvention und Notation}
+
+\subsection*{Beschriftung}
+
+\begin{center}\textbf{Zahlen und Tensoren}\end{center}
+\begin{tabular}{cl}
+  $a$ & ein Skalar (Zahl) \\
+  $\vec{a}$ & ein Vektor \\
+  $\vec{a} \in \set{R}^{n}$ & Vektor mit $n$ Komponenten \\
+  $\mat{A}$ & eine Matrix \\
+  $\mat{A} \in \set{R}^{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
+  $\ten{A}$ & ein Tensor \\
+  $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
+  $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
+
+
+\end{tabular}
+
+\begin{center}\textbf{Mengen}\end{center}
+\begin{tabular}{cl}
+  $(a,b)$ & ein geordnetes Paar (2-Tupel) der Elemente $a$ und $b$ \\
+  $\set{A}$ & eine Menge \\
+  $\set{R}$ & die Menge aller Reeller Zahlen \\
+  $\set{Z}$ & die Menge aller ganzer Zahlen \\
+  $\set{N}$ & die Menge aller natuerlicher Zahlen \\
+  $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
+  $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
+  $\{a,b\}$ & die Menge, welche aus Elementen $a$ und $b$ besteht \\
+  $\{1,\ldots,n\}$ & Menge aller ganzen Zahlen von 1 bis $n$ \\
+  $\in$ & ... ist Element von ...
+
+\end{tabular}
+
+\begin{center}\textbf{Indexierung}\end{center}
+\begin{tabular}{cl}
+  $\vecelem{a}_i$ & $i$-te Vektorkomponente mit Startindex 1 \\
+  ${(\mat{A})}_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
+  $\mat{A}_{:,i}$ & Spalte $i$ der Matrix $\mat{A}$\ \\
+
+\end{tabular}
+
+\begin{center}\textbf{Lineare Algebra Operationen}\end{center}
+\begin{tabular}{cl}
+  $\vec{v} \cdot \vec{w}$ & Skalarprodukt von $\vec{v}$ mit $\vec{w}$ \\
+  $\trans{\mat{A}}$ & das Transponierte einer Matrix $\mat{A}$ \\
+  $\mat{A} \odot \mat{B}$ & Elementeweises (Hadamard) Produkt \\
+  $\mat{A} * \mat{B}$ & diskrete Faltung von $\mat{A}$ ueber $\mat{B}$
+
+\end{tabular}
+
+\begin{center}\textbf{Infinitesimalrechnung/Differentialrechnung}\end{center}
+\begin{tabular}{cl}
+  $f'(x)$ & Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
+  $\ds\deriv{y}{x}$ & Ableitung von $y$ bezueglich $x$ \\[2ex]
+  $\ds\partderiv{y}{x}$ & Partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
+  $\vecf{\nabla} y$ & Gradient von $y$\\
+  $\vecf{\nabla}_{\vec{x}}y$ & Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
+
+\end{tabular}
+
+\begin{center}\textbf{Funktionen}\end{center}
+\begin{tabular}{cl}
+  $f: \set{A} \to \set{B}$ & Funktion $f$ mit Definitionsmenge $\set{A}$ und Zielmenge $\set{B}$ \\
+  $f(x)$ & Funktion $f$ mit Argument $x$ (Skalar) \\
+  $f(\vec{v})$ & Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
+  $\vecf{f}[\vec{v}]$ & Vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
+  $\mathcal{A}$ & ein Funktionenraum \\
+  $f * g$ & Faltung von $f$ ueber g \\
+
+\end{tabular}
+
+\begin{center}\textbf{Statistik}\end{center}
+\begin{tabular}{cl}
+  $\mathcal{N}$ & Gauss'sche Normalverteilung \\
+  $\phi$ & Gauss'sche Dichtefunktion \\
+  $\mu$ & Erwartungswert/Mittelwert \\
+  $\sigma^2$ & Varianz
+\end{tabular}
+
+\begin{center}\textbf{Sonstiges}\end{center}
+\begin{tabular}{cl}
+  $\forall$ & ``fuer jedes ...'' \\
+  $\therefore$ & ``... daraus folgt, dass ...'' \\
+  $\exists$ & ``... existiert'' \\
+\end{tabular}
+
+\pagebreak
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

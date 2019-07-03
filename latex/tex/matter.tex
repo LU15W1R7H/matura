@@ -1,98 +1,4 @@
-\documentclass[../main]{subfiles}
-
-\begin{document}
-
-\section{Konventionen und Notation}
-
-\subsection*{Beschriftung}
-
-\begin{center}\textbf{Zahlen und Tensoren}\end{center}
-\begin{tabular}{cl}
-  $a$ & ein Skalar (Zahl) \\
-  $\vec{a}$ & ein Vektor \\
-  $\vec{a} \in \set{R}^{n}$ & Vektor mit $n$ Komponenten \\
-  $\mat{A}$ & eine Matrix \\
-  $\mat{A} \in \set{R}^{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
-  $\ten{A}$ & ein Tensor \\
-  $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
-  $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
-
-
-\end{tabular}
-
-\begin{center}\textbf{Mengen}\end{center}
-\begin{tabular}{cl}
-  $(a,b)$ & ein geordnetes Paar (2-Tupel) der Elemente $a$ und $b$ \\
-  $\set{A}$ & eine Menge \\
-  $\set{R}$ & die Menge aller Reeller Zahlen \\
-  $\set{Z}$ & die Menge aller ganzer Zahlen \\
-  $\set{N}$ & die Menge aller natuerlicher Zahlen \\
-  $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
-  $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
-  $\{a,b\}$ & die Menge, welche aus Elementen $a$ und $b$ besteht \\
-  $\{1,\ldots,n\}$ & Menge aller ganzen Zahlen von 1 bis $n$ \\
-  $\in$ & ... ist Element von ...
-
-\end{tabular}
-
-\begin{center}\textbf{Indexierung}\end{center}
-\begin{tabular}{cl}
-  $\vecelem{a}_i$ & $i$-te Vektorkomponente mit Startindex 1 \\
-  ${(\mat{A})}_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
-  $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
-  $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
-  $\mat{A}_{:,i}$ & Spalte $i$ der Matrix $\mat{A}$\ \\
-
-\end{tabular}
-
-\begin{center}\textbf{Lineare Algebra Operationen}\end{center}
-\begin{tabular}{cl}
-  $\vec{v} \cdot \vec{w}$ & Skalarprodukt von $\vec{v}$ mit $\vec{w}$ \\
-  $\trans{\mat{A}}$ & das Transponierte einer Matrix $\mat{A}$ \\
-  $\mat{A} \odot \mat{B}$ & Elementeweises (Hadamard) Produkt \\
-  $\mat{A} * \mat{B}$ & diskrete Faltung von $\mat{A}$ ueber $\mat{B}$
-
-\end{tabular}
-
-\begin{center}\textbf{Infinitesimalrechnung/Differentialrechnung}\end{center}
-\begin{tabular}{cl}
-  $f'(x)$ & Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
-  $\ds\deriv{y}{x}$ & Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\ds\partderiv{y}{x}$ & Partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\vecf{\nabla} y$ & Gradient von $y$\\
-  $\vecf{\nabla}_{\vec{x}}y$ & Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
-
-\end{tabular}
-
-\begin{center}\textbf{Funktionen}\end{center}
-\begin{tabular}{cl}
-  $f: \set{A} \to \set{B}$ & Funktion $f$ mit Definitionsmenge $\set{A}$ und Zielmenge $\set{B}$ \\
-  $f(x)$ & Funktion $f$ mit Argument $x$ (Skalar) \\
-  $f(\vec{v})$ & Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
-  $\vecf{f}[\vec{v}]$ & Vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
-  $\mathcal{A}$ & ein Funktionenraum \\
-  $f * g$ & Faltung von $f$ ueber g \\
-
-\end{tabular}
-
-\begin{center}\textbf{Statistik}\end{center}
-\begin{tabular}{cl}
-  $\mathcal{N}$ & Gauss'sche Normalverteilung \\
-  $\phi$ & Gauss'sche Dichtefunktion \\
-  $\mu$ & Erwartungswert/Mittelwert \\
-  $\sigma^2$ & Varianz
-\end{tabular}
-
-\begin{center}\textbf{Sonstiges}\end{center}
-\begin{tabular}{cl}
-  $\forall$ & ``fuer jedes ...'' \\
-  $\therefore$ & ``... daraus folgt, dass ...'' \\
-  $\exists$ & ``... existiert'' \\
-\end{tabular}
-
-
-\pagebreak
-\section{Machinelles Lernen --- Theorie}
+\chapter{Machinelles Lernen --- Theorie}
 
 Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu loesen
@@ -150,9 +56,9 @@ gefahrener Kilometer und anhand des Alters des Autos.
 \cite{wiki:supervised_learning}
 \cite{wiki:unsupervised_learning}
 
-\subsection{Allgemeine Begriffe}
+\section{Allgemeine Begriffe}
 
-\subsubsection{Daten}
+\subsection{Daten}
 
 Um ein Modell zu trainieren braucht man Daten. Diese Daten bestehen immer aus
 \keyword{Inputs} und aus \keyword{Outputs}. Man unterscheidet hierbei zwei Arten
@@ -192,7 +98,7 @@ Die Inputdaten sind die Anzahl gefahrener Kilometer und die Alter von
 verschieden Autos. Sie stellen
 
 
-\subsubsection{Modelle}
+\subsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{f}\colon \set{R}^n \to \set{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
 Man kann diese Funktion gewissermassen als die Hypothese der Beziehung zwischen
 den Inputs und den Labels betrachten, welche das Modell aufgestellt hat.
@@ -233,8 +139,8 @@ BEISPIELMODELL GLEICHES WIE VORHIN
 \end{figure}
 
 
-\subsection{Training}
-\subsubsection{Kostenfunktionen}
+\section{Training}
+\subsection{Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
 Dafuer gibt es sogennante \keyword{Kostenfunktionen} (auch Verlust- oder
 Fehlerfunktionen).
@@ -271,7 +177,7 @@ Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 Die wichtigsten Kostenfunktionen, welche in dieser Arbeit verwendet werden,
 werden nun eingefuehrt.
 
-\paragraph{Mittlere quadratische Abweichung}
+\subsubsection{Mittlere quadratische Abweichung}
 Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''
 (engl.:\ mean squared error).
 Sie ist definiert folgendermassen definiert:
@@ -286,7 +192,7 @@ Sie erfuellt alle Anforderungen an eine Kostenfunktion:
 \item{Ihre partielle Ableitung nach $y$ lautet: $C'=\frac{1}{n}(y-\hat{y})$}
 \end{itemize}
 
-\paragraph{Logistische Regression Kostenfunktion}
+\subsubsection{Logistische Regression Kostenfunktion}
 
 Lossfunction:
 \begin{equation}
@@ -300,10 +206,10 @@ Costfunction:
 
 
 
-\paragraph{Cross-entropy}
+\subsubsection{Cross-entropy}
 
 
-\subsubsection{Gradientenverfahren}\label{sec:gradientenverfahren}
+\subsection{Gradientenverfahren}\label{sec:gradientenverfahren}
 Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
 Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
 Funktionswerte der Fehlerfunktion am kleinsten sind.
@@ -448,7 +354,7 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 
 
 
-\subsubsection{Stochastisches Gradientenverfahren fuer Machine Learning}
+\subsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}\ |\ \param_0,\ldots,\param_n)$
 ($\param$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
@@ -477,15 +383,15 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 \end{equation}
 
 
-\subsubsection{Adam Optimizer}
+\subsection{Adam Optimizer}
 ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
-\subsection{Sonstiges}
+\section{Sonstiges}
 
-\subsubsection{Overfitting}
+\subsection{Overfitting}
 
 \pagebreak
-\subsection{Künstliche Neuronale Netze und Deep Learning}
+\section{Künstliche Neuronale Netze und Deep Learning}
 Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \keyword{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
 Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \keyword{Deep Learning} zusammen.
 
@@ -495,7 +401,7 @@ verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden
 muessen. Diese Arbeit wird sich spaeter vorallem mit sogennanten Autoencodern auseinandersetzen.
 
 
-\subsubsection{Perzeptron}
+\subsection{Perzeptron}
 Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netz besser zu
 verstehen, wird im folgenden ein Vorgaenger des KNN erklaert: das \keyword{Perzeptron}.
 \para{}
@@ -563,7 +469,7 @@ Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
 
-\paragraph{Was kann ein Perzeptron erlernen?}
+\subsubsection{Was kann ein Perzeptron erlernen?}
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \keyword{Linearer Klassifikator} der Form
 $y = w_1x_1 + \cdots + w_n x_n$.
@@ -589,7 +495,7 @@ kann von einem Perzeptron nicht erlernt werden.
 
 \cite{wiki:perzeptron}
 
-\subsubsection{Biologische Analogie}
+\subsection{Biologische Analogie}
 SCHREIBEN
 % Gewicht entscheidet ob inhibitorisch oder exaktorisch.
 % Schwellenwert: Das Addieren eines Schwellenwerts  zur Netzeingabe verschiebt die gewichteten Eingaben. Die Bezeichnung bestimmt sich aus der Verwendung einer Schwellenwertfunktion als Aktivierungsfunktion, bei der das Neuron aktiviert wird, wenn der Schwellenwert überschritten ist. Die biologische Motivierung dabei ist das Schwellenpotential bei Nervenzellen. Mathematisch gesehen wird die Trennebene, die den Merkmalsraum auftrennt, durch einen Schwellenwert mit einer Translation verschoben.
@@ -602,13 +508,13 @@ SCHREIBEN
 \end{figure}
 
 
-\subsubsection{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
+\subsection{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage, lineare Klassifikationen
 durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
 ausgebaut werden. Ausserdem brauchen wir ein Kuenstliches Neuron, welches sich
 besonders gut als Baustein fuer KNNs eignet.
 
-\paragraph{Kuenstliche Neuronen im Allgemeinen}
+\subsubsection{Kuenstliche Neuronen im Allgemeinen}
 Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
 haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
 $w_{ji}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
@@ -623,7 +529,7 @@ sich fast nur in ihrer Aktivierungsfunktion.
   \caption{ein kuenstliches Neuron und seine Bestandteile}
 \end{figure}
 
-\paragraph{Perzeptronen als Kuenstliche Neuronen}
+\subsubsection{Perzeptronen als Kuenstliche Neuronen}
 Zuerst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
 Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
 Neuronen, besteht darin, dass seine Inputs und Outputs nur binaere Werte
@@ -671,7 +577,7 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1. Siehe Abb. (\ref
   \label{fig:heaviside}
 \end{figure}
 
-\paragraph{Stueckweise lineare Neuronen}
+\subsubsection{Stueckweise lineare Neuronen}
 Der naechste Schritt nach dem binaeren Perzeptron sind sogenannte stueckweise
 lineare Neuronen.
 Sie verwenden eine stueckweise lineare Aktivierungsfunktion. Diese bildet ein
@@ -729,7 +635,7 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
 \end{figure}
 
 
-\paragraph{Sigmoide Neuronen}
+\subsubsection{Sigmoide Neuronen}
 Die logische naechste Erweiterung sind nicht-lineare Neuronen.
 Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
@@ -786,7 +692,7 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$. Siehe Abb. (\ref{fig:sigmo
 
 
 
-\subsubsection{Topologie der Kuenstlichen Neuronalen Netzen}
+\subsection{Topologie der Kuenstlichen Neuronalen Netzen}
 Nun sollten diese Sigmoiden-Neuronen als Bausteine verwendet werden, um ein Kuenstliches
 Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
@@ -888,7 +794,7 @@ SCHICHTENBESCHRIFTUNG HINZUFUEGEN; BIAS ALS EIGENES NEURON?
   \label{fig:nn_layers}
 \end{figure}
 
-\subsubsection{Vorwaertspropagierung}
+\subsection{Vorwaertspropagierung}
 Jetzt, da der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
 des Modells erklaert werden. Hierfuer muessen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden:
@@ -1117,7 +1023,7 @@ $\vec{z}^{l+1}$ angewandt werden.
 \para{}
 \cite{Nielsen}
 
-\subsubsection{Modellparameter initalisieren}
+\subsection{Modellparameter initalisieren}
 Ein Schritt der getan werden muss, bevor das Training beginnt, ist das
 Initalisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
 Dies ist ein sehr essentieller Schritt, denn diese Startwerte entscheiden
@@ -1199,7 +1105,7 @@ NUR 1
 \cite{wiki:normal_distribution}
 \cite{Nielsen}
 
-\subsubsection{Rueckwaertspropagierung}\label{sec:backpropagation}
+\subsection{Rueckwaertspropagierung}\label{sec:backpropagation}
 Die wahre Herausforderung besteht beim Gradientenverfahren darin,
 die partiellen Ableitungen der Modellparameter,
 also die Komponenten des Gradienten, zu bestimmen.
@@ -1531,20 +1437,20 @@ UEBERPRUEFEN
 
 \pagebreak
 
-\subsubsection{Universal Approximation Theorem}\label{sec:UAT}
+\subsection{Universal Approximation Theorem}\label{sec:UAT}
 Neural Network kann alles erlernen
 
-\subsubsection{Vanishing Gradient Problem}
+\subsection{Vanishing Gradient Problem}
 
 Gleichung BP1 sagt uns, dass der Lernprozess langsam ist, falls $\varphi$ fast 0
 oder 1 ist. Sigmoid. Das Neuron ist saturiert und lernt nicht mehr. In letzter Schicht
 
-\paragraph{Kreuzentropie-Kostenfunktion}
+\subsubsection{Kreuzentropie-Kostenfunktion}
 
-\paragraph{ReLU}
+\subsubsection{ReLU}
 
 \pagebreak
-\subsection{Convolutional Neural Networks}
+\section{Convolutional Neural Networks}
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
 Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
 Spracherkennung.
@@ -1581,7 +1487,7 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 \cite{deeplearning.ai:cnn}
 \cite{wiki:cnn}
 
-\subsubsection{Topologie von CNNs}
+\subsection{Topologie von CNNs}
 Ein CNN wirft nicht alle Ideen eines KNNs ueber Bord, stattdessen erweitert es
 das KNN viel mehr.
 Die Topologie eines KNNs wird in sofern beibehalten, dass ein CNN immernoch in
@@ -1639,7 +1545,7 @@ SchichtIndizes der Filter,Padding und stride sind gleich den Indizes des Output(
 
 Flattening ist, wenn man einen Tensor zu einem Vektor umformt
 
-\subsubsection{Bilder als 3D-Matrizen}
+\subsection{Bilder als 3D-Matrizen}
 Bei der Betrachtung von Bildern fuer Machine Learning, ist es sinnvoll, diese
 nicht als eine Anordnung von verschieden farbigen Pixeln zu interpretieren,
 sondern sie als \keyword{3D-Matrizen} zu untersuchen.
@@ -1713,10 +1619,10 @@ voher ein Vektor $\vec{x}$.
   \label{fig:bildmatrix}
 \end{figure}
 
-\subsubsection{Filter}
+\subsection{Filter}
 Zuerst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
 Gebrauch von sogennanten Filtern. Diese werden in diesem Abschnitt behandelt.
-\paragraph{Filter in der Bildverarbeitung}
+\subsubsection{Filter in der Bildverarbeitung}
 \keyword{Filter} (auch Kern) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall um die Features eines Bildes zu
@@ -1780,7 +1686,7 @@ prozessierte Bild.
 \cite{deeplearning.ai:cnn}
 \cite{wiki:kernel}
 
-\paragraph{Biologische Motivation?}
+\subsubsection{Biologische Motivation?}
 Jedoch ist zu erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
 Auch unser Organismus hat diese Tatsache erkannt und deshalb spezielle Zellen
 ausgebildet (sogennante Ganglienzellen), welche sich mit der Vorverarbeitung von
@@ -1790,7 +1696,7 @@ Art von Kantendetektion durch mithilfe von Kontrastverstaerkung.
 \para{}
 \cite{Markl}
 
-\paragraph{Filteroperationen als diskrete Faltungen}
+\subsubsection{Filteroperationen als diskrete Faltungen}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
 graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlauetert. Spaeter werden auch noch farbige
@@ -1878,7 +1784,7 @@ und diese fallen somit weg.
 \cite{deeplearning.ai:cnn}
 \cite{wiki:convolution}
 
-\paragraph{Allgemeine Filteroperation}
+\subsubsection{Allgemeine Filteroperation}
 Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
 lediglich 3D-Matrizen anstatt 2D-Matizen verwendet. Wir betrachten die
 allgemeine Bildmatrix $\mat{B}_{h \times w \times c}$, wobei $c$ die
@@ -1901,7 +1807,7 @@ Allgemine Gleichung als Funktion geschrieben anstatt Matrix:
 
 
 
-\paragraph{GLEICHUNGEN!?}
+\subsubsection{GLEICHUNGEN!?}
 \begin{equation}
   \mat{B}^*(x,y) = \mat{F} * \mat{B}(x,y) = \sum_{i=1}^n \sum_{j=1}^n \mat{B}(x-i+a, y-j+a)\mat{F}(i,j)
 \end{equation}
@@ -1932,7 +1838,7 @@ Element der Filtermatrix
 $\set{D}$ ist der gesamte Definitionsbereich von $f$ und $g$.
 
 
-\paragraph{Wieso Filter?}
+\subsubsection{Wieso Filter?}
 Es stellt sich nun die Frage, weshalb sich Filter fuer Machine
 Learning eignen.
 Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
@@ -1954,7 +1860,7 @@ hat. Es besteht der Wunsch nach \keyword{Invarianz}. Typische Invarianzen,
 welcher ein Filter erfuellt, sind: Translationinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
 
 \keyword{Parameter Sharing}
-\paragraph{Filter in CNNs}
+\subsubsection{Filter in CNNs}
 So nun betrachten wir Filter fuer CNNs. Der springende Punkt ist hierbei, dass
 die Filtereintraege Modellparameter sind und erlernt werden. Da sie die gleiche
 Funktion wie Gewichte in einem KNN einnehmen, bezeichnet man die Matrixelemente
@@ -1969,7 +1875,7 @@ auch mit $w$.
 
 Die groesse des Filters bzw. das rezeptive Feld ist hierbei ein Hyperparameter.
 
-\paragraph{Padding}
+\subsubsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man ein Filter auf sie anwendet.
 Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelement nur ein Pixel
 des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
@@ -2013,7 +1919,7 @@ Um das Padding zu berechnen fuer same-Padding verwendet man folgende Formel:
   p = \frac{f-1}{2}
 \end{equation}
 
-\paragraph{Stride}
+\subsubsection{Stride}
 Bis jetzt haben wir bei den Filterfaltungen, den Filter pro Anwendung immer nur
 um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
 auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
@@ -2030,7 +1936,7 @@ beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 \end{equation}
 Falls $m$ keine ganze Zahl ergibt, wird abgerundet.
 
-\paragraph{Mehrere Filter}
+\subsubsection{Mehrere Filter}
 Eine Filteroperation ist nicht auf einen einzigen Filter beschraenkt. Es koennen
 mehrere Filter auf das gleiche Ausgangsbild angewandt werden und zusammen ein
 Endbild erzeugen.
@@ -2053,7 +1959,7 @@ Mathematisch ausgedrueckt, bedeutet dies:
 \end{equation}
 
 
-\subsubsection{Convolutional Layer}
+\subsection{Convolutional Layer}
 Convolution wird angewandt.
 Auf Outputmatrix wird Bias (Skalar) draufaddiert (auf jedes Element der gleiche Bias)
 Jeder Filter hat seinen eigenen Bias
@@ -2062,7 +1968,7 @@ Nun werden die verschieden Outputmatrizen der Filter ausgestackt zu einem
 3D-Tensor
 fertig!
 
-\subsubsection{Pooling Layer}
+\subsection{Pooling Layer}
 Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe von Neuronen
 der vorherigen Schicht zu einem einzigen Neuron der naechsten Schicht
 zusammengefasst wird.
@@ -2091,9 +1997,9 @@ Es gibt zwei Konventionen:
 Entweder bezeichnet man die Einheit von einem ConvLayer und einem PoolLayer zu
 einer Schicht zusammengefasst werden oder sie werden als seperate Schichten betrachtet...
 
-\subsubsection{Fully-connected Layer}
+\subsection{Fully-connected Layer}
 
-\subsubsection{Eigenschaften von CNNs}
+\subsection{Eigenschaften von CNNs}
 Parameter/Weight-Sharing
 
 ERkennung von gewissen Features (Ecken und Kanten)
@@ -2109,7 +2015,7 @@ Weil nicht fully-connected -> Overfitting erschwaert / unmoeglich
 
 
 \pagebreak
-\subsection{Autoencoder}
+\section{Autoencoder}
 Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Er wird
 benutzt um effiziente Codierungen von Daten unsupervised zu erlernen.
 
@@ -2121,7 +2027,7 @@ anhand der Codierung wieder die urspruenglichen Daten.
 
 
 
-\subsubsection{Topologie von Autoencodern}
+\subsection{Topologie von Autoencodern}
 
 \begin{itemize}
 \item{Eingabeschicht}
@@ -2192,11 +2098,11 @@ anhand der Codierung wieder die urspruenglichen Daten.
   \caption{Schichten eines Autoencoders}
 \end{figure}
 
-\subsubsection{Mathematische Betrachtung}
+\subsection{Mathematische Betrachtung}
 Falls lineare Neuronen verwendet werden, ist der Prozess der
 Dimensionalitaetsreduktion sehr aehnlich zur Hauptkomponentenanalyse.
 
-\subsubsection{Datenkompression}
+\subsection{Datenkompression}
 
 Lernen effiziente Datenrepraesenationen. Komprimierung. Unsupervised.
 Dimensionalitaetsreduktion.
@@ -2210,25 +2116,25 @@ Mathematik:
   \ds\phi,\psi = \operatorname*{\arg \min}_{\phi,\psi} \parallel {X - (\phi \circ \psi)X \parallel}^2
 \end{gather}
 
-\subsubsection{Bedeutung von Autoencodern}
-\paragraph{Datenkompression}
+\subsection{Bedeutung von Autoencodern}
+\subsubsection{Datenkompression}
 Falls ein Autoencoder nur aus linearen Neuronen besteht, ist die
 Dimensionsreduktion sehr aehnlich zu der Hauptkomponentenanalyse.
 
 Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
-\paragraph{Datengenerierung}
-\paragraph{Eigenschaften erkennen}
+\subsubsection{Datengenerierung}
+\subsubsection{Eigenschaften erkennen}
 
 
-\subsubsection{Variational Autoencoder?}
-\subsubsection{Detangled Autoencoder?}
+\subsection{Variational Autoencoder?}
+\subsection{Detangled Autoencoder?}
 
-\subsubsection{Autoencoder als generative Modelle}
+\subsection{Autoencoder als generative Modelle}
 Erwaehnung von GANs
 
-\subsection{Programmiertools}
+\section{Programmiertools}
 
-\subsubsection{Tensorflow}
+\subsection{Tensorflow}
 \begin{defbox}{Tensor}
   Ein Tensor ist eine verallgemeinerung von Matrizen auf
   $n$-dimensionale geometrische Objekte. Vorstellen kann man sich einen Tensor
@@ -2250,8 +2156,28 @@ Erwaehnung von GANs
 
 \end{defbox}
 
+\chapter{Entwicklung eines Autoencoders}
 
-\end{document}
+\section{Planung/Methoden}
+
+\subsection{Idee}
+Gesichtssynthese mithilfe eines Autoencoders als generatiaves Modell.
+
+\subsection{Methoden/Tools}
+
+\subsubsection{Python}
+\subsubsection{Tensorflow}
+\subsubsection{Keras}
+\subsubsection{Sonstige ``Tools''}
+\begin{itemize}
+\item{Spacemacs (Emacs)}
+\item{Arch Linux}
+\end{itemize}
+
+\subsection{Trainingsdaten}
+MegaFace Dataset
+
+\section{Programmieren}
 
 %%% Local Variables:
 %%% mode: latex
