@@ -61,8 +61,8 @@ def align(img,landmarks):
 
     # compute angle between eye centroids
     dY = rightEyeCenter[1] - leftEyeCenter[1]
-    dX = rightEyeCenter[0] = leftEyeCenter[0]
-    angle = -np.degrees(np.arctan2(dY,dX))
+    dX = rightEyeCenter[0] - leftEyeCenter[0]
+    angle = np.degrees(np.arctan2(dY,dX)) - 180
 
     desiredRightEyeX = 1.0 - desiredLeftEye[0]
 
@@ -96,7 +96,7 @@ def align(img,landmarks):
 # -----------------------
 
 dirPaths = getFilePaths('/home/luis/ml_data/')
-dirPaths = [dirPaths[41]]
+dirPaths = dirPaths[8:9]
 paths = [getFilePaths(path) for path in dirPaths]
 paths = np.concatenate(paths).ravel()
 
