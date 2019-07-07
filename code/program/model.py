@@ -5,30 +5,31 @@ from tensorflow.keras import layers
 from facealigner import FaceAligner
 import time
 
-IMAGE_WIDTH = 28
-IMAGE_HEIGHT = 28
+IMAGE_WIDTH = 64
+IMAGE_HEIGHT = 64
 IMAGE_CHANNELS = 1
+LEARNING_RATE = 0.002
 
 
 # MODELL
 input_data = tf.keras.Input(shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS)) # shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS)
 # encoder
-econv0 = tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(input_data) # input_shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS),
+econv0 = tf.keras.layers.Conv2D(filters=120,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(input_data) # input_shape=(IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS),
 maxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
-econv1 = tf.keras.layers.Conv2D(filters=8,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(maxpool0)
+econv1 = tf.keras.layers.Conv2D(filters=160,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(maxpool0)
 maxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv1)
-econv2 = tf.keras.layers.Conv2D(filters=8,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(maxpool1)
+econv2 = tf.keras.layers.Conv2D(filters=200,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(maxpool1)
 maxpool2 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv2)
 
 # bottleneck
 encoded = maxpool2
 
 #decoder
-dconv0 = tf.keras.layers.Conv2D(filters=8,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(encoded)
+dconv0 = tf.keras.layers.Conv2D(filters=200,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(encoded)
 upsample0 = tf.keras.layers.UpSampling2D(size=(2,2),interpolation='nearest')(dconv0)
-dconv1 = tf.keras.layers.Conv2D(filters=8,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(upsample0)
+dconv1 = tf.keras.layers.Conv2D(filters=160,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(upsample0)
 upsample1 = tf.keras.layers.UpSampling2D(size=(2,2),interpolation='nearest')(dconv1)
-dconv2 = tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=(1,1),padding='valid',activation='relu',use_bias=True)(upsample1) # padding is valid!!!
+dconv2 = tf.keras.layers.Conv2D(filters=120,kernel_size=(3,3),strides=(1,1),padding='same',activation='relu',use_bias=True)(upsample1) # padding is valid!!!
 upsample2 = tf.keras.layers.UpSampling2D(size=(2,2),interpolation='nearest')(dconv2)
 dconv3 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3),strides=(1,1),padding='same',activation='sigmoid')(upsample2)
 
@@ -42,23 +43,24 @@ print(autoencoder.summary())
 aligner = FaceAligner()
 
 dirPaths = getFilePaths('/home/luis/ml_data/')
-dirPaths = dirPaths[0:100] # max 50'000
+dirPaths = dirPaths[0:500] # max 50'000
 paths = [getFilePaths(path) for path in dirPaths]
 paths = np.concatenate(paths).ravel()
 
 imgs = loadImages(paths, greyscale=True)
-for img in imgs:
-    faces = aligner.getFaces(img)
+for i in range(len(imgs)):
+    faces = aligner.getFaces(imgs[i])
     if(len(faces)==0):
         continue
-    landmarks = aligner.getLandmarks(img,faces[0])
-    img = aligner.align(img,landmarks)
-    # cv2.imshow('test', img)
-    # cv2.waitKey(0)
+    landmarks = aligner.getLandmarks(imgs[i],faces[0])
+    imgs[i] = aligner.align(imgs[i],landmarks)
 
-imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
-imgs = imgs.astype('float32') / 255.0 # normalize data
 np.random.shuffle(imgs)
+imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
+# for img in imgs:
+#     cv2.imshow('test',img)
+#     cv2.waitKey(0)
+imgs = imgs.astype('float32') / 255.0 # normalize data
 imgs = imgs[...,np.newaxis]
 
 # training
