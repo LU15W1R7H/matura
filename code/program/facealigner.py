@@ -4,128 +4,91 @@ import cv2
 import dlib
 from collections import OrderedDict
 
-# converts rectangle to bounding box
-def face_to_bb(face):
-    x = face.left()
-    y = face.top()
-    w = face.right() - x
-    h = face.bottom() - y
-    return (x,y,w,h)
-
-FACIAL_LANDMARKS_68_IDXS = OrderedDict([
-	("mouth", (48, 68)),
-	("inner_mouth", (60, 68)),
-	("right_eyebrow", (17, 22)),
-	("left_eyebrow", (22, 27)),
-	("right_eye", (36, 42)),
-	("left_eye", (42, 48)),
-	("nose", (27, 36)),
-	("jaw", (0, 17))
-])
-
-#For dlib’s 5-point facial landmark detector:
-
-# DETECTOR
-detector = dlib.get_frontal_face_detector()
-# we always use the predictor with 68 landmarks
-predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
-
-def detectFaces(img):
-    rects = detector(img)
-    return rects
-
-def getLandmarks(img,face):
-    landmarks = predictor(img,face)
-    coords = np.zeros((68,2),dtype=int)
-    for i in range(0,68):
-        coords[i] = (landmarks.part(i).x,landmarks.part(i).y)
-
-    return coords
-
-# --------------------
-
-# ALIGNER
-desiredLeftEye=(0.35,0.35)
-desiredFaceSize=256
-
-def align(img,landmarks):
-    (lStart,lEnd) = FACIAL_LANDMARKS_68_IDXS['left_eye']
-    (rStart,rEnd) = FACIAL_LANDMARKS_68_IDXS['right_eye']
-
-    leftEyePts = landmarks[lStart:lEnd]
-    rightEyePts = landmarks[rStart:rEnd]
-
-    # compute center of mass for eyes
-    leftEyeCenter = leftEyePts.mean(axis=0).astype('int')
-    rightEyeCenter = rightEyePts.mean(axis=0).astype('int')
-
-    # compute angle between eye centroids
-    dY = rightEyeCenter[1] - leftEyeCenter[1]
-    dX = rightEyeCenter[0] - leftEyeCenter[0]
-    angle = np.degrees(np.arctan2(dY,dX)) - 180
-
-    desiredRightEyeX = 1.0 - desiredLeftEye[0]
-
-    # determine scale
-    dist = np.sqrt((dX ** 2) + (dY ** 2))
-    desiredDist = (desiredRightEyeX - desiredLeftEye[0])
-    desiredDist *= desiredFaceSize
-    scale = desiredDist / dist
-
-    # get center between eyes
-    eyesCenter = ((leftEyeCenter[0] + rightEyeCenter[0]) // 2, (leftEyeCenter[1] + rightEyeCenter[1]) // 2)
-
-    # create matrix for affine projection
-    M = cv2.getRotationMatrix2D(eyesCenter,angle,scale)
-
-    # update translation of matrix
-    tX = desiredFaceSize * 0.5
-    tY = desiredFaceSize * desiredLeftEye[1]
-    M[0,2] += (tX - eyesCenter[0])
-    M[1,2] += (tY - eyesCenter[1])
-
-    # apply matrix
-    (w,h) = (desiredFaceSize, desiredFaceSize)
-    output = cv2.warpAffine(img,M,(w,h),flags=cv2.INTER_CUBIC)
-
-    return output
+class FaceAligner:
 
 
+    def __init__(self):
 
+        self.FACIAL_LANDMARKS_68_DICT = OrderedDict([
+            ('mouth', (48, 68)),
+            ('inner_mouth', (60, 68)),
+            ('right_eyebrow', (17, 22)),
+            ('left_eyebrow', (22, 27)),
+            ('right_eye', (36, 42)),
+            ('left_eye', (42, 48)),
+            ('nose', (27, 36)),
+            ('jaw', (0, 17))
+        ])
 
-# -----------------------
+        self.detector = dlib.get_frontal_face_detector() # to detect the faces
+        self.predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat') # to detect landmarks
 
-dirPaths = getFilePaths('/home/luis/ml_data/')
-dirPaths = dirPaths[8:9]
-paths = [getFilePaths(path) for path in dirPaths]
-paths = np.concatenate(paths).ravel()
+        self.faceSize=256
+        self.leftEyePos=(0.35,0.35)
+        self.rightEyePos=(1.0-self.leftEyePos[0],1.0-self.leftEyePos[1])
 
+    def getFaces(self,img):
+        rects = self.detector(img)
+        return rects
 
-# paths = np.asarray(paths)
-# paths = paths.ravel()
+    def faceToBox(self,face):
+        x = face.left()
+        y = face.top()
+        w = face.right() - x
+        h = face.bottom() - y
+        return (x,y,w,h)
 
-imgs = loadImages(paths, greyscale=True)
-imgs = [resizeImage(img, 265,265) for img in imgs]
+    def getLandmarks(self,img,face):
+        landmarks = self.predictor(img,face)
+        coords = np.zeros((68,2),dtype=int)
+        for i in range(0,68):
+            coords[i] = (landmarks.part(i).x,landmarks.part(i).y)
+        return coords
 
-gray = imgs[0]
-cv2.imshow('lol',gray)
-cv2.waitKey(0)
+    def drawBB(self,img,face):
+        (x,y,w,h) = face_to_bb(face)
+        cv2.rectangle(gray, (x,y), (x+w, y+h), (0,255,0), 2) # draw bounding box
 
-faces = detectFaces(gray)
+    def drawLandmarks(self,img,landmarks):
+        for (x,y) in landmarks:
+            cv2.circle(img, (x,y),1, (0,0,255),-1)
 
-for face in faces:
-    landmarks = getLandmarks(gray,face)
-    (x,y,w,h) = face_to_bb(face)
-    cv2.rectangle(gray, (x,y), (x+w, y+h), (0,255,0), 2) # draw bounding box
+    def align(self,img,landmarks):
 
-    for (x,y) in landmarks:
-        cv2.circle(gray, (x,y),1, (0,0,255),-1)
+        # get eye landmarks
+        (lStart,lEnd) = self.FACIAL_LANDMARKS_68_DICT['left_eye']
+        (rStart,rEnd) = self.FACIAL_LANDMARKS_68_DICT['right_eye']
+        leftEyePts = landmarks[lStart:lEnd]
+        rightEyePts = landmarks[rStart:rEnd]
 
-    cv2.imshow('Output',gray)
-    cv2.waitKey(0)
+        # compute center of mass for eyes
+        leftEyeCtr = leftEyePts.mean(axis=0).astype('int')
+        rightEyeCtr = rightEyePts.mean(axis=0).astype('int')
 
-    aligned = align(gray,landmarks)
-    cv2.imshow('aligned',aligned)
-    cv2.waitKey(0)
+        # compute angle between eye centroids
+        dX = rightEyeCtr[0] - leftEyeCtr[0]
+        dY = rightEyeCtr[1] - leftEyeCtr[1]
+        angle = np.degrees(np.arctan2(dY,dX)) - 180
 
-# globals
+        # determine scale
+        dS = np.sqrt((dX ** 2) + (dY ** 2))
+        desiredDist = (self.rightEyePos[0] - self.leftEyePos[0])
+        desiredDist *= self.faceSize
+        scale = desiredDist / dS
+
+        # get center between eyes
+        eyesCenter = ((leftEyeCtr[0] + rightEyeCtr[0]) // 2, (leftEyeCtr[1] + rightEyeCtr[1]) // 2) # // is a integer division
+
+        # create matrix for transformation
+        mat = cv2.getRotationMatrix2D(eyesCenter,angle,scale)
+
+        # update translation component of matrix
+        tX = self.faceSize * 0.5
+        tY = self.faceSize * self.leftEyePos[1]
+        mat[0,2] += (tX - eyesCenter[0])
+        mat[1,2] += (tY - eyesCenter[1])
+
+        # apply transformation
+        output = cv2.warpAffine(img,mat,(self.faceSize,self.faceSize),flags=cv2.INTER_CUBIC)
+
+        return output

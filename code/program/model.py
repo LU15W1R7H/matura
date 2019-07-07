@@ -2,26 +2,12 @@ from utils import *
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
+from facealigner import FaceAligner
 import time
 
 IMAGE_WIDTH = 28
 IMAGE_HEIGHT = 28
 IMAGE_CHANNELS = 1
-
-dirPaths = getFilePaths('/home/luis/ml_data/')
-print(len(dirPaths))
-dirPaths = dirPaths[0:800]
-paths = [getFilePaths(path) for path in dirPaths]
-paths = np.concatenate(paths).ravel()
-
-
-# paths = np.asarray(paths)
-# paths = paths.ravel()
-
-imgs = loadImages(paths, greyscale=True)
-imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
-imgs = imgs.astype('float32') / 255.0 # normalize data
-imgs = imgs[...,np.newaxis]
 
 
 # MODELL
@@ -50,18 +36,35 @@ decoded = dconv3
 
 autoencoder = tf.keras.Model(input_data,decoded)
 autoencoder.compile(optimizer='adadelta',loss='binary_crossentropy')
-
 print(autoencoder.summary())
+
+# loading data
+aligner = FaceAligner()
+
+dirPaths = getFilePaths('/home/luis/ml_data/')
+dirPaths = dirPaths[0:100] # max 50'000
+paths = [getFilePaths(path) for path in dirPaths]
+paths = np.concatenate(paths).ravel()
+
+imgs = loadImages(paths, greyscale=True)
+for img in imgs:
+    faces = aligner.getFaces(img)
+    if(len(faces)==0):
+        continue
+    landmarks = aligner.getLandmarks(img,faces[0])
+    img = aligner.align(img,landmarks)
+    # cv2.imshow('test', img)
+    # cv2.waitKey(0)
+
+imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
+imgs = imgs.astype('float32') / 255.0 # normalize data
+np.random.shuffle(imgs)
+imgs = imgs[...,np.newaxis]
+
+# training
 
 autoencoder.fit(x=imgs,y=imgs,batch_size=128,epochs=25,shuffle=True,validation_data=None,callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/autoencoder')])
 
 generated_face = autoencoder.predict(imgs)
 
 autoencoder.save('myautoencoder.model')
-
-
-# for i, img in enumerate(imgs):
-#     imageio = readImage(img)
-#     imageio = imageio[:,:,0:3].reshape((1,64,64,3)) / 255.
-#     file_name = os.path.basename(img)
-#     denseRep = sess.run([encoded], feed_dict={inputs_layer: imageio, target_layer: imageio})
