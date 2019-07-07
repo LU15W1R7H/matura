@@ -279,12 +279,24 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
   \vec{p}_{t+1} = \vec{p}_t - \eta \cdot \vecf{\nabla} \mathit{f}(\vec{p}_t)
 \end{equation}
 
-BEISPIEL FUER GRADIENTENVERFAHREN MIT ABBILDUNG
-
 \begin{figure}[h!]
   \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      % hide axis,
+      colormap/cool,
+      ]
+      \addplot3[
+      mesh,
+      samples=50,
+      domain=-1:1,
+      ]
+      {1/(1+exp(-(x^2+y^2)))};
+      \addlegendentry{$f(x_1,\ldots,x_n)$}
+    \end{axis}
+  \end{tikzpicture}
 
-  \caption{Visualisierung des Gradientenabstieg}
+  \caption{Visualisierung des Gradientenabstiegs}
 \end{figure}
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
@@ -326,22 +338,6 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
   \caption{Visualisierung verschiedener Lernraten}
 \end{figure}
 
-
-% \begin{tikzpicture}
-%   \begin{axis}[
-%     title=Exmple using the mesh parameter,
-%     hide axis,
-%     colormap/cool,
-%     ]
-%     \addplot3[
-%     mesh,
-%     samples=50,
-%     domain=-8:8,
-%     ]
-%     {sin(deg(sqrt(x^2+y^2)))/sqrt(x^2+y^2)};
-%     \addlegendentry{$\frac{sin(r)}{r}$}
-%   \end{axis}
-% \end{tikzpicture}
 
 
 
