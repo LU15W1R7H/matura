@@ -281,20 +281,20 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-      % hide axis,
-      colormap/cool,
-      ]
-      \addplot3[
-      mesh,
-      samples=50,
-      domain=-1:1,
-      ]
-      {1/(1+exp(-(x^2+y^2)))};
-      \addlegendentry{$f(x_1,\ldots,x_n)$}
-    \end{axis}
-  \end{tikzpicture}
+  % \begin{tikzpicture}
+  %   \begin{axis}[
+  %     % hide axis,
+  %     colormap/cool,
+  %     ]
+  %     \addplot3[
+  %     mesh,
+  %     samples=50,
+  %     domain=-1:1,
+  %     ]
+  %     {1/(1+exp(-(x^2+y^2)))};
+  %     \addlegendentry{$f(x_1,\ldots,x_n)$}
+  %   \end{axis}
+  % \end{tikzpicture}
 
   \caption{Visualisierung des Gradientenabstiegs}
 \end{figure}
@@ -988,9 +988,11 @@ Konzept eingefuehrt werden: die Vektorisierung einer Funktion.
 \para{}
 
 \begin{defbox}{Vektorisierung einer Funktion}
-  Die Vektorisierung einer Funktion $f$, geschrieben als $\vecf{f}[\vec{v}]$ ist eine
-  neue Funktion, welche als Rueckgabewert einen Vektor hat, auf dessen
-  Komponenten jeweils immer die Funktion $f$ angewendet wird.
+  Die Vektorisierung einer skalaren Funktion $f$, geschrieben als
+  $\vecf{f}[\vec{v}]$ hat als Argument einen Vektor $\vec{v}$, auf dessen
+  Komponenten jeweils einzeln die Funktion $f$ angewandt wird. Dieser neue
+  Vektor ist der Rueckgabewert der Funktion. Er besitzt die gleichen Dimensionen
+  wie der Argumentvektor.
   \begin{equation*}
     \vecf{f}[\vec{v}]=
     \begin{pmatrix}
@@ -1289,7 +1291,8 @@ Daraus folgt folgende kompakte Gleichung fuer den Fehler der ganzen letzten Schi
 \para{}
 Nun muessen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
 der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetztigen Schicht
-erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf.
+erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
+(siehe Abb. (\ref{fig:cg_L-1})).
 
 \begin{figure}[h!]
   \centering
@@ -1326,7 +1329,7 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf.
 
   \end{tikzpicture}
   \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
-  \label{fig:cg_L}
+  \label{fig:cg_L-1}
 \end{figure}
 
 Es gilt erneut folgende Gleichung fuer die Berechnung des Fehlers $\delta_j^{l-1}$:
@@ -1365,22 +1368,21 @@ Matrixmultiplikation zwischen
 der transponierten Gewichtsmatrix $\trans{(\mat{W}^{l-1})}$ der Schicht ($l-1$)
 und dem Fehlers $\vec{\delta}^l$ der Schicht $l$.
 
-GEWICHTSMATRIX INDIZES STIMMEN WAHRSCHEINLICH NICHT
 \begin{gather*}
   \trans{\begin{pmatrix} \ds\sum_{n=1}^{|l|} w_{1,n}^{l-1} \cdot \delta_n^l & \cdots & \ds\sum_{n=1}^{|l|} w_{|l-1|,n} \cdot \delta_n^l \end{pmatrix}} =
   \begin{pmatrix}
-    w_{1,1}^{l-1} & w_{2,1}^{l-1} & \cdots & w_{|l-1|,1}^{l-1} \\
-    w_{1,2}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{|l-1|,2}^{l-1} \\
+    w_{1,1}^{l-1} & w_{2,1}^{l-1} & \cdots & w_{|l|,1}^{l-1} \\
+    w_{1,2}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{|l|,2}^{l-1} \\
     \vdots & \vdots & \ddots & \vdots \\
-    w_{1,|l|}^{l-1} & w_{2,|l|}^{l-1} & \cdots & w_{|l-1|,|l|}^{l-1}
+    w_{1,|l-1|}^{l-1} & w_{2,|l-1|}^{l-1} & \cdots & w_{|l|,|l-1|}^{l-1}
   \end{pmatrix}
   \trans{\begin{pmatrix} \delta_1^l & \cdots & \delta_{|l|}^l \end{pmatrix}} \\=
-  \begin{pmatrix}
-    w_{1,1}^{l-1} & w_{1,2}^{l-1} & \cdots & w_{1,|l|}^{l-1} \\
-    w_{2,1}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{2,|l|}^{l-1} \\
+  \trans{\begin{pmatrix}
+    w_{1,1}^{l-1} & w_{1,2}^{l-1} & \cdots & w_{1,|l-1|}^{l-1} \\
+    w_{2,1}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{2,|l-1|}^{l-1} \\
     \vdots & \vdots & \ddots & \vdots \\
-    w_{|l-1|,1}^{l-1} & w_{|l-1|,2}^{l-1} & \cdots & w_{|l-1|,|l|}^{l-1}
-  \end{pmatrix}
+    w_{|l|,1}^{l-1} & w_{|l|,2}^{l-1} & \cdots & w_{|l|,|l-1|}^{l-1}
+  \end{pmatrix}}
   \vec{\delta}^l = \trans{(\mat{W}^{l-1})} \vec{\delta}^l
 \end{gather*}
 
