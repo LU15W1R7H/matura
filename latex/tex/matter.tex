@@ -2,15 +2,15 @@
 
 Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu loesen.
 Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu loesen
-hat, statdessen wird das Modell trainiert, optimiert sich von selbst und findet selber
+hat, stattdessen wird das Modell trainiert, optimiert sich von selbst und findet selber
 einen Weg, das Problem zu loesen.
 Die Grundidee dabei ist, dass man Daten erfasst, generiert oder misst, welche
-analysiert werden sollen. Innerhalb diesen Daten existieren gewisse
+analysiert werden sollen. Innerhalb dieser Daten existieren gewisse
 Gesetzmaessigkeiten und Mustern. Diese Muster sollen vom Modell
 erkannt werden und verallgemeinert werden. Nach dem erfolgreichen Lernen,
-kann das Modell \keyword{Vorhersagen} zu neuen Daten machen.
+kann das Modell Vorhersagen zu neuen Daten machen.
 \para{}
-Man unterscheiden zwischen zwei Arten von Maschinellen Lernen:
+Man unterscheiden zwischen zwei Arten von Maschinellen Lernen.
 \begin{itemize}
 \item{
     \keyword{Ueberwachtes Lernen} (engl.:\ supervised learning) ist ein
@@ -20,7 +20,7 @@ Man unterscheiden zwischen zwei Arten von Maschinellen Lernen:
     erlernen und so ihre Beziehung zueinander zu verstehen.
     Anhand der Informationen, welche in den Inputs enthalten
     sind, sind dann die Labels vorherzusagen. Man gleicht dann die
-    vorhergesagten Labels des Modells mit den wahren Labels ab (man ueberwacht sie) und bewertet so ihre Faehigkeiten.
+    vorhergesagten Labels des Modells mit den wahren Labels ab (man ``ueberwacht'' sie) und bewertet so ihre Faehigkeiten.
     \para{}
     Voraussetztung dafuer ist, dass die Daten eben ``gelabelt'' sein muessen.
     Man muss schon im vorhinein Daten haben, bei welchen man die gewuenschten
@@ -31,32 +31,24 @@ Man unterscheiden zwischen zwei Arten von Maschinellen Lernen:
 \item{
     \keyword{Unueberwachtes Lernen} (engl.:\ unsupervised learning) ist ein anderes
     Lernverfahren, bei welchem eben diese Labels nicht vorhanden sind. Dem
-    Modell stehen nur die Inputdaten zur Verfuegung. Diese werden erneut analyisert
+    Modell stehen nur die Inputdaten zur Verfuegung. Diese werden auch analysiert
     und das Modell soll Muster herausextrahieren, welche sich von sonstigem
-    zuefaelligen Rauschen (durch z.B. Messungenauigkeiten erzeugt)
-    unterscheiden.
+    zuefaelligen Rauschen unterscheiden.
   }
 \end{itemize}
 
 Der Grossteil der Modelle des Maschinellen Lernens benutzten ueberwachtes
 Lernen, da es auch deutlich mehr Anwendungsmoeglichkeiten besitzt. Es gibt nur wenige Arten von
-unueberwachtem Lernen, darunter sind: Hauptkomponentenanalyse und Generative
+unueberwachtem Lernen, dazu gehoeren: Hauptkomponentenanalysen und Generative
 Adversial Networks. Aus diesem Grund, werden wir im folgenden uns grundsaetzlich
-mit ueberwachtem Lernen beschaeftigen. \\
-Im Verlauf dieser Arbeit, werden auch noch Autoencoder betrachten, welche eine
-Art Mischform darstellen. Man spricht von semiueberwachtem Lernen.
-\para{}
-
-Um die neuen Konzepte in den folgenden Abschnitten besser zu verstehen, werden
-wir ein bestimmtes Beispielmodell betrachten:\\
-Das Ziel ist den Preis eines Occasion Autos vorherzusagen, anhand der Anzahl
-gefahrener Kilometer und anhand des Alters des Autos.
-
+mit ueberwachtem Lernen beschaeftigen.
 \para{}
 \cite{wiki:supervised_learning}
 \cite{wiki:unsupervised_learning}
 
 \section{Allgemeine Begriffe}
+
+\subsection{Korrelation?}
 
 \subsection{Daten}
 
@@ -65,7 +57,8 @@ Um ein Modell zu trainieren braucht man Daten. Diese Daten bestehen immer aus
 von Outputs. Die \keyword{Labels} sind die erwarteten Outputs, welche die
 gewueschten Zielwerte sind. Die \keyword{Vorhersagen} sind die Outputs, welche
 das Modell produziert und hoffentlich moeglichst genau mit den Labels
-uebereinstimmen. \\
+uebereinstimmen.
+\para{}
 Diese Daten fuer Training kommen in der Form eines \keyword{Trainingsdatensatz} $\set{X}$.
 Dabei handelt es sich um eine Menge von \keyword{Samples},
 welche jeweils aus Inputs und Labels bestehen.
@@ -83,28 +76,27 @@ $\vec{\hat{y}}$.
 Die Inputs bestehen aus gewissen \keyword{Attributen}, welche die
 Merkmals\textit{typen} der Daten sind. Die sogennanten \keyword{Features} sind
 dann die spezifischen Werte der Attribute eines Samples. Der Algorithmus soll
-anhand dieser Attribute seine Vorhersagen machen.
+anhand dieser Features seine Vorhersagen machen.
 Diese Vorhersagen werden dann mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
-Unter korrekten Bedingungen (keine Ueberanpassung) findet kein Auswendiglernen der Trainingsdaten statt,
+Unter korrekten Bedingungen (kein Overfitting) findet kein Auswendiglernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassigkeiten.
 \para{}
 Um eine endgueltige Bewertung des Modells durchzufuehren, wird ein Testdatensatz
 $\set{T}$, welcher nicht Teil des Trainingsdatensatz ist, genutzt um Vorhersagen zu machen.
 Dies garantiert, dass kein Auswendiglernen moeglich ist.
 \para{}
-Um die soeben eingefuerten Begriffe zu verdeutlichen, betrachten wir unser Autobeispiel.
-Die Inputdaten sind die Anzahl gefahrener Kilometer und die Alter von
-verschieden Autos. Sie stellen
+BEISPIEL
 
 
 \subsection{Modelle}
-Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{f}\colon \set{R}^n \to \set{R}^m$, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{f}(\vec{x})$.
+Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^n
+\to \set{R}^m$, Hypothesenfunktion gennant, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
 Man kann diese Funktion gewissermassen als die Hypothese der Beziehung zwischen
 den Inputs und den Labels betrachten, welche das Modell aufgestellt hat.
 Im Zusammenhang mit Wertevorhersagen spricht man von einem Regressionsmodell.
 Das Verhalten dieses Modells wird bestimmt durch seine \keyword{Modellparameter}
-$\param_1, \param_2,\ldots,\param_n$. Sie bestimmen, wie die Hypothese des Modells lautet.
+$\param_1, \param_2,\ldots,\param_k$. Sie bestimmen, wie die Hypothese des Modells lautet.
 Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen $\vec{y}$ besser mit den Labels $\vec{\hat{y}}$ uebereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den
 Parametern vorgenommen werden, bis das Modell die gewuenschten Resultate liefert.
@@ -151,8 +143,8 @@ Fehler $C(\vec{y}_j,\vec{\hat{y}}_j)$ (wobei $\vec{y}_j$ die Vorhersagen sind un
 $\vec{\hat{y}}_j$ die Labels sind) einer gesamten Vorhersage zu berechnen. Siehe Gleichung (\ref{eq:errorfunc}).\\
 Der Fehler $\bar{C}(\set{X})$ eines ganzen Datensatzes $\set{X}$, der
 Groesse $p$ ergibt sich aus dem arithmetischen
-Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}).
-\para{}
+Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung
+(\ref{eq:meanerrorfunc}). \\
 \begin{minipage}[h!]{0.5\textwidth}
   \centering
   \begin{equation}\label{eq:errorfunc}
@@ -168,7 +160,7 @@ Mittel der einzelnen Vorhersagen-Fehler. Siehe Gleichung (\ref{eq:meanerrorfunc}
 \para{}
 Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
-\item{$c$ ist minimal, wenn $y = \hat{y}$}
+\item{$c$ ist minimal, wenn $\vec{y} = \vec{\hat{y}}$}
 \item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
 \item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklaert in Sektion (\ref{ref:partielle_ableitungen}))}
 \end{itemize}
@@ -180,30 +172,17 @@ werden nun eingefuehrt.
 \subsubsection{Mittlere quadratische Abweichung}
 Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''
 (engl.:\ mean squared error).
-Sie ist definiert folgendermassen definiert:
+Sie ist folgendermassen definiert:
 \begin{equation}
   C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2
 \end{equation}
 
 Sie erfuellt alle Anforderungen an eine Kostenfunktion:
 \begin{itemize}
-\item{Ihr Funktionwert ist 0 und minimal fuer $y = \hat{y}$}
-\item{Sie ist proportional zu ${(\hat{y}-y)}^2$}
-\item{Ihre partielle Ableitung nach $y$ lautet: $C'=\frac{1}{n}(y-\hat{y})$}
+\item{Ihr Funktionwert ist 0 und minimal fuer $\vec{y} = \vec{\hat{y}}$}
+\item{Sie ist proportional zu ${(\vec{\hat{y}}-\vec{y})}^2$}
+\item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{MSE}'=\frac{1}{n}(y_i-\hat{y_i})$}
 \end{itemize}
-
-\subsubsection{Logistische Regression Kostenfunktion}
-
-Lossfunction:
-\begin{equation}
-  L_{LG} = -(y \log \hat{y} + (1-y) \log (1-\hat{y}))
-\end{equation}
-
-Costfunction:
-\begin{equation}
-  J(\vec{w},\vec{b}) = \frac{1}{m} \sum_{i=1}^m L(\vec{\hat{y}}_i,\vec{y}_i) = - \frac{1}{m} \sum_{i=1}^m \left[ y_i...  \right]
-\end{equation}
-
 
 
 \subsubsection{Cross-entropy}
@@ -212,10 +191,10 @@ Costfunction:
 \subsection{Gradientenverfahren}\label{sec:gradientenverfahren}
 Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
 Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
-Funktionswerte der Fehlerfunktion am kleinsten sind.
-Deshalb muss diese Fehlerfunktion $C$ minimiert werden.
+Funktionswerte der Kostenfunktion am kleinsten sind.
+Deshalb muss diese Kostenfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhaengigkeit der Inputs betrachtet werden, sondern in Abhaengigkeit von den Modellparametern
-$C(\param_1, \param_2, \ldots, \param_n)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
+$C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden, um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
   Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
@@ -263,16 +242,15 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
   \end{equation*}
   Geometisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
   Sein Betrag gibt die Staerke des Anstiegs an.
-
-
-
 \end{defbox}
+
 
 \begin{figure}[h!]
   \caption{Skalarfeld mit zugehoerigem Gradientenfeld}
 \end{figure}
 
-Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor $\vec{b}_t$ in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
+Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
+$\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums so beschrieben
 werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
 \begin{equation}\label{eq:gradientdescent}
@@ -299,7 +277,11 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt):\\
   \caption{Visualisierung des Gradientenabstiegs}
 \end{figure}
 
-Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt $\vec{p}_0$ gewaehlt wurde.
+Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
+belibigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt
+$\vec{p}_0$ gewaehlt wurde.
+Wie man diesen Startpunkt zu waehlen hat, wird in Sektion
+(\ref{sec:parameter_initalisieren}) behandelt werden.
 Da dieser meist zufaellig bestimmt wird, ist es eine Glückssache ein sehr niedriges Minimum zu finden.
 \para{}
 Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
@@ -381,13 +363,17 @@ ZUSAMMENFASSUNG TRAININGSALGORITHMUS
 
 \pagebreak
 \chapter{Deep Learning und Künstliche Neuronale Netze}
-Das wohl beste Modell fuer die meisten Problemstellungen in Bereich Machinelles Lernen (Bilderkennung, Spracherkennung, etc.) ist das \keyword{Kuenstliche Neuronale Netz}, kurz KNN (eng.: Neural Network).
-Die Methoden welche benutzt werden um Neuronale Netze zu traniert fasst man unter dem Begriff \keyword{Deep Learning} zusammen.
-
+Das wohl beste Modell des Maschinelles Lernens ist fuer die meisten
+Problemstellungen (Bilderkennung, Spracherkennung, etc.) ist das
+\keyword{Kuenstliche Neuronale Netz} (eng.: Neural Network) kurz KNN.
+Der Bereich des Maschinelles Lernens, welcher sich mit Neuronalen Netzen
+beschaeftigt, bezeichnet man als \keyword{Deep Learning}.
+\para{}
 Kuenstliche Neuronale Netze sind zum Teil biologisch inspiriert von Nervensystemen von Lebewesen. Sie sind aber lediglich eine Abstraktion der Informationverarbeitung und versuchen nicht eine moeglichst genaue biologische Abbildung darzustellen.
 Es gibt nicht nur eine Art von Neuralem Netz, sondern es exisitieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden
-muessen. Diese Arbeit wird sich spaeter vorallem mit sogennanten Autoencodern auseinandersetzen.
+muessen. Diese Arbeit wird spaeter zwei solche Architekturen behandeln:
+Convolutional Neural Networks und sogennante Autoencodern.
 
 
 \section{Perzeptron}
@@ -403,13 +389,13 @@ w_n \in \set{R}$, fuer jeden Input ein Gewicht.
 Diese sind reelle Zahlen, welche das Verhalten des Perzeptron bestimmen.
 Die \keyword{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
 ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
-Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor:
+Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor mit dem Inputvektor.
 \begin{equation*}
   \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}
 \end{equation*}
 \para{}
 Zusaetzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
-Zusammen mit den Gewichten, bildet er die Modellparameter.
+Zusammen mit den Gewichten, bilden sie die Modellparameter.
 Das Perzeptron verhaelt sich so, dass falls die gewichtete Summe groesser als der
 Schwellwert ist, das Neuron feuert, d.h.\ der Output betraegt 1. Andernfalls ist er 0.
 Siehe erster Teil der Gleichung (\ref{eq:perzeptron_1}).
@@ -417,9 +403,9 @@ Es ist gaengig die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \keyword{Neigung} (engl.: Bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der Term $\tilde{z} + b$ wird mit $z$ bezeichnet. Siehe Rest der Gleichung (\ref{eq:perzeptron_1}).
-Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Ein hohes $b$
-laesst ein Neuron auch trotz einigen Nullen in den Inputs feuern, waehrend es
-fuer ein tiefes $b$ nicht feuern lassen wuerde.
+Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Ein grosse
+Neigung laesst ein Neuron auch dann noch feuern, wenn nur wenige Inputs
+eingeschatet sind.
 
 \begin{equation}\label{eq:perzeptron_1}
   p(\vec{x}) =
@@ -441,7 +427,7 @@ fuer ein tiefes $b$ nicht feuern lassen wuerde.
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[>=latex]
     \path (3,0) node [circle,draw](neuron){Neuron};
     \path[red] (0,1.5) node(x1){$x_1$} (0,0) node(x2){$x_2$} (0,-1.5) node(x3){$x_3$};
     \path[black!40!green] (5,0) node(y1){$y$};
@@ -466,36 +452,25 @@ Es kann die Features in zwei Klassen 0 oder 1 einordnen.
 Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
 Jedoch muessen diese Klassen linear separierbar sein.
-Das bedeutet, dass die Featurevektoren $\vec{x}$ durch eine Hyperebene trennbar
-sein muessen.
-Bei zwei Features (zwei Inputs) handelt es sich bei der Hyperebene um eine
-Gerade welche die Vektoren auftrennt. Siehe Abbildung (\ref{fig:linearer_Klassifikator}).
-Fuer drei Featuers ist es eine Ebene.
-ZU ABSTRAKT -> BEISPIEL
+\para{}
+Lineare Separierbarkeit bedeutet, dass man die Featurevektoren $\vec{x} \in \set{R}^n$
+innerhalb ihres Vektorraums $\set{R}^n$ durch eine Hyperebene in ihre Klassen aufteilbar sein muessen.
+Falls das Perzeptron zwei Inputs hat, bedeutet dies, dass man die Ortsvektoren
+einfach durch eine Gerade voneinander trennenbar sein muessen.
+Siehe Abbildung (\ref{fig:linearer_Klassifikator}). \\
+Falls die Features nicht linear separierbar sind, bedeutet dies, dass das
+Perzeptron die Klassifizierung nicht erlernen kann.
 
-Eine Funktionen, welche nicht linear separierbar ist (z.B\ XOR-Verknuepfungen),
-kann von einem Perzeptron nicht erlernt werden.
+BEISPIEL
 
 \begin{figure}[h!]
-
   \caption{erfolgreiche lineare Separierung (links) und das Versagen bei XOR (rechts)}
   \label{fig:linearer_Klassifikator}
 \end{figure}
 
+\para{}
 \cite{wiki:perzeptron}
-
-\subsection{Biologische Analogie}
-SCHREIBEN
-% Gewicht entscheidet ob inhibitorisch oder exaktorisch.
-% Schwellenwert: Das Addieren eines Schwellenwerts  zur Netzeingabe verschiebt die gewichteten Eingaben. Die Bezeichnung bestimmt sich aus der Verwendung einer Schwellenwertfunktion als Aktivierungsfunktion, bei der das Neuron aktiviert wird, wenn der Schwellenwert überschritten ist. Die biologische Motivierung dabei ist das Schwellenpotential bei Nervenzellen. Mathematisch gesehen wird die Trennebene, die den Merkmalsraum auftrennt, durch einen Schwellenwert mit einer Translation verschoben.
-
-% Hebbsche Lernregel
-
-\begin{figure}[h!]
-
-  \caption{Nervenzelle}
-\end{figure}
-
+\cite{wiki:linear_separability}
 
 \section{Erweiterung der Kuenstlichen Neuronen}\label{sec:kuenstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage, lineare Klassifikationen
@@ -508,9 +483,9 @@ Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
 haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
 $w_{ji}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
 Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
-die sogennante Aktivierung $a$ gebildet werden. Sie entspricht dem Output des Neurons.
-Die Aktivierung $a$ ist das Resultat der Aktivierungsfunktion $\varphi$ angewendet
-auf $z$. $a = \varphi(z)$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
+die sogennante \keyword{Aktivierung} $a$ gebildet werden. Sie entspricht dem Output des Neurons.
+Die Aktivierung $a = \varphi(z)$ ist das Resultat der \keyword{Aktivierungsfunktion} $\varphi$ angewendet
+auf $z$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
 
 \begin{figure}[h!]
@@ -685,6 +660,7 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$. Siehe Abb. (\ref{fig:sigmo
 Nun sollten diese Sigmoiden-Neuronen als Bausteine verwendet werden, um ein Kuenstliches
 Neuronales Netz zu bilden. Dazu werden sie miteinander verbundet und bilden so ein Netz,
 aehnlich wie ein Nervensystem.
+\para{}
 Diese Neuronen sind in verschieden Schichten (engl.: Layers)
 arangiert. Die erste ist die \keyword{Inputschicht}. Sie behinhalten die
 Inputneuronen. Dies sind eigentlich keine richtigen
@@ -707,19 +683,9 @@ ausschliesslich nach vorne propagiert werden.
 \para{}
 In Abbildung (\ref{fig:nn_layers}) ist ein Beispiel eines Neuronalen Netzes
 abgebildet. In diesem Fall besitz es sowohl 4 Inputs, wie auch 4 Outputs. Es hat
-ausserdem 3 Zwischenschichten. Die zwei aueserren Zwischenschichten haben 3 Neuronen und die dazwischen
-hat sogar 4 Neuronen.
-\para{}
-Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell fuer jede
-weiter Schicht eine hoeheres Abstraktionsniveau erreicht. Wuerde man zum
-Beispiel ein Netzwerk zur Gesichtserkennung trainieren, koennte man sich den
-Erkennungsprozess folgendermassen vorstellen. Die erste Zwischenschicht erkennt
-Kanten und Konturen. Die zweite vereint diese Merkmale zu Ecken und primitive
-geometrische Formen. Die dritte Schicht sollte dann schon komplexere
-geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase, aehneln. Die letzten Schichten sollte dann all diese
-Merkmale zusammensetzen und so ein Gesicht erkennen.
+ausserdem 3 Zwischenschichten. Die erste und die dritte haben jeweils 3 Neuronen
+und die zweite besitzt 4 Neuronen. \\
 
-SCHICHTENBESCHRIFTUNG HINZUFUEGEN; BIAS ALS EIGENES NEURON?
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -778,10 +744,21 @@ SCHICHTENBESCHRIFTUNG HINZUFUEGEN; BIAS ALS EIGENES NEURON?
       \draw[->] (mat-\ai-5) -- (mat-\aii-7);
     }
 
+
   \end{tikzpicture}
   \caption{Schichten eines KNNs}
   \label{fig:nn_layers}
 \end{figure}
+
+\section{Lernverhalten}
+Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell fuer jede
+weiter Schicht eine hoeheres Abstraktionsniveau erreicht. Wuerde man zum
+Beispiel ein Netzwerk zur Gesichtserkennung trainieren, koennte man sich den
+Erkennungsprozess folgendermassen vorstellen. Die erste Zwischenschicht erkennt
+Kanten und Konturen. Die zweite vereint diese Merkmale zu Ecken und primitive
+geometrische Formen. Die dritte Schicht sollte dann schon komplexere
+geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase, aehneln. Die letzten Schichten sollte dann all diese
+Merkmale zusammensetzen und so ein Gesicht erkennen.
 
 \section{Vorwaertspropagierung}
 Jetzt, da der Aufbau eines KNNs erklaert wurde, sollte nun die mathematische Funktionsweise
@@ -821,10 +798,6 @@ Bezeichnung der Teile eines KNNs getroffen werden:
 
 \end{itemize}
 
-ABBILDUNG MIT NEURONBESTANTEILEN (GEWICHTEBESCHRIFTUNGEN UND NEIGUNGEN)
-
-DIE GEWICHTBESCHRIFTUNGEN IN ABBILDUNG 11 sind falsch! Die Gewichtsindizes
-beginnen mit 0 und ended mit L-1
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -839,13 +812,13 @@ beginnen mit 0 und ended mit L-1
 
     \matrix[netstyle] (mat)
     {
-      |[inp]|$a_1^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_1^L$ \\
-      |[cl]| & |[cl]| & |[hid]|$a_1^1$   & |[sy]| $\cdots$ & |[hid]|$a_1^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$a_2^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_2^L$ \\
-      |[cl]| & |[cl]| & |[hid]|$a_2^1$   & |[sy]| $\cdots$ & |[hid]|$a_2^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$a_3^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$a_3^L$ \\
-      |[sy]| $\vdots$ & |[cl]| & |[hid]|$a_{|1|}^1$ & |[sy]|$\cdots$ & |[hid]|$a_{|L-1|}^{L-1}$ & |[cl]| & |[sy]| $\vdots$ \\
-      |[inp]|$a_{|0|}^0$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$a_{|L|}^L$ \\
+      |[inp]|$n_1^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_1^L$ \\
+      |[cl]| & |[cl]| & |[hid]|$n_1^1$   & |[sy]| $\cdots$ & |[hid]|$n_1^{L-1}$ & |[cl]| & |[cl]| \\
+      |[inp]|$n_2^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_2^L$ \\
+      |[cl]| & |[cl]| & |[hid]|$n_2^1$   & |[sy]| $\cdots$ & |[hid]|$n_2^{L-1}$ & |[cl]| & |[cl]| \\
+      |[inp]|$n_3^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$n_3^L$ \\
+      |[sy]| $\vdots$ & |[cl]| & |[hid]|$n_{|1|}^1$ & |[sy]|$\cdots$ & |[hid]|$n_{|L-1|}^{L-1}$ & |[cl]| & |[sy]| $\vdots$ \\
+      |[inp]|$n_{|0|}^0$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_{|L|}^L$ \\
     };
 
     % titels
@@ -883,12 +856,28 @@ beginnen mit 0 und ended mit L-1
       \draw[->] (mat-\ai-5) -- node[above,sloped]{} (mat-\aii-7);
     }
 
+    \node[below=2mm of mat-7-1.south] {$l=0$};
+    \node[below=2mm of mat-6-3.south] {$l=1$};
+    \node[below=2mm of mat-6-5.south] {$l=L-1$};
+    \node[below=2mm of mat-7-7.south] {$l=L$};
+
   \end{tikzpicture}
   \label{fi:nn_layers}
   \caption{zum Verstaentniss der Nomenklatur}
 \end{figure}
 
 \begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[>=latex]
+    \path (-2,1.5) node [draw,circle,inner sep=0,minimum size=1.25cm](n11){$n^1_1$};
+    \path (-2,-1.5) node [draw,circle,inner sep=0,minimum size=1.25cm](n12){$n^1_2$};
+    \path (2,1.5) node [draw,circle,inner sep=0,minimum size=1.25cm](n21){$n^2_1$};
+    \path (2,-1.5) node [draw,circle,inner sep=0,minimum size=1.25cm](n22){$n^2_2$};
+    \draw[->] (n11) -- node[above,sloped]{$w^1_{1,1}$} (n21);
+    \draw[->] (n11) -- node[above,pos=0.75,sloped]{$w^1_{2,1}$} (n22);
+    \draw[->] (n12) -- node[above,pos=0.75,sloped]{$w^1_{1,2}$} (n21);
+    \draw[->] (n12) -- node[above,sloped]{$w^1_{2,2}$} (n22);
+  \end{tikzpicture}
 
   \caption{Neuron mit Gewichtbeschriftungen und Neigung}
 \end{figure}
@@ -910,14 +899,14 @@ Zusaetzlich gehoert zu der gewichteten Summe auch die jeweilige Neigung $b_j^l$,
 dazuaddiert wird. Diese gewichtete Summe wird mit $z_j^{l+1}$ bezeichnet.
 
 \begin{equation}\label{eq:gewichtete_summe_normal}
-  z_j^{l+1} = \sum_{k=1}^{N_l} w_{j,k}^l a_k^l + b_j^l
+  z_j^{l+1} = \sum_{k=1}^{|l|} w_{j,k}^l a_k^l + b_j^l
 \end{equation}
 
 Auf diese Summe wird dann die Aktivierungsfunktion $\varphi$ angewandt.
 Das ist dann die Aktivierung $a_j^{l+1}$ des $j$-ten Neurons in der ($l+1$)-ten Schicht.
 
 \begin{equation}\label{eq:aktivierung_normal}
-  a_j^{l+1} = \varphi\left(\sum_{k=1}^{N_l} w_{j,k}^l a_k^{l} + b_j^l \right) = \varphi \left( z_j^{l+1} \right)
+  a_j^{l+1} = \varphi\left(\sum_{k=1}^{|l|} w_{j,k}^l a_k^{l} + b_j^l \right) = \varphi \left( z_j^{l+1} \right)
 \end{equation}
 \par\bigskip
 Da KNNs weit verbreitet sind in der Bilderkennung und Spracherkennung, ist es
@@ -967,9 +956,8 @@ Matrixform geschrieben werden, denn die Matrixmultiplikation von $\mat{W}^l$ mit
 $\vec{a}^{l}$ ergibt einen Vektor $\vec{\tilde{z}}^{l+1}$, welcher alle gewichteten
 Summen $\tilde{z}_j^{l+1}$ ohne die jeweilige Neigung enthaelt.
 
-STIMMT DIESE GLEICHUNG? (GLAUBE SCHON)
 \begin{equation*}
-  \mat{W}^l \vec{a}^{l} = \trans{\begin{pmatrix}\ds \sum_{i=1}^{|l|} w_{i,1}^l a_i^l &\ds \sum_{i=1}^{|l|} w_{i,2}^l a_i^l & \cdots &\ds \sum_{i=1}^{|l|} w_{i,|l+1|} a_i^l \end{pmatrix}} = \vec{\tilde{z}}^{l+1}
+  \mat{W}^l \vec{a}^{l} = \trans{\begin{pmatrix}\ds \sum_{j=1}^{|l|} w_{1,j}^l a_j^l &\ds \sum_{j=1}^{|l|} w_{2,j}^l a_j^l & \cdots &\ds \sum_{j=1}^{|l|} w_{|l+1|,j} a_j^l \end{pmatrix}} = \vec{\tilde{z}}^{l+1}
 \end{equation*}
 \para{}
 
@@ -1014,7 +1002,7 @@ $\vec{z}^{l+1}$ angewandt werden.
 \para{}
 \cite{Nielsen}
 
-\subsection{Modellparameter initalisieren}
+\subsection{Modellparameter initalisieren}\label{sec:parameter_initalisieren}
 Ein Schritt der getan werden muss, bevor das Training beginnt, ist das
 Initalisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
 Dies ist ein sehr essentieller Schritt, denn diese Startwerte entscheiden
@@ -1131,7 +1119,7 @@ Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
     \centering
-    \begin{tikzpicture}
+    \begin{tikzpicture}[>=latex]
 
       \path (0,1) node [circle,draw](var_x){$x$};
       \path (0,-1) node [circle,draw](var_y){$y$};
@@ -1183,7 +1171,7 @@ Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bi
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[>=latex]
     \path (0,2) node [circle,draw](z1){$z_1^L$};
     \path (0,0) node [circle,draw](z2){$z_2^L$};
     \path (0,-2) node [circle,draw](z3){$z_3^L$};
@@ -1296,7 +1284,7 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
+  \begin{tikzpicture}[>=latex]
     \path (0,1) node [circle,draw](z1-){$z_1^{l-1}$};
     \path (0,-1) node [circle,draw](z2-){$z_2^{l-1}$};
     \path (3,1) node [circle,draw](a1-){$a_1^{l-1}$};
@@ -1309,10 +1297,10 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
     \draw[->] (z2-) -- node[above,sloped]{$\varphi(z_2^L)$} (a2-);
 
     \draw[->] (a1-) -- node[sloped,above]{$\times w_{1,1}$} (z1);
-    \draw[->] (a1-) -- node[sloped,above right]{$\times w_{2,1}$} (z2);
-    \draw[->] (a1-) -- node[sloped,below right]{$\times w_{3,1}$} (z3);
-    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{1,2}$} (z1);
-    \draw[->] (a2-) -- node[sloped,above right]{$\times w_{2,2}$} (z2);
+    \draw[->] (a1-) -- node[sloped,above,pos=0.8]{$\times w_{2,1}$} (z2);
+    \draw[->] (a1-) -- node[sloped,below,pos=0.65]{$\times w_{3,1}$} (z3);
+    \draw[->] (a2-) -- node[sloped,above,pos=0.7]{$\times w_{1,2}$} (z1);
+    \draw[->] (a2-) -- node[sloped,above,pos=0.65]{$\times w_{2,2}$} (z2);
     \draw[->] (a2-) -- node[sloped,below]{$\times w_{3,2}$} (z3);
 
     % endings

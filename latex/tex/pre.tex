@@ -51,9 +51,9 @@ Die Leitfrage lautet: \textbf{Wie können mithilfe von Machine Learning Bilder v
 \begin{tabular}{cl}
   $a$ & ein Skalar (Zahl) \\
   $\vec{a}$ & ein Vektor \\
-  $\vec{a} \in \set{R}^{n}$ & Vektor mit $n$ Komponenten \\
+  $\vec{a} \in \set{R}^{n}$ & ein Vektor mit $n$ Komponenten \\
   $\mat{A}$ & eine Matrix \\
-  $\mat{A} \in \set{R}^{n \times m}$ & Matrix mit $n$ Zeilen und $m$ Spalten \\
+  $\mat{A} \in \set{R}^{n \times m}$ & eine Matrix mit $n$ Zeilen und $m$ Spalten \\
   $\ten{A}$ & ein Tensor \\
   $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
   $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
@@ -68,60 +68,60 @@ Die Leitfrage lautet: \textbf{Wie können mithilfe von Machine Learning Bilder v
   $\set{R}$ & die Menge aller Reeller Zahlen \\
   $\set{Z}$ & die Menge aller ganzer Zahlen \\
   $\set{N}$ & die Menge aller natuerlicher Zahlen \\
-  $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
-  $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
-  $\{a,b\}$ & die Menge, welche aus Elementen $a$ und $b$ besteht \\
-  $\{1,\ldots,n\}$ & Menge aller ganzen Zahlen von 1 bis $n$ \\
+  % $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
+  % $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
+  $\{a,b\}$ & die Menge, welche aus den Elementen $a$ und $b$ besteht \\
+  $\{1,\ldots,n\}$ & die Menge aller ganzen Zahlen von 1 bis $n$ \\
   $\in$ & ... ist Element von ...
 
 \end{tabular}
 
 \begin{center}\textbf{Indexierung}\end{center}
 \begin{tabular}{cl}
-  $\vecelem{a}_i$ & $i$-te Vektorkomponente mit Startindex 1 \\
-  ${(\mat{A})}_{i,j} = $ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
-  $\matelem{A}_{i,j}$ & Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
-  $\mat{A}_{i,:}$ & Zeile $i$ der Matrix $\mat{A}$ \\
-  $\mat{A}_{:,i}$ & Spalte $i$ der Matrix $\mat{A}$\ \\
+  $\vecelem{a}_i$ & die $i$-te Vektorkomponente mit Startindex 1 \\
+  ${(\mat{A})}_{i,j} = $ & das Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  $\matelem{A}_{i,j}$ & das Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
+  $\mat{A}_{i,:}$ & die Zeile $i$ der Matrix $\mat{A}$ \\
+  $\mat{A}_{:,i}$ & die Spalte $i$ der Matrix $\mat{A}$\ \\
 
 \end{tabular}
 
 \begin{center}\textbf{Lineare Algebra Operationen}\end{center}
 \begin{tabular}{cl}
-  $\vec{v} \cdot \vec{w}$ & Skalarprodukt von $\vec{v}$ mit $\vec{w}$ \\
+  $\vec{v} \cdot \vec{w}$ & das Skalarprodukt von $\vec{v}$ mit $\vec{w}$ \\
   $\trans{\mat{A}}$ & das Transponierte einer Matrix $\mat{A}$ \\
-  $\mat{A} \odot \mat{B}$ & Elementeweises (Hadamard) Produkt \\
-  $\mat{A} * \mat{B}$ & diskrete Faltung von $\mat{A}$ ueber $\mat{B}$
+  $\mat{A} \odot \mat{B}$ & das Elementeweises (Hadamard) Produkt \\
+  $\mat{A} * \mat{B}$ & die diskrete Faltung von $\mat{A}$ ueber $\mat{B}$
 
 \end{tabular}
 
 \begin{center}\textbf{Infinitesimalrechnung/Differentialrechnung}\end{center}
 \begin{tabular}{cl}
-  $f'(x)$ & Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
-  $\ds\deriv{y}{x}$ & Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\ds\partderiv{y}{x}$ & Partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\vecf{\nabla} y$ & Gradient von $y$\\
-  $\vecf{\nabla}_{\vec{x}}y$ & Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
+  $f'(x)$ & die Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
+  $\ds\deriv{y}{x}$ & die Ableitung von $y$ bezueglich $x$ \\[2ex]
+  $\ds\partderiv{y}{x}$ & die partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
+  $\vecf{\nabla} y$ & der Gradient von $y$\\
+  $\vecf{\nabla}_{\vec{x}}y$ & der Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
 
 \end{tabular}
 
 \begin{center}\textbf{Funktionen}\end{center}
 \begin{tabular}{cl}
-  $f: \set{A} \to \set{B}$ & Funktion $f$ mit Definitionsmenge $\set{A}$ und Zielmenge $\set{B}$ \\
-  $f(x)$ & Funktion $f$ mit Argument $x$ (Skalar) \\
-  $f(\vec{v})$ & Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
-  $\vecf{f}[\vec{v}]$ & Vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
+  $f: \set{A} \to \set{B}$ & eine Funktion $f$ mit Definitionsmenge $\set{A}$ und Zielmenge $\set{B}$ \\
+  $f(x)$ & eine Funktion $f$ mit Argument $x$ (Skalar) \\
+  $f(\vec{v})$ & eine Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
+  $\vecf{f}[\vec{v}]$ & die vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
   $\mathcal{A}$ & ein Funktionenraum \\
-  $f * g$ & Faltung von $f$ ueber g \\
+  $f * g$ & die Faltung von $f$ ueber $g$ \\
 
 \end{tabular}
 
 \begin{center}\textbf{Statistik}\end{center}
 \begin{tabular}{cl}
-  $\mathcal{N}$ & Gauss'sche Normalverteilung \\
-  $\phi$ & Gauss'sche Dichtefunktion \\
-  $\mu$ & Erwartungswert/Mittelwert \\
-  $\sigma^2$ & Varianz
+  $\mathcal{N}$ & die Gauss'sche Normalverteilung \\
+  $\phi$ & die Gauss'sche Dichtefunktion \\
+  $\mu$ & der Erwartungswert/Mittelwert \\
+  $\sigma^2$ & die Varianz
 \end{tabular}
 
 \begin{center}\textbf{Sonstiges}\end{center}
