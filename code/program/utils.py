@@ -3,6 +3,12 @@ import cv2
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
+import itertools
+
+# group iterable in groups and return list of groups
+def grouper(n, iterable):
+    args = [iter(iterable)] * n
+    return ([e for e in t if e != None] for t in itertools.zip_longest(*args))
 
 # loads image by path, boolean greyscale
 def loadImage(path,greyscale):

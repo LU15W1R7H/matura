@@ -9,16 +9,16 @@ class FaceAligner:
 
     def __init__(self):
 
-        self.FACIAL_LANDMARKS_68_DICT = OrderedDict([
-            ('mouth', (48, 68)),
-            ('inner_mouth', (60, 68)),
-            ('right_eyebrow', (17, 22)),
-            ('left_eyebrow', (22, 27)),
-            ('right_eye', (36, 42)),
-            ('left_eye', (42, 48)),
-            ('nose', (27, 36)),
-            ('jaw', (0, 17))
-        ])
+        self.FACIAL_LANDMARKS_INDICES = {
+            'mouth': (48, 68),
+            'inner_mouth': (60, 68),
+            'right_eyebrow': (17, 22),
+            'left_eyebrow': (22, 27),
+            'right_eye': (36, 42),
+            'left_eye': (42, 48),
+            'nose': (27, 36),
+            'jaw': (0, 17)
+        }
 
         self.detector = dlib.get_frontal_face_detector() # to detect the faces
         self.predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat') # to detect landmarks
@@ -92,3 +92,34 @@ class FaceAligner:
         output = cv2.warpAffine(img,mat,(self.faceSize,self.faceSize),flags=cv2.INTER_CUBIC)
 
         return output
+
+
+# helper functions
+
+
+# using facealigner to align all faces of the dataset and save them
+UNALIGNED_IMGS_PATH = '/mnt/hdd/megaface_data/'
+ALIGNED_IMGS_PATH = '/home/luis/ml_data/'
+
+aligner = FaceAligner()
+
+
+# loading data
+index = 0
+allDirPaths = getFilePaths(UNALIGNED_IMGS_PATH) # count 50'000
+allDirPaths = grouper(100,allDirPaths)
+for dirPaths in allDirPaths:
+    paths = [getFilePaths(path) for path in dirPaths]
+    paths = np.concatenate(paths).ravel()
+    imgs = loadImages(paths, greyscale=True)
+
+    # aligning and saving
+    for i in range(len(imgs)):
+        faces = aligner.getFaces(imgs[i])
+        if(len(faces)==0):
+            continue
+        landmarks = aligner.getLandmarks(imgs[i],faces[0])
+        aligned = aligner.align(imgs[i],landmarks)
+        status = cv2.imwrite(ALIGNED_IMGS_PATH + str(index) + '.jpg',aligned)
+        index += 1
+        print(index)

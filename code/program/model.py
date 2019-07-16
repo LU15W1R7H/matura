@@ -2,7 +2,6 @@ from utils import *
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
-from facealigner import FaceAligner
 import time
 
 IMAGE_WIDTH = 64
@@ -40,33 +39,23 @@ autoencoder.compile(optimizer='adadelta',loss='binary_crossentropy')
 print(autoencoder.summary())
 
 # loading data
-aligner = FaceAligner()
 
-dirPaths = getFilePaths('/home/luis/ml_data/')
-dirPaths = dirPaths[0:500] # max 50'000
-paths = [getFilePaths(path) for path in dirPaths]
-paths = np.concatenate(paths).ravel()
+allPaths = getFilePaths('/home/luis/ml_data/')
+pathGroups = grouper(100,allPaths)
+# paths = [getFilePaths(path) for path in dirPaths]
+# paths = np.concatenate(paths).ravel()
 
-imgs = loadImages(paths, greyscale=True)
-for i in range(len(imgs)):
-    faces = aligner.getFaces(imgs[i])
-    if(len(faces)==0):
-        continue
-    landmarks = aligner.getLandmarks(imgs[i],faces[0])
-    imgs[i] = aligner.align(imgs[i],landmarks)
+for paths in pathGroups:
+    imgs = loadImages(paths, greyscale=True)
+    np.random.shuffle(imgs)
+    imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
+    # for img in imgs:
+    #     cv2.imshow('test',img)
+    #     cv2.waitKey(0)
+    imgs = imgs.astype('float32') / 255.0 # normalize data
+    imgs = imgs[...,np.newaxis]
 
-np.random.shuffle(imgs)
-imgs = np.asarray([resizeImage(img, IMAGE_WIDTH,IMAGE_HEIGHT) for img in imgs])
-# for img in imgs:
-#     cv2.imshow('test',img)
-#     cv2.waitKey(0)
-imgs = imgs.astype('float32') / 255.0 # normalize data
-imgs = imgs[...,np.newaxis]
+    # training
 
-# training
-
-autoencoder.fit(x=imgs,y=imgs,batch_size=128,epochs=25,shuffle=True,validation_data=None,callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/autoencoder')])
-
-generated_face = autoencoder.predict(imgs)
-
-autoencoder.save('myautoencoder.model')
+    autoencoder.fit(x=imgs,y=imgs,batch_size=128,epochs=25,shuffle=True,validation_data=None,callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/autoencoder')])
+    autoencoder.save('myautoencoder.model') # always save model after training one group
