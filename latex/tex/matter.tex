@@ -248,6 +248,8 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 
   Geometisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
   Sein Betrag gibt die Staerke des Anstiegs an.
+
+  MATRIX-GRADIENT EINBRINGEN
 \end{defbox}
 \para{}
 \begin{figure}[h!]
@@ -1149,18 +1151,18 @@ $\ds\partderiv{C}{b_j^l}$ berechnen.
 \para{}
 Zur Uebersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ fuer
 jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezueglich der
-gewichteten Summe ist. Ebenfalls definiert man analog einen Fehlervektor
+gewichteten Summe ist (siehe Gl. (\ref{eq:BP0)})). Ebenfalls definiert man analog einen Fehlervektor
 $\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
-zusammenfasst. Nun heisst es diesen fuer jedes Neuron jeder Schicht zu
+zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es diesen fuer jedes Neuron jeder Schicht zu
 berechnen.
 \\
 \begin{gather}
-  \tag{BP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
-  \tag{BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
+  \tag{BP0}\label{eq:BP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
+  \tag{BP0a}\label{eq:BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
 \end{gather}
 \\
-Da die Kostenfunktion unmittelbar auf die letzte Schicht angewandt wird, beginnt
-man auch mit der Berechnung des Fehlers in der letzten Schicht $L$.
+Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewandt wird, beginnt
+man auch dort mit der Berechnung des Fehlers $\vec{\delta}^L$.
 Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
 \para{}
 
@@ -1203,7 +1205,7 @@ Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bi
     \draw[dashed] ($(beg3)!0.6!(z2)$) -- (z2);
     \draw[dashed] ($(beg3)!0.6!(z3)$) -- (z3);
   \end{tikzpicture}
-  \caption{Computation Graph zur Berechnung von $\delta_j^L$}
+  \caption{Computation Graph zur Berechnung von $\vec{\delta}^L$}
   \label{fig:cg_L}
 \end{figure}
 Wir koennen dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
@@ -1260,16 +1262,16 @@ muss eine neue Operation eingefuehrt werden: das Hadamard-Produkt.
 \para{}
 
 Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
-koenne wir den Fehlervektor der letzten Schicht so berechnen:
+koenne wir den Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0}) berechnen.
 
-\begin{equation*}
+\begin{equation}\label{eq:BPh0}
   \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'(\vec{z}^L)
-\end{equation*}
+\end{equation}
 
 Dabei ist der erste Operand des Hadamard-Produkt, nichts anderes als
 der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezueglich dem Aktivierungsvektor
 $\vec{a}^L$ der letzten Schicht. Dieser Gradient kann einfach berechnet werden, indem man die
-Ableitungsfunktion fuer die gewaehlte Kostenfunktion bildet. Wuerde man die
+vektorisierte Ableitungsfunktion fuer die gewaehlte Kostenfunktion bildet. Wuerde man die
 Mittlere quadratischen Abweichung $C = \frac{1}{2}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion waehlen, haetten wir
 $\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}})$.
 \para{}
@@ -1331,7 +1333,7 @@ Es gilt erneut die Gleichung (\ref{eq:BPh1}) fuer die Berechnung des Fehlers $\d
 \\
 Zuerst einmal ist der erste Faktor wieder die Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
 Desweiteren beinflusst beim Uebergang der Schicht ($l-1$) zur Schicht $l$ eine Aktivierungen
-$a_j^{l-1}$ alle gewichtete Summen $z_k^l$, daher folgt mit der Kettenregel,
+$a_j^{l-1}$ alle gewichtete Summen $z_k^l$. Mit der Kettenregel folgt daher
 dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
 $\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^L}{a_j^{l-1}}$ sein muss. Wir
 erhalten Gleichung (\ref{eq:BPh2}).
@@ -1389,18 +1391,19 @@ die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2})
 \end{equation}
 \\
 In einem letzten Schritt muessen wir jetzt noch Formeln herleiten, mit welchen
-man anhand des Fehlers $\delta^l$ die partiellen Ableitungen der Gewichte und
+man anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
 der Neigung berechnen kann.
 \para{}
-Fuer die Neigungen gilt folgendes.
+Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
+Summe $z_j^{l+1}$. Somit gilt fuer die Neigung Formel (\ref{eq:BPh3}).
 \\
-\begin{equation*}
+\begin{equation}\label{eq:BPh3}
   \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{b_k^l}
-\end{equation*}
+\end{equation}
 \\
 Der erste Term ist hierbei per Definition unser Fehler $\delta_j^l$ und der
 zweite Term laesst sich zu 1 evaluieren, da die Summe $z_k^{l+1}$ nur aus
-$b_k^l$ und die restlichen Summanden fuer die partielle Ableitung als konstant gelten.
+$b_k^l$ besteht und aus Summanden, welche fuer die partielle Ableitung als konstant gelten.
 Somit ist die Ableitung der Neigung gerade unser Fehler und wir erhalten die
 dritte (\ref{eq:BP3}) von vier essentielen Gleichungen.
 \\
@@ -1415,9 +1418,11 @@ Somit ist der Kostengradient bezuglich der Neigung gerade der Fehlervektor
   \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^l
 \end{equation}
 \\
-Fuer die partiellen Ableitungen der Kosten nach dem Gewicht giltet folgendes.
+Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
+gewichteten Summe $z_j^{l+1}$. Dadurch gilt fuer die partiellen Ableitungen der
+kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
 \\
-\begin{equation}
+\begin{equation}\label{eq:BPh4}
   \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
 \end{equation}
 \\
@@ -1479,7 +1484,7 @@ Bildverarbeitung, sondern es bestehen noch weiter Probleme.
 Trotzdem sollte nun klar sein, dass eine andere Modellarchitektur noetig ist, um Machine
 Learning auf Bilder anzuwenden. Fuer genau solche Anwendungen wurde eine modifizierte
 Version eines KNNs entwickelt: das \keyword{Convolutional Neural Network} (CNN).
-Im Allgemeinen sind CNNs immer geeignet, um Daten zu verarbeiten, welche eine
+Im Allgemeinen sind CNNs immer dann geeignet, wenn es Daten zu verarbeiten gibt, welche eine
 rasterartige Form haben, wie eben z.B Bilder.
 Diese Art von Netzwerk, macht Gebrauch von Konzepten aus der klassischen
 Bildverarbeitung, wie sie mit beispielsweise Photoshop gemacht werden kann.
@@ -1493,7 +1498,7 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 
 \section{Bilder als Tensoren}
 CNNs operieren an Bildern. Sie stellen den Input fuer die Modells dar.
-Um mit ihnen rechnen zu koennen, ist es sinnvoll sie als sogennante
+Um mit diesen Bildern rechnen zu koennen, ist es sinnvoll sie als sogennante
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
 Pixeln zu betrachten. \\
 Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen, was ein Tensor im Allgemeinen ist.
@@ -1573,7 +1578,8 @@ Ein Bild kann somit einfach als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
 \times \text{Anzahl Farbkomponenten})$ betrachtet werden.
 Elemente der Matrix nehmen dann einfach die Werte der Pixelkomponenten an.
 Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
-Somit waere es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$.
+Somit waere es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$ (siehe
+Abb. (\ref{fig:bildmatrix})).
 Siehe Abb. (\ref{fig:bildmatrix}).
 \para{}
 
@@ -1592,8 +1598,8 @@ ein Bild als Input und hat auch wieder eines als Output. Somit nehmen die Bilder
 die Rolle der Aktivierungen $a$ ein, weshalb man sie mit $\ten{A}^l$ bezeichnet.
 Das Bild $\ten{A}^0$ ist hierbei wieder der Input $\ten{X}$ ins ganze Netz.
 \para{}
-Ein wichtiger Unterschied eines CNNs ist, dass es verschiedene Typen von
-Schichten gibt. Man unterscheiden zwischen drei Arten von Schichten:
+Ein wichtiger Unterschied eines CNNs ist, dass es aus unterschiedlichen Typen von
+Schichten besteht. Man unterscheiden zwischen drei Arten von Schichten:
 \begin{itemize}
 \item{\keyword{Fully-connected Schichten},}
 \item{\keyword{Convolutional Schichten}, und}
@@ -1666,7 +1672,7 @@ horizontale Kanten akzentuiert. Die Eintraege dieses Filters lauten wie folgt:
 \end{equation*}
 
 Angewandt auf ein Bild, erhaelt man ein neues Bild, bei welchem alle erkannten
-Katen weiss eingefaerbt sind und die restlichen Bereichen schwarz sind.
+Katen weiss eingefaerbt sind und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
 In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
@@ -1690,13 +1696,15 @@ prozessierte Bild.
 Wie wir vorhin erfahren haben, koennen Filter genutzt werden um gewisse
 Features eines Bildes hervorzuheben und andere Features zu ignorieren. Dabei
 bestimmen die Filtereintraege, welche Features extrahiert werden. Somit bestimmt
-die Aufgabe darin, die richtigen Filterelemente zu bestimmen, damit die
+die Aufgabe darin, die richtigen Filtereintraege zu bestimmen, damit die
 gewuenschten Features erkannt werden und auf die gewuenschten Outputs abgebildet
-werden. Daraus schliesst sich, dass die Filtereintraege die Modellparameter
-eines CNNs sind. Mithilfe des Gradietenverfahrens soll erneut diese Parameter
+werden. Naheliegend sollte jetzt der Gedanke sein, die Filtereintreage als die
+Modellparameter eines CNNs zu definieren.
+Mithilfe des Gradietenverfahrens sollten erneut diese Parameter
 erlernt werden. \\
 Da die Filter die gleiche Funktion haben, wie die Gewichte in einem KNN,
-bezeichnet man die Filter in einem CNN mit $\ten{W}$.
+bezeichnet man die Filter in einem CNN mit $\ten{W}$. Die Groesse des Filters
+stellt dabei einene Hyperparameter dar.
 
 \begin{equation*}
   \mat{W} = \begin{pmatrix}
@@ -1706,20 +1714,16 @@ bezeichnet man die Filter in einem CNN mit $\ten{W}$.
   \end{pmatrix}
 \end{equation*}
 
-Die Groesse der Filters bzw. die Groesse der rezeptiven Felder ist
-ein Hyperparameter.
-\para{}
 
-
-\subsection{Filteroperation intutitiv}\label{sec:filteroperation_intutitiv}
+\subsection{Filteroperation intutitiv}\label{sec:filteroperation_intuitiv}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
 graustufiges Bild $\mat{A} \in \set{R}^{h \times w}$ erlauetert. Spaeter werden auch noch farbige
 Bilder erklaert.
 \para{}
-Bei einer Filteroperation, wendet man einen Filter $\mat{W}$ auf eine Bildmatrix
-$\mat{A}$ an und erhaelt so ein neues Bild $\mat{A}^*$. Man schreibt dafuer:
-$\mat{A}^* = \mat{W} * \mat{A}$. \\
+Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf eine Bildtensor
+$\ten{A}$ an und erhaelt so ein neues Bild $\ten{A}^*$. Man schreibt dafuer:
+$\ten{A}^* = \ten{W} * \ten{A}$. \\
 Um nun diese Operation zu erklaeren, verwenden wir als Beispiel eine
 2D-Filtermatrix $\mat{W} \in \set{R}^{3 \times 3}$, bei welcher
 $f = 3$ gewaehlt wurde.
@@ -1727,9 +1731,9 @@ Wie bereits vorhin erwaehnt wandert der Filter ueber das Bild. Dabei befindet
 sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
 wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
-\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})). Wir schreiben dafuer
-$\tilde{\mat{A}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Zentralelements im rezeptiven Feldes angiebt. Somit ist das rezeptiven Feld einfach eine
+\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
+Wir beziechnen dieses Feld mit $\tilde{\mat{A}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
+des Zentralelements im rezeptiven Felde angiebt. Somit ist das rezeptiven Feld einfach eine
 Untermatrix $\tilde{\mat{A}} \in \set{R}^{3 \times 3}$ des Obermatrix $\mat{A}$.
 
 \begin{figure}[h!]
@@ -1750,12 +1754,13 @@ gebildet. Nun erhalten wir eine neue Matrix $\mat{W} \odot
 \tilde{\mat{A}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
 Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
 aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\mat{A}^*)_{1,1}$ des bearbeiteten
-Bildes. In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
+Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
 bestimmt, wie die neuen Pixel aussehen.
-\begin{equation*}
+\\
+\begin{equation}\label{eq:filter1}
   (\mat{A}^*)_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
-\end{equation*}
-
+\end{equation}
+\\
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
 Prozedur angewendet, um den zweiten Pixel zu berechnen. Dies
 wird durchgezogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
@@ -1798,40 +1803,41 @@ Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
 betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
 Bedeutung der Faltung fuer Filter beschraenken.
 Damit ihr die Defintion trotzdem mal gesehen habt:
+//
 \begin{equation}
-  (f * g)(x) = \int f(t) g(x-t) \text{d}a = \sum_{t=-\infty}^\infty f(a)g(x-t)
+  (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
 \end{equation}
-\para{}
-Streng genommen wird in CNN nicht eine diskrete Faltung durchgefuehrt, sondern
-eine sogennante Kreuzkorrelation. Der Unterschied dabei ist, dass bei einer
-Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertiakl
-gespiegelt wird. Begrifflich benutzt man jedoch Faltung/Convolution um beide
+\\
+Streng genommen wird in CNNs nicht eine diskrete Faltung durchgefuehrt, sondern
+eine sogennante \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
+Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
+gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Begrifflich benutzt
+man jedoch die Woerter Faltung und Convolution um beide
 Operationen zu bezeichnen.
-
 \para{}
-
-Mithilfe der Faltungoperation koennen wir die Schritte welche in Sektion
+Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen. Um die
 Schreibweise etwas zu vereinfachen, fuehren wir folgende Konvention ein:
 \[ \mat{M}(x,y) = (\mat{M})_{y,x}\]
-Um einen Pixel $\mat{A}^*(x,y)$ des neuen Bildes zu berechnen, benutzt man folgende Formel.
-
-Kreuzkorrelation
-\begin{equation}
+Bei der Filteroperation handlet es sich lediglich um eine diskrete Faltung des
+Filtertensors $\ten{W}$ ueber den Bildtensor $\ten{B}$. Somit koennen wir
+folgende Formel verwenden um einen Pixel $\mat{A}^*(x,y)$ des neuen Bildes zu berechnen.
+\\
+\begin{equation}\tag{CO1}
   \mat{A}^*(x,y) = (\mat{W} * \mat{A})(x,y) = \sum_{u=0}^f \sum_{v=0}^f \mat{A}(x+u,y+v)\mat{W}(u,v)
 \end{equation}
-
-
+\\
 Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
 lediglich 3D-Tensoren anstatt 2D-Tensoren verwendet. Wir betrachten den
 allgemeinen Bildtensor $\ten{A}_{h \times w \times c}$, wobei $c$ die Anzahl
 Farbkomponenten (engl.: channels) ist.
-Nun benutzt man Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Groesse
+Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Groesse
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\mat{A}$.
-Das heisst der Filter muss nicht entlang der Tiefe des Bildes wandern, da er
-gerade gleich tief ist, wie das Bild. \\
-Die allgemine Filtergleichung lautet:
-\begin{equation}
+Dadruch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
+gerade gleich tief ist, wie das Bild.
+Die allgemeine Filtergleichung lautet:
+\\
+\begin{equation}\tag{CO2}
   \ten{A}^*(x,y,z) = (\ten{W} * \ten{A})(x,y,z) = \sum_{u=0}^f \sum_{v=0}^f \sum_{w=0}^c \mat{A}(x+u,y+v,w)\mat{W}(u,v,w)
 \end{equation}
 
@@ -1849,9 +1855,9 @@ neue Groesse $n_1$ des Bildes, anhand der alten Groesse $n_0$.
 
 Das Problem hierbei ist, dass nach einigen Faltungen das Bild extrem geschrumpft
 ist und im Grenzfall kleiner als der Filter wird. Das darf natuerlich nicht
-passieren. Ausserdem geht dabei Information an den Raender verloren, da es im
-Innern des Bildes zu viel Overlapping der Filterlagen kommt und die Raeder nur
-sehr wenig einbezogen werden.
+passieren. Ausserdem kommt es dabei zu einem relativen Informationverlust an den Raender, da es im
+Innern des Bildes zu viel Ueberlappungen der Filterlagen kommt und es bei den
+Raendern nur seltener zur Ueberlappung kommt.
 \para{}
 Diese Probleme werden mit sogennantem \keyword{Padding} behoben. Padding ist ein
 Schritt, welcher vor der eigentlichen Faltung stattfindet. Dabei werden einfach
@@ -1869,16 +1875,17 @@ hinzugefuegt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefuegt wird.
 Begrifflich unterscheidet man zwei Arten von Padding:
 \begin{itemize}
-\item{valid-Padding: Es werden keine zuesaezlichen Elemente angebracht. $f$ ist also 0.}
-\item{same-Padding: Es werden so viele Reihen und Spalten angebracht, dass
-    sich die Groesse des Bildes bei der Faltung erhalten bleibt.}
+\item{\keyword{Valid-Padding}: Es werden keine zuesaezlichen Elemente angebracht. $f$ ist also 0.}
+\item{\keyword{Same-Padding}: Es werden so viele Reihen und Spalten angebracht, dass
+    die Groesse des Bildes nach der Faltung unveraendert bleibt.}
 \end{itemize}
-
-Um same-padding zu erhalten, muss man $p$ so waehlen, dass es den Wegfall durch
-den Filter gerade kompensiert. Da durch das Padding der Filter jeweils um zwei
-$p$ groesser wird, erhalt man $n_1 = n_0 - f + 1 + 2p$. Wenn man diese Formel
-jetzt nach $p$ aufloest, erhaelt man folgende Formel fuer das Waehlen des
-valid-Paddings $p$.
+\para{}
+Um Same-Padding durchzufuehren, muss man $p$ so waehlen, dass es den Wegfall durch
+den Filter gerade kompensiert. Da durch das Padding der Filter der Laenge und
+Breite nach jeweils um zwei $p$ laenger wird, erhaelt man den Ausdruck $n_1 =
+n_0 - f + 1 + 2p$. Wenn man diese Formel jetzt nach $p$ aufloest,
+erhaelt man folgende Formel fuer das Waehlen des Valid-Paddings $p$.
+\\
 \begin{equation}
   p = \frac{f-1}{2}
 \end{equation}
@@ -1889,12 +1896,13 @@ um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
 auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
-Position uebersprungen. Zur Folge hat dies, dass das neue Bild $\mat{B}^*$
+Position uebersprungen. Zur Folge hat dies, dass das neue Bild
 deutlich kleiner geworden ist, denn das Zentralelement uebspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
 \para{}
-Folgende Formel beschreibt die Dimensionen des neuen Bildes $\mat{B}^*$ unter
+Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
 beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
+\\
 \begin{equation}
   n_1 = \frac{n_0 + 2p - f}{s} + 1
 \end{equation}
@@ -1906,7 +1914,7 @@ Endbild erzeugen.
 \para{}
 Die Anzahl Filter bezeichnen wir mit $c$.
 Nun macht man pro Filter eine Faltung ueber das Ursprungsbild $\ten{B}$, wobei
-jede Faltung eine neue Matrix $\mat{B}^*_i$ liefert, wobei $i$ der Index des
+jede Faltung einen neue Matrix $\mat{B}^*_i$ liefert, wobei $i$ der Index des
 Filters ist. All diese Tensoren sind zweidimensional, unabhaengig davon, wieviel
 Komponten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
 Matrizen $\mat{B}^*_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
@@ -1929,7 +1937,7 @@ Bildfeatures bzw. Pixel sind immer im Kontext von ihren Nachbarn wichtig. Denn
 ein Pixel ist erst eine Kante oder eine Ecke, wenn er zwei verschiedene
 Kontraste voneinander trennt. Oder um die Konturen eines Gegenstandes zu
 erkennen, muss man eine ganze Fuelle von Pixeln betrachten. Man bezeichnet
-dies als \keyword{lokalisierte Features}.
+diese Art von Features als \keyword{lokalisierte Features}.
 \para{}
 Ein weiterer Aspekt besteht darin, dass Bildausschnitt nicht immer gleich
 orientiert sind. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es
