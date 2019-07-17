@@ -10,6 +10,7 @@
 \newcommand{\mat}[1]{\bm{#1}}
 \newcommand{\matelem}[1]{\mathit{#1}}
 \newcommand{\ten}[1]{\mathbf{#1}}
+\newcommand{\tenelem}[1]{\mathrm{#1}}
 \newcommand{\set}[1]{\mathbb{#1}}
 
 \newcommand{\trans}[1]{#1^{\mathsf{T}}}
@@ -78,6 +79,13 @@
   \end{tikzpicture}
 }
 
+% conditional compilation
+\newif\ifcp
+\cptrue % if commented out -> no compilation
+
+% \ifcp
+   %% CONDITIONAL CODE
+% \fi
 
 
 %%% Local Variables:
