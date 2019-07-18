@@ -27,37 +27,37 @@ class FaceAligner:
         self.leftEyePos=(0.35,0.35)
         self.rightEyePos=(1.0-self.leftEyePos[0],1.0-self.leftEyePos[1])
 
-    def getFaces(self,img):
+    def get_faces(self,img):
         rects = self.detector(img)
         return rects
 
-    def faceToBox(self,face):
+    def face_to_box(self,face):
         x = face.left()
         y = face.top()
         w = face.right() - x
         h = face.bottom() - y
         return (x,y,w,h)
 
-    def getLandmarks(self,img,face):
+    def get_landmarks(self,img,face):
         landmarks = self.predictor(img,face)
         coords = np.zeros((68,2),dtype=int)
         for i in range(0,68):
             coords[i] = (landmarks.part(i).x,landmarks.part(i).y)
         return coords
 
-    def drawBB(self,img,face):
+    def draw_bb(self,img,face):
         (x,y,w,h) = face_to_bb(face)
         cv2.rectangle(gray, (x,y), (x+w, y+h), (0,255,0), 2) # draw bounding box
 
-    def drawLandmarks(self,img,landmarks):
+    def draw_landmarks(self,img,landmarks):
         for (x,y) in landmarks:
             cv2.circle(img, (x,y),1, (0,0,255),-1)
 
     def align(self,img,landmarks):
 
         # get eye landmarks
-        (lStart,lEnd) = self.FACIAL_LANDMARKS_68_DICT['left_eye']
-        (rStart,rEnd) = self.FACIAL_LANDMARKS_68_DICT['right_eye']
+        (lStart,lEnd) = self.FACIAL_LANDMARKS_INDICES['left_eye']
+        (rStart,rEnd) = self.FACIAL_LANDMARKS_INDICES['right_eye']
         leftEyePts = landmarks[lStart:lEnd]
         rightEyePts = landmarks[rStart:rEnd]
 

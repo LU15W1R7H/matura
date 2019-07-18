@@ -7,7 +7,13 @@ import time
 IMAGE_WIDTH = 64
 IMAGE_HEIGHT = 64
 IMAGE_CHANNELS = 1
-LEARNING_RATE = 0.002
+
+INPUT_SHAPE = (IMAGE_WIDTH,IMAGE_HEIGHT,IMAGE_CHANNELS)
+BATCH_SIZE = 128
+KERNEL_SIZE = 3
+LATENT_DIM = 32
+
+# look at:https://github.com/keras-team/keras/blob/master/examples/mnist_denoising_autoencoder.py
 
 
 # MODELL
