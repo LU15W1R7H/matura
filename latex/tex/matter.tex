@@ -1656,11 +1656,11 @@ Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
 den sogennanten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
 (\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlaenge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
-Element, das sogennante \keyword{Zentralelement}, bezeichnet mit $(\ten{F})_z$,
+Element, der sogennante \keyword{Quellenpixel} (engl.: Sourcepixel), bezeichnet mit $(\ten{F})_S$,
 immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
-  % Zentralelement kennzeichnen
+  % Sourcepixel kennzeichnen
   \caption{eine 2D-Filtermatrix}
   \label{fig:filtermatrix}
 \end{figure}
@@ -1752,12 +1752,12 @@ wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixe
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
 \keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
 Wir bezeichnen dieses Feld mit $\tilde{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Zentralelements $\mat{F}_z$ im rezeptiven Feld angiebt. Somit ist das rezeptiven Feld einfach eine
+des Quellenpixel $\mat{F}_Q$ im rezeptiven Feld angiebt. Somit ist das rezeptiven Feld einfach eine
 Untermatrix $\tilde{\mat{B}} \in \set{R}^{3 \times 3}$ des Obermatrix $\mat{B}$.
 
 \begin{figure}[h!]
 
-  % Zentralelement einzeichnen mit Beschriftung
+  % Quellenpixel einzeichnen mit Beschriftung
   \caption{ein Filter und sein rezeptives Feld}
   \label{fig:receptive_field}
 \end{figure}
@@ -1794,12 +1794,69 @@ verschobenen Filters kommt.
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
 
+\includegraphics[width=0.5\textwidth]{conv.jpg}
+
+\makeatletter
+ \tikzoption{canvas is xy plane at z}[]{%
+   \def\tikz@plane@origin{\pgfpointxyz{0}{0}{#1}}%
+   \def\tikz@plane@x{\pgfpointxyz{1}{0}{#1}}%
+   \def\tikz@plane@y{\pgfpointxyz{0}{1}{#1}}%
+   \tikz@canvas@is@plane
+ }
+ \makeatother
+
+\begin{tikzpicture}
+ [x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.8]
+
+
+
+
+    \begin{scope}[canvas is xz plane at y=0,transform shape]
+      %\draw[blue] (0,0) -- (10,0)--(10,10)--(0,10)--cycle;
+      \foreach \ii [count = \xi] in {1,2,3,...,8}{
+            \foreach \jj  [count = \yi]in {1,2,3,...,8}{
+            \pgfmathsetmacro{\nn}{int(\xi+8*\yi-8)}
+      \node[red,draw,minimum size=1cm] (n\nn-1) at (\ii,-\jj) {\nn};
+      }
+      }
+
+      \end{scope}
+
+        \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
+      \foreach \ii [count = \xi] in {1,2,3}{
+            \foreach \jj  [count = \yi]in {1,2,3}{
+            \pgfmathsetmacro{\nn}{int(\xi+3*\yi-3)}
+      \node[blue,draw,minimum size=1cm] (n\nn-2) at (\ii,-\jj) {\nn};
+      }
+      }
+      \end{scope}
+
+      \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
+      \foreach \ii [count = \xi] in {1,2,3,...,8}{
+            \foreach \jj  [count = \yi]in {1,2,3,...,8}{
+            \pgfmathsetmacro{\nn}{int(\xi+8*\yi-8)}
+      \node[green,draw,minimum size=1cm] (n\nn-3) at (\ii,-\jj) {\nn};
+      }
+      }
+      \end{scope}
+
+      \draw[fill=red!50,opacity=0.3] (n10-1.north east) -- (n5-2.north east) --(n10-3.north east)
+      --(n10-3.north west)-- (n5-2.north west) --  (n10-1.north west)  ;
+      \draw[fill=red!50,opacity=0.3] (n10-1.south east) -- (n5-2.south east) --(n10-3.south east)
+      --(n10-3.south west)-- (n5-2.south west)-- (n10-1.south west)  ;
+      \draw[fill=red!50,opacity=0.3] (n10-1.north east) -- (n5-2.north east) --(n10-3.north east)
+      --(n10-3.south east)-- (n5-2.south east)-- (n10-1.south east)  ;
+
+      \draw[fill=red!50,opacity=0.3] (n10-3.north west)-- (n5-2.north west) --  (n10-1.north west) -- (n10-1.south west)-- (n5-2.south west)   --(n10-3.south west) ;
+
+  \end{tikzpicture}
+
 Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
 hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
 Lage des Filters jeweils ein Pixel des neuen Bildes berechnet wird. Man kann
-sich vorstellen, dass an der Position des Zentralelements jeweils ein neuer
+sich vorstellen, dass an der Position des Quellenpixel jeweils ein neuer
 Pixel entsteht. Dabei muss der Filter immer eine vollstaendige Region als
-rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf den Raendern des
+rezeptives Feld haben. Dadurch kommt das Quellenpixel nie auf den Raendern des
 Bilds zu liegen. Somit fallen diese weg.
 \para{}
 \cite{deeplearning.ai:cnn}
@@ -1875,8 +1932,8 @@ einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 
 \subsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man einen Filter auf sie anwendet.
-Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelement nur ein Pixel
-des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
+Zur Erinnerung: Dies liegt daran, dass pro Lage des Quellenpixel nur ein Pixel
+des neuen Bildes entsteht und das Quellenpixel nunmal nicht auf allen
 Ursprungspixeln zu liegen kommt. Die Raender fallen so weg. Diese Groesse des
 Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei giltet folgende Formel fuer die
 neue Groesse $n_1$ des Bildes, anhand der alten Groesse $n_0$.
@@ -1928,7 +1985,7 @@ auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
 Position uebersprungen. Zur Folge hat dies, dass das neue Bild
-deutlich kleiner geworden ist, denn das Zentralelement uebspringt somit auch
+deutlich kleiner geworden ist, denn das Quellenpixel uebspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
 \para{}
 Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
@@ -1940,43 +1997,44 @@ beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 
 
 \subsection{Vorzuege von Filtern}
-Es stellt sich nun die Frage, weshalb sich Filter fuer Machine
-Learning eignen.
+Es stellt sich nun die Frage, weshalb sich Filter fuer Maschinelles
+Lernen mit Bildern eignen.
 Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
 eines Bildes hervorzuheben und die restlichen auszublenden. Genau die gleiche
 Aufgabe erfuellen die Neuronen in einem KNN. Auch sie sollen Features der
 Inputsdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
-Weshalb verwendet man als nicht einfach KNNs (abgesehen
-von dem Problem mit der Ueberzahl von Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem}).
+Weshalb verwendet man also nicht einfach KNNs? (abgesehen
+von dem Problem mit der Ueberzahl an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem}).
 \para{}
-Jedoch ist zu erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
+Man muss erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
 Bildfeatures bzw. Pixel sind nur im Kontext von ihren Nachbarn relevant. Denn
-ein Pixel ist erst eine Kante oder eine Ecke, wenn er zwei verschiedene
-Kontraste voneinander trennt. Oder ein Gegenstand wird erst durch eine ganzen Haufen
-von Pixeln und deren relative Position untereinander ausgezeichnet.
+ein Pixel ist erst dann eine Kante oder eine Ecke, wenn er zwei verschiedene
+Farbregionen voneinander trennt. Oder ein Gegenstand wird erst durch eine ganzen Haufen
+von Pixeln und deren relative Position zueinander ausgezeichnet.
 Man bezeichnet diesen Umstand als \keyword{lokalisierte Features}.
 \para{}
 Desweiteren sind Bildausschnitte nicht immer gleich
-orientiert sind. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es aber
+orientiert. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es aber
 keine Rolle spielen, wo auf dem Bild es sich befindet, welche Groesse es
-hat und was fuer eine Lage es hat. Um diese Eigenschaften zu ignorieren, muss
-das Modell gewisse \keyword{Invarianzen} erfuellen.
+hat und was fuer eine Lage es hat. Um diese Eigenschaften irrelevant fuer das
+Modell zu machen, muss dieses gewisse \keyword{Invarianzen} erfuellen.
 \para{}
-Die Eigenschaft, welche CNN dafuer geeignet macht fuer lokalisierte Features und
-solche Invariazen macht, bezeichnet man als \keyword{Parameter-Sharing}.
+Die Eigenschaft, welche CNN geeignet macht fuer lokalisierte Features und
+solche Invarianzen, bezeichnet man als \keyword{Parameter-Sharing}.
 Sie bezeichnet den Umstand, dass auf
-mehrere oder alle Features die gleichen Modellparameter angewandt werden, durch
-die Bewgung der Filters und seinen Eintraegen ueber (fast) alle Pixel. Somit ist
-es egal wo sich die lokalisierten Features befinden. Dies fuehrt dann eben zu
-den gewuenschten Varianzen: Translationsinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
-\para{}
-Noch weitere Vorteile eines CNNs bestehten darin, dass sie beliebige Groessen
-von Inputbildern verarbeiten koennen, da die Modellparameter die Features gleich
-behandeln.
+mehrere oder alle Features die gleichen Modellparameter wirken. Bei CNNs wird
+dies durch die Bewegung der Filters bzw. seiner Eintraegen ueber (fast) alle
+Pixel bewerkstelligt. Somit ist
+es egal wo und wie sich die lokalisierten Features befinden. Dies fuehrt dann eben zu
+den gewuenschten Invarianzen: Translations-, Rotations- und
+Helligkeitsinvarianz. \\
+Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
+beliebige Dimensionen besitzen koennen, da die Filter ihre Bewegung lediglich an
+die Groesse des Bildes anpassen muessen.
 
 \section{die Convolutional-Schicht}
-Nun moechten wir nochmals alles zusammentragen, was wir ueber Filter gelernt
-haben um nun die Convolutional-Schicht zu definieren.
+Nun moechten wir alles zusammentragen, was wir ueber Filter gelernt
+haben, um nun die Convolutional-Schicht zu definieren.
 \para{}
 Beginnen tut eine Convolutional Schicht $l$ mit seinem Input, also den
 Aktivierungen $\ten{A}^l \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherigen Schicht ($l-1$) produziert hat,
@@ -2010,6 +2068,69 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \end{pmatrix}
 \end{equation*}
 
+\begin{tikzpicture}[every node/.style={anchor=north east,fill=white,minimum width=1.4cm,minimum height=7mm}]
+
+  \matrix (mA) [matrix of math nodes,left delimiter={(},right delimiter={)}]
+  {
+    w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l \\
+  };
+
+\matrix (mB) [draw,matrix of math nodes] at ($(mA.south west)+(1.5,0.7)$)
+{
+  w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
+  \vdots & \ddots & \vdots \\
+  w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l \\
+};
+
+\matrix (mC) [draw,matrix of math nodes] at ($(mB.south west)+(1.5,0.7)$)
+{
+  w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
+  \vdots & \ddots & \vdots \\
+  w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l \\
+};
+
+\draw[dashed](mA.north east)--(mC.north east);
+\draw[dashed](mA.north west)--(mC.north west);
+\draw[dashed](mA.south east)--(mC.south east);
+\end{tikzpicture}
+
+
+\begin{tikzpicture}[every node/.style={anchor=north east,fill=white,minimum width=1.4cm,minimum height=7mm,inner sep=0,outer sep=0}]
+
+  \node (mA)
+  {
+    $\begin{bmatrix}
+      w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
+     \end{bmatrix}$
+  };
+
+  \node (mB) at ($(mA.south west)+(0.25,0.125)$)
+  {
+    $\begin{bmatrix}
+      w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
+    \end{bmatrix}$
+  };
+
+  \node (mC) at ($(mB.south west)+(0.25,0.125)$)
+  {
+    $\begin{bmatrix}
+      w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
+    \end{bmatrix}$
+  };
+
+  \draw[dashed,gray](mA.north east)--(mC.north east);
+  \draw[dashed,gray](mA.north west)--(mC.north west);
+  \draw[dashed,gray](mA.south east)--(mC.south east);
+\end{tikzpicture}
+
 Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
 $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 \\
@@ -2017,8 +2138,8 @@ $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
   \tilde{\mat{A}}_i^l = \ten{W}_i^l * \ten{A}^l
 \end{equation}
 \\
-Jede dieser Matrizen ist eine Tiefenschicht $\tilde{\mat{A}}^l_{:,:,i}$ des neuen
-3D-Tensors $\tilde{\mat{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
+Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
+Tiefe des neuen 3D-Tensors $\tilde{\mat{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Hoehe
 $h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
 berchnet anhand der Hohe $h^l$ und der Breite $w^l$ des Ausgangsbild.
@@ -2032,7 +2153,7 @@ $\vecf{\varphi}$ auf diesen Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
 neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Meistens waehlt man hier
 die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
 \begin{equation}
-  \ten{A}^{l+1} = \vecf{\varphi}(\tilde{\ten{A}^l})
+  \ten{A}^{l+1} = \vecf{\varphi}(\tilde{\ten{A}}^l)
 \end{equation}
 
 Da die Faltungsoperation eine lineare Operation, braucht man wieder eine Aktivierungsfunktion.
