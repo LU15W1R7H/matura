@@ -1470,6 +1470,7 @@ kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
 Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
 Um diesen Umstand zu erklaeren, wird nun ein kleines Beispielmodell erlauetert:
 \para{}
+\label{sec:CNN_parameter_problem}
 Es soll ein KNN designed werden, welches eine Photographie klassifizieren
 soll, ob darauf ein Hund sichtbar ist oder nicht. Wir nehmen fuer dieses
 Gedankenexperiment bereits ein relativ niedrig aufgeloestes Bild mit $256 \times 256$
@@ -1650,7 +1651,7 @@ erlernen.
 Ein Filter ist einfach eine Regionen, deutlich kleiner als das verarbeitete Bild
 $\ten{B}$, welche
 ueber alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
-$\ten{B}^*$ liefert.
+$\tilde{\ten{B}}$ liefert.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
 den sogennanten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
 (\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
@@ -1739,8 +1740,8 @@ graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlauetert. Spaeter werden 
 Bilder erklaert.
 \para{}
 Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf eine Bildtensor
-$\ten{B}$ an und erhaelt so ein neues Bild $\ten{B}^*$. Man schreibt dafuer:
-$\ten{B}^* = \ten{W} * \ten{B}$.
+$\ten{B}$ an und erhaelt so ein neues Bild $\tilde{\ten{B}}$. Man schreibt dafuer:
+$\tilde{\ten{B}} = \ten{W} * \ten{B}$.
 \para{}
 Um nun diese Operation zu erklaeren, verwenden wir als Beispiel eine
 2D-Filtermatrix $\mat{W} \in \set{R}^{3 \times 3}$, bei welcher
@@ -1771,12 +1772,12 @@ Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
 gebildet. Nun erhalten wir eine neue Matrix $\mat{W} \odot
 \tilde{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
 Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
-aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\mat{B}^*)_{1,1}$ des bearbeiteten
+aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\tilde{\mat{B}})_{1,1}$ des bearbeiteten
 Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
 bestimmt, wie die neuen Pixel aussehen.
 \\
 \begin{equation}\label{eq:filter1}
-  (\mat{B}^*)_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
+  (\tilde{\mat{B}})_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
 \end{equation}
 \\
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
@@ -1793,7 +1794,7 @@ verschobenen Filters kommt.
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
 
-Es ist zu bemerken, dass das neue Bild $\mat{B}^* \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
+Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
 hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
 Lage des Filters jeweils ein Pixel des neuen Bildes berechnet wird. Man kann
 sich vorstellen, dass an der Position des Zentralelements jeweils ein neuer
@@ -1829,10 +1830,10 @@ Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen.
 Bei der Filteroperation handlet es sich lediglich um eine diskrete Faltung des
 Filtertensors $\ten{W}$ ueber den Bildtensor $\ten{B}$. Somit koennen wir
-folgende Formel verwenden um einen Pixel $\mat{B}^*(x,y)$ des neuen Bildes zu berechnen.
+folgende Formel verwenden um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
-  \mat{B}^*_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \mat{W}_{v,u}\mat{B}_{y+v,x+u}
+  \tilde{\mat{B}}_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \mat{W}_{v,u}\mat{B}_{y+v,x+u}
 \end{equation}
 \\
 Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
@@ -1843,11 +1844,11 @@ Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Groe
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\mat{B}$.
 Dadruch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
 gerade gleich tief ist, wie das Bild. Das hat zur Folge, dass das verarbeitete
-Bild $\mat{B}^*$ immer eine 2D-Matrix ist.
+Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
 Die allgemeine Filtergleichung lautet:
 \\
 \begin{equation}\tag{FO}
-  \mat{B}^*_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c \ten{W}_{v,u,w} \ten{B}_{x+u,y+v,w}
+  \tilde{\mat{B}}_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c \ten{W}_{v,u,w} \ten{B}_{x+u,y+v,w}
 \end{equation}
 
 \subsection{Mehrere Filter}
@@ -1857,15 +1858,20 @@ Endbild erzeugen.
 \para{}
 Die Anzahl Filter bezeichnen wir mit $c$.
 Nun macht man pro Filter $\ten{F}_i$ eine Faltung ueber das Ursprungsbild $\ten{B}$, wobei
-jede Faltung einen neue Matrix $\mat{B}^*_i = \ten{F}_i * \ten{B}$ liefert, wobei $i$ der Index des
-Filters ist. All diese Tensoren sind zweidimensional, unabhaengig davon, wieviel
+jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{F}_i * \ten{B}$ liefert, wobei $i$ der Index des
+Filters ist. All diese gefalteten Bilder $\mat{B}*_i$ sind zweidimensionale Matrizen, unabhaengig davon, wieviel
 Komponten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
-Matrizen $\mat{B}^*_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
-$\ten{B}^*$ bilden.
-Hierfuer muessen alle Filter gleich gross sein.
-Die Tiefe des neuen Bildes $\ten{B}^*$ ist jetzt gerade die Anzahl Filter $c$.
-Wir haben vorhin bereits immer die Tiefe des Bildes (bzw. die Anzahl
-Farbkomponenten) mit $c$ bezeichnet.
+Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
+$\tilde{\ten{B}}$ bilden.
+Hierfuer muessen alle Filter $\ten{F}_i$ gleich gross sein.
+\begin{figure}[h!]
+  \caption{aufeinander gelegte gefaltene Bilder}
+
+\end{figure}
+Die Tiefe des neuen Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter $c$.
+Wir haben bereits frueher immer die Tiefe des Bildes (bzw. die Anzahl
+Farbkomponenten) mit $c$ bezeichnet. Somit ist $c$ sowohl die Anzahl Filter
+einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 
 \subsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man einen Filter auf sie anwendet.
@@ -1933,54 +1939,101 @@ beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 \end{equation}
 
 
-\subsection{Wieso Filter?}
+\subsection{Vorzuege von Filtern}
 Es stellt sich nun die Frage, weshalb sich Filter fuer Machine
 Learning eignen.
 Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
 eines Bildes hervorzuheben und die restlichen auszublenden. Genau die gleiche
-Aufgabe erfuellen die Neuronen in einem KNNs. Auch sie sollen Features der
+Aufgabe erfuellen die Neuronen in einem KNN. Auch sie sollen Features der
 Inputsdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
+Weshalb verwendet man als nicht einfach KNNs (abgesehen
+von dem Problem mit der Ueberzahl von Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem}).
 \para{}
 Jedoch ist zu erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
-Bildfeatures bzw. Pixel sind immer im Kontext von ihren Nachbarn wichtig. Denn
+Bildfeatures bzw. Pixel sind nur im Kontext von ihren Nachbarn relevant. Denn
 ein Pixel ist erst eine Kante oder eine Ecke, wenn er zwei verschiedene
-Kontraste voneinander trennt. Oder um die Konturen eines Gegenstandes zu
-erkennen, muss man eine ganze Fuelle von Pixeln betrachten. Man bezeichnet
-diese Art von Features als \keyword{lokalisierte Features}.
+Kontraste voneinander trennt. Oder ein Gegenstand wird erst durch eine ganzen Haufen
+von Pixeln und deren relative Position untereinander ausgezeichnet.
+Man bezeichnet diesen Umstand als \keyword{lokalisierte Features}.
 \para{}
-Ein weiterer Aspekt besteht darin, dass Bildausschnitt nicht immer gleich
-orientiert sind. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es
-keine Rolle spielen, wo auf dem Bild es sich befindet, oder welche Groesse es
-hat. Es besteht der Wunsch nach \keyword{Invarianz}. Typische Invarianzen,
-welcher ein Filter erfuellt, sind: Translationinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
-
-\keyword{Parameter Sharing}
-
-Variable Inputgroesse, verschieden grosse Bilder
-
-Sparse connectivity: Nicht alle Werte werden miteinander verrrechnet deutlich
-schneller als Matrixmultiplikation.
+Desweiteren sind Bildausschnitte nicht immer gleich
+orientiert sind. Wenn man ein Gesicht auf einem Bild erkennen moechte, sollte es aber
+keine Rolle spielen, wo auf dem Bild es sich befindet, welche Groesse es
+hat und was fuer eine Lage es hat. Um diese Eigenschaften zu ignorieren, muss
+das Modell gewisse \keyword{Invarianzen} erfuellen.
+\para{}
+Die Eigenschaft, welche CNN dafuer geeignet macht fuer lokalisierte Features und
+solche Invariazen macht, bezeichnet man als \keyword{Parameter-Sharing}.
+Sie bezeichnet den Umstand, dass auf
+mehrere oder alle Features die gleichen Modellparameter angewandt werden, durch
+die Bewgung der Filters und seinen Eintraegen ueber (fast) alle Pixel. Somit ist
+es egal wo sich die lokalisierten Features befinden. Dies fuehrt dann eben zu
+den gewuenschten Varianzen: Translationsinvarianz, Rotationsinvarianz und Helligkeitsinvarianz.
+\para{}
+Noch weitere Vorteile eines CNNs bestehten darin, dass sie beliebige Groessen
+von Inputbildern verarbeiten koennen, da die Modellparameter die Features gleich
+behandeln.
 
 \section{die Convolutional-Schicht}
-Somit nehmen die Bilder
-die Rolle der Aktivierungen $\vec{a}^l$ ein, weshalb man sie mit $\ten{A}^l$ bezeichnet.
-Das Bild $\ten{B}^0$ ist hierbei wieder der Input $\ten{X}$ ins ganze Netz.
+Nun moechten wir nochmals alles zusammentragen, was wir ueber Filter gelernt
+haben um nun die Convolutional-Schicht zu definieren.
+\para{}
+Beginnen tut eine Convolutional Schicht $l$ mit seinem Input, also den
+Aktivierungen $\ten{A}^l \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherigen Schicht ($l-1$) produziert hat,
+oder falls es die erste Schicht ist erhaelt sie den Input $\ten{X}$ des Netzes,
+welchen man auch mit $\ten{A}^0$ bezeichnet. \\
+Die Schicht besitzt $c^l$ Varianten an Filtern $\ten{W}^l_i \in
+\set{R}^{f^l \times f^l \times c^{l-1}}$. Diese Filter haben alle die gleichen
+Eigenschaften, bezueglich: der Groesse $f^l$, der Tiefe $c^{l-1}$, dem Padding
+$p^l$, dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
+$w^l_{i\,|\,\alpha,\beta,\gamma}$.
 
-Da wir nun die Filter in ihrem vollen Umfang betrachtet haben, koennen wir uns
-endlich den Convolutional Schichten widmen.
-Eine ConvSchicht $l$ erhaelt als Input ein Bild $\ten{B}^{l-1} \in \set{R}^{h^{l-1}
-  \times w^{l-1} \times c^{l-1}}$. Darauf werden
-als erstes alle $c^l$ Filter $F_i^l \in \set{R}^{f^l \times f^l \times c^{l-1}}$ angewandt. Die neuen Matrizen $A^*_i$
-werden aufeinander draufgelegt und bilden den Tensor $\ten{B}^{*,l} \in \set{R}^{h^l
-  \times w^l \times c^l}$.
-Nun kommt ein Optionaler Zwischenschritt. Man kann nun auf jedes Element des
-Ausgangstensor einen Bias $b$ draufaddieren. \\
-Nun wendet man auf alle Elemente des Ausganstensor die vektorisierte
-Aktiverungsfunktion $\varphi$ an. Die gaengiste Aktiverungsfunktion ist hierfuer
-die ReLU-Aktiverungsfunktion $\varphi^{ReLU}$. Dadurch erhaelt man den
-Aktiverungstensor $\ten{B}^l \in \set{R}^{h^l \times w^l \times c^l}$.
+\begin{equation*}
+  (\ten{W^l}_i)_{:,:,1} = \begin{pmatrix}
+    w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
+  \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+  (\ten{W^l}_i)_{:,:,\gamma} = \begin{pmatrix}
+    w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
+  \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+  (\ten{W^l}_i)_{:,:,c^l} = \begin{pmatrix}
+    w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
+  \end{pmatrix}
+\end{equation*}
 
-
+Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
+$\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
+\\
+\begin{equation}
+  \tilde{\mat{A}}_i^l = \ten{W}_i^l * \ten{A}^l
+\end{equation}
+\\
+Jede dieser Matrizen ist eine Tiefenschicht $\tilde{\mat{A}}^l_{:,:,i}$ des neuen
+3D-Tensors $\tilde{\mat{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
+Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Hoehe
+$h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
+berchnet anhand der Hohe $h^l$ und der Breite $w^l$ des Ausgangsbild.
+\\
+\begin{equation}
+  n_1 = \frac{n_0 + 2p - f}{s} + 1
+\end{equation}
+\\
+Nun wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
+$\vecf{\varphi}$ auf diesen Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
+neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Meistens waehlt man hier
+die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
+\begin{equation}
+  \ten{A}^{l+1} = \vecf{\varphi}(\tilde{\ten{A}^l})
+\end{equation}
 
 Da die Faltungsoperation eine lineare Operation, braucht man wieder eine Aktivierungsfunktion.
 
@@ -1993,7 +2046,6 @@ Matrixmultiplikation eine Faltungsooperation benutzt.
 Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe Tensorelementen
 der vorherigen Schicht zu einem einzigen Tensorelement der naechsten Schicht
 zusammengefasst wird.
-
 Viel Begrifflichkeit der Filter wird auf das Pooling uebertragen. Die Groesse
 des Felder, welches zusammengefasst wird, bezeichnet man mit $f$. Das Stride $s$
 bezeichnet auch hier wieder, was die Schrittgroesse bei Verschieben des Feldes ist.
