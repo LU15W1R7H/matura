@@ -217,7 +217,7 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 \para{}
 \begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
   Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf
-  multidimensionale Funktionen $f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$.
+  multidimensionale Funktionen $f(\vec{x}) = f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$.
   Man leitet dabei nur nach einem Argument $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
   Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
   Die partielle Ableitung einer Funktion $f(x_1,\ldots,x_n)$ bezueglich einer
@@ -272,6 +272,9 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
   \begin{tikzpicture}
     \begin{axis}[
       % hide axis,
+      xticklabels={,,},
+      yticklabels={,,},
+      zticklabels={,,},
       colormap/cool,
       ]
       \addplot3[
@@ -281,9 +284,19 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
       ]
       {1/(1+exp(-(x^2+y^2)))};
       \addlegendentry{$f(x_1,\ldots,x_n)$}
+
+      \pgfmathparse{1/(1+exp(-((-0.99)^2+(0.99)^2)))}
+
+      \coordinate (ballpos) at (axis cs:-0.8,0.8,{1/(1+exp(-((-0.8)^2+(0.8)^2)))});
+      \coordinate (bottom) at (axis cs:0,0,0.5);
+      \draw[red,very thick,->,>=latex] (ballpos) -- ($(ballpos)!0.3!(bottom)$);
+      \shade [ball color=yellow] (ballpos) circle (0.25cm);
     \end{axis}
+
+
   \end{tikzpicture}
-  \caption{Visualisierung des Gradientenabstiegs}
+  \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
+    Gradientenfeld hinab in das lokale Minimum.}
 \end{figure}
 \fi
 
@@ -1029,17 +1042,20 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
 
-\ifcp
+% \ifcp
 \pgfplotsset{compat=1.15}
 \pgfmathdeclarefunction{gauss}{2}{%
   \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+\pgfmathdeclarefunction{gausseval}{3}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((#3-#1)^2)/(2*#2^2))}%
 }
 \usetikzlibrary{arrows.meta}    % <--- added
 
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[
-    every pin/.style = {pin edge={Latex-,thin,black}}
+    every pin/.style = {pin edge={Latex-,thin,black}},>=latex
     ]
     \begin{axis}[
       width=15cm,height=6cm,
@@ -1048,24 +1064,38 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
       ymin=0,ymax=0.45,
       axis line style = thick,
       xtick={-3,-2,-1,1,2,3},
-      extra x ticks ={1.63},
-      extra x tick labels ={\color{blue}1.63},
       x label style={anchor=west},
       y label style={anchor=south},
+      extra x ticks={0},
+      extra x tick style={%
+        grid=major,
+        ticklabel pos=top,
+      },
+      extra x tick labels={$\mu$},
       xlabel={$x$},
       ylabel={$\phi(x)$},
       axis on top,
       samples=50]
-      \addplot[fill=blue!25,draw=none,domain=-3.5:-1.63] {gauss(0,1)} \closedcycle;
-      \addplot[fill=blue!25,draw=none,domain=1.63:3.5]   {gauss(0,1)} \closedcycle;
+      \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
       \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
-      \node [pin= 60:$P_{val}/2$] at ( 2,0.02)   {};
-      \node [pin=120:$P_{val}/2$] at (-2,0.02)   {};
+      \coordinate (wp1) at (-1,{gausseval(0,1,-1)});
+      \coordinate (wp2) at (1,{gausseval(0,1,1)});
+      \coordinate (zero) at (0,0);
+      \newcommand{\equal}{=}
+      % \path [fill=black] (wp1) circle (2pt);
+      % \path [fill=black] (wp2) circle (2pt);
+      \path [draw=black,<->,very thick] (wp1) -- node[above]{$\sigma^2$} (wp1 -| zero);
+      \path [draw=black,<->,very thick] (wp2) -- node[above]{$\sigma^2$} (wp2 -| zero);
+      \node [pin=120:$\phi(x_{WS1})'' \equal 0$] at (wp1) {};
+      \node [pin=60:$\phi(x_{WS2})'' \equal 0$] at (wp2) {};
+
+      \node [pin=60:$\ds A \equal \int_{-\infty}^{\infty} \phi(x) \text{d}x \equal 1$] at (1.4,0.05) {};
     \end{axis}
   \end{tikzpicture}
-  \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit $X\sim\mathcal{N}(0,1)$}%
+  \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit ihren
+    wichtigsten Eigenschaften}%
 \end{figure}
-\fi
+% \fi
 
 
 Um die Neigungen $b_{t=0}$ zu initalisieren benutzt man eine Normalverteilung
@@ -1575,6 +1605,18 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
     \node[right=3mm of B.east] {$\in \set{R}^{3 \times 3 \times 3}$};
   \end{tikzpicture}
 
+  \begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
+    \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
+    \foreach \z in {0, 5, 10} \foreach \x in {0,...,3}
+    \foreach \y [evaluate={\b=random(0, 1);}] in {0,...,3}
+    \filldraw [fill=white] (\x, \y, \z) -- (\x+1, \y, \z) -- (\x+1, \y+1, \z) --
+    (\x, \y+1, \z) -- cycle (\x+.5, \y+.5, \z) node [yslant=tan(15)] {\b};
+    \draw [dashed] (0, 4, 0) -- (0, 4, 10) (4, 4, 0) -- (4, 4, 10);
+    \draw [->] (0, 4.5, 0)  -- (4, 4.5, 0)   node [near end, above left] {Column};
+    \draw [->] (-.5, 4, 0)  -- (-.5, 0, 0)   node [midway, left] {Row};
+    \draw [->] (4, 4.5, 10) -- (4, 4.5, 2.5) node [near end, above right] {Channel};
+  \end{tikzpicture}
+
 \end{defbox}
 \para{}
 Ein Bild kann somit einfach als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
@@ -1803,7 +1845,7 @@ verschobenen Filters kommt.
   }
   \makeatother
 
-  \begin{tikzpicture}[x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.7]
+  \begin{tikzpicture}[x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.7,every pin/.style = {pin edge={Latex-,thin,black}}]
 
 
     \begin{scope}[canvas is xz plane at y=0,transform shape]
@@ -1867,13 +1909,14 @@ verschobenen Filters kommt.
     \path[draw=blue!40!bgcolor] (n-1-1-3.south west) -- (n-2-1-3.south west) -- (n-3-1-3.south west);
     \path[draw=blue!40!bgcolor] (n-1-3-1.north east) -- (n-2-3-1.north east) -- (n-3-3-1.north east);
 
-
+    \node [pin=120:Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$] at (n1-1-1.north west) {};
+    \node [pin=180:Quellenpixel $(\mat{B})_S$] at (n1-2-2.east) {};
     \begin{scope}[canvas is xz plane at y=0,transform shape]
-      \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 2};
-      \node[] (rf-tag) at (n-1-2-1.north) {Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$};
-      \node[] (sp-tag) at (n-1-2-2.north) {Quellenpixel $(\mat{B})_S$};
+      % \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 2};
+      % \node[] (sp-tag) at (n-1-2-2.north) {Quellenpixel $(\mat{B})_S$};
     \end{scope}
 
+    \node [pin=180:Filter $\mat{F}$] at (n2-1-3.east) {};
     \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
       \node[draw=red,text=textcolor,minimum size=1cm] (marked2) at (2,-2) {\LARGE 0};
       \node[] (rf-tag) at (n-2-2-1.north) {Filter $\mat{F}$};
@@ -2197,17 +2240,6 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \draw[dashed,gray](mA.south east)--(mC.south east);
 \end{tikzpicture}
 
-\begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
-  \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
-  \foreach \z in {0, 5, 10} \foreach \x in {0,...,3}
-  \foreach \y [evaluate={\b=random(0, 1);}] in {0,...,3}
-  \filldraw [fill=white] (\x, \y, \z) -- (\x+1, \y, \z) -- (\x+1, \y+1, \z) --
-  (\x, \y+1, \z) -- cycle (\x+.5, \y+.5, \z) node [yslant=tan(15)] {\b};
-  \draw [dashed] (0, 4, 0) -- (0, 4, 10) (4, 4, 0) -- (4, 4, 10);
-  \draw [->] (0, 4.5, 0)  -- (4, 4.5, 0)   node [near end, above left] {Column};
-  \draw [->] (-.5, 4, 0)  -- (-.5, 0, 0)   node [midway, left] {Row};
-  \draw [->] (4, 4.5, 10) -- (4, 4.5, 2.5) node [near end, above right] {Channel};
-\end{tikzpicture}%
 
 Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
 $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
