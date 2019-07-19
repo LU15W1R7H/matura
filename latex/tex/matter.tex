@@ -255,7 +255,7 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 \begin{figure}[h!]
   \caption{Skalarfeld mit zugehoerigem Gradientenfeld}
 \end{figure}
-\\
+
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
 $\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums folgendermassen beschrieben
@@ -286,7 +286,7 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
   \caption{Visualisierung des Gradientenabstiegs}
 \end{figure}
 \fi
-\\
+
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
 beliebigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt
 $\vec{p}_0$ gewaehlt wurde.
@@ -304,7 +304,7 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 \item{Falls $\eta$ zu gross ist, kann es passiert, dass man ueber das lokale
     Minimum hinaus schiesst und somit nur darum herum springt.}
 \end{itemize}
-\\
+
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}
@@ -799,7 +799,7 @@ Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum Verstaentn
 \item{$\varphi$ ist die gewaehlte Aktivierungsfunktion (grundsaetzlich ist diese
     immer die Sigmoidfunktion $\sigma$).}
 \end{itemize}
-\\
+
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -865,7 +865,7 @@ Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum Verstaentn
   \label{fig:nomenklatur1}
   \caption{zum Verstaentniss der Nomenklatur}
 \end{figure}
-\\
+\para{}
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -881,7 +881,7 @@ Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum Verstaentn
   \label{fig:nomenklatur2}
   \caption{zum Verstaentniss der Gewichtebeschriftungen}
 \end{figure}
-\\
+\para{}
 Die Vorwaertspropagierung beginnt bei den Inputneuronen, welche jeweils
 einen Inputwert in sich tragen. Diese werden, um fuer eine kohaerente Nomenklatur zu sorgen,
 analog zu den Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
@@ -1117,7 +1117,7 @@ mehrere Pfade in einem Knoten enden, werden die einzelnen Werte der Pfade
 zusammenaddiert, um die Variable zu bilden. \\
 In Abbildung (\ref{fig:computation_graph}) ist ein Beispiel eines Computation
 Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
-\\
+\para{}
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
     \centering
@@ -1147,7 +1147,7 @@ Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
   \caption{Computation Graph einer exemplarischen Verkettung von Funktionen}
   \label{fig:computation_graph}
 \end{figure}
-\\
+\para{}
 Der erste Schritt der Rueckwaertsprogagierung besteht darin, dass man die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
 der Kostenfunktion $C$ bezueglich den gewichteten Summen $z_j^l$ aller Schichten
 berechnet. Daraus laesst sich dann spaeter sehr einfach die partiellen Ableitungen
@@ -1156,7 +1156,7 @@ $\ds\partderiv{C}{b_j^l}$ berechnen.
 \para{}
 Zur Uebersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ fuer
 jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezueglich der
-gewichteten Summe ist (siehe Gl. (\ref{eq:BP0)})). Ebenfalls definiert man analog einen Fehlervektor
+gewichteten Summe ist (siehe Gl. (\ref{eq:BP0)}). Ebenfalls definiert man analog einen Fehlervektor
 $\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
 zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es diesen fuer jedes Neuron jeder Schicht zu
 berechnen.
@@ -1170,7 +1170,6 @@ Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewandt wird, beg
 man auch dort mit der Berechnung des Fehlers $\vec{\delta}^L$.
 Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
 \para{}
-
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -1213,6 +1212,7 @@ Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bi
   \caption{Computation Graph zur Berechnung von $\vec{\delta}^L$}
   \label{fig:cg_L}
 \end{figure}
+\para{}
 Wir koennen dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
 in Abhaengigkeit von den letzten Aktivierungen $a_j^L$ ist, welche wiederum in
 Abhaengigkeit von der jeweiligen gewichteten Summe $z_j^L$ berechnet werden.
@@ -1291,7 +1291,7 @@ Nun muessen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
 der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetztigen Schicht
 erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
 (siehe Abb. (\ref{fig:cg_L-1})).
-
+\para{}
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -1329,7 +1329,7 @@ erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
   \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
   \label{fig:cg_L-1}
 \end{figure}
-
+\para{}
 Es gilt erneut die Gleichung (\ref{eq:BPh1}) fuer die Berechnung des Fehlers $\delta_j^{l-1}$.
 \\
 \begin{equation}\tag{\ref{eq:BPh1}}
@@ -1585,8 +1585,6 @@ Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
 Somit waere es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$ (siehe
 Abb. (\ref{fig:bildmatrix})).
 \para{}
-
-
 \begin{figure}[h!]
   \begin{tikzpicture}
 
@@ -1656,7 +1654,7 @@ Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
 den sogennanten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
 (\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlaenge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
-Element, der sogennante \keyword{Quellenpixel} (engl.: Sourcepixel), bezeichnet mit $(\ten{F})_S$,
+Element, der sogennante \keyword{Zentralelement} (engl.: Center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
@@ -1751,26 +1749,28 @@ sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
 wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
 \keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
-Wir bezeichnen dieses Feld mit $\tilde{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Quellenpixel $\mat{F}_Q$ im rezeptiven Feld angiebt. Somit ist das rezeptiven Feld einfach eine
+Das Zentralelement $(\ten{W})_c$ liegt dann gerade ueber dem sogennanten
+\keyword{Quellenpixel} (engl.: source pixel), bezeichnet mit $(\ten{B})_S$.
+Um das Rezeptive Feld zu kennzeichnen, bezeichnen wir es mit $\hat{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
+des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angiebt. Somit ist das rezeptiven Feld einfach eine
 Untermatrix $\tilde{\mat{B}} \in \set{R}^{3 \times 3}$ des Obermatrix $\mat{B}$.
 
 \begin{figure}[h!]
 
-  % Quellenpixel einzeichnen mit Beschriftung
+  % Zentralelement einzeichnen mit Beschriftung
   \caption{ein Filter und sein rezeptives Feld}
   \label{fig:receptive_field}
 \end{figure}
 
 \para{}
 Der Filter beginnt nun oben links ueber das Bild zu wandern. Somit
-hat der Filter zu beginn das rezeptive Feld $\tilde{\mat{B}}^{(2,2)}$, denn der
+hat der Filter zu beginn das rezeptive Feld $\hat{\mat{B}}^{(2,2)}$, denn der
 Filter darf nicht ueber die Raender des Bildes hinausragen.
 Nun werden die Elemente der Filters mit den Elementen des rezeptiven Feldes
 verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird einfach das
 Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
 gebildet. Nun erhalten wir eine neue Matrix $\mat{W} \odot
-\tilde{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
+\hat{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
 Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
 aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\tilde{\mat{B}})_{1,1}$ des bearbeiteten
 Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
@@ -1788,75 +1788,117 @@ Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
 Dabei werden die Elemente des urspruenglichen Bildes durchaus mehrmals
 verrechnet, da es zu einer Ueberlappung des vorherigen Filter und des
 verschobenen Filters kommt.
+\para{}
 
 \begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.5\textwidth]{conv.jpg}
+
+  \makeatletter
+  \tikzoption{canvas is xy plane at z}[]{%
+    \def\tikz@plane@origin{\pgfpointxyz{0}{0}{#1}}%
+    \def\tikz@plane@x{\pgfpointxyz{1}{0}{#1}}%
+    \def\tikz@plane@y{\pgfpointxyz{0}{1}{#1}}%
+    \tikz@canvas@is@plane
+  }
+  \makeatother
+
+  \begin{tikzpicture}[x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.7]
+
+
+    \begin{scope}[canvas is xz plane at y=0,transform shape]
+      % \draw[blue] (0,0) -- (10,0)--(10,10)--(0,10)--cycle;
+      \foreach \ii [count = \xi] in {-3,-2,...,3}{
+        \foreach \jj  [count = \yi] in {-3,-2,...,3}{
+          \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj))}
+          \node[draw=blue!20!bgcolor,fill=blue!2!bgcolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
+        }
+      }
+      \foreach \ii [count = \xi] in {-3,-2,-1}{
+        \foreach \jj [count = \yi] in {-3,-2,-1}{
+          \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
+          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num}; % rename nodes
+        }
+      }
+
+      \path[draw=textcolor] (n-1-1-1.north west) -- (n-1-7-1.north east) -- (n-1-7-7.south east) -- (n-1-1-7.south west) -- cycle;
+      \path[draw=blue] (n-1-1-1.north west) -- (n-1-3-1.north east) -- (n-1-3-3.south east) -- (n-1-1-3.south west) -- cycle;
+
+
+    \end{scope}
+
+    \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
+      \foreach \ii [count = \xi] in {-1,0,1}{
+        \foreach \jj  [count = \yi]in {-1,0,1}{
+          \pgfmathsetmacro{\num}{int(\ii)}
+          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,text=textcolor,minimum size=1cm] (n-2-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
+        }
+      }
+
+      \path[draw=blue] (n-2-1-1.north west) -- (n-2-3-1.north east) -- (n-2-3-3.south east) -- (n-2-1-3.south west) -- cycle;
+    \end{scope}
+
+    \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
+      \foreach \ii [count = \xi] in {1,2,3,...,7}{
+        \foreach \jj  [count = \yi]in {1,2,3,...,7}{
+          \node[draw=blue!20!bgcolor,fill=blue!2!bgcolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
+        }
+      }
+
+      \foreach \ii [count = \xi] in {-3,-2,-1}{
+        \foreach \jj [count = \yi] in {-3,-2,-1}{
+          \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
+          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {}; % rename nodes
+        }
+      }
+
+      \path[draw=blue,dashed] (n-3-1-1.north west) -- (n-3-3-1.north east) -- (n-3-3-3.south east) -- (n-3-1-3.south west) -- cycle;
+      \path[draw=textcolor] (n-3-2-2.north west) -- (n-3-6-2.north east) -- (n-3-6-6.south east) -- (n-3-2-6.south west) -- cycle;
+    \end{scope}
+
+    % red box
+    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north east) -- (n-2-2-2.north east) -- (n-3-2-2.north east) -- (n-3-2-2.north west) -- (n-2-2-2.north west) -- (n-1-2-2.north west); % top
+    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.south east) -- (n-2-2-2.south east) -- (n-3-2-2.south east) -- (n-3-2-2.south west) -- (n-2-2-2.south west) -- (n-1-2-2.south west); % bottom
+    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north east) -- (n-2-2-2.north east) -- (n-3-2-2.north east) -- (n-3-2-2.south east) -- (n-2-2-2.south east) -- (n-1-2-2.south east); % right
+    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north west) -- (n-2-2-2.north west) -- (n-3-2-2.north west) -- (n-3-2-2.south west) -- (n-2-2-2.south west) -- (n-1-2-2.south west); % left
+
+
+    % blue lines connecting
+    \path[draw=blue!40!bgcolor] (n-1-1-3.south west) -- (n-2-1-3.south west) -- (n-3-1-3.south west);
+    \path[draw=blue!40!bgcolor] (n-1-3-1.north east) -- (n-2-3-1.north east) -- (n-3-3-1.north east);
+
+
+    \begin{scope}[canvas is xz plane at y=0,transform shape]
+      \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 2};
+      \node[] (rf-tag) at (n-1-2-1.north) {Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$};
+      \node[] (sp-tag) at (n-1-2-2.north) {Quellenpixel $(\mat{B})_S$};
+    \end{scope}
+
+    \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
+      \node[draw=red,text=textcolor,minimum size=1cm] (marked2) at (2,-2) {\LARGE 0};
+      \node[] (rf-tag) at (n-2-2-1.north) {Filter $\mat{F}$};
+      \node[] (ze-tag) at (n-2-2-2.north) {Zentralelement $(\mat{F})_C$};
+    \end{scope}
+
+    \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
+      \node[draw=red,fill=blue!10!white,text=textcolor,minimum size=1cm] (marked3) at (2,-2) {\LARGE -3};
+    \end{scope}
+
+    % name tags
+
+
+
+  \end{tikzpicture}
 
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
 
-\includegraphics[width=0.5\textwidth]{conv.jpg}
-
-\makeatletter
- \tikzoption{canvas is xy plane at z}[]{%
-   \def\tikz@plane@origin{\pgfpointxyz{0}{0}{#1}}%
-   \def\tikz@plane@x{\pgfpointxyz{1}{0}{#1}}%
-   \def\tikz@plane@y{\pgfpointxyz{0}{1}{#1}}%
-   \tikz@canvas@is@plane
- }
- \makeatother
-
-\begin{tikzpicture}
- [x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.8]
-
-
-
-
-    \begin{scope}[canvas is xz plane at y=0,transform shape]
-      %\draw[blue] (0,0) -- (10,0)--(10,10)--(0,10)--cycle;
-      \foreach \ii [count = \xi] in {1,2,3,...,8}{
-            \foreach \jj  [count = \yi]in {1,2,3,...,8}{
-            \pgfmathsetmacro{\nn}{int(\xi+8*\yi-8)}
-      \node[red,draw,minimum size=1cm] (n\nn-1) at (\ii,-\jj) {\nn};
-      }
-      }
-
-      \end{scope}
-
-        \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
-      \foreach \ii [count = \xi] in {1,2,3}{
-            \foreach \jj  [count = \yi]in {1,2,3}{
-            \pgfmathsetmacro{\nn}{int(\xi+3*\yi-3)}
-      \node[blue,draw,minimum size=1cm] (n\nn-2) at (\ii,-\jj) {\nn};
-      }
-      }
-      \end{scope}
-
-      \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
-      \foreach \ii [count = \xi] in {1,2,3,...,8}{
-            \foreach \jj  [count = \yi]in {1,2,3,...,8}{
-            \pgfmathsetmacro{\nn}{int(\xi+8*\yi-8)}
-      \node[green,draw,minimum size=1cm] (n\nn-3) at (\ii,-\jj) {\nn};
-      }
-      }
-      \end{scope}
-
-      \draw[fill=red!50,opacity=0.3] (n10-1.north east) -- (n5-2.north east) --(n10-3.north east)
-      --(n10-3.north west)-- (n5-2.north west) --  (n10-1.north west)  ;
-      \draw[fill=red!50,opacity=0.3] (n10-1.south east) -- (n5-2.south east) --(n10-3.south east)
-      --(n10-3.south west)-- (n5-2.south west)-- (n10-1.south west)  ;
-      \draw[fill=red!50,opacity=0.3] (n10-1.north east) -- (n5-2.north east) --(n10-3.north east)
-      --(n10-3.south east)-- (n5-2.south east)-- (n10-1.south east)  ;
-
-      \draw[fill=red!50,opacity=0.3] (n10-3.north west)-- (n5-2.north west) --  (n10-1.north west) -- (n10-1.south west)-- (n5-2.south west)   --(n10-3.south west) ;
-
-  \end{tikzpicture}
-
 Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
 hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
-Lage des Filters jeweils ein Pixel des neuen Bildes berechnet wird. Man kann
+Lage des Filters jeweils nur ein Pixel des neuen Bildes berechnet wird. Man kann
 sich vorstellen, dass an der Position des Quellenpixel jeweils ein neuer
 Pixel entsteht. Dabei muss der Filter immer eine vollstaendige Region als
-rezeptives Feld haben. Dadurch kommt das Quellenpixel nie auf den Raendern des
+rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf den Raendern des
 Bilds zu liegen. Somit fallen diese weg.
 \para{}
 \cite{deeplearning.ai:cnn}
@@ -1932,8 +1974,8 @@ einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 
 \subsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man einen Filter auf sie anwendet.
-Zur Erinnerung: Dies liegt daran, dass pro Lage des Quellenpixel nur ein Pixel
-des neuen Bildes entsteht und das Quellenpixel nunmal nicht auf allen
+Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelement nur ein Pixel
+des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
 Ursprungspixeln zu liegen kommt. Die Raender fallen so weg. Diese Groesse des
 Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei giltet folgende Formel fuer die
 neue Groesse $n_1$ des Bildes, anhand der alten Groesse $n_0$.
@@ -1985,7 +2027,7 @@ auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
 Position uebersprungen. Zur Folge hat dies, dass das neue Bild
-deutlich kleiner geworden ist, denn das Quellenpixel uebspringt somit auch
+deutlich kleiner geworden ist, denn das Zentralelement uebspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
 \para{}
 Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
@@ -2068,6 +2110,30 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \end{pmatrix}
 \end{equation*}
 
+\begin{equation*}
+  \ten{W^l}_i =
+  \begin{bmatrix}
+    \begin{pmatrix}
+      w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
+    \end{pmatrix}
+    & \cdots &
+    \begin{pmatrix}
+      w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
+    \end{pmatrix}
+    & \cdots &
+    \begin{pmatrix}
+      w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
+      \vdots & \ddots & \vdots \\
+      w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
+    \end{pmatrix}
+  \end{bmatrix}
+\end{equation*}
+
+
 \begin{tikzpicture}[every node/.style={anchor=north east,fill=white,minimum width=1.4cm,minimum height=7mm}]
 
   \matrix (mA) [matrix of math nodes,left delimiter={(},right delimiter={)}]
@@ -2077,23 +2143,23 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
     w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l \\
   };
 
-\matrix (mB) [draw,matrix of math nodes] at ($(mA.south west)+(1.5,0.7)$)
-{
-  w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
-  \vdots & \ddots & \vdots \\
-  w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l \\
-};
+  \matrix (mB) [draw,matrix of math nodes] at ($(mA.south west)+(1.5,0.7)$)
+  {
+    w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l \\
+  };
 
-\matrix (mC) [draw,matrix of math nodes] at ($(mB.south west)+(1.5,0.7)$)
-{
-  w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
-  \vdots & \ddots & \vdots \\
-  w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l \\
-};
+  \matrix (mC) [draw,matrix of math nodes] at ($(mB.south west)+(1.5,0.7)$)
+  {
+    w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
+    \vdots & \ddots & \vdots \\
+    w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l \\
+  };
 
-\draw[dashed](mA.north east)--(mC.north east);
-\draw[dashed](mA.north west)--(mC.north west);
-\draw[dashed](mA.south east)--(mC.south east);
+  \draw[dashed](mA.north east)--(mC.north east);
+  \draw[dashed](mA.north west)--(mC.north west);
+  \draw[dashed](mA.south east)--(mC.south east);
 \end{tikzpicture}
 
 
@@ -2105,7 +2171,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
       w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
       \vdots & \ddots & \vdots \\
       w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
-     \end{bmatrix}$
+    \end{bmatrix}$
   };
 
   \node (mB) at ($(mA.south west)+(0.25,0.125)$)
@@ -2130,6 +2196,18 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \draw[dashed,gray](mA.north west)--(mC.north west);
   \draw[dashed,gray](mA.south east)--(mC.south east);
 \end{tikzpicture}
+
+\begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
+  \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
+  \foreach \z in {0, 5, 10} \foreach \x in {0,...,3}
+  \foreach \y [evaluate={\b=random(0, 1);}] in {0,...,3}
+  \filldraw [fill=white] (\x, \y, \z) -- (\x+1, \y, \z) -- (\x+1, \y+1, \z) --
+  (\x, \y+1, \z) -- cycle (\x+.5, \y+.5, \z) node [yslant=tan(15)] {\b};
+  \draw [dashed] (0, 4, 0) -- (0, 4, 10) (4, 4, 0) -- (4, 4, 10);
+  \draw [->] (0, 4.5, 0)  -- (4, 4.5, 0)   node [near end, above left] {Column};
+  \draw [->] (-.5, 4, 0)  -- (-.5, 0, 0)   node [midway, left] {Row};
+  \draw [->] (4, 4.5, 10) -- (4, 4.5, 2.5) node [near end, above right] {Channel};
+\end{tikzpicture}%
 
 Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
 $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
