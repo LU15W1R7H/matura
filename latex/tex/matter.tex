@@ -276,7 +276,11 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
       yticklabels={,,},
       zticklabels={,,},
       colormap/cool,
+      legend style={at={(1,1.2)},anchor=north east}
       ]
+      \addplot3[domain=-1:1,orange, quiver={u={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*x)}, v={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*y)}, scale arrows=0.4}, -stealth,samples=10] {0.5};
+      \addlegendentry{$-\vecf{\nabla}_{\vec{x}}f$}
+
       \addplot3[
       mesh,
       samples=50,
@@ -285,15 +289,11 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
       {1/(1+exp(-(x^2+y^2)))};
       \addlegendentry{$f(x_1,\ldots,x_n)$}
 
-      \pgfmathparse{1/(1+exp(-((-0.99)^2+(0.99)^2)))}
-
       \coordinate (ballpos) at (axis cs:-0.8,0.8,{1/(1+exp(-((-0.8)^2+(0.8)^2)))});
       \coordinate (bottom) at (axis cs:0,0,0.5);
       \draw[red,very thick,->,>=latex] (ballpos) -- ($(ballpos)!0.3!(bottom)$);
       \shade [ball color=yellow] (ballpos) circle (0.25cm);
     \end{axis}
-
-
   \end{tikzpicture}
   \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
     Gradientenfeld hinab in das lokale Minimum.}
@@ -1042,7 +1042,7 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
 
-% \ifcp
+\ifcp
 \pgfplotsset{compat=1.15}
 \pgfmathdeclarefunction{gauss}{2}{%
   \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
@@ -1095,7 +1095,7 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
   \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit ihren
     wichtigsten Eigenschaften}%
 \end{figure}
-% \fi
+\fi
 
 
 Um die Neigungen $b_{t=0}$ zu initalisieren benutzt man eine Normalverteilung
@@ -1832,6 +1832,7 @@ verrechnet, da es zu einer Ueberlappung des vorherigen Filter und des
 verschobenen Filters kommt.
 \para{}
 
+\ifcp
 \begin{figure}[h!]
   \centering
   % \includegraphics[width=0.5\textwidth]{conv.jpg}
@@ -1927,14 +1928,11 @@ verschobenen Filters kommt.
       \node[draw=red,fill=blue!10!white,text=textcolor,minimum size=1cm] (marked3) at (2,-2) {\LARGE -3};
     \end{scope}
 
-    % name tags
-
-
-
   \end{tikzpicture}
 
   \caption{Schema, wie ein Filter ueber ein Bild laueft}
 \end{figure}
+\fi
 
 Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
 hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
