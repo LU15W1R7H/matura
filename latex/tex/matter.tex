@@ -63,11 +63,11 @@ Diese Daten fuer Training kommen in der Form eines \keyword{Trainingsdatensatz} 
 Dabei handelt es sich um eine Menge von \keyword{Samples},
 welche jeweils aus Inputs und Labels bestehen.
 Die Inputs werden in einem Vektor
-\[ \vec{x} = \trans{\begin{pmatrix} x_1 & x_2 & \cdots & x_n \end{pmatrix}} \]
+\[ \vec{x} = \trans{\begin{pmatrix} x_1 & x_2 & \cdots & x_m \end{pmatrix}} \]
 und die Labels in einem Vektor
-\[ \vec{\hat{y}} = \trans{\begin{pmatrix} \hat{y}_1 & \hat{y_2} & \cdots & \hat{y}_m \end{pmatrix}} \]
+\[ \vec{\hat{y}} = \trans{\begin{pmatrix} \hat{y}_1 & \hat{y_2} & \cdots & \hat{y}_n \end{pmatrix}} \]
 zusammengefasst. Auch die Vorhersagen werden in einem Vektor
-\[\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_m \end{pmatrix}} \]
+\[\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_n \end{pmatrix}} \]
 zusammengefasst.
 Somit ist ein Trainingssample nichts anderes als ein Paar
 $(\vec{x}_i,\vec{\hat{y}}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
@@ -90,8 +90,8 @@ BEISPIEL
 
 
 \subsection{Modelle}
-Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^n
-\to \set{R}^m$, Hypothesenfunktion gennant, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
+Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
+\to \set{R}^n$, Hypothesenfunktion gennant, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
 Man kann diese Funktion gewissermassen als die Hypothese, welche das Modell bezueglich der Beziehung zwischen
 den Inputs und den Labels aufgestellt hat, betrachten.
 Diese Modelle koennen verwendet werden um vorallem entweder
@@ -144,7 +144,7 @@ Mittel der einzelnen Vorhersagen-Fehler (siehe Gl. (\ref{eq:meanerrorfunc})).
 \\
 \begin{minipage}[h!]{0.5\textwidth}
   \begin{equation}\label{eq:errorfunc}
-    C \left(\vec{y},\vec{\hat{y}} \right)=\ds\sum_{i=1}^{m} c(y_i, \hat{y}_i)
+    C \left(\vec{y},\vec{\hat{y}} \right)=\ds\sum_{i=1}^{n} c(y_i, \hat{y}_i)
   \end{equation}
 \end{minipage}
 \begin{minipage}[h!]{0.5\textwidth}
@@ -172,14 +172,14 @@ Zusaetzlich halbiert man noch das arithmetische Mittel, damit bei der Ableitung 
 $2$ wegfaellt.
 \\
 \begin{equation}\label{eq:MSE}
-  C_{MSE} = \frac{1}{2m}\sum_{i=1}^{m}{(\hat{y}_i - y_i)}^2 = \frac{1}{2m}{(\vec{\hat{y}} - \vec{y})}^2
+  C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2
 \end{equation}
 \\
 Sie erfuellt alle Anforderungen an eine Kostenfunktion:
 \begin{itemize}
 \item{Ihr Funktionwert ist 0 und minimal fuer $\vec{y} = \vec{\hat{y}}$}
 \item{Sie ist proportional zu ${(\vec{\hat{y}}-\vec{y})}^2$}
-\item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{MSE}'=\frac{1}{m}(y_i-\hat{y_i})$}
+\item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{MSE}'=\frac{1}{n}(y_i-\hat{y_i})$}
 \end{itemize}
 
 
@@ -275,8 +275,11 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
       xticklabels={,,},
       yticklabels={,,},
       zticklabels={,,},
+      xlabel=$x_1$,
+      ylabel=$x_2$,
       colormap/cool,
-      legend style={at={(1,1.2)},anchor=north east}
+      legend style={at={(1,1.2)},anchor=north east},
+      reverse legend
       ]
       \addplot3[domain=-1:1,orange, quiver={u={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*x)}, v={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*y)}, scale arrows=0.4}, -stealth,samples=10] {0.5};
       \addlegendentry{$-\vecf{\nabla}_{\vec{x}}f$}
@@ -287,7 +290,7 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
       domain=-1:1,
       ]
       {1/(1+exp(-(x^2+y^2)))};
-      \addlegendentry{$f(x_1,\ldots,x_n)$}
+      \addlegendentry{$f(x_1,x_2)$}
 
       \coordinate (ballpos) at (axis cs:-0.8,0.8,{1/(1+exp(-((-0.8)^2+(0.8)^2)))});
       \coordinate (bottom) at (axis cs:0,0,0.5);
@@ -380,8 +383,7 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 \end{equation}
 
 
-\subsection{Adam Optimizer}
-ZUSAMMENFASSUNG TRAININGSALGORITHMUS
+\subsection{Adam Optimizer?}
 
 \section{Trainingsphaenomene}
 
@@ -413,7 +415,7 @@ besteht aus einem einzigen Kuenstlichen Neuron. Dieses Kuenstliche Neuron
 hat mehrere binaere Inputs und einen einzigen binaeren Output. Binaer
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
 kann. Des weiteren besitzt es mehrere sogenannte \keyword{Gewichte} $w_1, \ldots,
-w_n \in \set{R}$, fuer jeden Input ein Gewicht.
+w_m \in \set{R}$, fuer jeden Input $x_i$ ein Gewicht $w_i$.
 Diese sind reelle Zahlen, welche das Verhalten des Perzeptron bestimmen.
 Die \keyword{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
 ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
@@ -422,7 +424,7 @@ $\vec{w} = \trans{\begin{pmatrix} w_1 & \cdots & w_n \end{pmatrix}}$ mit dem
 Inputvektor $\vec{x}$.
 \\
 \begin{equation*}
-  \tilde{z} = \sum_{i=1}^{n} w_i x_i = \vec{w} \cdot \vec{x}
+  \tilde{z} = \sum_{i=1}^{m} w_i x_i = \vec{w} \cdot \vec{x}
 \end{equation*}
 \\
 Zusaetzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
@@ -478,15 +480,15 @@ werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen
 \subsection{Was kann ein Perzeptron erlernen?}
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \keyword{Linearer Klassifikator} der Form
-$y = w_1x_1 + \cdots + w_n x_n$.
+$y = w_1x_1 + \cdots + w_m x_m$. Es ist also ein Klassifizierungsmodell, kein Regressionsmodell.
 Es kann die Features in zwei Klassen 0 oder 1 einordnen, wobei der Outputs der
 Hypothesenfunktion, diese Klassifiezierung angibt.
 Ueberschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
 Jedoch muessen diese Klassen linear separierbar sein.
 \para{}
-Lineare Separierbarkeit bedeutet, dass man alle Featurevektoren $\vec{x}_1,\ldots,\vec{x}_p \in \set{R}^n$
-innerhalb ihres Vektorraums $\set{R}^n$ durch eine Hyperebene in ihre Klassen aufteilbar sein muessen.
+Lineare Separierbarkeit bedeutet, dass man alle Featurevektoren $\vec{x}_1,\ldots,\vec{x}_p \in \set{R}^m$
+innerhalb ihres Vektorraums $\set{R}^m$ durch eine Hyperebene in ihre Klassen aufteilbar sein muessen.
 Falls das Perzeptron zwei Inputs hat, bedeutet dies, dass die Ortsvektoren
 einfach durch eine Gerade voneinander trennenbar sein muessen (siehe Abb.
 (\ref{fig:linearer_Klassifikator})). \\
@@ -1028,7 +1030,7 @@ Gradientenverfahrens ein Startpunkt $\vec{p}_0$ innerhalb des Gradientenfeldes
 $\vecf{\nabla}C$ gewaehlt werden, von welchem aus der Gradientenabstieg beginnt.
 Da wir das Gradientenverfahren zur Optimierung der Modellparameter verwenden,
 ist unser Startpunkt, der Vektor aller Hyperparameter
-$\vec{\param} = \trans{\begin{pmatrix} \param_1 & \cdots & \param_n \end{pmatrix}}$.
+$\vec{\param} = \trans{\begin{pmatrix} \param_1 & \cdots & \param_k \end{pmatrix}}$.
 Dieser Startpunkt entscheidet darueber, in welches lokale Minimum konvergiert
 wird und bestimmt somit auch die bestmoegliche Exaktheit der Vorhersagen. Falls
 schlecht Initalwerte gewaehlt werden, konvergiert der Punkt in ein hohes lokales
@@ -1109,9 +1111,6 @@ einer Schicht eine Varianz von $\sigma^2_{tot} = 1$ hat.
   b_{t=0}^l &\sim \mathcal{N}(\mu = 0, \sigma^2 = 1)
 \end{align}
 
-
-WEITERE ERLAUETERUNGEN? SATURATION DER NEURONEN VERHINDERN DESHALB TOTALE VARIANZ
-NUR 1
 
 \para{}
 \cite{wiki:normal_distribution}
@@ -1564,7 +1563,7 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   dessen Zahlen in einem Raster angeordet sind.
   Analog zum Volumen, bezeichnet man die Form des Tensors mit Hoehe, Breite und
   Tiefe. \\
-  Ein Tensor von der Form $\set{R}^{3 \times 3 \times 3}$ koennte folgendermassen
+  Ein Tensor von der Form $\set{R}^{3 \times 2 \times 3}$ koennte folgendermassen
   aussehen:
   \para{}
 
@@ -1602,7 +1601,7 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
     \draw[brown, ultra thin] (A\i)--(C\i);
 
     \node[left=1mm of B.west] {$\ten{T} =$};
-    \node[right=3mm of B.east] {$\in \set{R}^{3 \times 3 \times 3}$};
+    \node[right=3mm of B.east] {$\in \set{R}^{3 \times 2 \times 3}$};
   \end{tikzpicture}
 
   \begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
@@ -2115,7 +2114,7 @@ Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
 beliebige Dimensionen besitzen koennen, da die Filter ihre Bewegung lediglich an
 die Groesse des Bildes anpassen muessen.
 
-\section{die Convolutional-Schicht}
+\subsection{die Convolutional-Schicht}
 Nun moechten wir alles zusammentragen, was wir ueber Filter gelernt
 haben, um nun die Convolutional-Schicht zu definieren.
 \para{}
@@ -2128,29 +2127,7 @@ Die Schicht besitzt $c^l$ Varianten an Filtern $\ten{W}^l_i \in
 Eigenschaften, bezueglich: der Groesse $f^l$, der Tiefe $c^{l-1}$, dem Padding
 $p^l$, dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
 $w^l_{i\,|\,\alpha,\beta,\gamma}$.
-
-\begin{equation*}
-  (\ten{W^l}_i)_{:,:,1} = \begin{pmatrix}
-    w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
-  \end{pmatrix}
-\end{equation*}
-\begin{equation*}
-  (\ten{W^l}_i)_{:,:,\gamma} = \begin{pmatrix}
-    w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
-  \end{pmatrix}
-\end{equation*}
-\begin{equation*}
-  (\ten{W^l}_i)_{:,:,c^l} = \begin{pmatrix}
-    w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
-  \end{pmatrix}
-\end{equation*}
-
+\\
 \begin{equation*}
   \ten{W^l}_i =
   \begin{bmatrix}
@@ -2159,13 +2136,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
       \vdots & \ddots & \vdots \\
       w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
     \end{pmatrix}
-    & \cdots &
-    \begin{pmatrix}
-      w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
-      \vdots & \ddots & \vdots \\
-      w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
-    \end{pmatrix}
-    & \cdots &
+    & \stackrel{\mathclap{\normalfont\mbox{Tiefe}}}{\cdots} &
     \begin{pmatrix}
       w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
       \vdots & \ddots & \vdots \\
@@ -2173,72 +2144,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
     \end{pmatrix}
   \end{bmatrix}
 \end{equation*}
-
-
-\begin{tikzpicture}[every node/.style={anchor=north east,fill=white,minimum width=1.4cm,minimum height=7mm}]
-
-  \matrix (mA) [matrix of math nodes,left delimiter={(},right delimiter={)}]
-  {
-    w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l \\
-  };
-
-  \matrix (mB) [draw,matrix of math nodes] at ($(mA.south west)+(1.5,0.7)$)
-  {
-    w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l \\
-  };
-
-  \matrix (mC) [draw,matrix of math nodes] at ($(mB.south west)+(1.5,0.7)$)
-  {
-    w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
-    \vdots & \ddots & \vdots \\
-    w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l \\
-  };
-
-  \draw[dashed](mA.north east)--(mC.north east);
-  \draw[dashed](mA.north west)--(mC.north west);
-  \draw[dashed](mA.south east)--(mC.south east);
-\end{tikzpicture}
-
-
-\begin{tikzpicture}[every node/.style={anchor=north east,fill=white,minimum width=1.4cm,minimum height=7mm,inner sep=0,outer sep=0}]
-
-  \node (mA)
-  {
-    $\begin{bmatrix}
-      w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
-      \vdots & \ddots & \vdots \\
-      w_{i\,|\,f,1,c^l}^l & \cdots & w_{i\,|\,f,f,c^l}^l
-    \end{bmatrix}$
-  };
-
-  \node (mB) at ($(mA.south west)+(0.25,0.125)$)
-  {
-    $\begin{bmatrix}
-      w_{i\,|\,1,1,\gamma}^l & \cdots & w_{i\,|\,1,f,\gamma}^l \\
-      \vdots & \ddots & \vdots \\
-      w_{i\,|\,f,1,\gamma}^l & \cdots & w_{i\,|\,f,f,\gamma}^l
-    \end{bmatrix}$
-  };
-
-  \node (mC) at ($(mB.south west)+(0.25,0.125)$)
-  {
-    $\begin{bmatrix}
-      w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
-      \vdots & \ddots & \vdots \\
-      w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
-    \end{bmatrix}$
-  };
-
-  \draw[dashed,gray](mA.north east)--(mC.north east);
-  \draw[dashed,gray](mA.north west)--(mC.north west);
-  \draw[dashed,gray](mA.south east)--(mC.south east);
-\end{tikzpicture}
-
-
+\\
 Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
 $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 \\
@@ -2256,63 +2162,109 @@ berchnet anhand der Hohe $h^l$ und der Breite $w^l$ des Ausgangsbild.
   n_1 = \frac{n_0 + 2p - f}{s} + 1
 \end{equation}
 \\
-Nun wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
-$\vecf{\varphi}$ auf diesen Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
+Da die Faltungsoperation eine lineare Operation, braucht man wieder eine
+Aktivierungsfunktion, um das Modell zu befaehigen nicht-lineare Probleme zu
+loesen.
+Deshalb wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
+$\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
 neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Meistens waehlt man hier
 die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
 \begin{equation}
   \ten{A}^{l+1} = \vecf{\varphi}(\tilde{\ten{A}}^l)
 \end{equation}
 
-Da die Faltungsoperation eine lineare Operation, braucht man wieder eine Aktivierungsfunktion.
 
-Eigentlich ist ein CNN einfach ein KNN, welches in einer Schicht anstatt
-Matrixmultiplikation eine Faltungsooperation benutzt.
 
 \cite{Goodfellow-et-al-2016}
 
-\section{Pooling-Schichten}
-Pooling reduziert die Dimensionalitaet der Daten, indem eine Gruppe Tensorelementen
-der vorherigen Schicht zu einem einzigen Tensorelement der naechsten Schicht
-zusammengefasst wird.
-Viel Begrifflichkeit der Filter wird auf das Pooling uebertragen. Die Groesse
-des Felder, welches zusammengefasst wird, bezeichnet man mit $f$. Das Stride $s$
-bezeichnet auch hier wieder, was die Schrittgroesse bei Verschieben des Feldes ist.
-Local Pooling 2x2 Feld wird zu einem Neuron zusammengefasst. MaxPooling ->
-behaelt einfach maximalen Wert des Feld bei und verwirft den Rest. Average
-Pooling berechnet das arithmethische Mittel des Feldes und verwednet dieses.
-MaxPooling ist am effektivsten.
+\section{Dimensionalitaetskontrolle}
+Beim Anwenden einer Convolutional Schicht gehen Informationen verloren, da nur
+die relevanten Features hervorgehoben werden und der Rest verworfen wird. Jedoch
+schrumpft das Bild entweder gar nicht (bei Same-Padding) oder es schrumpft nur
+sehr leicht (bei Valid-Padding). Dies ist ein Problem, da die Information in
+deutlich weniger Pixeln bzw. Tensorelementen codiert werden koennte. Deshalb
+haben wir einen unoetigen Ressourcenverbrauch und eine erhoehte Gefahr fuer
+Overfitting. Um diesem Problem entgegenzuwirken gibt es einerseits sogennante
+\keyword{Pooling-Schichten} und als Gegenstueck dazu
+\keyword{Upsampling-Schichten}. Ersteres wird verwendet um die Dimensionalitaet
+der Bilder zu vermindern und letzteres um die Dimensionalitaet der Bilder zu
+erweitern. Somit ermoeglich diese Schichten eine kontrollierte Art (im Gegensatz zum
+Padding) die Dimensionalitaet einzustellen.
 
-Pooling:
-Komprimierung des Bildes. Durchschnitt von 2x2 Pixeln berchnen -> ein Pixel des
-gepoolten Bild. -> 75\% Informationsreduktion .
+\subsection{die Pooling-Schicht}
+Die Pooling-Schicht verringert die Dimensionalitaet durch das Zusammenfassen eines Felds
+von Tensorelementen zu einem einzigen Tensorelement der naechsten Schicht
+erreicht. Dabei geht das Feld nur entlang der Laenge und Breite des Bildes und
+nicht entlang der Tiefe. Dies bedeutet, das Pooling wird auf jeden Channel
+einzeln angewandt, dadurch aendert sich die Tiefe des Bildes nicht.
+\para{}
+Fuer die Beschreibung einer Pooling-Schicht wird viel Begrifflichkeit der
+Convolutional-Schicht und der Filter uebernommen.
+Die Groesse des Elementfelder, welches zusammengefasst wird, bezeichent man analog zur
+Filtergroesse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling wieder wie
+gross dieSchrittgreosse beim Verschieben des Felder ist. Meistens waehlt man den
+Stride $s$ gerade gleich der Feldgroesse $f$, damit alle Pixel
+zusammengefasst werden. Kleiner als $f$ kann $s$ nicht gewaehlt werden.
+\para{}
+Man unterscheidet zwischen zwei Arten von Pooling:
+\begin{itemize}
+  \item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
+    man das arithmetische Mittel der Element bildet.}
+  \item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
+    Element mit dem hoehsten Wert beibehalten wird und die anderen verworfen werden.}
+\end{itemize}
+In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
+Resultate erziehlt.
+\para{}
+Es ist festzustellen, dass eine Pooling-Schicht keinerlei Modellparameter
+besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
+Hyperparameter, wie die Feldgroesse $f$ und den Stride $s$.
+\para{}
+Mit einer Pooling-Schicht, bei welcher $f = 2$ und $s = 2$ gewaehlt wurde, also
+ein ($2 \times 2$)-Feld zusammengefasst wird, kommt es zu einer
+Dimensionalitaetsreduktion von 75\%, da aus jeweils vier Element ein Element wird.
+\para{}
+Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten sie
+gleichen Formeln wie fuer die Filteroperationen:
+\\
+\begin{equation}
+  n_1 = \frac{n_0 - f}{s} + 1
+\end{equation}
+\\
 
-Pooling als Filter betrachtet:
-MaxPooling mit 2x2 Feld. Filtergroesse $f=2$ und stride $s=2$. Dies sind die
-Hyperparamter des MaxPooling. Hat also zwar Hyperparameter aber keinerlei Modellparameter
+\subsection{die Upsampling-Schicht}
+Die Upsampling-Schicht bildet das Gegenstueck zur Pooling-Schicht, da sie die
+Dimensionaliaet der Bilder erhoeht. Auf den ersten Blick erscheint unklar,
+weshalb man die Dimensionalitaet erhoehen wollen koennte, da die eigentliche
+Motivation dieser Schichten in der Verhinderung von Overfitting besteht. Jedoch
+sollte in Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schicht
+noetig sind.
+\para{}
+Man verwendet auch hier wieder den Begriff der Feldgroesse $f^l$. Diesemal
+beschreibt dieser Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
+wird ein Element zu einem $(f \times f)$-Feld hochgerechnet und erweitert so die
+Dimensionalitaet.
+\para{}
+Es stellt sich natuerlich die Frage, was fuer Werte das neue Feld erhaelt.
+Dafuer muss man eine Interpolationsart waehlen.
+Zwei Arten sind besonders verbreitet:
+\begin{itemize}
+\item{\keyword{Bilineare Interpolation}}
+\item{\keyword{Naechste-Nachbar-Interpolation} (engl.: nearest-neighbor-interpolation)}
+\end{itemize}
+Wir werden hier nur die Naechste-Nachbar-Interpolation betrachten. Sie ist
+ziemlich trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
+Elements an. Der Wert wird also einfach vermehrt.
 
-MaxPooling koennte auch andere Filtergroesse oder Stride haben. Formeln fuer
-Outputgroesse gelten auch hier.
-
-Bei 3D-Tensoren aendert sich die Depth nicht, da das Pooling auf jeden Channel
-einzeln angewandt wird.
-
-
-Es gibt zwei Konventionen:
-Entweder bezeichnet man die Einheit von einem ConvLayer und einem PoolLayer zu
-einer Schicht zusammengefasst werden oder sie werden als seperate Schichten betrachtet...
-
-\section{Upsampling-Schichten}
-
-\section{Fully-connected-Schichten}
-Flattening ist, wenn man einen Tensor zu einem Vektor umformt
-
-
+\section{Sonstiges, vielleicht einbringen?}
+Eigentlich ist ein CNN einfach ein KNN, welches in einer Schicht anstatt
+Matrixmultiplikation eine Faltungsooperation benutzt.
 
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
 Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Er wird
-benutzt um effiziente Codierungen von Daten unsupervised zu erlernen.
+benutzt um effiziente Codierungen von Daten semi-unueberwacht zu erlernen.
+Semi-unueberwacht deshalb, weil die Labels in den Features enthalten sind.
 
 Der Autoencoder soll eine komprimierte Repraesentation (Encoding) fuer einen
 Datensatz erlernen und somit die wesentlichen Features herausextrahieren. Er
@@ -2419,7 +2371,6 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 
 \section{Denoising Autoencoder}
 
-\section{Variational Autoencoder?}
 
 % ------------------------------------
 
@@ -2442,35 +2393,8 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 \end{itemize}
 
 \subsection{Trainingsdaten}
-MegaFace Dataset
+MNIST Datensatz.
 
-\section{Daten-Normalisierung}
-Die Gesichter muessen ``normalisiert'' werden. In diesem Fall bedeutet, dies
-dass alle Gesichter gleiche Ausrichtung und Skalierung haben muessen. Dazu
-muessen sie verschoben, rotiert und skaliert werden.
-
-\subsection{Daten laden}
-
-\subsection{Facealigner}
-\subsubsection{Facial landmarks}
-Shape prediction Problem. Erkennung von lokalen Gesichtsfeatuers und bestimmung
-ihrer Position im Bild.
-
-Zwei Schritte: Gesicht lokalisieren und erkennung der Gesichtstrukturen im Bild
-
-DLib implementation:
-Beispiel der Implemenation von One Millisecond Face Alignment with an Ensemble of Regression Trees paper by Kazemi and Sullivan (2014).
-
-\cite{net:facial_landmarks}
-
-\subsubsection{der Aligner}
-
-Hierfuer werden wir einen
-``Facealigner'' in Python schreiben, mithilfe von OpenCV und dlib (ueber AUR installiert).
-
-\cite{net:face_alignment}
-
-\subsection{Zuschneiden}
 
 
 \section{Programmieren}
