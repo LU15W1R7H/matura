@@ -129,22 +129,23 @@ Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \end{figure}
 
 \section{Training}
-\subsection{Kostenfunktionen}
+\subsection{Verlust- und Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
-Dafuer gibt es sogennante \keyword{Kostenfunktionen} (auch Verlust- oder
-Fehlerfunktionen).
-Sie sollen ein Mass fuer die Abweichung der Vorhersagen $\vec{y}$ von den Labeln $\vec{\hat{y}}$ sein.
+Dies wird mithilfe von sogennaten Kostenfunktion bzw. Verlustfunktionen
+erreicht.
 \para{}
-Die Fehler $c(y_i,\hat{y}_i)$ der einzelnen Outputs werden aufsummiert um den
-Fehler $C(\vec{y}_j,\vec{\hat{y}}_j)$ einer gesamten Vorhersage mit $m$ Outputs
-zu berechnen (siehe Gl. (\ref{eq:errorfunc})). \\
-Der Fehler $\bar{C}(\set{X})$ eines ganzen Datensatzes $\set{X}$, der
-Groesse $p$ ergibt sich aus dem arithmetischen
-Mittel der einzelnen Vorhersagen-Fehler (siehe Gl. (\ref{eq:meanerrorfunc})).
+Eine \keyword{Verlustfunktion} $L(y,\hat{y})$ sollte ein Mass fuer die
+Abweichung der Vorhersagen $y$ von den Labeln $\hat{y}$ sein.
+Aus ihr bildet man die \keyword{Kostenfunktion} $C(\vec{y},\vec{\hat{y}})$, indem man die
+alle Verluste der einzelnen Ouputs aufsummiert. Somit erhaelt man die Kosten
+einer gesamten Vorhersage mit $m$ Outputs (siehe Gl. (\ref{eq:errorfunc})). \\
+Der Fehler $\bar{C}(\set{X})$ des gesamten Trainingsdatensatz $\set{X}$, der
+Groesse $p$, ergibt sich aus dem arithemtischen Mittel der einzelnen Kosten der
+Vorhersagen (siehe Gl. (\ref{eq:meanerrorfunc})).
 \\
 \begin{minipage}[h!]{0.5\textwidth}
   \begin{equation}\label{eq:errorfunc}
-    C \left(\vec{y},\vec{\hat{y}} \right)=\ds\sum_{i=1}^{n} c(y_i, \hat{y}_i)
+    C \left(\vec{y},\vec{\hat{y}} \right) = \ds\sum_{i=1}^{m} L(y_i, \hat{y}_i)
   \end{equation}
 \end{minipage}
 \begin{minipage}[h!]{0.5\textwidth}
@@ -153,23 +154,27 @@ Mittel der einzelnen Vorhersagen-Fehler (siehe Gl. (\ref{eq:meanerrorfunc})).
   \end{equation}
 \end{minipage}
 \para{}
-Eine Kostenfunktion sollte folgende Eigenschaften aufweisen:
+Eine Verlustfunktion $L$ bzw. eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
-\item{$c$ ist minimal, wenn $\vec{y} = \vec{\hat{y}}$}
-\item{$c$ waechst mit $|\vec{y}-\vec{\hat{y}}|$}
+\item{$L$ ist minimal, wenn $y = \hat{y}$}
+\item{$L$ waechst mit $|y - \hat{y}}|$}
 \item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklaert in Sektion (\ref{ref:partielle_ableitungen}))}
 \end{itemize}
 \para{}
-Die wichtigsten Kostenfunktionen, welche in dieser Arbeit verwendet werden,
-werden nun eingefuehrt.
 
 \subsubsection{Mittlere quadratische Abweichung}
-Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''
+Die bekannteste Verlustfunktion ist die ``Mittlere quadratische Abweichung''
 (engl.:\ mean squared error). Sie ist definiert als das arithmetische Mittel
-aller quadrierten Differenzen zwischen den Vorhersagen und Labels (siehe Gl.
-(\ref{eq:MSE})).
+aller quadrierten Differenzen zwischen den Vorhersagen und Labels.
 Zusaetzlich halbiert man noch das arithmetische Mittel, damit bei der Ableitung der Faktor
 $2$ wegfaellt.
+\\
+\begin{equation}\label{eq:MSE}
+  L_{MSE} = \frac{1}{2n}{(\hat{y} - y)}^2
+\end{equation}
+\\
+Die Kostenfunktion kann mithilfe des einer Summe berechnen werden, oder in
+diesem Fall mithilfe einer Vektorsubtraktion Vorhersagen $\vec{y}$ von den Labels $\vec{\hat{y}}$.
 \\
 \begin{equation}\label{eq:MSE}
   C_{MSE} = \frac{1}{2n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2 = \frac{1}{2n}{(\vec{\hat{y}} - \vec{y})}^2
@@ -2152,6 +2157,12 @@ $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
   \tilde{\mat{A}}_i^l = \ten{W}_i^l * \ten{A}^l
 \end{equation}
 \\
+Die Faltung berechnet man nach folgender Gleichung:
+\\
+\begin{equation}\tag{FO}
+  \tilde{\mat{A}}_{i\,|\,y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c \ten{W}^l_{i\,|\,v,u,w} \ten{A}^l_{x+u,y+v,w}
+\end{equation}
+\\
 Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
 Tiefe des neuen 3D-Tensors $\tilde{\mat{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Hoehe
@@ -2256,10 +2267,6 @@ Wir werden hier nur die Naechste-Nachbar-Interpolation betrachten. Sie ist
 ziemlich trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
 Elements an. Der Wert wird also einfach vermehrt.
 
-\section{Sonstiges, vielleicht einbringen?}
-Eigentlich ist ein CNN einfach ein KNN, welches in einer Schicht anstatt
-Matrixmultiplikation eine Faltungsooperation benutzt.
-
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
 Ein \keyword{Autoencoder} ist eine weitere KNN-Architektur eines KNNs. Diese
@@ -2307,13 +2314,13 @@ anhand der Codierung wieder die urspruenglichen Daten.
 
     \matrix[netstyle] (mat)
     {
-      |[inp]| $x_1$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_1$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_1^1$   & |[cl]| & |[hid]|$h_1^3$ & |[cl]| & |[cl]|  \\
-      |[inp]| $x_2$     & |[cl]| & |[cl]| & |[hid]|$h_2^2$ & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_2$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_2^1$   & |[cl]| & |[hid]|$h_2^3$ & |[cl]| & |[cl]| \\
-      |[inp]| $x_3$     & |[cl]| & |[cl]| & |[hid]|$h_3^2$ & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_3$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_3^1$   & |[cl]| & |[hid]|$h_3^3$ & |[cl]| & |[cl]| \\
-      |[inp]| $x_4$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_4$ \\
+      |[inp]| $x_1$  & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_1$ \\
+      |[cl]| & |[hid]|$h_1^1$   & |[cl]| & |[cl]| & |[cl]| & |[hid]|$h_1^3$  & |[cl]|  \\
+      |[inp]| $x_2$  & |[cl]| & |[hid]|$h_2^2$ & |[cl]| & |[hid]| $h_2^4$ & |[cl]| & |[ou]|$\tilde{x}_2$ \\
+      |[cl]| & |[hid]|$h_2^1$   & |[cl]| & |[hid]| $h_2^3$ & |[cl]| & |[hid]|$h_2^3$ & |[cl]| \\
+      |[inp]| $x_3$ & |[cl]| & |[hid]|$h_3^2$ & |[cl]| & |[hid]| $h_3^4$ & |[cl]| & |[ou]|$\tilde{x}_3$ \\
+      |[cl]| & |[hid]|$h_3^1$   & |[cl]| & |[cl]| & |[cl]| & |[hid]|$h_3^3$ & |[cl]| \\
+      |[inp]| $x_4$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_4$ \\
     };
 
     % titels
@@ -2330,25 +2337,37 @@ anhand der Codierung wieder die urspruenglichen Daten.
     % input -> hidden1
     \foreach \ai in {1,3,...,7} {
       \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-3);
+      \draw[->] (mat-\ai-1) -- (mat-\aii-2);
     }
 
     % hidden1 -> hidden2
     \foreach \ai in {2,4,...,6} {
       \foreach \aii in {3,5}
-      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
+      \draw[->] (mat-\ai-2) -- (mat-\aii-3);
     }
 
     % hidden2 -> hidden3
     \foreach \ai in {3,5} {
-      \foreach \aii in {2,4,6}
+      \foreach \aii in {4}
+      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
+    }
+
+    % hidden3 -> output
+    \foreach \ai in {4} {
+      \foreach \aii in {3,5}
       \draw[->] (mat-\ai-4) -- (mat-\aii-5);
     }
 
     % hidden3 -> output
-    \foreach \ai in {2,4,...,6} {
+    \foreach \ai in {3,5} {
+      \foreach \aii in {2,4,6}
+      \draw[->] (mat-\ai-5) -- (mat-\aii-6);
+    }
+
+    % hidden3 -> output
+    \foreach \ai in {2,4,6} {
       \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-5) -- (mat-\aii-7);
+      \draw[->] (mat-\ai-6) -- (mat-\aii-7);
     }
 
   \end{tikzpicture}
