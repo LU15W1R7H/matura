@@ -85,6 +85,9 @@ Die Leitfrage lautet: \textbf{Wie entwickelt man mithilfe von Tensorflow und
   $\matelem{A}_{i,j}$ & das Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\mat{A}_{i,:}$ & die Zeile $i$ der Matrix $\mat{A}$ \\
   $\mat{A}_{:,i}$ & die Spalte $i$ der Matrix $\mat{A}$\ \\
+  $\ten{A}_{i,:,:}$ & der $i$-te Querschnitt entlang der Hoehe des Tensors $\ten{A}$ \\
+  $\ten{A}_{:,i,:}$ & der $i$-te Querschnitt entlang der Breite des Tensors $\ten{A}$ \\
+  $\ten{A}_{:,:,i}$ & der $i$-te Querschnitt entlang der Tiefe des Tensors $\ten{A}$ \\
 
 \end{tabular}
 
@@ -127,14 +130,6 @@ Die Leitfrage lautet: \textbf{Wie entwickelt man mithilfe von Tensorflow und
   $\mu$ & der Erwartungswert/Mittelwert \\
   $\sigma^2$ & die Varianz
 \end{tabular}
-
-\begin{center}\textbf{Sonstiges}\end{center}
-\begin{tabular}{cl}
-  $\forall$ & ``fuer jedes ...'' \\
-  $\therefore$ & ``... daraus folgt, dass ...'' \\
-  $\exists$ & ``... existiert'' \\
-\end{tabular}
-
 
 %%% Local Variables:
 %%% mode: latex

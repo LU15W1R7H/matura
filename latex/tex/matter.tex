@@ -2397,38 +2397,74 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 \subsection{Datengenerierung}
 \subsection{Eigenschaften erkennen}
 
-\section{Convolutional Autoencoder}
+\section{Convolutional-Autoencoder}
 
-\section{Denoising Autoencoder}
+\section{Denoising-Autoencoder}
 
 
 % ------------------------------------
 
-\chapter{Entwicklung eines Autoencoders}
+\chapter{Entwicklung eines Denoising-Autoencoders}
+In diesem Kapitel moechten wir uns nun der eigentlichen Entwicklung eines
+Machine-Learning-Modells widmen. Wir werden zuerst einige Frameworks und Tools,
+welche diese Entwicklung ermoeglichen betrachten und ihre grobe Funktionsweise
+verstehen. In einem naechsten Schritt programmieren wir dann ein konkretes Modell.
 
-\section{Planung/Methoden}
-
-\subsection{Idee}
-
-
-\subsection{Methoden/Tools}
-
-\subsubsection{Python}
-\subsubsection{Tensorflow}
-\subsubsection{Keras}
-\subsubsection{Sonstige ``Tools''}
-\begin{itemize}
-\item{Spacemacs (Emacs)}
-\item{Arch Linux}
-\end{itemize}
-
-\subsection{Trainingsdaten}
-MNIST Datensatz.
+\section{TensorFlow}
+\keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes Framework fuer
+datenstromorientriere Programmierung. Es ist im Grunde genommen ein
+Mathematik-Framework, dessen Hauptanwendungsbereich im Maschinellen Lernen liegt.
+TF ist in C++ und Python geschrieben. Das
+Python-Frontend ermoeglicht ein sehr einfaches erstellen von Computation Graphs
+um Modelle fuer Maschinelles Lernen zu designen.
+TF ist gratis und ein Open-Source-Projekt. Es kann auf Github gefunden werden
+unter: https://github.com/tensorflow/tensorflow.
 
 
+\subsection{Hardwarebeschleuniging}
+TF ist hauptsaechlich in C++ geschrieben, da diese Programmiersprache sehr
+nah am Maschinen Code ist (engl.: low-level), im Gegensatz zu vielen anderen Programmiersprachen.
+Somit ist der Code sehr hardwarenah und kann sehr schnell ausgefuehrt werden.
+\para{}
+\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration)
 
-\section{Programmieren}
+\keyword{Parallelisierung}
 
+\subsubsection{CPU-Beschleunigung}
+
+\subsubsection{GPU-Beschleunigung und CUDA}
+
+\subsection{Funktionsweise}
+
+\subsubsection{Tensoren}
+
+\subsubsection{Computation Graphs}
+
+\subsection{Tensorboard}
+
+\section{Keras}
+\keyword{Keras} ist ein Open-Source Deep-Learning Framework geschrieben in
+Python. Keras wurde entwickelt um eine einheitliche Schnittstelle fuer
+verschieden Backends, wie TensorFlow, Microsoft Cognitive Toolkit und Theano zu
+bieten. Seit TF Version 1.4 ist Keras ein fester Bestandteil der TensorFlow-Core-API.
+
+Keras ermoeglicht ein sehr simples und benutzerfreundliches defnieren von
+Deep-Learning-Modeln welche dann sehr einfach trainiert werden koennen.
+
+\section{Setup}
+Installationsschritte fuer Python, CUDA, CUDNN und Tensorflow auf arch-basierter Linuxdistribution mit Pacman.
+
+Emacs und Spacemacs erwaehnen.
+
+\section{das Modell}
+Denoising Autoencoder fuer den MNIST-Datensatz.
+
+\subsection{MNIST}
+
+\section{Entwicklung}
+
+
+\chapter{Diskussion}
 
 
 %%% Local Variables:

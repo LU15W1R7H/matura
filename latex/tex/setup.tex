@@ -40,6 +40,20 @@ citestyle=authortitle
 \usepackage{pgfplots}
 \usepackage{xcolor}
 
+% for code
+\usepackage{listings}
+\lstset{%
+  frame            = tb,    % draw frame at top and bottom of code block
+  tabsize          = 1,     % tab space width
+  numbers          = left,  % display line numbers on the left
+  framesep         = 3pt,   % expand outward
+  framerule        = 0.4pt, % expand outward
+  commentstyle     = \color{Green},      % comment color
+  keywordstyle     = \color{blue},       % keyword color
+  stringstyle      = \color{DarkRed},    % string color
+  backgroundcolor  = \color{WhiteSmoke}, % backgroundcolor color
+  showstringspaces = false,              % do not mark spaces in strings
+}
 
 % for page layout
 \usepackage{geometry}
