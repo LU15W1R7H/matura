@@ -1,13 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D
-from tensorflow.keras.datasets import mnist
-from tensorflow.keras import regularizers
-from tensorflow.keras import backend as K
-from tensorflow.keras.callbacks import TensorBoard
 
-(x_train, _), (x_test, _) = mnist.load_data()
+import tensorflow as tf
+
+(x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
 x_train = x_train.astype('float32') / 255.
 x_test = np.reshape(x_test, (len(x_test),28,28,1))
 x_test = x_test.astype('float32') / 255.
@@ -20,23 +16,26 @@ x_train_noisy = np.clip(x_train_noisy, 0., 1.)
 x_test_noisy = np.clip(x_test_noisy, 0., 1.)
 
 
-input_img = Input(shape=(28,28,1))
+input_data = tf.keras.Input(shape=(28,28,1))
 
-x = Conv2D(32, (3,3),activation='relu',padding='same')(input_img)
-x = MaxPooling2D((2,2),padding='same')(x)
-x = Conv2D(32, (3,3),activation='relu',padding='same')(x)
-encoded = MaxPooling2D((2,2),padding='same')(x)
-#bottleneck (shape=(7,7,32))
-x = Conv2D(32,(3,3),activation='relu',padding='same')(encoded)
-x = UpSampling2D((2,2))(x)
-x= Conv2D(32, (3,3),activation='relu',padding='same')(x)
-x = UpSampling2D((2,2))(x)
-decoded = Conv2D(1,(3,3),activation='sigmoid',padding='same')(x)
+econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
+econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
+emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
+encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
+dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
+dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
+dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
+dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
+dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+decoded = dconv2
 
-autoencoder = Model(input_img, decoded)
+autoencoder = tf.keras.Model(input_data, decoded)
 autoencoder.compile(optimizer='adadelta',loss='binary_crossentropy')
 
-autoencoder.fit(x_train_noisy, x_train, epochs=100, batch_size=128, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[TensorBoard(log_dir='/tmp/tb',histogram_freq=0,write_graph=False)])
+print(autoencoder.summary())
+
+autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/denoiser',histogram_freq=0,write_graph=False)])
 
 decoded_imgs = autoencoder.predict(x_test)
 
@@ -59,4 +58,3 @@ for i in range(n):
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 plt.show()
-
