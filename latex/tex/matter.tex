@@ -258,6 +258,26 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 \end{defbox}
 \para{}
 \begin{figure}[h!]
+  \begin{tikzpicture}
+    \begin{axis}[
+      title={$x \exp(-x^2-y^2)$ and its gradient},
+      domain=-2:2,
+      view={0}{90},
+      axis background/.style={fill=white},
+      ]
+      \addplot3[contour gnuplot={number=9,
+        labels=false},thick]
+      {exp(0-x^2-y^2)*x};
+      \addplot3[blue,
+			quiver={
+        u={exp(0-x^2-y^2)*(1-2*x^2)},
+        v={exp(0-x^2-y^2)*(-2*x*y)},
+        scale arrows=0.3,
+			},
+			-stealth,samples=15]
+      {exp(0-x^2-y^2)*x};
+    \end{axis}
+  \end{tikzpicture}
   \caption{Skalarfeld mit zugehoerigem Gradientenfeld}
 \end{figure}
 
@@ -329,29 +349,12 @@ Dabei hilft nur ausporbieren. Falls $\eta$ nicht gut gewahelt wurde, gibt es Pro
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}
-    \begin{axis}[
-      axis lines = left,
-      xlabel = $\param_1$,
-      ylabel= {$C(\param_1)$},
-      grid=major,
-      ]
-      \addplot [
-      domain=-10:10,
-      samples=100,
-      color=blue
-      ]
-      {x^2 - 5*x};
-
-      \draw (axis cs:-5,20) -- node[left]{Text} (axis cs:5,60);
-      \addplot[color=red,mark=pentagon*,samples at={-7,5,-4,3,-2}] {x^2 - 5*x};
-
-      \pgfmathparse{sin(60)}\pgfmathresult
-
-    \end{axis}
+    \draw[gray] (0,0) grid[step=0.5cm] (5,5);
+    \draw[ultra thick,black,->] (-0.5,0) -- (5.5,0) node[right] {$x_1$};
+    \draw[ultra thick,black,->] (0,-0.5) -- (0,5.5) node [above left] {$f(x_1)$};
   \end{tikzpicture}
   \caption{Visualisierung verschiedener Lernraten}
 \end{figure}
-
 
 \subsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie vorhin erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
@@ -2404,43 +2407,218 @@ Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
 
 % ------------------------------------
 
-\chapter{Entwicklung eines Denoising-Autoencoders}
-In diesem Kapitel moechten wir uns nun der eigentlichen Entwicklung eines
-Machine-Learning-Modells widmen. Wir werden zuerst einige Frameworks und Tools,
-welche diese Entwicklung ermoeglichen betrachten und ihre grobe Funktionsweise
-verstehen. In einem naechsten Schritt programmieren wir dann ein konkretes Modell.
+\chapter{Implementation fuer Maschinelles Lernen}
+In diesem Kapitel werden wir einige Frameworks betrachten, welche eine
+Implementation der ML-Algorithemen realisiert haben. Wir werden sie in ihrer
+groben Funktionsweise untersuchen. Diese Tools werden wir im
+naechsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
 
 \section{TensorFlow}
 \keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes Framework fuer
 datenstromorientriere Programmierung. Es ist im Grunde genommen ein
-Mathematik-Framework, dessen Hauptanwendungsbereich im Maschinellen Lernen liegt.
-TF ist in C++ und Python geschrieben. Das
-Python-Frontend ermoeglicht ein sehr einfaches erstellen von Computation Graphs
-um Modelle fuer Maschinelles Lernen zu designen.
+Mathematik-Framework fuer numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
+liegt. Die Vorteile von TF bestehen vorallem darin, dass die praktische
+Anwendung des Frameworks sehr
+einfach ist und fast keine mathematische Vorkenntnisse voraussetzt. Somit kann
+man sehr einfach ein ML-Modell definieren, trainieren und verwenden. Ausserdem
+besitzt TF sehr performante Implementierungen, welche Algorithmen, wie die
+Vorwaertspropagierung und die Rueckwaertspropagierung, sehr schnell ausfuehren
+laesst. Somit geht das Training von ML-Modellen deutlich schneller als bei
+selbstgeschriebenen Implementationen.
 TF ist gratis und ein Open-Source-Projekt. Es kann auf Github gefunden werden
 unter: https://github.com/tensorflow/tensorflow.
-
-
-\subsection{Hardwarebeschleuniging}
-TF ist hauptsaechlich in C++ geschrieben, da diese Programmiersprache sehr
-nah am Maschinen Code ist (engl.: low-level), im Gegensatz zu vielen anderen Programmiersprachen.
-Somit ist der Code sehr hardwarenah und kann sehr schnell ausgefuehrt werden.
 \para{}
-\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration)
+In der Industrie ist TensorFlow sehr weit verbreitet. Es wird von den
+verschiedensten Unternehmen fuer ihre Anwendungen gebraucht, darunter waren:
+Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele mehr.
+\para{}
+Grundsaetzlich wurde TF fuer Maschinelles Lernen entwickelt. Speziell eigenet es
+sich fuer Deep Learning mit kuenstlichen neuronalen Netzen. Es ist ein
+Interface, welches das definieren von Modellen erlaubt, welche dann mit den
+eingebauten ML-Algorithmen trainiert werden koennen. \\
+Trotz dieser eigentlichen Grundidee von TF, sollten die Abstraktionen eigentlich
+fuer beliebige Anwendugen, welche mit numerischen Berechnungen zu tun haben,
+eignen.
 
-\keyword{Parallelisierung}
+\para{}
+\cite{book:tensorflow}
 
-\subsubsection{CPU-Beschleunigung}
-
-\subsubsection{GPU-Beschleunigung und CUDA}
+\subsection{Notizen}
+Parallel execution of a core model dataflow graph. These computational devices
+share a set of shared parameters.
 
 \subsection{Funktionsweise}
+Nun moechten wir die grobe Funktionsweise von TensorFlow betrachten, damit wir
+auch verstehen, wie ein ML-Modell in TF programmiert werden muss.
+\para{}
+Das Backend von TF - also der Teil des Programmes worin sich die ganze Logik
+fuer das Maschinelle Lernen befindet - ist in C++ geschrieben. C++ wurde
+gewaehlt da es eine sehr performante Programmiersprache ist. Darauf wird in
+Sektion () noch mehr eingegangen. \\
+TF besitzt mehrere Fontends, also Schnittstellen, um deutlich einfacher das
+Backend zu verwenden, ohne die innere Logik zu verstehen. Das umfangreichste
+Frontend wurde in Python geschrieben. Auf dieses Frontend werden wir uns auch
+fokusieren. Python ist allgemein als eine sehr einsteigerfreundliche
+Programmiersprache bekannt.
 
-\subsubsection{Tensoren}
 
-\subsubsection{Computation Graphs}
+\subsubsection{Konzepte}
+\paragraph{tf.Graph}
+TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
+durch einen gerichteten Graphen beschreibt und ihn erst nach der Definition
+ausfuehrt. Bei diesem Graphen handelt es sich um einen \keyword{Computation
+  Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
+haben. In TensorFlow bezeichnet man diesen Graphen als einen
+\keycode{tf.Graph}. \\
+Der tf.Graph besteht aus einer Menge an Knoten, welche miteinander ueber Pfade
+verbunden sind. Er stellt so eine Datenstrom Berechnung dar. Jeder Knoten hat
+null oder mehr Inputs und null oder mehr Outputs. Die Werte der Knoten wandern
+entlang der Pfade zu den naechsten Knoten.
+Der tf.Graph wird im Frontend definiert. In Abbildung () ist der Python-Code
+abbgebildet fuer einen beispielhaften tf.Graph zusammen mit einer Visualisierung
+rechts davon.
+
+\begin{figure}[h!]
+
+  \caption{tf.Graph: rechts der Pythoncode und links eine Visualisierung}
+\end{figure}
+
+\paragraph{tf.Tensor}
+Jeder Knoten in TF ist ein Tensor, wie wir sie in Sektion () kennengelernt
+haben, fuer die Convolutional Neural Networks. Tensoren eignen sich deshalb
+sehr, da die Daten so beliebige Dimensionalitaten und Formen annehmen koennen.
+Es koennen sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren
+dritter Ordnung) verrechnet werden oder auch noch hoeherdimensionale Daten. \\
+In TensorFlow bezeichnet man einen Tensor als einene \keycode{tf.Tensor}. Er
+ist definiert durch seine Stufe, seine Form und seinen Datentyp (z.B. float32).
+
+\paragraph{tf.Operation}
+Die Knoten des tf.Graph, also die Tensoren werden ueber die Pfade aufeinander
+abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
+als \keycode{tf.Operation}. Sie besitzt einene Namen und reprasentiert eine
+abstrakte Berechnung. Zum Beispiel eine Matrix-Multiplikation (``MatMul''),
+eine Addition (``Add'') oder eine Aktivierungsfunktion, wie die ReLU. Ausserdem
+besitzten die meisten Operationen noch gewisse Attribute, welche sie weiter
+beschreiben, z.B. die Anzahl Filter bei einer Faltungsoperation.
+
+\paragraph{tf.Session}
+Der Client (das Frontend) kommuniziert mit dem TensorFlow-System (das Backend)
+ueber eine sogennante \keycode{tf.Session}. Sie ermoeglicht es einene tf.Graph
+zu erstellen und ihn auszufuehren, mithifle der Methode tf.Session.Run(). Sie
+erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
+reingeschrieben werden sollen.
+
+\paragraph{tf.Variable}
+In den meisten Anwwendungen, wird der tf.Graph mehrere Male ausgefuehrt. Jedoch
+existieren die Werte eines Tensors jeweils immer nur fuer eine einzige
+Ausfuehrung. Deshalb existiert eine spezielle Art von Knoten, die tf.Variable,
+welche mehrere Ausfuehrungen ueberlebt. Es ist also ein Tensor, dessen Eintraege
+in mehreren Ausfuehrungen des Graphens erhalten bleiben und jeweils manipuliert
+werden koenne. Typischerweise verwendet man sie um die Modellparameter zu
+definieren. Bei jeder Ausfuehrung des Graphens wird trainiert und
+Parametertensoren werden angepasst.
+
+\paragraph{Automatische Gradientenberechnung}
+Als wir die Rueckwaertsprogagierung hergeleitet haben, haben wir mithilfe von
+Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
+bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
+TF auch datenstromorient.
+
+
+
+------- Implementation
+The main components in a TF system are the \keyword{client} which uses the Session
+interface to communicate with the \keyword{master} and one or more worker processes.
+Each worker process is responsible for arbitraring access to one or more
+computational \keyword{devices} and executing the graph on such a device, if
+instructed by the master.
+TF can also be run on multiple machines at the same time using distrubuted
+implementations and doing cluster computations.
+
+Devices are the computational heart of TF. Each device has a type and a name. A
+device can be anything like a CPU, GPU or TPU (Tensor processing unit). The
+worker is responsible for allocating memoery on the devices and exucuting operatoins.
+
+A tensor is TF is a typed multidimensional array. The type has to be specified
+(e.g.: ints (8 bit to 64 bit), float32, complex numbers and a string)
+
+a lot more to it but irrelevant for us.
+
+------ Extensions
+Many optimization algorithms including common ml training algorithms like SGD
+compute the gradient of a cost function with respect to a set of inputs.
+Therefor TF has a built-in support for automatic gradient computation.
+It extends the TF Graph using following procedure:
+If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
+$I$ it first finds the path in the computation graph from $I$ to $C$. It then
+backtracks from $C$ to $I$ and for each operation on the backward path it adds a
+node to the graph composing the partial gradients using the chain rule. The
+newely added node computes the gradient function for the corresponding operation
+in the forward path.
+Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
+
+
+\subsection{Implementation}
+TF ist gerade deshalb sehr attraktiv fuer ML, da es sehr performant (schnell
+ausfuehrbar) ist und dadurch die Trainingszeit fuer die Modelle relativ
+kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
+\para{}
+Ein wichtiger Faktor ist, dass TF auf der Backend-Seite hauptsaechlich in C++
+geschrieben ist. C++ ist eine Programmiersprache die sehr nahe am Maschinen-Code
+(engl.: low-level) ist. Somit ist der Code sehr hardwarenah und kann so
+schneller ausgefuehrt werden. Ein Nachteil von C++ ist jedoch, dass die Sprache
+ziemlich verbos ist. Das bedeutet man braucht viel Code um einen relativ
+einfache Operation auszudruecken. Um hierbei Abhilfe zu schaffen wurde ein
+Python-Fontend zu TF entwickelt, welches ein relativ einfaches und unverboses
+Entwickeln ermoeglicht.
+\para{}
+Ein noch wichtigeren Aspekt bei der Performance spielt die sogennante
+\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
+gebrauch macht. Hardwarebeschleunigung bezeichnet einen Menge an Methoden,
+mithilfe dessen die Leistung verschiedener Prozessiereinheiten eines Computers
+effizienter genutzt werden koennen. Eine wichtige Art der Hardwarebeschleunigung
+besteht in der \keyword{Parallelisierung} von Operationen.
+
+\subsubsection{Hardwarebeschleunigung}
+Tensors eignene sich fuer Hardwarebeschleunigung da, ihre Operationen sich
+leicht Paralellisieren lassen.
+
+\paragraph{CPU-Beschleunigung}
+
+
+\paragraph{GPU-Beschleunigung durch cuDNN und CUDA}
+cuDNN ist die NVIDIA CUDA Deep Neural Network library. Sie ist eine
+GPU-beschleunigte Bibliothek fuer deep neural networks. Sie stellt
+implementation fuer standard routines wie Vorwaerts- und Rueckwaertspropagierung bereit.
+
+\subparagraph{CUDA}
+\subparagraph{cuDNN}
 
 \subsection{Tensorboard}
+\subsubsection{Notizen}
+TensorBoard is a companion visualitzayion yool for TensorFlow for understanding
+the structure of the computation graphs as well as the overall behaviour of the
+ML-Modell.
+
+\subsubsection{Visualizing computational graphs}
+Due to the size and topology of these graphs with maybe over 10'000 nodes the
+nodes are groupped and collapsed into high-level blocks. The visualtionsation is
+interactive and can pan, zoom and expand.
+
+\subsubsection{Visualization of Summary Data/Training}
+When training Ml-models users often want to examine the state of various aspect
+of the model and how they change over time. In this way the can observe the
+learning behaviour of the model, whetever or not it converges and how fast it
+does this. With this informations the best hyper parameters can be chosen. The
+operations used to compute these summarisations are then inserted into the
+TF.graph. Interesting values to examine are value of the loss function or the
+time taken to execute the graph, histogrambased summaries. The data for
+TensorBoard is written by TensorFlow in a log file, which then can be read by
+the TensorBoard program. The tensorboard starts a http server and shows the data
+in a web browser.
+
+
+\subsubsection{Visualization of Training}
 
 \section{Keras}
 \keyword{Keras} ist ein Open-Source Deep-Learning Framework geschrieben in
@@ -2450,6 +2628,8 @@ bieten. Seit TF Version 1.4 ist Keras ein fester Bestandteil der TensorFlow-Core
 
 Keras ermoeglicht ein sehr simples und benutzerfreundliches defnieren von
 Deep-Learning-Modeln welche dann sehr einfach trainiert werden koennen.
+
+\chapter{Entwicklung eines Denoising-Autoencoders}
 
 \section{Setup}
 Installationsschritte fuer Python, CUDA, CUDNN und Tensorflow auf arch-basierter Linuxdistribution mit Pacman.
@@ -2464,7 +2644,10 @@ Denoising Autoencoder fuer den MNIST-Datensatz.
 \section{Entwicklung}
 
 
+
+
 \chapter{Diskussion}
+\section{Auswertung mit TensorBoard}
 
 
 %%% Local Variables:
