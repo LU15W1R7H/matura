@@ -1,5 +1,6 @@
 \documentclass[12pt, a4paper]{report} % article, report or book
 
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
 
@@ -35,9 +36,11 @@ citestyle=authortitle
 
 % for drawing
 \usepackage{tikz}
-\usetikzlibrary{3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns}
+\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns}
+% \tikzexternalize[prefix=tikz/]
 \usepackage{tikzpagenodes}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
 \usepackage{xcolor}
 
 % for code

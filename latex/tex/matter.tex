@@ -48,8 +48,6 @@ mit ueberwachtem Lernen beschaeftigen.
 
 \section{Allgemeine Begriffe}
 
-\subsection{Korrelation?}
-
 \subsection{Daten}
 
 Um ein Modell zu trainieren braucht man Daten. Diese Daten bestehen immer aus
@@ -157,7 +155,7 @@ Vorhersagen (siehe Gl. (\ref{eq:meanerrorfunc})).
 Eine Verlustfunktion $L$ bzw. eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
 \item{$L$ ist minimal, wenn $y = \hat{y}$}
-\item{$L$ waechst mit $|y - \hat{y}}|$}
+\item{$L$ waechst mit $|y - \hat{y}|$}
 \item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklaert in Sektion (\ref{ref:partielle_ableitungen}))}
 \end{itemize}
 \para{}
@@ -199,8 +197,7 @@ Deshalb muss diese Kostenfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhaengigkeit der Inputs betrachtet
 werden, sondern als Funktion der Modellparametern
 $C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden,
-um das Modell zu verbessern. $\ds (\param_1,\ldots,\param_k) = \operatorname*{\arg
-  \min}(C)$.
+um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 \footnote{
   Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
@@ -251,36 +248,38 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
     \end{pmatrix}
   \end{equation*}
 
-  Geometisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten Anstiegs von $f$ zeigt.
-  Sein Betrag gibt die Staerke des Anstiegs an.
-
-  MATRIX-GRADIENT EINBRINGEN
+  Geometisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in
+  einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten
+  Anstiegs von $f$ zeigt. Sein Betrag gibt die Staerke des Anstiegs an.
 \end{defbox}
 \para{}
 \begin{figure}[h!]
+  \centering
   \begin{tikzpicture}
     \begin{axis}[
-      title={$x \exp(-x^2-y^2)$ and its gradient},
       domain=-2:2,
       view={0}{90},
       axis background/.style={fill=white},
+      legend style={cells={align=left},at={(1.2,1)},anchor=east}
       ]
       \addplot3[contour gnuplot={number=9,
         labels=false},thick]
       {exp(0-x^2-y^2)*x};
+      \addlegendentry{Isolinien\\ von $f(x_1,x_2)$}
       \addplot3[blue,
-			quiver={
+      quiver={
         u={exp(0-x^2-y^2)*(1-2*x^2)},
         v={exp(0-x^2-y^2)*(-2*x*y)},
         scale arrows=0.3,
-			},
-			-stealth,samples=15]
+      },
+      -stealth,samples=15]
       {exp(0-x^2-y^2)*x};
+      \addlegendentry{$\vecf{\nabla}f$}
     \end{axis}
   \end{tikzpicture}
-  \caption{Skalarfeld mit zugehoerigem Gradientenfeld}
+  \caption{ein Skalarfeld als Konturdiagramm mit zugehoerigem Gradientenfeld}
 \end{figure}
-
+\para{}
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
 $\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradient der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
 Also kann jetzt das iterative Annahern an das lokalen Minimums folgendermassen beschrieben
@@ -1601,9 +1600,9 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
     {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
     \arrayfilling{B}{red}
 
-    \matrix (A) [mymatrix=blue] at (0,0)
+    \matrix (A) [mymatrix=purple] at (0,0)
     {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
-    \arrayfilling{A}{blue}
+    \arrayfilling{A}{purple}
 
     \foreach \i in {auxnw, auxne, auxse, auxsw}
     \draw[brown, ultra thin] (A\i)--(C\i);
@@ -1612,17 +1611,17 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
     \node[right=3mm of B.east] {$\in \set{R}^{3 \times 2 \times 3}$};
   \end{tikzpicture}
 
-  \begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
-    \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
-    \foreach \z in {0, 5, 10} \foreach \x in {0,...,3}
-    \foreach \y [evaluate={\b=random(0, 1);}] in {0,...,3}
-    \filldraw [fill=white] (\x, \y, \z) -- (\x+1, \y, \z) -- (\x+1, \y+1, \z) --
-    (\x, \y+1, \z) -- cycle (\x+.5, \y+.5, \z) node [yslant=tan(15)] {\b};
-    \draw [dashed] (0, 4, 0) -- (0, 4, 10) (4, 4, 0) -- (4, 4, 10);
-    \draw [->] (0, 4.5, 0)  -- (4, 4.5, 0)   node [near end, above left] {Column};
-    \draw [->] (-.5, 4, 0)  -- (-.5, 0, 0)   node [midway, left] {Row};
-    \draw [->] (4, 4.5, 10) -- (4, 4.5, 2.5) node [near end, above right] {Channel};
-  \end{tikzpicture}
+  % \begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
+  %   \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
+  %   \foreach \z in {0, 5, 10} \foreach \x in {0,...,3}
+  %   \foreach \y [evaluate={\b=random(0, 1);}] in {0,...,3}
+  %   \filldraw [fill=white] (\x, \y, \z) -- (\x+1, \y, \z) -- (\x+1, \y+1, \z) --
+  %   (\x, \y+1, \z) -- cycle (\x+.5, \y+.5, \z) node [yslant=tan(15)] {\b};
+  %   \draw [dashed] (0, 4, 0) -- (0, 4, 10) (4, 4, 0) -- (4, 4, 10);
+  %   \draw [->] (0, 4.5, 0)  -- (4, 4.5, 0)   node [near end, above left] {Column};
+  %   \draw [->] (-.5, 4, 0)  -- (-.5, 0, 0)   node [midway, left] {Row};
+  %   \draw [->] (4, 4.5, 10) -- (4, 4.5, 2.5) node [near end, above right] {Channel};
+  % \end{tikzpicture}
 
 \end{defbox}
 \para{}
@@ -2222,9 +2221,9 @@ zusammengefasst werden. Kleiner als $f$ kann $s$ nicht gewaehlt werden.
 \para{}
 Man unterscheidet zwischen zwei Arten von Pooling:
 \begin{itemize}
-  \item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
+\item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
     man das arithmetische Mittel der Element bildet.}
-  \item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
+\item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
     Element mit dem hoehsten Wert beibehalten wird und die anderen verworfen werden.}
 \end{itemize}
 In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
@@ -2275,7 +2274,7 @@ Elements an. Der Wert wird also einfach vermehrt.
 Ein \keyword{Autoencoder} ist eine weitere KNN-Architektur eines KNNs. Diese
 Architekur beschreibt jedoch nicht die Schichtenarten, sondern beschreibt das
 Netzwerk auf der Ebene der Netzform. Autoencoder werden verwendet um \keyword{effiziente
-Daten-Codierungen} zu erlernen. Dies bedeutet das Modell versucht die
+  Daten-Codierungen} zu erlernen. Dies bedeutet das Modell versucht die
 wichtigsten Features, welche die meisten Informationen codieren zu extrahieren
 und diese in einer neuer Form zu repraesentieren. Er kann dann aus dieser neuen
 Form dann wieder eine der Ursprungsform sehr aehnliche Repraesentation reproduzieren.
@@ -2382,14 +2381,6 @@ anhand der Codierung wieder die urspruenglichen Daten.
 Falls lineare Neuronen verwendet werden, ist der Prozess der
 Dimensionalitaetsreduktion sehr aehnlich zur Hauptkomponentenanalyse.
 
-Mathematik:
-
-
-\begin{gather}
-  \phi: \mathcal{X} \to \mathcal{F}\\
-  \psi: \mathcal{F} \to \mathcal{X}\\
-  \ds\phi,\psi = \operatorname*{\arg \min}_{\phi,\psi} \norm{X - (\phi \circ \psi)X}^2
-\end{gather}
 
 \section{Bedeutung von Autoencodern}
 \subsection{Datenkompression}
@@ -2526,36 +2517,36 @@ TF auch datenstromorient.
 
 
 
-------- Implementation
-The main components in a TF system are the \keyword{client} which uses the Session
-interface to communicate with the \keyword{master} and one or more worker processes.
-Each worker process is responsible for arbitraring access to one or more
-computational \keyword{devices} and executing the graph on such a device, if
-instructed by the master.
-TF can also be run on multiple machines at the same time using distrubuted
-implementations and doing cluster computations.
+% ------- Implementation
+% The main components in a TF system are the \keyword{client} which uses the Session
+% interface to communicate with the \keyword{master} and one or more worker processes.
+% Each worker process is responsible for arbitraring access to one or more
+% computational \keyword{devices} and executing the graph on such a device, if
+% instructed by the master.
+% TF can also be run on multiple machines at the same time using distrubuted
+% implementations and doing cluster computations.
 
-Devices are the computational heart of TF. Each device has a type and a name. A
-device can be anything like a CPU, GPU or TPU (Tensor processing unit). The
-worker is responsible for allocating memoery on the devices and exucuting operatoins.
+% Devices are the computational heart of TF. Each device has a type and a name. A
+% device can be anything like a CPU, GPU or TPU (Tensor processing unit). The
+% worker is responsible for allocating memoery on the devices and exucuting operatoins.
 
-A tensor is TF is a typed multidimensional array. The type has to be specified
-(e.g.: ints (8 bit to 64 bit), float32, complex numbers and a string)
+% A tensor is TF is a typed multidimensional array. The type has to be specified
+% (e.g.: ints (8 bit to 64 bit), float32, complex numbers and a string)
 
-a lot more to it but irrelevant for us.
+% a lot more to it but irrelevant for us.
 
------- Extensions
-Many optimization algorithms including common ml training algorithms like SGD
-compute the gradient of a cost function with respect to a set of inputs.
-Therefor TF has a built-in support for automatic gradient computation.
-It extends the TF Graph using following procedure:
-If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
-$I$ it first finds the path in the computation graph from $I$ to $C$. It then
-backtracks from $C$ to $I$ and for each operation on the backward path it adds a
-node to the graph composing the partial gradients using the chain rule. The
-newely added node computes the gradient function for the corresponding operation
-in the forward path.
-Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
+% ------ Extensions
+% Many optimization algorithms including common ml training algorithms like SGD
+% compute the gradient of a cost function with respect to a set of inputs.
+% Therefor TF has a built-in support for automatic gradient computation.
+% It extends the TF Graph using following procedure:
+% If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
+% $I$ it first finds the path in the computation graph from $I$ to $C$. It then
+% backtracks from $C$ to $I$ and for each operation on the backward path it adds a
+% node to the graph composing the partial gradients using the chain rule. The
+% newely added node computes the gradient function for the corresponding operation
+% in the forward path.
+% Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
 
 \subsection{Implementation}
