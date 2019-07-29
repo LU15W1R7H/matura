@@ -394,7 +394,8 @@ Eine Iteration des Stochastischen Graidentenverfahren wird analog zu Gleichung (
 
 \section{Trainingsphaenomene}
 
-\subsection{Overfitting}
+\subsection{Konvergenz und Divergenz}
+\subsection{Underfitting und Overfitting}
 
 % ------------------------------------------------------------
 
@@ -1087,8 +1088,8 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
       samples=50]
       \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
       \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
-      \coordinate (wp1) at (-1,{gausseval(0,1,-1)});
-      \coordinate (wp2) at (1,{gausseval(0,1,1)});
+      \node[fill=red,circle,minimum size=0.15cm,inner sep=0,outter sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};
+      \node[fill=red,circle,minimum size=0.15cm,inner sep=0,outter sep=0] (wp2) at (1,{gausseval(0,1,1)}) {};
       \coordinate (zero) at (0,0);
       \newcommand{\equal}{=}
       % \path [fill=black] (wp1) circle (2pt);
@@ -2405,9 +2406,9 @@ groben Funktionsweise untersuchen. Diese Tools werden wir im
 naechsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
 
 \section{TensorFlow}
-\keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes Framework fuer
-datenstromorientriere Programmierung. Es ist im Grunde genommen ein
-Mathematik-Framework fuer numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
+\keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes \keyword{Framework} fuer
+\keyword{datenstromorientriere Programmierung}. Es ist im Grunde genommen eine
+Mathematik-Programmbibliothek fuer numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
 liegt. Die Vorteile von TF bestehen vorallem darin, dass die praktische
 Anwendung des Frameworks sehr
 einfach ist und fast keine mathematische Vorkenntnisse voraussetzt. Somit kann
@@ -2429,45 +2430,72 @@ Interface, welches das definieren von Modellen erlaubt, welche dann mit den
 eingebauten ML-Algorithmen trainiert werden koennen. \\
 Trotz dieser eigentlichen Grundidee von TF, sollten die Abstraktionen eigentlich
 fuer beliebige Anwendugen, welche mit numerischen Berechnungen zu tun haben,
-eignen.
+sich eignen.
+\para{}
+Im folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Zuerst
+wie man TF zu verwenden hat, anhand gewisser Konzepte und danach noch die
+zugrundeliegene Implementation.
 
 \para{}
 \cite{book:tensorflow}
 
-\subsection{Notizen}
-Parallel execution of a core model dataflow graph. These computational devices
-share a set of shared parameters.
-
-\subsection{Funktionsweise}
-Nun moechten wir die grobe Funktionsweise von TensorFlow betrachten, damit wir
-auch verstehen, wie ein ML-Modell in TF programmiert werden muss.
+\subsection{Client und Master}
+Wie die meisten grossen Programmbibliotheken ist Tensorflow in Backend und
+Fontend aufgeteilt. Das Frontend von Tensorflow bezeichnet man als
+\keyword{Client} und das Backend als \keyword{Master}.
 \para{}
-Das Backend von TF - also der Teil des Programmes worin sich die ganze Logik
-fuer das Maschinelle Lernen befindet - ist in C++ geschrieben. C++ wurde
-gewaehlt da es eine sehr performante Programmiersprache ist. Darauf wird in
-Sektion () noch mehr eingegangen. \\
-TF besitzt mehrere Fontends, also Schnittstellen, um deutlich einfacher das
-Backend zu verwenden, ohne die innere Logik zu verstehen. Das umfangreichste
-Frontend wurde in Python geschrieben. Auf dieses Frontend werden wir uns auch
-fokusieren. Python ist allgemein als eine sehr einsteigerfreundliche
-Programmiersprache bekannt.
+\begin{infobox}{Fontend und Backend}
+  Das \keyword{Frontend} ist der Teil eines Programmes, mit welchem der Benutzer
+  interagiert. Es stellt eine Schnittstelle zu dem sogennanten Backend eines
+  Programmes dar. Es exponiert so gewisse Funktionalitaeten des Programmes dem
+  Benuzter gegenueber, ohne dass er dabei etwas von der zugrundeliegenden Logik mitbekommt.
+  \para{}
+  Das \keyword{Backend} ist das Gegenstueck zum Frontend. Es implementiert
+  jedigliche Programmlogik, welche das gewuenschte Verhalten der Applikation
+  hervorruft. Der Benutzer hat keinen direkten Zugriff auf diesen Teil des
+  Programmes und bekommt somit nichts von dessen Existenz mit.
+\end{infobox}
+\para{}
+Der Client - also das Frontend - von TF ist in Python geschrieben.
+\footnote{
+  Tensorflow besitzte mehrere Frontends, welche in den verschiedensten
+  Programmiersprachen geschrieben sind. Wir werden jedoch nur das
+  Python-Frontend betrachten, da es am besten von TF unterstuetzt ist.
+}
+Python ist allgemein als eine sehr einsteigerfreundliche Programmiersprache bekannt. Sie
+ermoeglicht es dem Benutzer mit wenigen Zeilen Code und ziemlich intuitiv
+TensorFlow zu verwenden.
+\para{}
+Der Master - also das Backend - von TF ist dagegen in C++ (und CUDA)
+geschrieben. Dies hat den Grund, dass C++ im Gegensatz zu Python sehr performant
+ist. Also ist die Zeit zum Aufuehren eines Programmes sehr kurz. Dafuer ist der
+Programmcode deutlich anspruchsvoller und verboser. Da der Benutzer jedoch keine
+direkte Interaktion mit dem Master hat, bekommt er davon nichts mit.
 
+\subsection{Verwendung - der Client}
+Nun moechten wir betrachten wie man TensorFlow zu verwenden hat, damit wir
+spaeter ein ML-Modell damit basteln koennen. Dafuer muessen
+wir den Client von TF betrachten. Man verwendet verschiedene Konzepte um
+programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese
+Konzepte behandeln.
 
 \subsubsection{Konzepte}
 \paragraph{tf.Graph}
 TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
-durch einen gerichteten Graphen beschreibt und ihn erst nach der Definition
-ausfuehrt. Bei diesem Graphen handelt es sich um einen \keyword{Computation
-  Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
-haben. In TensorFlow bezeichnet man diesen Graphen als einen
-\keycode{tf.Graph}. \\
+(engl.: computation) durch einen gerichteten Graphen beschreibt. Diesen Graphen
+stellt man zuerst durch eine Definition auf und erst nach der Errichtung wird er
+dann Knoten fuer Knoten ausgefuehrt.
+Bei diesen Graphen handelt es sich um \keyword{Computation Graphs}, wie wir sie schon in Sektion (\ref{sec:backpropagation}) kennengelernt
+haben. In TensorFlow bezeichnet man diesen Graphen als einen \keycode{tf.Graph}.
+\para{}
 Der tf.Graph besteht aus einer Menge an Knoten, welche miteinander ueber Pfade
-verbunden sind. Er stellt so eine Datenstrom Berechnung dar. Jeder Knoten hat
+verbunden sind. Er stellt so eine Datenstrom-Berechnung dar. Jeder Knoten hat
 null oder mehr Inputs und null oder mehr Outputs. Die Werte der Knoten wandern
-entlang der Pfade zu den naechsten Knoten.
-Der tf.Graph wird im Frontend definiert. In Abbildung () ist der Python-Code
-abbgebildet fuer einen beispielhaften tf.Graph zusammen mit einer Visualisierung
-rechts davon.
+entlang der Pfade zu den jeweils naechsten Knoten.
+\para{}
+In Abbildung () ist der Python-Code zur Kreiirung und Zusammenbau
+fuer einen beispielhaften tf.Graph abbgebildet. Daneben befindet sich eine
+Visualierung des erstellen Graphs.
 
 \begin{figure}[h!]
 
@@ -2475,29 +2503,37 @@ rechts davon.
 \end{figure}
 
 \paragraph{tf.Tensor}
-Jeder Knoten in TF ist ein Tensor, wie wir sie in Sektion () kennengelernt
-haben, fuer die Convolutional Neural Networks. Tensoren eignen sich deshalb
-sehr, da die Daten so beliebige Dimensionalitaten und Formen annehmen koennen.
+Jeder Knoten in TF ist ein Tensor, wie wir sie bereits in Sektion () einmal kennengelernt
+haben. Tensoren werden deshalb als Datentraeger in TF verwendet,
+da die Daten so beliebige Dimensionalitaten und Formen annehmen koennen.
 Es koennen sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren
-dritter Ordnung) verrechnet werden oder auch noch hoeherdimensionale Daten. \\
-In TensorFlow bezeichnet man einen Tensor als einene \keycode{tf.Tensor}. Er
-ist definiert durch seine Stufe, seine Form und seinen Datentyp (z.B. float32).
+dritter Ordnung) verrechnet werden. \\
+In TensorFlow bezeichnet man einen Tensor als einen \keycode{tf.Tensor}. Er
+ist definiert durch seine Stufe, seine Form und den Datentyp seiner Elemente (z.B. float32).
+
+Einen Tensor definiert man folgendermassen (ausserhalb eines tf.Graphs):
 
 \paragraph{tf.Operation}
-Die Knoten des tf.Graph, also die Tensoren werden ueber die Pfade aufeinander
+Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
 abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
-als \keycode{tf.Operation}. Sie besitzt einene Namen und reprasentiert eine
-abstrakte Berechnung. Zum Beispiel eine Matrix-Multiplikation (``MatMul''),
-eine Addition (``Add'') oder eine Aktivierungsfunktion, wie die ReLU. Ausserdem
-besitzten die meisten Operationen noch gewisse Attribute, welche sie weiter
-beschreiben, z.B. die Anzahl Filter bei einer Faltungsoperation.
+als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils Namen und reprasentiert eine
+abstrakte Berechnung. Zum Beispiel eine Matrix-Multiplikation (in TF als
+``MatMul'' bezeichnet),
+eine Addition (``Add'') oder eine Aktivierungsfunktion, wie die ReLU (``ReLU'').
+Zum Teil besitzen Operationen noch gewisse Attribute, welche sie genauer
+beschreien, z.B. die Anzahl Filter bei der Anwendung einer Convolutional-Schicht.
+
+Code zur Definition eines Operation
 
 \paragraph{tf.Session}
-Der Client (das Frontend) kommuniziert mit dem TensorFlow-System (das Backend)
-ueber eine sogennante \keycode{tf.Session}. Sie ermoeglicht es einene tf.Graph
-zu erstellen und ihn auszufuehren, mithifle der Methode tf.Session.Run(). Sie
+Der Client kommuniziert mit dem Master ueber eine sogennante
+\keycode{tf.Session}.
+Sie ist die Schnittstelle zwischen Frontend und Backend und ermoeglicht es einen tf.Graph
+zu erstellen und ihn auszufuehren. Sie
 erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
 reingeschrieben werden sollen.
+
+Code zur Defintion einer Session
 
 \paragraph{tf.Variable}
 In den meisten Anwwendungen, wird der tf.Graph mehrere Male ausgefuehrt. Jedoch
@@ -2509,11 +2545,8 @@ werden koenne. Typischerweise verwendet man sie um die Modellparameter zu
 definieren. Bei jeder Ausfuehrung des Graphens wird trainiert und
 Parametertensoren werden angepasst.
 
-\paragraph{Automatische Gradientenberechnung}
-Als wir die Rueckwaertsprogagierung hergeleitet haben, haben wir mithilfe von
-Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
-bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
-TF auch datenstromorient.
+\subsubsection{Training}
+Forwardpropagation durch Graph und Backpropagation speziell implementiert..
 
 
 
@@ -2549,7 +2582,7 @@ TF auch datenstromorient.
 % Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
 
-\subsection{Implementation}
+\subsection{Implementation - der Master}
 TF ist gerade deshalb sehr attraktiv fuer ML, da es sehr performant (schnell
 ausfuehrbar) ist und dadurch die Trainingszeit fuer die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
@@ -2585,6 +2618,14 @@ implementation fuer standard routines wie Vorwaerts- und Rueckwaertspropagierung
 \subparagraph{CUDA}
 \subparagraph{cuDNN}
 
+
+\subsubsection{Automatische Gradientenberechnung}
+Als wir die Rueckwaertsprogagierung hergeleitet haben, haben wir mithilfe von
+Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
+bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
+TF auch datenstromorient.
+
+
 \subsection{Tensorboard}
 \subsubsection{Notizen}
 TensorBoard is a companion visualitzayion yool for TensorFlow for understanding
@@ -2619,6 +2660,14 @@ bieten. Seit TF Version 1.4 ist Keras ein fester Bestandteil der TensorFlow-Core
 
 Keras ermoeglicht ein sehr simples und benutzerfreundliches defnieren von
 Deep-Learning-Modeln welche dann sehr einfach trainiert werden koennen.
+
+\subsection{Funktionsweise}
+
+\subsection{Keras-Schichten}
+
+\subsubsection{Conv2D}
+\subsubsection{MaxPooling2D}
+\subsubsection{UpSampling2D}
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
 
