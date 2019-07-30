@@ -560,12 +560,12 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
       \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\x$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=pagecolor] {$\x$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=pagecolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
 
       \draw[red,ultra thick] (-1.5,0) -- (0,0); % 0-red
       \draw[red,ultra thick] (0,1) -- (1.5,1); % 1-red
@@ -612,12 +612,12 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
       \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\x$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=pagecolor] {$\x$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=pagecolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
 
       \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
       \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
@@ -668,12 +668,12 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb. (\ref{fig:sigmo
       \draw[style=help lines,ystep=0.5,xstep=0.25] (-1.4,0) grid (1.4, 1.1);
 
       \foreach \x/\xtext in {-1/-4,-0.5/-2,0.5/2,1/4}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=bgcolor] {$\xtext$};
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=pagecolor] {$\xtext$};
 
       \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=bgcolor] {$\y$};
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=pagecolor] {$\y$};
 
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=bgcolor] {$O$};
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
 
       \draw[red,ultra thick,x=0.25cm] plot[domain=-6.0:6.0] (\x,{1/(1+exp(-\x)) });
     \end{tikzpicture}
@@ -720,9 +720,9 @@ und die zweite besitzt 4 Neuronen. \\
     \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!bgcolor]
-    \tikzstyle{hid} = [fill=blue!70!bgcolor]
-    \tikzstyle{ou} = [fill=green!70!bgcolor]
+    \tikzstyle{inp} = [fill=red!70!pagecolor]
+    \tikzstyle{hid} = [fill=blue!70!pagecolor]
+    \tikzstyle{ou} = [fill=green!70!pagecolor]
 
     \matrix[netstyle] (mat)
     {
@@ -830,9 +830,9 @@ Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum Verstaentn
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{sy} = [cl,font=\LARGE]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!bgcolor]
-    \tikzstyle{hid} = [fill=blue!70!bgcolor]
-    \tikzstyle{ou} = [fill=green!70!bgcolor]
+    \tikzstyle{inp} = [fill=red!70!pagecolor]
+    \tikzstyle{hid} = [fill=blue!70!pagecolor]
+    \tikzstyle{ou} = [fill=green!70!pagecolor]
 
     \matrix[netstyle] (mat)
     {
@@ -1576,41 +1576,6 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   \para{}
 
 
-  \newcommand{\arrayfilling}[2]{
-    \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
-    \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
-    \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
-  }
-
-  \begin{tikzpicture}[font=\ttfamily,
-    mymatrix/.style={
-      matrix of math nodes, inner sep=0pt, color=#1,
-      column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
-      nodes={anchor=center, minimum width=5mm,
-        minimum height=3mm, outer sep=0pt, inner sep=0pt,
-        text width=5mm, align=right,
-        draw=none, font=\small},
-    }
-    ]
-
-    \matrix (C) [mymatrix=green] at (6mm,5mm)
-    {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
-    \arrayfilling{C}{green}
-
-    \matrix (B) [mymatrix=red] at (3mm,2.5mm)
-    {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
-    \arrayfilling{B}{red}
-
-    \matrix (A) [mymatrix=purple] at (0,0)
-    {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
-    \arrayfilling{A}{purple}
-
-    \foreach \i in {auxnw, auxne, auxse, auxsw}
-    \draw[brown, ultra thin] (A\i)--(C\i);
-
-    \node[left=1mm of B.west] {$\ten{T} =$};
-    \node[right=3mm of B.east] {$\in \set{R}^{3 \times 2 \times 3}$};
-  \end{tikzpicture}
 
   % \begin{tikzpicture}[x=(15:.5cm), y=(90:.5cm), z=(330:.5cm), >=stealth]
   %   \draw (0, 0, 0) -- (0, 0, 10) (4, 0, 0) -- (4, 0, 10);
@@ -1625,6 +1590,41 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   % \end{tikzpicture}
 
 \end{defbox}
+\newcommand{\arrayfilling}[2]{
+  \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
+  \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
+  \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
+}
+
+\begin{tikzpicture}[font=\ttfamily,
+  mymatrix/.style={
+    matrix of math nodes, inner sep=0pt, color=#1,
+    column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
+    nodes={anchor=center, minimum width=5mm,
+      minimum height=3mm, outer sep=0pt, inner sep=0pt,
+      text width=5mm, align=right,
+      draw=none, font=\small},
+  }
+  ]
+
+  \matrix (C) [mymatrix=green] at (6mm,5mm)
+  {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
+  \arrayfilling{C}{green}
+
+  \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
+  \arrayfilling{B}{red}
+
+  \matrix (A) [mymatrix=purple] at (0,0)
+  {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
+  \arrayfilling{A}{purple}
+
+  \foreach \i in {auxnw, auxne, auxse, auxsw}
+  \draw[brown, ultra thin] (A\i)--(C\i);
+
+  \node[left=1mm of B.west] {$\ten{T} =$};
+  \node[right=3mm of B.east] {$\in \set{R}^{3 \times 2 \times 3}$};
+\end{tikzpicture}
 \para{}
 Ein Bild kann somit einfach als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
   \times w \times c}$, der Form $(\text{Bildhoehe} \times \text{Bildbreite}
@@ -1861,13 +1861,13 @@ verschobenen Filters kommt.
       \foreach \ii [count = \xi] in {-3,-2,...,3}{
         \foreach \jj  [count = \yi] in {-3,-2,...,3}{
           \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj))}
-          \node[draw=blue!20!bgcolor,fill=blue!2!bgcolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
+          \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
         }
       }
       \foreach \ii [count = \xi] in {-3,-2,-1}{
         \foreach \jj [count = \yi] in {-3,-2,-1}{
           \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
-          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num}; % rename nodes
+          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num}; % rename nodes
         }
       }
 
@@ -1881,7 +1881,7 @@ verschobenen Filters kommt.
       \foreach \ii [count = \xi] in {-1,0,1}{
         \foreach \jj  [count = \yi]in {-1,0,1}{
           \pgfmathsetmacro{\num}{int(\ii)}
-          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,text=textcolor,minimum size=1cm] (n-2-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
+          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,text=textcolor,minimum size=1cm] (n-2-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
         }
       }
 
@@ -1891,14 +1891,14 @@ verschobenen Filters kommt.
     \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
       \foreach \ii [count = \xi] in {1,2,3,...,7}{
         \foreach \jj  [count = \yi]in {1,2,3,...,7}{
-          \node[draw=blue!20!bgcolor,fill=blue!2!bgcolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
+          \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
         }
       }
 
       \foreach \ii [count = \xi] in {-3,-2,-1}{
         \foreach \jj [count = \yi] in {-3,-2,-1}{
           \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
-          \node[draw=blue!20!bgcolor,fill=blue!10!bgcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {}; % rename nodes
+          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {}; % rename nodes
         }
       }
 
@@ -1914,8 +1914,8 @@ verschobenen Filters kommt.
 
 
     % blue lines connecting
-    \path[draw=blue!40!bgcolor] (n-1-1-3.south west) -- (n-2-1-3.south west) -- (n-3-1-3.south west);
-    \path[draw=blue!40!bgcolor] (n-1-3-1.north east) -- (n-2-3-1.north east) -- (n-3-3-1.north east);
+    \path[draw=blue!40!pagecolor] (n-1-1-3.south west) -- (n-2-1-3.south west) -- (n-3-1-3.south west);
+    \path[draw=blue!40!pagecolor] (n-1-3-1.north east) -- (n-2-3-1.north east) -- (n-3-3-1.north east);
 
     \node [pin=120:Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$] at (n1-1-1.north west) {};
     \node [pin=180:Quellenpixel $(\mat{B})_S$] at (n1-2-2.east) {};
@@ -2311,9 +2311,9 @@ anhand der Codierung wieder die urspruenglichen Daten.
     \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
     \tikzstyle{cl} = [draw=none,fill=none]
     \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!bgcolor]
-    \tikzstyle{hid} = [fill=blue!70!bgcolor]
-    \tikzstyle{ou} = [fill=green!70!bgcolor]
+    \tikzstyle{inp} = [fill=red!70!pagecolor]
+    \tikzstyle{hid} = [fill=blue!70!pagecolor]
+    \tikzstyle{ou} = [fill=green!70!pagecolor]
 
     \matrix[netstyle] (mat)
     {
@@ -2432,7 +2432,9 @@ Trotz dieser eigentlichen Grundidee von TF, sollten die Abstraktionen eigentlich
 fuer beliebige Anwendugen, welche mit numerischen Berechnungen zu tun haben,
 sich eignen.
 \para{}
-Im folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Zuerst
+Im folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Um
+genau zu sein betrachten wir Tensorflow-Core, denn TF als ganzes ist eine
+riesige API. Zuerst
 wie man TF zu verwenden hat, anhand gewisser Konzepte und danach noch die
 zugrundeliegene Implementation.
 
@@ -2479,8 +2481,15 @@ wir den Client von TF betrachten. Man verwendet verschiedene Konzepte um
 programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese
 Konzepte behandeln.
 
+\subsubsection{Grundideen}
+MOEGLICHER AUFBAU
+Tensoren, Graph (mit Operation), Session
+
+
+The zentrale Dateneinheit in TF sind tensoren. Rank = Grad und Shape = Form.
+
 \subsubsection{Konzepte}
-\paragraph{tf.Graph}
+\paragraph{Graph}
 TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
 (engl.: computation) durch einen gerichteten Graphen beschreibt. Diesen Graphen
 stellt man zuerst durch eine Definition auf und erst nach der Errichtung wird er
@@ -2494,26 +2503,71 @@ null oder mehr Inputs und null oder mehr Outputs. Die Werte der Knoten wandern
 entlang der Pfade zu den jeweils naechsten Knoten.
 \para{}
 In Abbildung () ist der Python-Code zur Kreiirung und Zusammenbau
+
+[von tensorflow.org/apidocs: A Graph contains a set of tf.Operation objects, which represent units of computation; and tf.Tensor objects, which represent the units of data that flow between operations.
+
+A default Graph is always registered, and accessible by calling tf.compat.v1.getdefaultgraph. To add an operation to the default graph, simply call one of the functions that defines a new Operation]
+
+there exists a Default graph, to which is an implicit argument to all API
+functions. So tf.tensors and tf.operatioins are automatically added to this graph.
+
 fuer einen beispielhaften tf.Graph abbgebildet. Daneben befindet sich eine
 Visualierung des erstellen Graphs.
+
+
+
 
 \begin{figure}[h!]
 
   \caption{tf.Graph: rechts der Pythoncode und links eine Visualisierung}
 \end{figure}
 
-\paragraph{tf.Tensor}
+\paragraph{Tensoren}
 Jeder Knoten in TF ist ein Tensor, wie wir sie bereits in Sektion () einmal kennengelernt
 haben. Tensoren werden deshalb als Datentraeger in TF verwendet,
 da die Daten so beliebige Dimensionalitaten und Formen annehmen koennen.
 Es koennen sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren
 dritter Ordnung) verrechnet werden. \\
 In TensorFlow bezeichnet man einen Tensor als einen \keycode{tf.Tensor}. Er
-ist definiert durch seine Stufe, seine Form und den Datentyp seiner Elemente (z.B. float32).
+ist definiert durch seine Form (mit Stufe) und den Datentyp seiner Elemente (z.B. float32).
 
-Einen Tensor definiert man folgendermassen (ausserhalb eines tf.Graphs):
+Spezielle tf.Tensoren:
+\begin{itemize}
+\item{tf.Variable}
+\item{tf.constant}
+\item{tf.placeholder}
+\item{tf.SparseTensor}
+\end{itemize}
 
-\paragraph{tf.Operation}
+Alle TEsnoren ausser tf.variable sind immutable, also besitzen einen einzigen
+Wert pro Ausfuehrung des Graphs.
+
+
+[A Tensor is a symbolic handle to one of the outputs of an Operation. It does not hold the values of that operation's output, but instead provides a means of computing those values in a TensorFlow tf.compat.v1.Session.
+
+This class has two primary purposes:
+
+A Tensor can be passed as an input to another Operation. This builds a dataflow connection between operations, which enables TensorFlow to execute an entire Graph that represents a large, multi-step computation.
+
+After the graph has been launched in a session, the value of the Tensor can be computed by passing it to tf.Session.run. t.eval() is a shortcut for calling tf.compat.v1.getdefaultsession().run(t).
+]
+
+Einen Tensor definiert man folgendermassen (in einem tf.Graphs):
+
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  # BUild a dataflow graph
+  c = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+  d = tf.constant([[1.0, 1.0], [0.0, 1.0]])
+  e = tf.matmul(c, d)
+  print(e.shape)
+
+  sess = tf.Session()
+  result = sessrun(e)
+
+\end{minted}
+
+\paragraph{Operationen}
 Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
 abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
 als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils Namen und reprasentiert eine
@@ -2523,9 +2577,18 @@ eine Addition (``Add'') oder eine Aktivierungsfunktion, wie die ReLU (``ReLU'').
 Zum Teil besitzen Operationen noch gewisse Attribute, welche sie genauer
 beschreien, z.B. die Anzahl Filter bei der Anwendung einer Convolutional-Schicht.
 
+[An Operation is a node in a TensorFlow Graph that takes zero or more Tensor objects as input, and produces zero or more Tensor objects as output. Objects of type Operation are created by calling a Python op constructor (such as tf.matmul) or tf.Graph.createop.
+
+For example c = tf.matmul(a, b) creates an Operation of type "MatMul" that takes tensors a and b as input, and produces c as output.
+
+After the graph has been launched in a session, an Operation can be executed by passing it to tf.Session.run. op.run() is a shortcut for calling tf.compat.v1.getdefaultsession().run(op).]
+
+Die einfachste Operation ist eine tf.constant(), welche einfach einen konstanten
+Wert zurueckgibt. a = tf.constant(3.0, dtype=tf.float32)
+
 Code zur Definition eines Operation
 
-\paragraph{tf.Session}
+\paragraph{Session}
 Der Client kommuniziert mit dem Master ueber eine sogennante
 \keycode{tf.Session}.
 Sie ist die Schnittstelle zwischen Frontend und Backend und ermoeglicht es einen tf.Graph
@@ -2533,9 +2596,11 @@ zu erstellen und ihn auszufuehren. Sie
 erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
 reingeschrieben werden sollen.
 
+[A Session object encapsulates the environment in which Operation objects are executed, and Tensor objects are evaluated. For example:]
+
 Code zur Defintion einer Session
 
-\paragraph{tf.Variable}
+\paragraph{Variablen}
 In den meisten Anwwendungen, wird der tf.Graph mehrere Male ausgefuehrt. Jedoch
 existieren die Werte eines Tensors jeweils immer nur fuer eine einzige
 Ausfuehrung. Deshalb existiert eine spezielle Art von Knoten, die tf.Variable,
@@ -2545,8 +2610,139 @@ werden koenne. Typischerweise verwendet man sie um die Modellparameter zu
 definieren. Bei jeder Ausfuehrung des Graphens wird trainiert und
 Parametertensoren werden angepasst.
 
+[A variable maintains state in the graph across calls to run(). You add a variable to the graph by constructing an instance of the class Variable.
+
+The Variable() constructor requires an initial value for the variable, which can be a Tensor of any type and shape. The initial value defines the type and shape of the variable. After construction, the type and shape of the variable are fixed. The value can be changed using one of the assign methods.
+
+If you want to change the shape of a variable later you have to use an assign Op with validateshape=False.
+
+Just like any Tensor, variables created with Variable() can be used as inputs for other Ops in the graph. Additionally, all the operators overloaded for the Tensor class are carried over to variables, so you can also add nodes to the graph by just doing arithmetic on variables.]
+
+Code:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import tensorflow as tf
+
+  # alternative: better?
+  my_variable = tf.get_variable("my_variable", [1, 2, 3])
+  other_variable = tf.get_variable("other_variable", dtype=tf.int32,
+  initializer=tf.constant([23, 42]))
+
+
+
+  # Create a variable.
+  w = tf.Variable(<initial-value>, name=<optional-name>)
+
+  # Use the variable in the graph like any Tensor.
+  y = tf.matmul(w, ...another variable or tensor...)
+
+  # The overloaded operators are available too.
+  z = tf.sigmoid(w + y)
+
+  # Assign a new value to the variable with `assign()` or a related method.
+  w.assign(w + 1.0)
+  w.assign_add(1.0)
+
+  session.run(tf.global_variables_initalizer())
+
+\end{minted}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import tensorflow as tf
+
+  b = tf.Variable(tf.zeros([100]))
+  W = tf.Variable(tf.random_uniform([784,100],-1,1))
+  x = tf.placeholder(name='x')
+  relu = tf.nn.relu(tf.matmul(W, x) + b)
+  C = [...]
+
+  s = tf.Session()
+  for step in xrange(0,10)
+  input = loadData()
+  result = s.run(C, feed_dict={x: input})
+
+\end{minted}
+
+
+\paragraph{Feeding}
+\keycode{tf.Placeholder} sind Parameter fuer Computation Graph
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  x= tf.placeholder(tf.float32)
+  y= tf.placeholder(tf.float32)
+  z = x+y
+  sess.run(z, feed_dict={x: 3, y: 4.5})
+
+
+  sess.run()
+\end{minted}
+
+\subsubsection{Code Beispiel}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import tensorflow as tf
+
+  b = tf.Variable(tf.zeros([100]))
+  W = tf.Variable(tf.random_uniform([784,100],-1,1))
+  x = tf.placeholder(name='x')
+  relu = tf.nn.relu(tf.matmul(W, x) + b)
+  C = [...]
+
+  s = tf.Session()
+  for step in xrange(0,10)
+  input = loadData()
+  result = s.run(C, feed_dict={x: input})
+\end{minted}
+
+\subsubsection{Layers}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  x = tf.placeholder(tf.float32, shape=[None, 3])
+  linear_model = tf.layers.Dense(units=1)
+  y = linear_model(x)
+
+  init = tf.global_variables_initalizer()
+  sess.run(init) // initalizing all veriables
+\end{minted}
+
 \subsubsection{Training}
 Forwardpropagation durch Graph und Backpropagation speziell implementiert..
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  # Daten
+  x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
+  y_true = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)
+
+  # Modell
+  linear_model = tf.layers.Dense(units=1)
+  y_pred = linear_model(x)
+
+  # Evalutaion
+  sess = tf.Session()
+  init = tf.global_variables_initializer()
+  sess.run(init)
+
+  print(sess.run(y_pred))
+
+  # Loss
+  loss = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
+
+  print(sess.run(loss))
+
+
+  # Training
+  optimizer = tf.train.GradientDescentOptimizer(0.01)
+  train = optimizer.minimize(loss)
+
+
+  for i in range(100):
+  _, loss_value = sess.run((train, loss))
+  print(loss_value)
+
+\end{minted}
+
+
+
+
 
 
 
@@ -2581,6 +2777,15 @@ Forwardpropagation durch Graph und Backpropagation speziell implementiert..
 % in the forward path.
 % Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
+\subsubsection{Why dataflow}
+Reasons:
+\begin{itemize}
+\item{Parallelism. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.}
+\item{Distributed execution. By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.}
+\item{Compilation. TensorFlow's XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.}
+\item{Portability. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.}
+\end{itemize}
+
 
 \subsection{Implementation - der Master}
 TF ist gerade deshalb sehr attraktiv fuer ML, da es sehr performant (schnell
@@ -2605,7 +2810,8 @@ besteht in der \keyword{Parallelisierung} von Operationen.
 
 \subsubsection{Hardwarebeschleunigung}
 Tensors eignene sich fuer Hardwarebeschleunigung da, ihre Operationen sich
-leicht Paralellisieren lassen.
+leicht Paralellisieren lassen. Diese lassen sich leicht Parallelisieren, da wir
+es mit Dataflow-programming zu tun haben. Deshalb werden gerichtete Graphen verwednet.
 
 \paragraph{CPU-Beschleunigung}
 
@@ -2632,10 +2838,19 @@ TensorBoard is a companion visualitzayion yool for TensorFlow for understanding
 the structure of the computation graphs as well as the overall behaviour of the
 ML-Modell.
 
+Muss im terminal als Programm gestartet werden: tensorboard --logdir .
+
 \subsubsection{Visualizing computational graphs}
 Due to the size and topology of these graphs with maybe over 10'000 nodes the
 nodes are groupped and collapsed into high-level blocks. The visualtionsation is
 interactive and can pan, zoom and expand.
+
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  writer = tf.summary.FIleWriter('.')
+  writer.add_graph(tf.get_default_graph())
+  writer.flush()
+\end{minted}
 
 \subsubsection{Visualization of Summary Data/Training}
 When training Ml-models users often want to examine the state of various aspect

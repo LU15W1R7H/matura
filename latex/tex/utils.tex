@@ -44,7 +44,7 @@
 {
   \centering
 
-  \tikzstyle{mybox} = [draw=red, fill=blue!40!bgcolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{mybox} = [draw=red, fill=blue!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
   \tikzstyle{fancytitle} = [fill=red, text=white]
   \begin{tikzpicture}
     \node [mybox] (box) {%
@@ -65,21 +65,31 @@
 {
   \centering
 
-  \tikzstyle{mybox} = [draw=blue, fill=green!40!bgcolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-  \tikzstyle{fancytitle} = [fill=red, text=white]
+  \tikzstyle{mybox} = [draw=blue, fill=green!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{fancytitle} = [fill=blue, text=white]
   \begin{tikzpicture}
     \node [mybox] (box) {%
       \begin{minipage}{1.0\textwidth}
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=red!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
+    \node [right,inner xsep=1em,fill=blue!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
     at ([shift={(-1em,0pt)}]box.north west) {#1};
-    \fill[red!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
-    \fill[red!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
+    \fill[blue!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[blue!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
 
   \end{tikzpicture}
 }
+
+% \newcommand{\code}{\mint[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}}
+
+% \newenvironment{codeblock}
+% {
+%   \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+% }
+% {
+% \end{minted}
+% }
 
 % conditional compilation
 \newif\ifcp

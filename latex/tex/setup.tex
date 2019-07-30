@@ -1,8 +1,14 @@
-\documentclass[12pt, a4paper]{report} % article, report or book
+\documentclass[12pt, a4paper]{report}
 
+% standard
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
+
+% fonts
+% \renewcommand{\sfdefault}{cmr}
+
+
 
 \usepackage{environ}
 
@@ -17,6 +23,8 @@
 \usepackage{xfrac}
 
 % for code
+\usepackage{minted}
+\usepackage{caption}
 % \usepackage{sourcecodepro}
 
 
@@ -42,21 +50,6 @@ citestyle=authortitle
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.9}
 \usepackage{xcolor}
-
-% for code
-\usepackage{listings}
-\lstset{%
-  frame            = tb,    % draw frame at top and bottom of code block
-  tabsize          = 1,     % tab space width
-  numbers          = left,  % display line numbers on the left
-  framesep         = 3pt,   % expand outward
-  framerule        = 0.4pt, % expand outward
-  commentstyle     = \color{Green},      % comment color
-  keywordstyle     = \color{blue},       % keyword color
-  stringstyle      = \color{DarkRed},    % string color
-  backgroundcolor  = \color{WhiteSmoke}, % backgroundcolor color
-  showstringspaces = false,              % do not mark spaces in strings
-}
 
 % for page layout
 \usepackage{geometry}
@@ -97,9 +90,9 @@ contents={}
 % disable pargraph indentation ----- GOOD???
 \setlength{\parindent}{0pt}
 
-\colorlet{bgcolor}{white}
+\colorlet{pagecolor}{white}
 \colorlet{textcolor}{black}
-\pagecolor{bgcolor}
+\pagecolor{pagecolor}
 \color{textcolor}
 
 %%% Local Variables:
