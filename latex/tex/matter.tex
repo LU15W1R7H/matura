@@ -199,10 +199,13 @@ werden, sondern als Funktion der Modellparametern
 $C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden,
 um das Modell zu verbessern.
 Fuer diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
-\footnote{
-  Im Gymnasium wird beigebracht die lokalen Extrema (inkl.\ lokalen Minimas) zu bestimmen, indem die erste Ableitung $f'$ gebildet wird und  gleich null gesetzt wird.
-  Dies ist hier nicht moeglich, da die Funktion $C'(\param_1,\param_2, \ldots,
-  \param_n)$ deutlich zu komplex ist, um die Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren verwendet.
+\footnote{%
+  Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
+  bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
+  wird.Dies ist hier nicht moeglich, da die Funktion
+  $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
+  Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
+  verwendet.
 }
 \para{}
 Allgemein koennen mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
@@ -290,7 +293,7 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
 \end{equation}
 \\
 
-\ifcp
+\ifcp%
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}
@@ -325,7 +328,7 @@ werden (wobei $\eta$ eine spaeter erklaerte Schrittgroesse darstellt).
   \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
     Gradientenfeld hinab in das lokale Minimum.}
 \end{figure}
-\fi
+\fi%
 
 Waehrend des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
 beliebigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt
@@ -429,12 +432,10 @@ Die \keyword{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
 ihrem Gewicht, wird mit $\tilde{z}$ bezeichnet.
 Sie ist das gleiche wie das Skalarprodukt des Gewichtevektor
 $\vec{w} = \trans{\begin{pmatrix} w_1 & \cdots & w_n \end{pmatrix}}$ mit dem
-Inputvektor $\vec{x}$.
-\\
+Inputvektor $\vec{x}$. \\
 \begin{equation*}
   \tilde{z} = \sum_{i=1}^{m} w_i x_i = \vec{w} \cdot \vec{x}
-\end{equation*}
-\\
+\end{equation*} \\
 Zusaetzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bilden sie die Modellparameter.
 Das Perzeptron verhaelt sich so, dass falls die gewichtete Summe $\tilde{z}$ groesser als der
@@ -446,8 +447,7 @@ $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
 Die Neigung gibt an wie stark das Neuron dazu neigt zu feuern. Eine grosse
 Neigung laesst ein Neuron auch dann noch feuern, wenn nur wenige Inputs
-eingeschaltet sind.
-\\
+eingeschaltet sind. \\
 \begin{equation}\label{eq:perzeptron_1}
   h(\vec{x}) =
   \begin{cases}
@@ -465,7 +465,7 @@ eingeschaltet sind.
     0 & \quad\text{ansonsten}
   \end{cases}
 \end{equation}
-\\
+\para{}
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -480,7 +480,7 @@ eingeschaltet sind.
   \caption{Perzeptron mit drei Inputs}
   \label{fi:perzeptron}
 \end{figure}
-\\
+\para{}
 Fuer das Trainieren des Perzeptron existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
@@ -517,6 +517,7 @@ Ein Perzeptron ist, wie vorhin erklaert, nur in der Lage, lineare Klassifikation
 durchzufuehren. Um nun auch kompliziertere Probleme zu loesen, muss das Prinzip
 ausgebaut werden. Ausserdem brauchen wir ein Kuenstliches Neuron, welches sich
 besonders gut als Baustein fuer KNNs eignet.
+
 
 \subsection{Kuenstliche Neuronen im Allgemeinen}
 Kuenstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
@@ -619,9 +620,9 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
 
       \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
 
-      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0); % 0-red
-      \draw[red,ultra thick] (0.5,1) -- (1.5,1); % 1-red
-      \draw[red,ultra thick] (-0.5,0) -- (0.5,1); % d-red
+      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0);
+      \draw[red,ultra thick] (0.5,1) -- (1.5,1);
+      \draw[red,ultra thick] (-0.5,0) -- (0.5,1);
 
       \draw[draw=red,fill=red] (-0.5,0) circle (0.03);
       \draw[draw=red,fill=red] (0.5,1) circle (0.03);
@@ -1088,8 +1089,8 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion
       samples=50]
       \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
       \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
-      \node[fill=red,circle,minimum size=0.15cm,inner sep=0,outter sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};
-      \node[fill=red,circle,minimum size=0.15cm,inner sep=0,outter sep=0] (wp2) at (1,{gausseval(0,1,1)}) {};
+      \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};
+      \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp2) at (1,{gausseval(0,1,1)}) {};
       \coordinate (zero) at (0,0);
       \newcommand{\equal}{=}
       % \path [fill=black] (wp1) circle (2pt);
@@ -1722,14 +1723,14 @@ Groesse von $f = 3$. Wir betrachten nun den Sobelfilter $\mat{G}_x$, welcher
 horizontale Kanten akzentuiert. Die Eintraege dieses Filters lauten wie folgt:
 \begin{equation*}
   \mat{G}_x =
-  \begin{bmatrix}
+  \begin{pmatrix}
     -1 & 0 & +1 \\
     -2 & 0 & +2 \\
     -1 & 0 & +1 \\
-  \end{bmatrix}
+  \end{pmatrix}
 \end{equation*}
 
-Angewandt auf ein schwarz-weisses Bild $\mat{B}$, erhaelt man ein neues Bild, bei welchem alle erkannten
+Angewandt auf ein schwarz-weisses Bild, erhaelt man ein neues Bild, bei welchem alle erkannten
 Katen weiss eingefaerbt sind und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
@@ -2167,7 +2168,7 @@ Die Faltung berechnet man nach folgender Gleichung:
 \end{equation}
 \\
 Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
-Tiefe des neuen 3D-Tensors $\tilde{\mat{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
+Tiefe des neuen 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Hoehe
 $h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
 berchnet anhand der Hohe $h^l$ und der Breite $w^l$ des Ausgangsbild.
@@ -2458,7 +2459,7 @@ Fontend aufgeteilt. Das Frontend von Tensorflow bezeichnet man als
   Programmes und bekommt somit nichts von dessen Existenz mit.
 \end{infobox}
 \para{}
-Der Client - also das Frontend - von TF ist in Python geschrieben.
+Der Client - also das Frontend - von TF ist in \keyword{Python} geschrieben.
 \footnote{
   Tensorflow besitzte mehrere Frontends, welche in den verschiedensten
   Programmiersprachen geschrieben sind. Wir werden jedoch nur das
@@ -2468,7 +2469,7 @@ Python ist allgemein als eine sehr einsteigerfreundliche Programmiersprache beka
 ermoeglicht es dem Benutzer mit wenigen Zeilen Code und ziemlich intuitiv
 TensorFlow zu verwenden.
 \para{}
-Der Master - also das Backend - von TF ist dagegen in C++ (und CUDA)
+Der Master - also das Backend - von TF ist dagegen in \keyword{C++} (und CUDA)
 geschrieben. Dies hat den Grund, dass C++ im Gegensatz zu Python sehr performant
 ist. Also ist die Zeit zum Aufuehren eines Programmes sehr kurz. Dafuer ist der
 Programmcode deutlich anspruchsvoller und verboser. Da der Benutzer jedoch keine
@@ -2481,40 +2482,117 @@ wir den Client von TF betrachten. Man verwendet verschiedene Konzepte um
 programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese
 Konzepte behandeln.
 
-\subsubsection{Grundideen}
-MOEGLICHER AUFBAU
-Tensoren, Graph (mit Operation), Session
-
-
-The zentrale Dateneinheit in TF sind tensoren. Rank = Grad und Shape = Form.
-
-\subsubsection{Konzepte}
-\paragraph{Graph}
+\subsubsection{Graph}
 TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
-(engl.: computation) durch einen gerichteten Graphen beschreibt. Diesen Graphen
-stellt man zuerst durch eine Definition auf und erst nach der Errichtung wird er
-dann Knoten fuer Knoten ausgefuehrt.
-Bei diesen Graphen handelt es sich um \keyword{Computation Graphs}, wie wir sie schon in Sektion (\ref{sec:backpropagation}) kennengelernt
+(engl.: computation) durch einen gerichteten Graphen beschreibt. Zuest stellt
+man diesen Graph auf und fuegt ihn zusammen und erst nach der Definition fuehrt man
+ihn aus.
+Es handelt es sich dabei um einen \keyword{Computation Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
 haben. In TensorFlow bezeichnet man diesen Graphen als einen \keycode{tf.Graph}.
 \para{}
-Der tf.Graph besteht aus einer Menge an Knoten, welche miteinander ueber Pfade
-verbunden sind. Er stellt so eine Datenstrom-Berechnung dar. Jeder Knoten hat
+Er besteht aus einer Menge an Knoten, welche miteinander ueber Pfade
+verbunden sind. So fuehrt er eine Datenstrom-Berechnung aus. Jeder Knoten hat
 null oder mehr Inputs und null oder mehr Outputs. Die Werte der Knoten wandern
 entlang der Pfade zu den jeweils naechsten Knoten.
 \para{}
-In Abbildung () ist der Python-Code zur Kreiirung und Zusammenbau
+Man muss einen Graph nicht explizit definieren (kann es aber, falls man mehrere
+Graphen braucht), da beim defnieren der Operationen sie implizit dem
+sogennanten \keyword{Default Graph} hinzugefuegt werden.
 
-[von tensorflow.org/apidocs: A Graph contains a set of tf.Operation objects, which represent units of computation; and tf.Tensor objects, which represent the units of data that flow between operations.
+\subsubsection{Tensoren}
+Die zentrale Dateneinheit in TensorFlow sind Tensoren, wie wir sie bereits in
+Sektion () kennengelernt haben.
+Auch die Knoten des Graphs reprasentieren Tensoren, welche aber keine feste Wert
+enthalten, da sie erst beim Ausfuehren des Graphens, mit Werten befuellt werden.
+Nach der Ausfuehrung der Graphs, kann man die Zahlenwerte auslesen.
+\para{}
+Man verwenet in TF deshalb Tensoren, weil so die Daten beliebige Dimensionalitaeten
+und Formen annehmen koennen. Es koennen sowohl Listen von Zahlen (Vektoren),
+wie auch Bilder (Tensoren dritter Ordnung) verrechnet werden.
+\para{}
+In Tensorflow bezeichnet man einen Tensor mit \keycode{tf.Tensor}.
+Er ist definiert durch seine Form (Stufe inbegriefen) und den Datentyp seiner
+Elemente (z.B. tf.float32).
+\para{}
+Jeder tf.Tensoren ist mit einer einzigen Graph-Ausfuehrung assoziert. Sie
+besitzen ihren Wert nur fuer den jeweiligen Durchlauf. Man sagt die Tensoren sind ``immutable''.
+\para{}
+Die meisten Tensoren sind nur Zwischenwerte der Graphenberechnung, bzw. einfach
+eine Durchflussstelle. Daneben gibt es auch noch einige spezielle Tensoren, die
+ein spezifisches Verhalten aufweisen. Diese wichtigsten dieser Art, werden wir
+nun betrachten.
+\paragraph{tf.constant}
+Der \keycode{tf.Constant} Tensor ist ein Knoten innerhalb des Graphs, welcher immer einen
+konstanten Wert als Ouput hat. Er hat somit keine Inputs.
+\para{}
+Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
+Formen erstellt. Als Argument, gibt man die Elemente des Tensors.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  skalar = tf.constant(1.0)
+  vector2 = tf.constant([1.0, 2.0])
+  matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+\end{minted}
 
-A default Graph is always registered, and accessible by calling tf.compat.v1.getdefaultgraph. To add an operation to the default graph, simply call one of the functions that defines a new Operation]
+\paragraph{tf.placeholder}
+Um den Graphen fuer Maschinelles Lernen zu verwenden, braucht man eine
+Moeglichkeit ihn mit Inputs zu befuettern. Dafuer gibt es den sogennanten
+\keycode{tf.Placeholder} Tensor. Bei der Werte-Einspeisung wird er mit seinem
+Variabelnnamen refenziert. Man muss seine Dimensionen und seinen Datentyp bei der Erstellung angeben.
+Er hat logischerweise auch nur Outputs und keinerlei Inputs.
+\para{}
+Ihn definiert man folgenderweise:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  input = tf.placeholder(dtype=tf.float32, shape=(2,2))
+\end{minted}
 
-there exists a Default graph, to which is an implicit argument to all API
-functions. So tf.tensors and tf.operatioins are automatically added to this graph.
+\paragraph{tf.variable}
+Ein weiteres Kriterium um Maschinelles Lernen mit dem tf.Graph durchzufuehren
+ist, dass man Modellparameter einfuehren kann. Dafuer ist der
+\keycode{tf.Variable} Tensor geeignet. Er ist im Gegensatz zu den anderen
+Tensoren ``mutable''. Das bedeutet, dass seine Werte unabhaengig von einer
+einzigen Graphenausfuehrung existieren und erhalten bleiben. Seine Elementen
+koennen modifiziert werden. Somit sind sie geeignet, fuer Modellparameter. Diese
+sind muessen auch grundsaetzlich erhalten bleiben und nur beim Trainingvorgang
+angepasst werden.
+\para{}
+Folgender Python-Code kreeirt eine tf.Varaible und aendert ihren Wert danach.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  w = tf.Variable(<initial-value>, name=<optional-name>)
+  w.assign(w + 1.0)
+  w.assign_add(1.0)
+\end{minted}
 
+
+\subsubsection{Operationen}
+Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
+abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
+als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils Namen und reprasentiert eine
+abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
+Input, wie auch als Output.
+Ein Beispiel dafuer waere eine Matrix-Multiplikation (in TF als
+``MatMul'' bezeichnet). Zum Teil besizten diese Operationen gewisse Attribute,
+
+
+welche sie genauer definieren, dies ist zum Beispiel der Fall bei einer
+Faltungsoperation, bei welcher man den Stride und das Padding angeben kann.
+\para{}
+Nun koennen wir einen eigentlichen Graphen auch definieren, denn dafuer muss man
+in TensorFlow lediglich die Operationen definieren und gleichzeitig verketten.
+Die Knotenpunkte werden von TensorFlow automatisch erstellt.
+\para{}
+Nun folgt ein Codebeispiel fuer die Erstellung eines Graphens mit mehren Operationen.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  c = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+  d = tf.constant([[1.0, 1.0], [0.0, 1.0]])
+  e = tf.matmul(c, d)
+\end{minted}
+Zuest werden zwei konstante Tensoren 2.Ordnung \mintinline{python}{c} und \mintinline{python}{d}
+erstellt. Dann wird eine Matrixmultiplikations-Operation zwischen ihnen
+definiert, welche als Output den Tensor \mintinline{python}{e} befuellt.
+
+\paragraph{Beispiel}
 fuer einen beispielhaften tf.Graph abbgebildet. Daneben befindet sich eine
 Visualierung des erstellen Graphs.
-
-
 
 
 \begin{figure}[h!]
@@ -2522,101 +2600,23 @@ Visualierung des erstellen Graphs.
   \caption{tf.Graph: rechts der Pythoncode und links eine Visualisierung}
 \end{figure}
 
-\paragraph{Tensoren}
-Jeder Knoten in TF ist ein Tensor, wie wir sie bereits in Sektion () einmal kennengelernt
-haben. Tensoren werden deshalb als Datentraeger in TF verwendet,
-da die Daten so beliebige Dimensionalitaten und Formen annehmen koennen.
-Es koennen sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren
-dritter Ordnung) verrechnet werden. \\
-In TensorFlow bezeichnet man einen Tensor als einen \keycode{tf.Tensor}. Er
-ist definiert durch seine Form (mit Stufe) und den Datentyp seiner Elemente (z.B. float32).
 
-Spezielle tf.Tensoren:
-\begin{itemize}
-\item{tf.Variable}
-\item{tf.constant}
-\item{tf.placeholder}
-\item{tf.SparseTensor}
-\end{itemize}
-
-Alle TEsnoren ausser tf.variable sind immutable, also besitzen einen einzigen
-Wert pro Ausfuehrung des Graphs.
-
-
-[A Tensor is a symbolic handle to one of the outputs of an Operation. It does not hold the values of that operation's output, but instead provides a means of computing those values in a TensorFlow tf.compat.v1.Session.
-
-This class has two primary purposes:
-
-A Tensor can be passed as an input to another Operation. This builds a dataflow connection between operations, which enables TensorFlow to execute an entire Graph that represents a large, multi-step computation.
-
-After the graph has been launched in a session, the value of the Tensor can be computed by passing it to tf.Session.run. t.eval() is a shortcut for calling tf.compat.v1.getdefaultsession().run(t).
-]
-
-Einen Tensor definiert man folgendermassen (in einem tf.Graphs):
-
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  # BUild a dataflow graph
-  c = tf.constant([[1.0, 2.0], [3.0, 4.0]])
-  d = tf.constant([[1.0, 1.0], [0.0, 1.0]])
-  e = tf.matmul(c, d)
-  print(e.shape)
-
-  sess = tf.Session()
-  result = sessrun(e)
-
-\end{minted}
-
-\paragraph{Operationen}
-Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
-abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
-als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils Namen und reprasentiert eine
-abstrakte Berechnung. Zum Beispiel eine Matrix-Multiplikation (in TF als
-``MatMul'' bezeichnet),
-eine Addition (``Add'') oder eine Aktivierungsfunktion, wie die ReLU (``ReLU'').
-Zum Teil besitzen Operationen noch gewisse Attribute, welche sie genauer
-beschreien, z.B. die Anzahl Filter bei der Anwendung einer Convolutional-Schicht.
-
-[An Operation is a node in a TensorFlow Graph that takes zero or more Tensor objects as input, and produces zero or more Tensor objects as output. Objects of type Operation are created by calling a Python op constructor (such as tf.matmul) or tf.Graph.createop.
-
-For example c = tf.matmul(a, b) creates an Operation of type "MatMul" that takes tensors a and b as input, and produces c as output.
-
-After the graph has been launched in a session, an Operation can be executed by passing it to tf.Session.run. op.run() is a shortcut for calling tf.compat.v1.getdefaultsession().run(op).]
-
-Die einfachste Operation ist eine tf.constant(), welche einfach einen konstanten
-Wert zurueckgibt. a = tf.constant(3.0, dtype=tf.float32)
-
-Code zur Definition eines Operation
-
-\paragraph{Session}
+\subsubsection{Session}
 Der Client kommuniziert mit dem Master ueber eine sogennante
 \keycode{tf.Session}.
 Sie ist die Schnittstelle zwischen Frontend und Backend und ermoeglicht es einen tf.Graph
-zu erstellen und ihn auszufuehren. Sie
-erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
+zu erstellen und ihn auszufuehren. Grundsaetzlich umschliesst eine Sessoin alle
+Operation- und Tensor-Objekte.
+Sie erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
 reingeschrieben werden sollen.
+\para{}
+Nun koennen wir auch unseren Graph ausfuehren, denn dieser wird zusammen mit der
+Session ausgefuehrt. Dies macht man folgendermassen:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  sess = tf.Session()
+  result = sess.run()
+\end{minted}
 
-[A Session object encapsulates the environment in which Operation objects are executed, and Tensor objects are evaluated. For example:]
-
-Code zur Defintion einer Session
-
-\paragraph{Variablen}
-In den meisten Anwwendungen, wird der tf.Graph mehrere Male ausgefuehrt. Jedoch
-existieren die Werte eines Tensors jeweils immer nur fuer eine einzige
-Ausfuehrung. Deshalb existiert eine spezielle Art von Knoten, die tf.Variable,
-welche mehrere Ausfuehrungen ueberlebt. Es ist also ein Tensor, dessen Eintraege
-in mehreren Ausfuehrungen des Graphens erhalten bleiben und jeweils manipuliert
-werden koenne. Typischerweise verwendet man sie um die Modellparameter zu
-definieren. Bei jeder Ausfuehrung des Graphens wird trainiert und
-Parametertensoren werden angepasst.
-
-[A variable maintains state in the graph across calls to run(). You add a variable to the graph by constructing an instance of the class Variable.
-
-The Variable() constructor requires an initial value for the variable, which can be a Tensor of any type and shape. The initial value defines the type and shape of the variable. After construction, the type and shape of the variable are fixed. The value can be changed using one of the assign methods.
-
-If you want to change the shape of a variable later you have to use an assign Op with validateshape=False.
-
-Just like any Tensor, variables created with Variable() can be used as inputs for other Ops in the graph. Additionally, all the operators overloaded for the Tensor class are carried over to variables, so you can also add nodes to the graph by just doing arithmetic on variables.]
 
 Code:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -2662,19 +2662,7 @@ Code:
 
 \end{minted}
 
-
-\paragraph{Feeding}
-\keycode{tf.Placeholder} sind Parameter fuer Computation Graph
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  x= tf.placeholder(tf.float32)
-  y= tf.placeholder(tf.float32)
-  z = x+y
-  sess.run(z, feed_dict={x: 3, y: 4.5})
-
-
-  sess.run()
-\end{minted}
+\subsubsection{Beispiel: Perzeptron in TF}
 
 \subsubsection{Code Beispiel}
 
@@ -2777,14 +2765,6 @@ Forwardpropagation durch Graph und Backpropagation speziell implementiert..
 % in the forward path.
 % Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
-\subsubsection{Why dataflow}
-Reasons:
-\begin{itemize}
-\item{Parallelism. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.}
-\item{Distributed execution. By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.}
-\item{Compilation. TensorFlow's XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.}
-\item{Portability. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.}
-\end{itemize}
 
 
 \subsection{Implementation - der Master}
@@ -2807,6 +2787,15 @@ gebrauch macht. Hardwarebeschleunigung bezeichnet einen Menge an Methoden,
 mithilfe dessen die Leistung verschiedener Prozessiereinheiten eines Computers
 effizienter genutzt werden koennen. Eine wichtige Art der Hardwarebeschleunigung
 besteht in der \keyword{Parallelisierung} von Operationen.
+
+\subsubsection{Why dataflow}
+Reasons:
+\begin{itemize}
+\item{Parallelism. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.}
+\item{Distributed execution. By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.}
+\item{Compilation. TensorFlow's XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.}
+\item{Portability. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.}
+\end{itemize}
 
 \subsubsection{Hardwarebeschleunigung}
 Tensors eignene sich fuer Hardwarebeschleunigung da, ihre Operationen sich

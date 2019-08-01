@@ -5,11 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
 
-% fonts
-% \renewcommand{\sfdefault}{cmr}
-
-
-
+% latex
 \usepackage{environ}
 
 % math and formulas
@@ -25,7 +21,6 @@
 % for code
 \usepackage{minted}
 \usepackage{caption}
-% \usepackage{sourcecodepro}
 
 
 % for bibliography
@@ -43,13 +38,13 @@ citestyle=authortitle
 \usepackage{wrapfig} % for Text around images
 
 % for drawing
+\usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns}
 % \tikzexternalize[prefix=tikz/]
 \usepackage{tikzpagenodes}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.9}
-\usepackage{xcolor}
 
 % for page layout
 \usepackage{geometry}
@@ -61,8 +56,8 @@ citestyle=authortitle
 \fancyhf{}
 \renewcommand{\headrulewidth}{2pt}
 \rhead{Luis Wirth}
-\lhead{Maturarbeit}
-\chead{Machine Learning}
+\lhead{\thechapter}
+\chead{Maturarbeit}
 \cfoot{\thepage}
 
 % footnote at bottom
@@ -87,7 +82,6 @@ contents={}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
-% disable pargraph indentation ----- GOOD???
 \setlength{\parindent}{0pt}
 
 \colorlet{pagecolor}{white}
