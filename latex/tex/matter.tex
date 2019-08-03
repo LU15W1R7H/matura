@@ -1981,7 +1981,7 @@ Filtertensors $\ten{W}$ ueber den Bildtensor $\ten{B}$. Somit koennen wir
 folgende Formel verwenden um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
-  \tilde{\mat{B}}_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \mat{W}_{v,u}\mat{B}_{y+v,x+u}
+  (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} (\mat{W})_{v,u}(\mat{B})_{y+v,x+u}
 \end{equation}
 \\
 Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
@@ -1996,7 +1996,7 @@ Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
 Die allgemeine Filtergleichung lautet:
 \\
 \begin{equation}\tag{FO}
-  \tilde{\mat{B}}_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c \ten{W}_{v,u,w} \ten{B}_{x+u,y+v,w}
+  (\tilde{\mat{B}})_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c (\ten{W})_{v,u,w} (\ten{B})_{x+u,y+v,w}
 \end{equation}
 
 \subsection{Mehrere Filter}
@@ -2138,7 +2138,7 @@ $p^l$, dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
 $w^l_{i\,|\,\alpha,\beta,\gamma}$.
 \\
 \begin{equation*}
-  \ten{W^l}_i =
+  \ten{W}^l_i =
   \begin{bmatrix}
     \begin{pmatrix}
       w_{i\,|\,1,1,1}^l & \cdots & w_{i\,|\,1,f,1}^l \\
@@ -2164,7 +2164,7 @@ $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 Die Faltung berechnet man nach folgender Gleichung:
 \\
 \begin{equation}\tag{FO}
-  \tilde{\mat{A}}_{i\,|\,y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c \ten{W}^l_{i\,|\,v,u,w} \ten{A}^l_{x+u,y+v,w}
+  (\tilde{\mat{A}}_i)_{y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c (\ten{W}^l_i)_{v,u,w} (\ten{A}^l)_{x+v,y+u,w}
 \end{equation}
 \\
 Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
@@ -2434,10 +2434,13 @@ fuer beliebige Anwendugen, welche mit numerischen Berechnungen zu tun haben,
 sich eignen.
 \para{}
 Im folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Um
-genau zu sein betrachten wir Tensorflow-Core, denn TF als ganzes ist eine
-riesige API. Zuerst
-wie man TF zu verwenden hat, anhand gewisser Konzepte und danach noch die
-zugrundeliegene Implementation.
+genau zu sein betrachten wir Tensorflow-Core Version r1.14.
+\footnote{Momentan befindet sich TF 2.0 in der Beta. Es ist eine grosse
+  Ueberarbeitung des Frameworks. Es ist zu empfehlen, sobald TF 2.0 offiziel
+  veroeffentlich wurde, es zu verwenden.}
+Wir werden TF nur sehr grob betrachten, da wir spaeter nicht direkt damit
+arbeiten werden, sondern mit der High-Level-API Keras. Trotzdem ist er hilfreich
+ein grobes Verstaentniss ueber TF zu besitzen.
 
 \para{}
 \cite{book:tensorflow}
@@ -2467,7 +2470,8 @@ Der Client - also das Frontend - von TF ist in \keyword{Python} geschrieben.
 }
 Python ist allgemein als eine sehr einsteigerfreundliche Programmiersprache bekannt. Sie
 ermoeglicht es dem Benutzer mit wenigen Zeilen Code und ziemlich intuitiv
-TensorFlow zu verwenden.
+TensorFlow zu verwenden. Wenn wir also mit TensorFlow programmieren, werden wir
+mit Python-Code arbeiten.
 \para{}
 Der Master - also das Backend - von TF ist dagegen in \keyword{C++} (und CUDA)
 geschrieben. Dies hat den Grund, dass C++ im Gegensatz zu Python sehr performant
@@ -2477,14 +2481,15 @@ direkte Interaktion mit dem Master hat, bekommt er davon nichts mit.
 
 \subsection{Verwendung - der Client}
 Nun moechten wir betrachten wie man TensorFlow zu verwenden hat, damit wir
-spaeter ein ML-Modell damit basteln koennen. Dafuer muessen
-wir den Client von TF betrachten. Man verwendet verschiedene Konzepte um
+spaeter ein ML-Modell damit basteln koennen. Dafuer werden gewisse
+Python-Kenntnisse vorausgesetzt. Wir betrachten nun also
+den Client von TF. Man verwendet verschiedene Konzepte um
 programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese
 Konzepte behandeln.
 
 \subsubsection{Graph}
 TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
-(engl.: computation) durch einen gerichteten Graphen beschreibt. Zuest stellt
+(engl.: computation) durch einen gerichteten Graphen beschreibt. Zuerst stellt
 man diesen Graph auf und fuegt ihn zusammen und erst nach der Definition fuehrt man
 ihn aus.
 Es handelt es sich dabei um einen \keyword{Computation Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
@@ -2508,22 +2513,33 @@ Nach der Ausfuehrung der Graphs, kann man die Zahlenwerte auslesen.
 \para{}
 Man verwenet in TF deshalb Tensoren, weil so die Daten beliebige Dimensionalitaeten
 und Formen annehmen koennen. Es koennen sowohl Listen von Zahlen (Vektoren),
-wie auch Bilder (Tensoren dritter Ordnung) verrechnet werden.
+wie auch Bilder (Tensoren dritter Ordnung) verrechnet werden. \\
+Nun sollte auch klar sein, weshalb wir bei der Herleitung der Gleichungen, auch
+immer eine Matrixschreibweise erarbeitet haben.
 \para{}
 In Tensorflow bezeichnet man einen Tensor mit \keycode{tf.Tensor}.
 Er ist definiert durch seine Form (Stufe inbegriefen) und den Datentyp seiner
 Elemente (z.B. tf.float32).
 \para{}
-Jeder tf.Tensoren ist mit einer einzigen Graph-Ausfuehrung assoziert. Sie
-besitzen ihren Wert nur fuer den jeweiligen Durchlauf. Man sagt die Tensoren sind ``immutable''.
+Jeder tf.Tensor ist mit einer einzigen Graph-Ausfuehrung assoziert. Sie
+besitzen ihren Wert nur fuer den jeweiligen Durchlauf, danach wird er verworfen.
+Man sagt die Tensoren sind ``immutable'', da die Werte nicht erhalten bleiben
+und so nicht modifiziert werden koennen.
 \para{}
 Die meisten Tensoren sind nur Zwischenwerte der Graphenberechnung, bzw. einfach
-eine Durchflussstelle. Daneben gibt es auch noch einige spezielle Tensoren, die
-ein spezifisches Verhalten aufweisen. Diese wichtigsten dieser Art, werden wir
-nun betrachten.
+eine Durchflussstelle. Daneben gibt es auch noch einige spezielle Tensoren,
+welche als Inputs in den Graphen agieren. Sie haben also selber kein Inputs
+sondern nur Outputs. \\
+Die wichtigsten dieser Art, werden wir nun betrachten, jeweils mit der
+generischen Python-Schreibweise und einem Code-Beispiel.
+
 \paragraph{tf.constant}
-Der \keycode{tf.Constant} Tensor ist ein Knoten innerhalb des Graphs, welcher immer einen
-konstanten Wert als Ouput hat. Er hat somit keine Inputs.
+Der \keycode{tf.Constant} Tensor ist ein Input-Knoten in den Graphen.
+Er hat immer einen konstanten Wert als Output. Dieser wird beim Erstellen
+angegeben.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  <varname> = tf.constant(<value>)
+\end{minted}
 \para{}
 Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
 Formen erstellt. Als Argument, gibt man die Elemente des Tensors.
@@ -2535,14 +2551,15 @@ Formen erstellt. Als Argument, gibt man die Elemente des Tensors.
 
 \paragraph{tf.placeholder}
 Um den Graphen fuer Maschinelles Lernen zu verwenden, braucht man eine
-Moeglichkeit ihn mit Inputs zu befuettern. Dafuer gibt es den sogennanten
-\keycode{tf.Placeholder} Tensor. Bei der Werte-Einspeisung wird er mit seinem
-Variabelnnamen refenziert. Man muss seine Dimensionen und seinen Datentyp bei der Erstellung angeben.
-Er hat logischerweise auch nur Outputs und keinerlei Inputs.
+Moeglichkeit ihn mit Inputs fuer die Modelle zu befuettern. Um dies moeglichst
+komfortabel zu machen, gibt es den sogennanten
+\keycode{tf.Placeholder} Tensor. Wie der Name es schon sagt, ist er ein
+Platzhalter fuer die Inputs, welcher beim Start der Graphausfuehrnug eingespeist
+werden. Man muss einzig seine Dimensionen und seinen Datentyp (z.B. tf.float32) bei der Erstellung angeben.
 \para{}
-Ihn definiert man folgenderweise:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  input = tf.placeholder(dtype=tf.float32, shape=(2,2))
+  <varname> = tf.placeholder(dtype=<datatype>, shape=<shape>)
+  some_placeholder = tf.placeholder(dtype=tf.float32, shape=(2,2))
 \end{minted}
 
 \paragraph{tf.variable}
@@ -2551,54 +2568,52 @@ ist, dass man Modellparameter einfuehren kann. Dafuer ist der
 \keycode{tf.Variable} Tensor geeignet. Er ist im Gegensatz zu den anderen
 Tensoren ``mutable''. Das bedeutet, dass seine Werte unabhaengig von einer
 einzigen Graphenausfuehrung existieren und erhalten bleiben. Seine Elementen
-koennen modifiziert werden. Somit sind sie geeignet, fuer Modellparameter. Diese
-sind muessen auch grundsaetzlich erhalten bleiben und nur beim Trainingvorgang
-angepasst werden.
+koennen modifiziert werden. Somit sind sie geeignet, fuer Modellparameter.
+Die Werte bleiben grundsaetzlich jede Ausfuehrung erhalten und koennen beim
+Trainingsdurchlauf angepasst werden.
 \para{}
-Folgender Python-Code kreeirt eine tf.Varaible und aendert ihren Wert danach.
+Folgender Python-Code kreirt eine tf.Varaible mit einem Anfangswert und aendert ihren Wert danach.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   w = tf.Variable(<initial-value>, name=<optional-name>)
   w.assign(w + 1.0)
-  w.assign_add(1.0)
 \end{minted}
-
 
 \subsubsection{Operationen}
 Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
 abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
-als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils Namen und reprasentiert eine
+als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils einen Namen und repraesentiert eine
 abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
 Input, wie auch als Output.
-Ein Beispiel dafuer waere eine Matrix-Multiplikation (in TF als
-``MatMul'' bezeichnet). Zum Teil besizten diese Operationen gewisse Attribute,
-
-
-welche sie genauer definieren, dies ist zum Beispiel der Fall bei einer
-Faltungsoperation, bei welcher man den Stride und das Padding angeben kann.
 \para{}
-Nun koennen wir einen eigentlichen Graphen auch definieren, denn dafuer muss man
-in TensorFlow lediglich die Operationen definieren und gleichzeitig verketten.
-Die Knotenpunkte werden von TensorFlow automatisch erstellt.
-\para{}
-Nun folgt ein Codebeispiel fuer die Erstellung eines Graphens mit mehren Operationen.
+Man definiert meistens keine neuen Operationen, sondern verwendet einfach die vordefinierten.
+Ein Beispiel dafuer waere die \keycode{tf.matmul(a,b)}, welche eine
+Matrixmultiplikation zwischen \mintinline{python}{a} und \mintinline{python}{b} ausfuehrt.
+``MatMul'' bezeichnet).
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  c = tf.constant([[1.0, 2.0], [3.0, 4.0]])
-  d = tf.constant([[1.0, 1.0], [0.0, 1.0]])
-  e = tf.matmul(c, d)
+  c = tf.matmul(a, b)
 \end{minted}
-Zuest werden zwei konstante Tensoren 2.Ordnung \mintinline{python}{c} und \mintinline{python}{d}
-erstellt. Dann wird eine Matrixmultiplikations-Operation zwischen ihnen
-definiert, welche als Output den Tensor \mintinline{python}{e} befuellt.
+\para{}
+% Zum Teil besizten gewisse Operationen auch Attribute,
+% welche sie genauer definieren. Dies ist zum Beispiel der Fall bei einer
+% Faltungsoperation, bei welcher man den Stride und das Padding angeben kann.
+Nun koennen wir endlich den eignentlichen Graphen definieren. Dafuer muss man
+erstellt man einfach ein paar Inputtensoren und verrechnete diese mithilfe von
+Operationen. Die Resultate der Operationen verkettet man dann einfach weiter,
+bis man den gewuenschten Graphen hat.
+\para{}
+Hier ein Beispiel eines solchen Graphs.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+  b = tf.constant([[1.0, 1.0], [0.0, 1.0]])
+  c = tf.matmul(a, b)
+  d = tf.placeholder(dtype=tf.float32, shape(2,2))
+  e = tf.add(c, e)
+\end{minted}
 
-\paragraph{Beispiel}
-fuer einen beispielhaften tf.Graph abbgebildet. Daneben befindet sich eine
-Visualierung des erstellen Graphs.
-
-
-\begin{figure}[h!]
-
-  \caption{tf.Graph: rechts der Pythoncode und links eine Visualisierung}
+\begin{figure}
+  \caption{Visualisierung des beschriebenen \keycode{tf.graph}}
 \end{figure}
+\para{}
 
 
 \subsubsection{Session}
@@ -2606,94 +2621,79 @@ Der Client kommuniziert mit dem Master ueber eine sogennante
 \keycode{tf.Session}.
 Sie ist die Schnittstelle zwischen Frontend und Backend und ermoeglicht es einen tf.Graph
 zu erstellen und ihn auszufuehren. Grundsaetzlich umschliesst eine Sessoin alle
-Operation- und Tensor-Objekte.
-Sie erwartet eine List von Outputtensoren, in welche die Resultate der Berechnung
-reingeschrieben werden sollen.
-\para{}
-Nun koennen wir auch unseren Graph ausfuehren, denn dieser wird zusammen mit der
-Session ausgefuehrt. Dies macht man folgendermassen:
+Operation- und Tensor-Objekte. Um sie zu erstellen verwendet man die Funktion \keycode{tf.Session()}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   sess = tf.Session()
-  result = sess.run()
+\end{minted}
+\para{}
+Sie wird verwendet um den Graphen zu berchnen. Dafuer muss man einfach die
+Session ausfuehren. Dafuer verwendet man die Funktion
+\keycode{tf.Session.run()}.
+Diese Funktion erwartet als Argument einerseits den Tensor, welchen man
+innerhalb es Graphen berchnen will. Diesen gibt man per Variabelnnamen an.
+Andererseits erwartet die Funktion noch einen Dictionaire, den sogennanten
+\keycode{feed_dict}, welcher die tf.placeholder befuellt.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  result = sess.run(<tensor>, feed_dict={<placeholder_name>: <wert>, <...>})
 \end{minted}
 
-
-Code:
+Nun folgt ein Codebeispiel, welches ein Sigmoides Neuron mit drei Inputs
+implementiert, initalisiert und ausfuehrt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   import tensorflow as tf
+  import numpy
 
-  # alternative: better?
-  my_variable = tf.get_variable("my_variable", [1, 2, 3])
-  other_variable = tf.get_variable("other_variable", dtype=tf.int32,
-  initializer=tf.constant([23, 42]))
+  x = tf.placeholder(dtype=tf.float32, shape=(3))
 
+  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
+  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
 
+  z = tf.add(tf.tensordot(x, w, 1), b)
+  a = tf.sigmoid(z)
 
-  # Create a variable.
-  w = tf.Variable(<initial-value>, name=<optional-name>)
-
-  # Use the variable in the graph like any Tensor.
-  y = tf.matmul(w, ...another variable or tensor...)
-
-  # The overloaded operators are available too.
-  z = tf.sigmoid(w + y)
-
-  # Assign a new value to the variable with `assign()` or a related method.
-  w.assign(w + 1.0)
-  w.assign_add(1.0)
-
-  session.run(tf.global_variables_initalizer())
-
-\end{minted}
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  import tensorflow as tf
-
-  b = tf.Variable(tf.zeros([100]))
-  W = tf.Variable(tf.random_uniform([784,100],-1,1))
-  x = tf.placeholder(name='x')
-  relu = tf.nn.relu(tf.matmul(W, x) + b)
-  C = [...]
-
-  s = tf.Session()
-  for step in xrange(0,10)
-  input = loadData()
-  result = s.run(C, feed_dict={x: input})
-
-\end{minted}
-
-\subsubsection{Beispiel: Perzeptron in TF}
-
-\subsubsection{Code Beispiel}
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  import tensorflow as tf
-
-  b = tf.Variable(tf.zeros([100]))
-  W = tf.Variable(tf.random_uniform([784,100],-1,1))
-  x = tf.placeholder(name='x')
-  relu = tf.nn.relu(tf.matmul(W, x) + b)
-  C = [...]
-
-  s = tf.Session()
-  for step in xrange(0,10)
-  input = loadData()
-  result = s.run(C, feed_dict={x: input})
-\end{minted}
-
-\subsubsection{Layers}
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  x = tf.placeholder(tf.float32, shape=[None, 3])
-  linear_model = tf.layers.Dense(units=1)
-  y = linear_model(x)
+  y = a
 
   init = tf.global_variables_initalizer()
-  sess.run(init) // initalizing all veriables
+
+  with tf.Session() as sess:
+    sess.run(init)
+    res = sess.run(y, feed_dict = {x: [1, 2, 3]})
+    console.log(res)
 \end{minted}
 
-\subsubsection{Training}
-Forwardpropagation durch Graph und Backpropagation speziell implementiert..
+\subsubsection{Optimizer}
+Um ein ML-Modell in TF zu implementieren, muss man das ganze Modell mit
+allen Operationen als Graphen definieren. Dies hoert sich im Moment noch sehr
+aufwendig an, ist es jedoch nicht. Wir werden naemlich Keras dazu verwenden,
+dessen Funktionsweise spaeter erklaert wird. Keras stellt Implementationen von
+verschiedenen KNN-Schichten zu verfuegen, damit man sie nicht mehr selber
+erstellen muss. Diese kann man dann einfach zu einem Graphen zusammenfuegen.
+Aber dazu spaeter mehr.
+\para{}
+Die Ausfuehrung des erstellen Graphen stellt dann einfach eine
+Vorwaertspropagierung dar. Bevor jedoch das Modell brachbare Resualte liert,
+muss man es trainieren. Dafuer verwendet man einen \keycode{tf.train.Optimizer}.
+\\
+Zuerst muss man eine Kostenfunktion definieren. Dabei stehen Verschiedene aus \keycode{tf.losses} zur
+Auswahl. Als Argumente nehmen diese die
+Label-Tensoren und die Vorhersagen-Tensoren.
+Ein Beispiel mit dem Mittleren Quadratischen Fehler koennte so aussehen:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  cost = tf.losses.mean_squared_error(labels=y_hat, predictions=y)
+\end{minted}
+Nun erstellt man einen Optimizer. Dabei stehen wieder mehrere zur Auswahl. Der
+\keycode{tf.train.GraidentDescentOptimizer} ist eine Implementation des
+Gradientenverfahren. Er nimmt als Arugment die Lernrate $\eta$.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  optimizer = tf.train.GradientDescentOptimizer(learning_rate=<>)
+\end{minted}
+Nun muss man nur noch den Optimizer die Kostenfunktion minimieren lassen.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  opt_op = optimizer.minimize(loss)
+  opt_op.run()
+\end{minted}
+\para{}
+Nun folgt ein kleines Beispielmodell, welches trainiert wird.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   # Daten
@@ -2729,81 +2729,101 @@ Forwardpropagation durch Graph und Backpropagation speziell implementiert..
 \end{minted}
 
 
-
-
-
-
-
-% ------- Implementation
-% The main components in a TF system are the \keyword{client} which uses the Session
-% interface to communicate with the \keyword{master} and one or more worker processes.
-% Each worker process is responsible for arbitraring access to one or more
-% computational \keyword{devices} and executing the graph on such a device, if
-% instructed by the master.
-% TF can also be run on multiple machines at the same time using distrubuted
-% implementations and doing cluster computations.
-
-% Devices are the computational heart of TF. Each device has a type and a name. A
-% device can be anything like a CPU, GPU or TPU (Tensor processing unit). The
-% worker is responsible for allocating memoery on the devices and exucuting operatoins.
-
-% A tensor is TF is a typed multidimensional array. The type has to be specified
-% (e.g.: ints (8 bit to 64 bit), float32, complex numbers and a string)
-
-% a lot more to it but irrelevant for us.
-
-% ------ Extensions
-% Many optimization algorithms including common ml training algorithms like SGD
-% compute the gradient of a cost function with respect to a set of inputs.
-% Therefor TF has a built-in support for automatic gradient computation.
-% It extends the TF Graph using following procedure:
-% If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
-% $I$ it first finds the path in the computation graph from $I$ to $C$. It then
-% backtracks from $C$ to $I$ and for each operation on the backward path it adds a
-% node to the graph composing the partial gradients using the chain rule. The
-% newely added node computes the gradient function for the corresponding operation
-% in the forward path.
-% Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
-
-
-
 \subsection{Implementation - der Master}
 TF ist gerade deshalb sehr attraktiv fuer ML, da es sehr performant (schnell
 ausfuehrbar) ist und dadurch die Trainingszeit fuer die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
 \para{}
-Ein wichtiger Faktor ist, dass TF auf der Backend-Seite hauptsaechlich in C++
-geschrieben ist. C++ ist eine Programmiersprache die sehr nahe am Maschinen-Code
-(engl.: low-level) ist. Somit ist der Code sehr hardwarenah und kann so
-schneller ausgefuehrt werden. Ein Nachteil von C++ ist jedoch, dass die Sprache
-ziemlich verbos ist. Das bedeutet man braucht viel Code um einen relativ
-einfache Operation auszudruecken. Um hierbei Abhilfe zu schaffen wurde ein
-Python-Fontend zu TF entwickelt, welches ein relativ einfaches und unverboses
-Entwickeln ermoeglicht.
+In diesem Abschnitt werden wir grob die zugrundeliegende Implementation von
+TensorFlow betrachten - also den Master - und dabei herausfinden weshalb TF so performant ist.
+Ausserdem werden wir herausfinden, wie TF ableiten kann.
+
+
+\subsubsection{Devices}
+Die Kernstuecke des Masters sind die verschiedenen \keyword{Devices}, auf
+welchen die Berechnungen ausgefuehrt werden. Ein Device ist jedliche Art von
+Computerprozessor, auf welchem die Graphen ausfuehrt werden koennen.
+Zu diesen Prozessoren gehoeren die CPU (Hauptprozessor) und die GPU (Grafikprozessor).
+\footnote{
+Die normale TensorFlow Version ist nicht in der Lage die GPU zu verwenden. Um
+sie verfuegbar zu machen, muss man die GPU Version installieren. Wir werden im folgenden
+von der GPU-Version ausgehen, da sie erhebliche Performance Vorteile gewaehrt.
+}
 \para{}
-Ein noch wichtigeren Aspekt bei der Performance spielt die sogennante
-\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
-gebrauch macht. Hardwarebeschleunigung bezeichnet einen Menge an Methoden,
-mithilfe dessen die Leistung verschiedener Prozessiereinheiten eines Computers
-effizienter genutzt werden koennen. Eine wichtige Art der Hardwarebeschleunigung
-besteht in der \keyword{Parallelisierung} von Operationen.
+
+Der Master analysiert die verfuegbaren Devices und bewertete sie, bezueglich
+ihren Faehigkeiten. Anhand dieser Bewertung entscheidet der Master dann, auf
+welchem Device die Berechnugen ausgefuert werden.
+\footnote{
+  Es ist moeglich die Graphen auf mehreren Devices gleichzeitig auszufuehren und
+  so noch schneller die Modelle zu trainieren. Dies ist jedoch erst fuer sehr
+  aufwendige Projekte noetig und erfordert ein fortgeschritteneres Versteantniss.
+}
+Insofern GPUs zur Verfuegung stehen, waehlt TF grundsaetzlich immer diese, da
+sie Tensoroperationen deutlich schneller als CPUs verarbeiten koennen.
 
 \subsubsection{Why dataflow}
 Reasons:
 \begin{itemize}
 \item{Parallelism. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.}
-\item{Distributed execution. By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.}
 \item{Compilation. TensorFlow's XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.}
 \item{Portability. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.}
 \end{itemize}
 
-\subsubsection{Hardwarebeschleunigung}
-Tensors eignene sich fuer Hardwarebeschleunigung da, ihre Operationen sich
-leicht Paralellisieren lassen. Diese lassen sich leicht Parallelisieren, da wir
-es mit Dataflow-programming zu tun haben. Deshalb werden gerichtete Graphen verwednet.
+\subsubsection{Performance und Hardwarebeschleunigung}
+Nun moechten wir die Gruende fuer die beachtliche Performance von TF erschliessen.
+Der erste wichtiger Faktor dabei ist, dass der Master hauptsaechlich in C++
+geschrieben ist. C++ ist eine Programmiersprache die sehr nahe am Maschinen-Code
+(engl.: low-level) ist. Somit ist der Code sehr hardwarenah und kann so
+schneller ausgefuehrt werden. Der Nachteil besteht dafuer darin, dass die Programmiersprache
+ziemlich verbos ist. Das bedeutet man braucht viel Code um eine relativ einfach Idee
+auszudruecken. Deshalb wurde der Client von TF in Python geschrieben, was
+Abhilfe verschafft und so ein relativ einfaches und unverboses Entwickeln ermoeglicht.
+\para{}
+\para{}
+Der andere wichtige Aspekt fuer die Performance ist wohl die sogennante
+\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
+gebrauch macht. \\
+Hardwarebeschleunigung bezeichnet eine Sammlung an Methoden,
+bei welchen man spezialisierte Hardware verwendet um rechenintensive Aufgaben
+schneller auszufuehren. Die Architektur einer CPU ist zwar so ausgelegt, dass
+sie beliebige Aufgaben ausfuehren kann, jedoch meistens nicht besonders
+effizient. Deshalb wurden einerseits neue externe Hardwarebausteine, wie die
+GPU, welche sich fuer Grafikberechnungen besonders eignet, entwickelt.
+Andererseits wurde auch die interne Architektur der CPU so angepasst, dass sie
+auch spezielisierte Aufgaben besser meistert.
+\para{}
+Der Grossteil der Hardwarebeschleunigung wird durch die
+\keyword{Parallelisierung} von Operationen erreicht. Dabei spaltet man eine
+rechenintensive Aufgabe in viele Teilaufgaben auf, welche gleichzeitig in
+gleicher Weise ausgefuehrt werden. Voraussetzung dafuer ist, dass die
+Teilaufgaben unabhaengig voneinander bearbeitet werden koennen. \\
+Ein typisches Beispiel fuer die Paralleliserbarkeit von Operationen ist die
+Matrixmultiplikation. Moechte man eine Matrix $\mat{A} \in \set{R}^{n \times m}$ mit
+einer zweiten Matrix $\mat{B} \in \set{R}^{m \times p}$ multiplizieren, muss man
+praktisch $m$-mal die gleichen Schritte ausfuehren: Man berechnet jeweils das
+Skalarprodukt zwischen der $i$-ten Zeile von $\mat{A}$ und der $i$-ten Spalte
+von $\mat{B}$. Alle diese Skalarprodukte haben keinen Einfluss aufeindander und
+koennen so unabhaenigig mit der gleichen Prozedur berchnet werden.
+\para{}
+Allgemein eignen sich Tensoroperatioen fuer Parallelisierung und damit zur Hardwarebeschleunigung.
+Nun ist auch ersichtlich, weshalb TensorFlow als Hauptdatentyp Tensoren
+verwendet; damit es gebrauch von der Hardwarebeschleunigung machen kann. wir fast alle Gleichungen des Maschinellen
 
 \paragraph{CPU-Beschleunigung}
+Die Hardwarebeschleunigung der CPU ist fuer TensorFlow nur von geringfuegiger
+Relevanz, da TF sich vorallem fuer GPU-Hardwarebeschleunigung eignet
+und dafuer optimiert ist. Ausserdem ist es praktisch unmoeglich die gleiche
+Performance von TF mit einer CPU zu erreichen, welche mit einer GPU moeglich ist.
+\para{}
+Hauptsaechlich parallelisiert TensorFlow mithilfe von der \keywoyd{SIMD}. SIMD
+ist ein Prinzip zur Paralleliserung einer Insturktion fuer mehrere
+Dateneinheiten und steht deshalb fuer ``Single Instruction, Multiple Data''.
+SIMD umfasst einerseits die spezifische CPU-Architektur und den dazugehoerigen
+Befehlssatz, um die Operatioen zu parallelisieren.
+Es gibt verschiedene
 
+SSE4.1, SSE4.2, AVX, AVX2, FMA
 
 \paragraph{GPU-Beschleunigung durch cuDNN und CUDA}
 cuDNN ist die NVIDIA CUDA Deep Neural Network library. Sie ist eine
@@ -2819,6 +2839,19 @@ Als wir die Rueckwaertsprogagierung hergeleitet haben, haben wir mithilfe von
 Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
 bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
 TF auch datenstromorient.
+
+
+% Many optimization algorithms including common ml training algorithms like SGD
+% compute the gradient of a cost function with respect to a set of inputs.
+% Therefor TF has a built-in support for automatic gradient computation.
+% It extends the TF Graph using following procedure:
+% If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
+% $I$ it first finds the path in the computation graph from $I$ to $C$. It then
+% backtracks from $C$ to $I$ and for each operation on the backward path it adds a
+% node to the graph composing the partial gradients using the chain rule. The
+% newely added node computes the gradient function for the corresponding operation
+% in the forward path.
+% Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
 
 \subsection{Tensorboard}
@@ -2858,20 +2891,181 @@ in a web browser.
 
 \section{Keras}
 \keyword{Keras} ist ein Open-Source Deep-Learning Framework geschrieben in
-Python. Keras wurde entwickelt um eine einheitliche Schnittstelle fuer
+Python. Keras wurde entwickelt, um eine einheitliche Schnittstelle fuer
 verschieden Backends, wie TensorFlow, Microsoft Cognitive Toolkit und Theano zu
 bieten. Seit TF Version 1.4 ist Keras ein fester Bestandteil der TensorFlow-Core-API.
 
 Keras ermoeglicht ein sehr simples und benutzerfreundliches defnieren von
 Deep-Learning-Modeln welche dann sehr einfach trainiert werden koennen.
+Wir werden also anstatt TF direkt zu verwenden, ueber Keras das Modell definieren.
+Deshalb ist ein tiefgehendes Verstaetniss von TF ueberfluessig.
 
-\subsection{Funktionsweise}
+tf.keras is TensorFlow's implementation of the Keras API specification. This is a high-level API to build and train models that includes first-class support for TensorFlow-specific functionality, such as eager execution, tf.data pipelines, and Estimators. tf.keras makes TensorFlow easier to use without sacrificing flexibility and performance.
 
-\subsection{Keras-Schichten}
+\subsection{Grundsaetliche Funktionsweise}
+In Keras, you assemble layers to build models. A model is (usually) a graph of layers. The most common type of model is a stack of layers: the tf.keras.Sequential model.
 
-\subsubsection{Conv2D}
-\subsubsection{MaxPooling2D}
-\subsubsection{UpSampling2D}
+\subsection{Schichten}
+Keras ist hat verschiedene Schichten von Kuenstlichen Neuronalen Netzen
+implementiert. Dies koennen also einfach in den tf.Graph eingefuegt werden.
+
+\paragraph{Sequential-Modell/Dense-Layer}
+To build a simple, fully-connected network (i.e. multi-layer perceptron):
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  model = tf.keras.Sequential()
+  # Adds a densely-connected layer with 64 units to the model:
+  model.add(layers.Dense(64, activation='relu'))
+  # Add another:
+  model.add(layers.Dense(64, activation='relu'))
+  # Add a softmax layer with 10 output units:
+  model.add(layers.Dense(10, activation='softmax'))
+\end{minted}
+
+
+\paragraph{Configure the layers}
+
+There are many tf.keras.layers available with some common constructor parameters:
+
+activation: Set the activation function for the layer. This parameter is specified by the name of a built-in function or as a callable object. By default, no activation is applied.
+kernel_initializer and bias_initializer: The initialization schemes that create the layer's weights (kernel and bias). This parameter is a name or a callable object. This defaults to the "Glorot uniform" initializer.
+kernel_regularizer and bias_regularizer: The regularization schemes that apply the layer's weights (kernel and bias), such as L1 or L2 regularization. By default, no regularization is applied.
+
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  # Create a sigmoid layer:
+  layers.Dense(64, activation='sigmoid')
+  # Or:
+  layers.Dense(64, activation=tf.sigmoid)
+
+  # A linear layer with L1 regularization of factor 0.01 applied to the kernel matrix:
+  layers.Dense(64, kernel_regularizer=tf.keras.regularizers.l1(0.01))
+
+  # A linear layer with L2 regularization of factor 0.01 applied to the bias vector:
+  layers.Dense(64, bias_regularizer=tf.keras.regularizers.l2(0.01))
+
+  # A linear layer with a kernel initialized to a random orthogonal matrix:
+  layers.Dense(64, kernel_initializer='orthogonal')
+
+  # A linear layer with a bias vector initialized to 2.0s:
+  layers.Dense(64, bias_initializer=tf.keras.initializers.constant(2.0))
+
+\end{minted}
+
+
+\paragraph{Conv2D}
+
+\paragraph{MaxPooling2D}
+\paragraph{UpSampling2D}
+
+\subsection{Train and evaluate}
+
+Train and evaluate
+Set up training
+
+After the model is constructed, configure its learning process by calling the compile method:
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  model = tf.keras.Sequential([
+  # Adds a densely-connected layer with 64 units to the model:
+  layers.Dense(64, activation='relu', input_shape=(32,)),
+  # Add another:
+  layers.Dense(64, activation='relu'),
+  # Add a softmax layer with 10 output units:
+  layers.Dense(10, activation='softmax')])
+
+  model.compile(optimizer=tf.train.AdamOptimizer(0.001),
+  loss='categorical_crossentropy',
+  metrics=['accuracy'])
+
+\end{minted}
+
+tf.keras.Model.compile takes three important arguments:
+
+optimizer: This object specifies the training procedure. Pass it optimizer instances from the tf.train module, such as tf.train.AdamOptimizer, tf.train.RMSPropOptimizer, or tf.train.GradientDescentOptimizer.
+loss: The function to minimize during optimization. Common choices include mean square error (mse), categorical_crossentropy, and binary_crossentropy. Loss functions are specified by name or by passing a callable object from the tf.keras.losses module.
+metrics: Used to monitor training. These are string names or callables from the tf.keras.metrics module.
+\para{}
+The following shows a few examples of configuring a model for training:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  # Configure a model for mean-squared error regression.
+  model.compile(optimizer=tf.train.AdamOptimizer(0.01),
+  loss='mse',       # mean squared error
+  metrics=['mae'])  # mean absolute error
+
+  # Configure a model for categorical classification.
+  model.compile(optimizer=tf.train.RMSPropOptimizer(0.01),
+  loss=tf.keras.losses.categorical_crossentropy,
+  metrics=[tf.keras.metrics.categorical_accuracy])
+
+\end{minted}
+
+\subsubsection{Fit}
+Input NumPy data
+For small datasets, use in-memory NumPy arrays to train and evaluate a model. The model is "fit" to the training data using the fit method:
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import numpy as np
+
+  def random_one_hot_labels(shape):
+  n, n_class = shape
+  classes = np.random.randint(0, n_class, n)
+  labels = np.zeros((n, n_class))
+  labels[np.arange(n), classes] = 1
+  return labels
+
+  data = np.random.random((1000, 32))
+  labels = random_one_hot_labels((1000, 10))
+
+  model.fit(data, labels, epochs=10, batch_size=32)
+
+\end{minted}
+
+tf.keras.Model.fit takes three important arguments:
+
+epochs: Training is structured into epochs. An epoch is one iteration over the entire input data (this is done in smaller batches).
+batch_size: When passed NumPy data, the model slices the data into smaller batches and iterates over these batches during training. This integer specifies the size of each batch. Be aware that the last batch may be smaller if the total number of samples is not divisible by the batch size.
+validation_data: When prototyping a model, you want to easily monitor its performance on some validation data. Passing this argument—a tuple of inputs and labels—allows the model to display the loss and metrics in inference mode for the passed data, at the end of each epoch.
+
+\subsubsection{Predict}
+The tf.keras.Model.evaluate and tf.keras.Model.predict methods can use NumPy data and a tf.data.Dataset.
+
+To evaluate the inference-mode loss and metrics for the data provided:
+
+data = np.random.random((1000, 32))
+labels = random_one_hot_labels((1000, 10))
+
+model.evaluate(data, labels, batch_size=32)
+
+model.evaluate(dataset, steps=30)
+
+
+And to predict the output of the last layer in inference for the data provided, as a NumPy array:
+
+result = model.predict(data, batch_size=32)
+print(result.shape)
+
+\subsection{Weiss nit}
+inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
+
+# A layer instance is callable on a tensor, and returns a tensor.
+x = layers.Dense(64, activation='relu')(inputs)
+x = layers.Dense(64, activation='relu')(x)
+predictions = layers.Dense(10, activation='softmax')(x)
+
+Instantiate the model given inputs and outputs.
+
+model = tf.keras.Model(inputs=inputs, outputs=predictions)
+
+# The compile step specifies the training configuration.
+model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
+loss='categorical_crossentropy',
+metrics=['accuracy'])
+
+# Trains for 5 epochs
+model.fit(data, labels, batch_size=32, epochs=5)
+
+
+% ------------------------------------
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
 
@@ -2894,6 +3088,7 @@ Denoising Autoencoder fuer den MNIST-Datensatz.
 \section{Auswertung mit TensorBoard}
 
 
+%%% TeX-command-extra-options: "--shell-escape"
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"
