@@ -633,7 +633,7 @@ Ausserdem koennen mit diesen Neuron auch nur lineare Probleme geloest werden.
 \end{figure}
 
 
-\subsection{Sigmoide Neuronen}
+\subsection{Nicht-lineare Neuronen}
 Die logische naechste Erweiterung sind nicht-lineare Neuronen.
 Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
@@ -644,10 +644,11 @@ angewendet werden und somit das KNN trainiert werden. Die anderen
 Funktionen haben Stellen bei welchen die Ableitungsfunktion null
 betraegt, somit kann das lokale Minimum nicht gefunden werden.
 \para{}
-Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere. Die Sigmoidfunktion wird
-bevorzugt, da ihre Ableitung sehr simpel ist (siehe Abb. (\ref{fig:sigmoid})).
+Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere.
+Trotzdem wird meistens die Sigmoidfunktion wird
+verwendet, auch weil ihre Ableitung sehr simpel ist (siehe Abb. (\ref{fig:sigmoid})).
 Die Nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
-Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Kompostion von nicht-linearen
+Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Komposition von nicht-linearen
 Funktionen jede belibige Funktion zu approximieren!
 \para{}
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
@@ -820,8 +821,8 @@ Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum Verstaentn
       (\ref{sec:backpropagation}).
     }
   }
-\item{$\varphi$ ist die gewaehlte Aktivierungsfunktion (grundsaetzlich ist diese
-    immer die Sigmoidfunktion $\sigma$).}
+\item{$\varphi$ ist die gewaehlte Aktivierungsfunktion (diese ist immer eine
+    nicht-lineare Aktivierungsfunktion)}
 \end{itemize}
 
 \begin{figure}[h!]
@@ -978,7 +979,7 @@ dem Neuron $n_j^{l+1}$.
   \end{pmatrix}
 \end{equation*}
 \\
-Mit diesen Definitionen kann nun Gleichung (\ref{eq:gewichtete_summe_normal}) in
+Mit diesen Definitionen kann nun fast Gleichung (\ref{eq:gewichtete_summe_normal}) in
 Matrixform geschrieben werden, denn die Matrixmultiplikation von $\mat{W}^l$ mit
 $\vec{a}^{l}$ ergibt einen Vektor $\vec{\tilde{z}}^{l+1}$, welcher alle gewichteten
 Summen $\tilde{z}_j^{l+1}$ ohne die jeweilige Neigung enthaelt.
@@ -1572,7 +1573,7 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   dessen Zahlen in einem Raster angeordet sind.
   Analog zum Volumen, bezeichnet man die Form des Tensors mit Hoehe, Breite und
   Tiefe. \\
-  Ein Tensor von der Form $\set{R}^{3 \times 2 \times 3}$ koennte folgendermassen
+  Ein Tensor von der Form $\set{R}^{3 \times 3 \times 3}$ koennte folgendermassen
   aussehen:
   \para{}
 
@@ -1647,7 +1648,7 @@ Abb. (\ref{fig:bildmatrix})).
 Ein CNN besteht, wie ein KNN auch, aus Schichten. Jede dieser Schichten erhaelt
 als Input ein Bild und hat auch wieder eines als Output. \\
 Ein wichtiger Unterschied eines CNNs ist, dass es aus unterschiedlichen Typen von
-Schichten besteht. Man unterscheiden zwischen drei Arten von Schichten:
+Schichten besteht. Man unterscheiden zwischen vier Arten von Schichten:
 \begin{itemize}
 \item{\keyword{Fully-connected-Schichten},}
 \item{\keyword{Convolutional-Schichten},}
@@ -1769,7 +1770,7 @@ Modellparameter eines CNNs zu definieren.
 Mithilfe des Gradietenverfahrens sollten erneut diese Parameter
 erlernt werden. \\
 Da die Filter die gleiche Funktion haben, wie die Gewichte in einem KNN,
-bezeichnet man die Filter in einem CNN mit $\ten{W}$. Die Groesse des Filters
+bezeichnet man die Filter in einem CNN mit $\mat{W}$. Die Groesse des Filters
 stellt dabei einene Hyperparameter dar.
 
 \begin{equation*}
@@ -1798,12 +1799,16 @@ Wie bereits vorhin erwaehnt wandert der Filter ueber das Bild. Dabei befindet
 sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
 wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
-\keyword{Rezeptive Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
-Das Zentralelement $(\ten{W})_c$ liegt dann gerade ueber dem sogennanten
-\keyword{Quellenpixel} (engl.: source pixel), bezeichnet mit $(\ten{B})_S$.
-Um das Rezeptive Feld zu kennzeichnen, bezeichnen wir es mit $\hat{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angiebt. Somit ist das rezeptiven Feld einfach eine
-Untermatrix $\tilde{\mat{B}} \in \set{R}^{3 \times 3}$ des Obermatrix $\mat{B}$.
+\keyword{Rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
+Das Rezeptive Feld, bezeichnet mit $\hat{\mat{B}} \in \set{R}^{3 \times 3}$ ist also einfach eine
+Untermatrix der Obermatrix $\mat{B}$.
+\para{}
+Jedem Element des Filters entspricht ein Element des rezeptiven Feldes. Dem
+Zentralelement $(\mat{W})_c$ entspricht dabei gerade der sogennante Quellenpixel
+(engl.: source pixel) $(\ten{B})_s$ des Bildes. Ihn verwenden wir fuer eine
+Namenskonvention fuer das rezeptive Feld. Wir bezeichnen das rezeptive Feld mit
+$\hat{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
+des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angiebt.
 
 \begin{figure}[h!]
 
@@ -1957,6 +1962,14 @@ Bilds zu liegen. Somit fallen diese weg.
 Eigentlich handelt es sich bei einer Anwendung eines Filters auf ein Bild um
 eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.:
 \keyword{Convolution}).
+\footnote{
+  Streng genommen wird in CNNs nicht eine diskrete Faltung durchgefuehrt, sondern
+  eine sogennante \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
+  Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
+  gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Jedoch verwendet man
+  begrifflich das Wort Faltung fuer beide Operationen. Im Verlauf dieser Arbeit
+  wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
+}
 Daher ruehrt auch der Name des Convolutional Neural Networks.
 Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
 betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
@@ -1967,13 +1980,6 @@ Damit ihr die Defintion trotzdem mal gesehen habt:
   (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
 \end{equation}
 \\
-Streng genommen wird in CNNs nicht eine diskrete Faltung durchgefuehrt, sondern
-eine sogennante \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
-Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
-gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Jedoch verwendet man
-begrifflich das Wort Faltung fuer beide Operationen. Im Verlauf dieser Arbeit
-wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
-\para{}
 Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen.
 Bei der Filteroperation handlet es sich lediglich um eine diskrete Faltung des
@@ -1989,7 +1995,7 @@ lediglich 3D-Tensoren anstatt 2D-Tensoren verwendet. Wir betrachten den
 allgemeinen Bildtensor $\ten{B}_{h \times w \times c}$, wobei $c$ die Anzahl
 Farbkomponenten (engl.: channels) ist.
 Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Groesse
-$f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\mat{B}$.
+$f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\ten{B}$.
 Dadruch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
 gerade gleich tief ist, wie das Bild. Das hat zur Folge, dass das verarbeitete
 Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
@@ -2005,13 +2011,13 @@ mehrere Filter auf das gleiche Ausgangsbild angewandt werden und zusammen ein
 Endbild erzeugen.
 \para{}
 Die Anzahl Filter bezeichnen wir mit $c$.
-Nun macht man pro Filter $\ten{F}_i$ eine Faltung ueber das Ursprungsbild $\ten{B}$, wobei
-jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{F}_i * \ten{B}$ liefert, wobei $i$ der Index des
-Filters ist. All diese gefalteten Bilder $\mat{B}*_i$ sind zweidimensionale Matrizen, unabhaengig davon, wieviel
+Nun macht man pro Filter $\ten{W}_i$ eine Faltung ueber das Ursprungsbild $\ten{W}$, wobei
+jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert, wobei $i$ der Index des
+Filters ist. All diese gefalteten Bilder $\tilde{\mat{B}}_i$ sind zweidimensionale Matrizen, unabhaengig davon, wieviel
 Komponten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
 $\tilde{\ten{B}}$ bilden.
-Hierfuer muessen alle Filter $\ten{F}_i$ gleich gross sein.
+Hierfuer muessen alle Filter $\ten{W}_i$ gleich gross sein.
 \begin{figure}[h!]
   \caption{aufeinander gelegte gefaltene Bilder}
 
@@ -2208,8 +2214,8 @@ Padding) die Dimensionalitaet einzustellen.
 
 \subsection{die Pooling-Schicht}
 Die Pooling-Schicht verringert die Dimensionalitaet durch das Zusammenfassen eines Felds
-von Tensorelementen zu einem einzigen Tensorelement der naechsten Schicht
-erreicht. Dabei geht das Feld nur entlang der Laenge und Breite des Bildes und
+von Tensorelementen zu einem einzigen Tensorelement der naechsten Schicht.
+Dabei geht das Feld nur entlang der Laenge und Breite des Bildes und
 nicht entlang der Tiefe. Dies bedeutet, das Pooling wird auf jeden Channel
 einzeln angewandt, dadurch aendert sich die Tiefe des Bildes nicht.
 \para{}
@@ -2217,7 +2223,7 @@ Fuer die Beschreibung einer Pooling-Schicht wird viel Begrifflichkeit der
 Convolutional-Schicht und der Filter uebernommen.
 Die Groesse des Elementfelder, welches zusammengefasst wird, bezeichent man analog zur
 Filtergroesse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling wieder wie
-gross dieSchrittgreosse beim Verschieben des Felder ist. Meistens waehlt man den
+gross die Schrittgroesse beim Verschieben des Felder ist. Meistens waehlt man den
 Stride $s$ gerade gleich der Feldgroesse $f$, damit alle Pixel
 zusammengefasst werden. Kleiner als $f$ kann $s$ nicht gewaehlt werden.
 \para{}
