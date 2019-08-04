@@ -1541,7 +1541,8 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 \cite{deeplearning.ai:cnn}
 \cite{wiki:cnn}
 
-\section{Bilder als Tensoren}
+
+\section{Bilder als Tensoren}\label{sec:tensor}
 CNNs operieren an Bildern. Sie stellen den Input fuer die Modelle dar.
 Um mit diesen Bildern rechnen zu koennen, ist es sinnvoll sie als sogennante
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
@@ -2502,9 +2503,10 @@ Es handelt es sich dabei um einen \keyword{Computation Graph}, wie wir ihn schon
 haben. In TensorFlow bezeichnet man diesen Graphen als einen \keycode{tf.Graph}.
 \para{}
 Er besteht aus einer Menge an Knoten, welche miteinander ueber Pfade
-verbunden sind. So fuehrt er eine Datenstrom-Berechnung aus. Jeder Knoten hat
-null oder mehr Inputs und null oder mehr Outputs. Die Werte der Knoten wandern
-entlang der Pfade zu den jeweils naechsten Knoten.
+verbunden sind. Die Knoten halten Werte in sich, welche ueber die Pfade,
+verrechnet werden und in den naechsten Knoten eingespeist werden. Die Pfade sind also die Operationen, welche auf die Werte
+angewandt werden. So fuehrt der Graph eine Datenstrom-Berechnung aus.
+Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
 \para{}
 Man muss einen Graph nicht explizit definieren (kann es aber, falls man mehrere
 Graphen braucht), da beim defnieren der Operationen sie implizit dem
@@ -2512,7 +2514,7 @@ sogennanten \keyword{Default Graph} hinzugefuegt werden.
 
 \subsubsection{Tensoren}
 Die zentrale Dateneinheit in TensorFlow sind Tensoren, wie wir sie bereits in
-Sektion () kennengelernt haben.
+Sektion (\ref{sec:tensor}) kennengelernt haben.
 Auch die Knoten des Graphs reprasentieren Tensoren, welche aber keine feste Wert
 enthalten, da sie erst beim Ausfuehren des Graphens, mit Werten befuellt werden.
 Nach der Ausfuehrung der Graphs, kann man die Zahlenwerte auslesen.
@@ -2532,28 +2534,33 @@ besitzen ihren Wert nur fuer den jeweiligen Durchlauf, danach wird er verworfen.
 Man sagt die Tensoren sind ``immutable'', da die Werte nicht erhalten bleiben
 und so nicht modifiziert werden koennen.
 \para{}
-Die meisten Tensoren sind nur Zwischenwerte der Graphenberechnung, bzw. einfach
-eine Durchflussstelle. Daneben gibt es auch noch einige spezielle Tensoren,
-welche als Inputs in den Graphen agieren. Sie haben also selber kein Inputs
-sondern nur Outputs. \\
-Die wichtigsten dieser Art, werden wir nun betrachten, jeweils mit der
-generischen Python-Schreibweise und einem Code-Beispiel.
+Die soeben beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb
+des Graphen. Sie muessen nicht explizit definiert werden, da sie automatisch
+eingefuegt werden, wenn der Graph durch seine Operationen definiert wird.
+\para{}
+
+Neben dieser Art von Knoten, gibt es noch verschiedene Inputknoten.
+stellen den Input in den Graphen dar und muessen explizit definiert werden. Von ihnen gibt es verschiedene Arten,
+welche wir nun betrachten werden.
 
 \paragraph{tf.constant}
 Der \keycode{tf.Constant} Tensor ist ein Input-Knoten in den Graphen.
 Er hat immer einen konstanten Wert als Output. Dieser wird beim Erstellen
 angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  <varname> = tf.constant(<value>)
+  <Varname> = tf.constant(<Wert>)
 \end{minted}
 \para{}
 Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
-Formen erstellt. Als Argument, gibt man die Elemente des Tensors.
+Formen erstellt. Als Argument, gibt man die Elemente des Tensors, worueber auch
+die Form ersichtlich an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   skalar = tf.constant(1.0)
   vector2 = tf.constant([1.0, 2.0])
   matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
 \end{minted}
+\[\text{skalar}=1 \quad \text{vector2}=\begin{pmatrix}1&2\end{pmatrix} \quad
+\text{matrix2x2}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
 
 \paragraph{tf.placeholder}
 Um den Graphen fuer Maschinelles Lernen zu verwenden, braucht man eine
@@ -2564,13 +2571,18 @@ Platzhalter fuer die Inputs, welcher beim Start der Graphausfuehrnug eingespeist
 werden. Man muss einzig seine Dimensionen und seinen Datentyp (z.B. tf.float32) bei der Erstellung angeben.
 \para{}
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  <varname> = tf.placeholder(dtype=<datatype>, shape=<shape>)
-  some_placeholder = tf.placeholder(dtype=tf.float32, shape=(2,2))
+  <Varname> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
 \end{minted}
+Fuer den Datentyp waehlt man eigentlich immer
+\mintinline{python}{dtype=tf.float32}. Somit kann man mit Gleitkommazahlen rechnen.
+Die Form gibt man einfach als $n$-Tupel von Integern an, welche die Anzahl
+Komponenten in der jeweiligen Dimension angeben. Somit bedeutet die Form
+\mintinline{python}{shape=(4,2,3)} einen Tensor im Tensorraum $\set{R}^{4 \times
+2 \times 3}$.
 
 \paragraph{tf.variable}
-Ein weiteres Kriterium um Maschinelles Lernen mit dem tf.Graph durchzufuehren
-ist, dass man Modellparameter einfuehren kann. Dafuer ist der
+Ein weiteres Kriterium um Maschinelles Lernen mit dem tf.Graph durchzufuehren,
+ist dass man Modellparameter einfuehren kann. Dafuer ist der
 \keycode{tf.Variable} Tensor geeignet. Er ist im Gegensatz zu den anderen
 Tensoren ``mutable''. Das bedeutet, dass seine Werte unabhaengig von einer
 einzigen Graphenausfuehrung existieren und erhalten bleiben. Seine Elementen
@@ -2580,9 +2592,12 @@ Trainingsdurchlauf angepasst werden.
 \para{}
 Folgender Python-Code kreirt eine tf.Varaible mit einem Anfangswert und aendert ihren Wert danach.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  w = tf.Variable(<initial-value>, name=<optional-name>)
-  w.assign(w + 1.0)
+  <Varname> = tf.Variable(<Initialwert>, name=<optionaler Name>)
+  <Varname>.assign(<neuer Wert>)
 \end{minted}
+Bei der neuen Wertebesetzung kann auch der alte Wert des Tensors referenziert
+werden, um den Wert zum Beispiel zu erhoehen:
+\mintinline{python}{var.assign(var + 2.0)}.
 
 \subsubsection{Operationen}
 Die Knoten des tf.Graph - also die Tensoren - werden ueber die Pfade aufeinander
@@ -2593,24 +2608,25 @@ Input, wie auch als Output.
 \para{}
 Man definiert meistens keine neuen Operationen, sondern verwendet einfach die vordefinierten.
 Ein Beispiel dafuer waere die \keycode{tf.matmul(a,b)}, welche eine
-Matrixmultiplikation zwischen \mintinline{python}{a} und \mintinline{python}{b} ausfuehrt.
+Matrixmultiplikation zwischen \mintinline{python}{a} und \mintinline{python}{b}
+ausfuehrt. Im folgenden Code wird das Resulat im neuen Tensor
+\mintinline{python}{c} gespeichert.
 ``MatMul'' bezeichnet).
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   c = tf.matmul(a, b)
 \end{minted}
 \para{}
-% Zum Teil besizten gewisse Operationen auch Attribute,
-% welche sie genauer definieren. Dies ist zum Beispiel der Fall bei einer
-% Faltungsoperation, bei welcher man den Stride und das Padding angeben kann.
-Nun koennen wir endlich den eignentlichen Graphen definieren. Dafuer muss man
-erstellt man einfach ein paar Inputtensoren und verrechnete diese mithilfe von
-Operationen. Die Resultate der Operationen verkettet man dann einfach weiter,
-bis man den gewuenschten Graphen hat.
+Mit diesem Konzept koennen wir nun endlich den eigentlichen Graph definieren.
+Dafuer muss man lediglich ein paar Inputtensoren erstellen, und diese mithilfe
+von Operationen verrechnen. Natuerlich kann man die Resulate der Operationen
+dann weiter verrechnen, bis man den gewuenschten Grapen hat.
 \para{}
 Hier ein Beispiel eines solchen Graphs.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  # Inputknoten
   a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
   b = tf.constant([[1.0, 1.0], [0.0, 1.0]])
+  # Operationen
   c = tf.matmul(a, b)
   d = tf.placeholder(dtype=tf.float32, shape(2,2))
   e = tf.add(c, e)
@@ -2626,82 +2642,111 @@ Hier ein Beispiel eines solchen Graphs.
 Der Client kommuniziert mit dem Master ueber eine sogennante
 \keycode{tf.Session}.
 Sie ist die Schnittstelle zwischen Frontend und Backend und ermoeglicht es einen tf.Graph
-zu erstellen und ihn auszufuehren. Grundsaetzlich umschliesst eine Sessoin alle
-Operation- und Tensor-Objekte. Um sie zu erstellen verwendet man die Funktion \keycode{tf.Session()}.
+zu erstellen und ihn auszufuehren.
+Um die Session zu erstellen verwendet man die Funktion \keycode{tf.Session()}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   sess = tf.Session()
 \end{minted}
-\para{}
-Sie wird verwendet um den Graphen zu berchnen. Dafuer muss man einfach die
-Session ausfuehren. Dafuer verwendet man die Funktion
-\keycode{tf.Session.run()}.
-Diese Funktion erwartet als Argument einerseits den Tensor, welchen man
-innerhalb es Graphen berchnen will. Diesen gibt man per Variabelnnamen an.
-Andererseits erwartet die Funktion noch einen Dictionaire, den sogennanten
-\keycode{feed_dict}, welcher die tf.placeholder befuellt.
+Es ist Best-Practise eine Session, wie eine Datei ueber das
+\keycode{with}-Statment zu oeffen und zu schliessen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  result = sess.run(<tensor>, feed_dict={<placeholder_name>: <wert>, <...>})
+  with tf.Session() as sess:
+    # Code
 \end{minted}
-
-Nun folgt ein Codebeispiel, welches ein Sigmoides Neuron mit drei Inputs
-implementiert, initalisiert und ausfuehrt.
+\para{}
+Um den Graphen nun zu berechnen, muss man lediglich die Session ausfuehren, das
+geschieht ueber die Methode \keycode{tf.Session.run()}.
+Diese Funktion erwartet als Argument einerseits den Knotenpunkt, welchen man
+berchnen moechte. Dessen Wert ist der Rueckgabewert der Funktion.
+Andererseits erwartet die Funktion noch einen Python-Dictionary, den sogennanten
+\keycode{feed\_dict}, welcher die \code{tf.placeholder} mit ihren Werten befuellt.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  result = sess.run(<Knotenpunkt>, feed_dict=<Placeholder-Dictionary>)
+\end{minted}
+Es folgt nun ein Codebeispiel, welches die Forwaertspropagierung eines
+Sigmoide Neurons mit drei Inputs implementiert. Es wird es mit den Inputs $x = \trans{\begin{pmatrix}1&2&3\end{pmatrix}}$ ausgefuehrt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   import tensorflow as tf
-  import numpy
 
+  # Inputs
   x = tf.placeholder(dtype=tf.float32, shape=(3))
 
+  # Modellparameter
   w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
   b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
 
+  # Forwaertspropagierung
   z = tf.add(tf.tensordot(x, w, 1), b)
   a = tf.sigmoid(z)
-
   y = a
 
-  init = tf.global_variables_initalizer()
-
   with tf.Session() as sess:
-    sess.run(init)
     res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-    console.log(res)
+    print(res)
 \end{minted}
 
 \subsubsection{Optimizer}
 Um ein ML-Modell in TF zu implementieren, muss man das ganze Modell mit
 allen Operationen als Graphen definieren. Dies hoert sich im Moment noch sehr
-aufwendig an, ist es jedoch nicht. Wir werden naemlich Keras dazu verwenden,
-dessen Funktionsweise spaeter erklaert wird. Keras stellt Implementationen von
-verschiedenen KNN-Schichten zu verfuegen, damit man sie nicht mehr selber
+aufwendig an, ist es jedoch nicht. Wir werden naemlich die High-Level-API Keras
+zur Hilfe ziehen, bei der Graphen erstellt.
+Keras stellt Implementationen von verschiedenen KNN-Schichten zu verfuegen, damit man sie nicht mehr selber
 erstellen muss. Diese kann man dann einfach zu einem Graphen zusammenfuegen.
 Aber dazu spaeter mehr.
 \para{}
 Die Ausfuehrung des erstellen Graphen stellt dann einfach eine
 Vorwaertspropagierung dar. Bevor jedoch das Modell brachbare Resualte liert,
 muss man es trainieren. Dafuer verwendet man einen \keycode{tf.train.Optimizer}.
-\\
-Zuerst muss man eine Kostenfunktion definieren. Dabei stehen Verschiedene aus \keycode{tf.losses} zur
-Auswahl. Als Argumente nehmen diese die
-Label-Tensoren und die Vorhersagen-Tensoren.
-Ein Beispiel mit dem Mittleren Quadratischen Fehler koennte so aussehen:
+\para{}
+Der erste Schritt ist dafuer eine Kostenfunktion zu definieren. Es sthene dabei
+Verschiedne aus \keycode{tf.losses} zur Verfuegung. Als Argument nimmt die
+Kostenfunktion die Label-Tensoren \code{labels} und die Vorhersagen-Tensoren \code{predictions}.
+Beispielsweise koennte man den Mittleren Quadratischen Fehler waehlen:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   cost = tf.losses.mean_squared_error(labels=y_hat, predictions=y)
 \end{minted}
-Nun erstellt man einen Optimizer. Dabei stehen wieder mehrere zur Auswahl. Der
+Nun erstellt man den Optimizer. Dabei stehen wieder mehrere zur Auswahl. Der
 \keycode{tf.train.GraidentDescentOptimizer} ist eine Implementation des
 Gradientenverfahren. Er nimmt als Arugment die Lernrate $\eta$.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   optimizer = tf.train.GradientDescentOptimizer(learning_rate=<>)
 \end{minted}
-Nun muss man nur noch den Optimizer die Kostenfunktion minimieren lassen.
+Nun kann man den Optimizer damit beauftragen die Kostenfunktion \code{loss} zu
+minimieren. Ausserdem muss man dem Optimizer eine List von \code{tf.Variable}s
+geben, welche die zu optimierenden Modellparameter sind.
+Man erhaelt so man eine Optimierungs-Operation, welche man dann
+ausfuehren kann.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  opt_op = optimizer.minimize(loss)
+  opt_op = opt.minimize(cost, var_list=<Hyperparameter-Liste>)
   opt_op.run()
 \end{minted}
 \para{}
 Nun folgt ein kleines Beispielmodell, welches trainiert wird.
-
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import tensorflow as tf
+
+  # Inputs
+  x = tf.placeholder(dtype=tf.float32, shape=(3))
+
+  # Modellparameter
+  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
+  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
+
+  # Forwaertspropagierung
+  z = tf.add(tf.tensordot(x, w, 1), b)
+  a = tf.sigmoid(z)
+  y = a
+
+  cost = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
+
+
+  with tf.Session() as sess:
+  print(sess.run(cost)) # cost is just another node
+  optimizer = tf.train.GradientDescentOptimizer(0.01)
+  train = optimizer.minimize()
+  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
+  print(res)
+
   # Daten
   x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
   y_true = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)
