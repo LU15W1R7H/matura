@@ -1316,15 +1316,15 @@ Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
 koenne wir den Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0}) berechnen.
 
 \begin{equation}\label{eq:BPh0}
-  \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'(\vec{z}^L)
+  \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'[\vec{z}^L]
 \end{equation}
 
-Dabei ist der erste Operand des Hadamard-Produkt, nichts anderes als
+Dabei ist der erste Operand des Hadamard-Produkts nichts anderes als
 der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezueglich dem Aktivierungsvektor
 $\vec{a}^L$ der letzten Schicht. Dieser Gradient kann einfach berechnet werden, indem man die
 vektorisierte Ableitungsfunktion fuer die gewaehlte Kostenfunktion bildet. Wuerde man die
-Mittlere quadratischen Abweichung $C = \frac{1}{2}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion waehlen, haetten wir
-$\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}})$.
+Mittlere quadratischen Abweichung $C = \frac{1}{2|L|}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion waehlen, haetten wir
+$\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}}) \cdot \frac{1}{|L|}$.
 \para{}
 Daraus folgt die kompakte matrix-version (\ref{eq:BP1a}) der Gleichung
 (\ref{eq:BP1}), welche den Fehlervektor fuer die letzte Schicht berechnet.
@@ -1334,7 +1334,7 @@ Daraus folgt die kompakte matrix-version (\ref{eq:BP1a}) der Gleichung
 \end{equation}
 \\
 Nun muessen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
-der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetztigen Schicht
+der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetzigen Schicht
 erarbeiten. Dafuer stellen wir zuallererst wieder einen Computation Graph auf
 (siehe Abb. (\ref{fig:cg_L-1})).
 \para{}
@@ -1383,10 +1383,10 @@ Es gilt erneut die Gleichung (\ref{eq:BPh1}) fuer die Berechnung des Fehlers $\d
 \end{equation}
 \\
 Zuerst einmal ist der erste Faktor wieder die Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
-Desweiteren beinflusst beim Uebergang der Schicht ($l-1$) zur Schicht $l$ eine Aktivierungen
-$a_j^{l-1}$ alle gewichtete Summen $z_k^l$. Mit der Kettenregel folgt daher
+Desweiteren beeinflusst beim Uebergang der Schicht ($l-1$) zur Schicht $l$ eine Aktivierungen
+$a_j^{l-1}$ alle gewichteten Summen $z_k^l$. Mit der Kettenregel folgt daher,
 dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
-$\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^L}{a_j^{l-1}}$ sein muss. Wir
+$\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^l}{a_j^{l-1}}$ sein muss. Wir
 erhalten Gleichung (\ref{eq:BPh2}).
 \\
 \begin{equation}\label{eq:BPh2}
@@ -1394,7 +1394,7 @@ erhalten Gleichung (\ref{eq:BPh2}).
 \end{equation}
 \\
 Um die gewichtete Summe $z_k^l$ zu bilden, multipliziert man einfach die
-Aktivierung $a_j^{l=1}$ der vorherigen Schichten mit dem entsprechenden Gewichte $w_{k,j}^{l-1}$.
+Aktivierung $a_j^{l-1}$ der vorherigen Schicht mit den entsprechenden Gewichten $w_{k,j}^{l-1}$.
 Dadurch ist diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade das
 Gewicht selbst. Desweiteren ist $\ds\partderiv{C}{z_k^l}$ per Definition der
 Fehler $\delta_k^l$. Mit dieser Erkenntnis erhalten wir die zweite essentielle
@@ -1408,7 +1408,7 @@ Auch diese Gleichung haetten wir gerne in der Matrixschreibweise. Wir beginnen
 mit der Erweiterung auf alle gewichteten Summen.
 \\
 \begin{equation*}
-  \vec{\delta}^{l-1} = \vecf{\varphi}'(\vec{z}^{l-1}) \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|} \cdot \delta_k^l \end{pmatrix}}
+  \vec{\delta}^{l-1} = \vecf{\varphi}'[\vec{z}^{l-1}] \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|}^{l-1} \cdot \delta_k^l \end{pmatrix}}
 \end{equation*}
 \\
 Der zweite Operant des Hadamard-Produkts ist hierbei gerade das Produkt der
@@ -1438,12 +1438,12 @@ Nun haben wir unsere rekursive Fehlerdefinition in Matrixschreibweise und somit
 die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2}).
 \\
 \begin{equation}\tag{BP2a}\label{eq:BP2a}
-  \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'(\vec{z}^{l-1})
+  \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
 \end{equation}
 \\
 In einem letzten Schritt muessen wir jetzt noch Formeln herleiten, mit welchen
 man anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
-der Neigung berechnen kann.
+der Neigungen berechnen kann.
 \para{}
 Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
 Summe $z_j^{l+1}$. Somit gilt fuer die Neigung Formel (\ref{eq:BPh3}).
@@ -1452,26 +1452,26 @@ Summe $z_j^{l+1}$. Somit gilt fuer die Neigung Formel (\ref{eq:BPh3}).
   \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{b_k^l}
 \end{equation}
 \\
-Der erste Term ist hierbei per Definition unser Fehler $\delta_j^l$ und der
+Der erste Term ist hierbei per Definition unser Fehler $\delta_j^{l+1}$ und der
 zweite Term laesst sich zu 1 evaluieren, da die Summe $z_k^{l+1}$ nur aus
 $b_k^l$ besteht und aus Summanden, welche fuer die partielle Ableitung als konstant gelten.
 Somit ist die Ableitung der Neigung gerade unser Fehler und wir erhalten die
 dritte (\ref{eq:BP3}) von vier essentielen Gleichungen.
 \\
 \begin{equation}\tag{BP3}\label{eq:BP3}
-  \partderiv{C}{b_j^l} = \delta_j^l
+  \partderiv{C}{b_j^l} = \delta_j^{l+1}
 \end{equation}
 \\
-Somit ist der Kostengradient bezuglich der Neigung gerade der Fehlervektor
+Somit ist der Kostengradient bezueglich der Neigung gerade der Fehlervektor
 (siehe Gl. (\ref{eq:BP3a})).
 \\
 \begin{equation}\tag{BP3a}\label{eq:BP3a}
-  \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^l
+  \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
 \end{equation}
 \\
 Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
 gewichteten Summe $z_j^{l+1}$. Dadurch gilt fuer die partiellen Ableitungen der
-kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
+Kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
 \\
 \begin{equation}\label{eq:BPh4}
   \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
@@ -1479,17 +1479,18 @@ kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
 \\
 Dabei laesst sich der erste Teil wieder zum Fehler $\delta_j^{l+1}$ evaluieren.
 Die zweite partielle Ableitung ist gerade die Aktivierung $a_k^l$, da sich die
-gewichtete Summe aus der Multiplikation des Gewichtets mit der Aktivierung ergibt.
-Somit erhalten wir die letzte der vier essentielen Gleichungen (\ref{eq:BP4}).
+gewichtete Summe aus der Multiplikation des Gewichtes mit der Aktivierung ergibt.
+Somit erhalten wir die letzte der vier essentiellen Gleichungen (\ref{eq:BP4}).
 \begin{equation}\tag{BP4}\label{eq:BP4}
   \partderiv{C}{w_{j,k}^l} = \delta_j^{l+1} \cdot a_k^l
 \end{equation}
 \\
-Die matrix-version davon ist Gleichung (\ref{eq:BP4a}).
+Die Matrix-version davon ist Gleichung (\ref{eq:BP4a}).
 \begin{equation}\tag{BP4a}\label{eq:BP4a}
   \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
 \end{equation}
 
+ALLES ZUSAMMENFASSEN
 
 \cite{Nielsen}
 
@@ -1521,14 +1522,14 @@ Es soll ein KNN designed werden, welches eine Photographie klassifizieren
 soll, ob darauf ein Hund sichtbar ist oder nicht. Wir nehmen fuer dieses
 Gedankenexperiment bereits ein relativ niedrig aufgeloestes Bild mit $256 \times 256$
 Pixel, dies entspricht weniger als $0.07$ Megapixel (ein iPhone XS hat eine Kamera mit
-12 Megapixel). Um die verschiedenen Farben zu codieren besitzt jeder Pixel drei Komponten R, G
+12 Megapixel). Um die verschiedenen Farben zu codieren besitzt jeder Pixel drei Komponten: R, G
 und B. Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
 Komponenten. Jede Komponente ist ein Feature welches das KNN zu verrechnen hat. Somit bestuende
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
 nun mit seiner Nachbarsschicht, welche gleiche Dimensionen besitzt, zu verbinden, braucht
 es $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich so
-viele Gewichte! Fuer ein Netwerke ohne eine einzige Zwischenschichten gaebe es
-also ueber 38 Milliarden Modellparameter zu erlernen! Das dies nicht realistisch ist,
+viele Gewichte! Fuer ein Netwerk ohne eine einzige Zwischenschichten gaebe es
+also ueber 38 Milliarden Modellparameter zu erlernen! Dass dies nicht realistisch ist,
 sollte auf der Hand liegen.
 \para{}
 Nicht nur die Anzahl Modellparameter sind ein Problem fuer KNNs in der
@@ -1538,7 +1539,7 @@ Learning auf Bilder anzuwenden. Fuer genau solche Anwendungen wurde eine modifiz
 Version eines KNNs entwickelt: das \keyword{Convolutional Neural Network} (CNN).
 Im Allgemeinen sind CNNs immer dann geeignet, wenn es Daten zu verarbeiten gibt, welche eine
 rasterartige Form haben, wie eben z.B Bilder.
-Diese Art von Netzwerk, macht Gebrauch von Konzepten aus der klassischen
+Diese Art von Netzwerk macht Gebrauch von Konzepten aus der klassischen
 Bildverarbeitung, wie sie mit beispielsweise Photoshop gemacht werden kann.
 Wie beim Perzeptron und bei den klassischen KNNs auch, ist die Architektur
 biologisch inspiriert.
@@ -1550,8 +1551,8 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklaeren.
 
 
 \section{Bilder als Tensoren}\label{sec:tensor}
-CNNs operieren an Bildern. Sie stellen den Input fuer die Modelle dar.
-Um mit diesen Bildern rechnen zu koennen, ist es sinnvoll sie als sogennante
+CNNs operieren an Bildern. Diese Bilder stellen den Input fuer die Modelle dar.
+Um mit diesen Bildern rechnen zu koennen, ist es sinnvoll, sie als sogenannte
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
 Pixeln zu betrachten. \\
 Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen, was ein Tensor im Allgemeinen ist.
@@ -1566,7 +1567,7 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   Ein Tensor nullten Ranges ist ein Skalar, einer erster Stufe ein Vektor und
   einer mit Rang 2 ist eine normale Matrix.
   \begin{gather*}
-    1 \in \set{R} \text{ (Skalar)} \quad \begin{pmatrix} 1 & 2 & 3 \end{pmatrix}
+    1 \in \set{R} \text{ (Skalar)} \quad \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
     \in \set{R}^3 \text{ (Vektor)} \quad
     \begin{pmatrix}
       1 & 2 & 3 \\
@@ -1579,7 +1580,7 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, muessen wir zuerst verstehen
   Ein Tensor $\ten{T} \in \set{R}^{h \times w \times d}$ mit Rang 3 ist eine 3-dimensionale Zahlenanordnung. Man kann sich
   diesen Tensor einfach als eine 3D-Matrix vorstellen; ein Volumen innerhalb
   dessen Zahlen in einem Raster angeordet sind.
-  Analog zum Volumen, bezeichnet man die Form des Tensors mit Hoehe, Breite und
+  Analog zum Volumen bezeichnet man die Form des Tensors mit Hoehe, Breite und
   Tiefe. \\
   Ein Tensor von der Form $\set{R}^{3 \times 3 \times 3}$ koennte folgendermassen
   aussehen:
@@ -1653,7 +1654,7 @@ Abb. (\ref{fig:bildmatrix})).
 \end{figure}
 
 \section{Topologie von CNNs}
-Ein CNN besteht, wie ein KNN auch, aus Schichten. Jede dieser Schichten erhaelt
+Ein CNN besteht, wie auch ein KNN, aus Schichten. Jede dieser Schichten erhaelt
 als Input ein Bild und hat auch wieder eines als Output. \\
 Ein wichtiger Unterschied eines CNNs ist, dass es aus unterschiedlichen Typen von
 Schichten besteht. Man unterscheiden zwischen vier Arten von Schichten:
@@ -1667,14 +1668,14 @@ Die fully-connected-Schicht ist altbekannt und ist einfach die klassische Schich
 eines KNNs, bestehend aus Neuronen. \\
 Die Convolutional-Schicht ist eine neuartige Schicht, welche es im KNN nicht
 gibt. Sie ist die Schicht, welche fuer das Training relevant ist,
-da sie die Modellparameter beinhalten. Sie extrahiert die relevanten Features
+da sie die Modellparameter beinhaltet. Sie extrahiert die relevanten Features
 aus den Inputbildern und lernt so die Bilder zu verstehen. \\
-Die Pooling-Schicht, wie auch die Upsampling-Schicht beinhalten keine
-Modellparameter und sind fuer das Training deshalb nicht direkt relevant.
-Diese Schichten werden lediglich gebraucht um die verarbeiteten Bilder neu zu
-skalieren. Dies ist sinnvoll, da durch die Extraktion gewisser Featurse, die
+Die Pooling-Schicht, wie auch die Upsampling-Schicht, beinhaltet keine
+Modellparameter und ist fuer das Training deshalb nicht direkt relevant.
+Diese Schichten werden lediglich gebraucht, um die verarbeiteten Bilder neu zu
+skalieren. Dies ist sinnvoll, da durch die Extraktion gewisser Features, die
 restlichen Features wegfallen. Somit muss weniger Information pro Bild gehalten
-werden und die Bilder sollten schrumpfen um Overfitting vorzubeugen. Die Pooling-
+werden und die Bilder sollten schrumpfen, um Overfitting vorzubeugen. Die Pooling-
 Schichten reduzieren die Bilder und die Upsampling-Schichten erweitern die
 Bilder um mehr Pixel. Dies wird in Sektion (\ref{sec:autoencoder}) fuer die Autoencoder
 hilfreich werden. \\
@@ -1692,7 +1693,7 @@ In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
 
 \section{Convolutional-Schichten und Filter}
 Zuerst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
-Gebrauch von sogennanten Filtern. Diese werden in diesem Abschnitt behandelt.
+Gebrauch von sogenannten Filtern. Diese werden in diesem Abschnitt behandelt.
 
 \subsection{Filter in der Bildverarbeitung}
 \keyword{Filter} (auch Kerne) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
@@ -1705,7 +1706,7 @@ erlernen.
 \end{figure}
 
 \para{}
-Ein Filter ist einfach eine Regionen, deutlich kleiner als das verarbeitete Bild
+Ein Filter ist einfach eine Region, deutlich kleiner als das verarbeitete Bild
 $\ten{B}$, welche
 ueber alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
 $\tilde{\ten{B}}$ liefert.
@@ -1740,7 +1741,7 @@ horizontale Kanten akzentuiert. Die Eintraege dieses Filters lauten wie folgt:
 \end{equation*}
 
 Angewandt auf ein schwarz-weisses Bild, erhaelt man ein neues Bild, bei welchem alle erkannten
-Katen weiss eingefaerbt sind und die restlichen Bereiche schwarz sind.
+Kanten weiss eingefaerbt sind und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
 In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
@@ -1761,16 +1762,16 @@ prozessierte Bild.
 
 
 \subsection{Filter in CNNs}
-Aus diktaktischen Gruenden betrachten wir nun zuerst
+Aus didaktischen Gruenden betrachten wir nun zuerst
 nur 2D-Filter, welche sich fuer graustufige Bilder
 $\mat{B} \in \set{R}^{h \times w}$ eignen. Somit ist der hierfuer geeignete
 Filter einfach eine 2D-Matrix, bezeichnet mit $\mat{F} \in \set{R}^{f \times
-  f}$. Man bedenkte bei jeder Filtermatrix einfach immer, dass es sich
-eigentlich im Allgemeinen Fall um einen 3D-Tensor handelt.
+  f}$. Man bedenke bei jeder Filtermatrix einfach immer, dass es sich
+eigentlich im allgemeinen Fall um einen 3D-Tensor handelt.
 \para{}
 Wie wir vorhin erfahren haben, koennen Filter genutzt werden um gewisse
 Features eines Bildes hervorzuheben und andere Features zu ignorieren. Dabei
-bestimmen die Filtereintraege, welche Features extrahiert werden. Somit bestimmt
+bestimmen die Filtereintraege, welche Features extrahiert werden. Somit besteht
 die Aufgabe darin, die richtigen Filtereintraege zu bestimmen, damit die
 gewuenschten Features erkannt werden und auf die gewuenschten Outputs abgebildet
 werden. Naheliegend sollte jetzt der Gedanke sein, die Filtereintreage als die
@@ -1779,7 +1780,7 @@ Mithilfe des Gradietenverfahrens sollten erneut diese Parameter
 erlernt werden. \\
 Da die Filter die gleiche Funktion haben, wie die Gewichte in einem KNN,
 bezeichnet man die Filter in einem CNN mit $\mat{W}$. Die Groesse des Filters
-stellt dabei einene Hyperparameter dar.
+stellt dabei einen Hyperparameter dar.
 
 \begin{equation*}
   \mat{W} = \begin{pmatrix}
@@ -1792,31 +1793,31 @@ stellt dabei einene Hyperparameter dar.
 
 \subsection{Filteroperation intutitiv}\label{sec:filteroperation_intuitiv}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
-Filteroperation leichter verstaendlich zu machen, wird sie erneut fuer ein
+Filteroperation leichter verstaendlich zu machen, wird es erneut fuer ein
 graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlauetert. Spaeter werden auch noch farbige
 Bilder erklaert.
 \para{}
-Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf eine Bildtensor
+Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf einen Bildtensor
 $\ten{B}$ an und erhaelt so ein neues Bild $\tilde{\ten{B}}$. Man schreibt dafuer:
 $\tilde{\ten{B}} = \ten{W} * \ten{B}$.
 \para{}
 Um nun diese Operation zu erklaeren, verwenden wir als Beispiel eine
 2D-Filtermatrix $\mat{W} \in \set{R}^{3 \times 3}$, bei welcher
 $f = 3$ gewaehlt wurde.
-Wie bereits vorhin erwaehnt wandert der Filter ueber das Bild. Dabei befindet
+Wie bereits oben erwaehnt, wandert der Filter ueber das Bild. Dabei befindet
 sich der Filter immer ueber einer Region des Bilder, welche gleich gross ist,
-wie der Filter selber (in diesem Fall ($3 \times 3$)), so dass den Filtermatrixeintraegen immer eindeutig
+wie der Filter selber (in diesem Fall ($3 \times 3$)), sodass den Filtermatrixeintraegen immer eindeutig
 Bildmatrixeintraege entsprechen. Diese Region des Bildes bezeichnet man als das
-\keyword{Rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
+\keyword{rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
 Das Rezeptive Feld, bezeichnet mit $\hat{\mat{B}} \in \set{R}^{3 \times 3}$ ist also einfach eine
 Untermatrix der Obermatrix $\mat{B}$.
 \para{}
 Jedem Element des Filters entspricht ein Element des rezeptiven Feldes. Dem
-Zentralelement $(\mat{W})_c$ entspricht dabei gerade der sogennante Quellenpixel
+Zentralelement $(\mat{W})_c$ entspricht dabei gerade dem sogenannten Quellenpixel
 (engl.: source pixel) $(\ten{B})_s$ des Bildes. Ihn verwenden wir fuer eine
 Namenskonvention fuer das rezeptive Feld. Wir bezeichnen das rezeptive Feld mit
 $\hat{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angiebt.
+des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angibt.
 
 \begin{figure}[h!]
 
@@ -1844,12 +1845,12 @@ bestimmt, wie die neuen Pixel aussehen.
 \end{equation}
 \\
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
-Prozedur angewendet, um den zweiten Pixel zu berechnen. Dies
+Prozedur angewandt, um den zweiten Pixel zu berechnen. Dies
 wird durchgezogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
-Danach wird der Filter wieder nach ganz rechts verschoben und er bewegt sich ein
+Danach wird der Filter wieder nach ganz links verschoben und er bewegt sich ein
 Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
 Dabei werden die Elemente des urspruenglichen Bildes durchaus mehrmals
-verrechnet, da es zu einer Ueberlappung des vorherigen Filter und des
+verrechnet, da es zu einer Ueberlappung des vorherigen Filters und des
 verschobenen Filters kommt.
 \para{}
 
@@ -1960,8 +1961,8 @@ hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, 
 Lage des Filters jeweils nur ein Pixel des neuen Bildes berechnet wird. Man kann
 sich vorstellen, dass an der Position des Quellenpixel jeweils ein neuer
 Pixel entsteht. Dabei muss der Filter immer eine vollstaendige Region als
-rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf den Raendern des
-Bilds zu liegen. Somit fallen diese weg.
+rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf die Raender des
+Bildes zu liegen. Somit fallen diese weg.
 \para{}
 \cite{deeplearning.ai:cnn}
 \cite{wiki:convolution}
@@ -1969,10 +1970,10 @@ Bilds zu liegen. Somit fallen diese weg.
 \subsection{Filteroperationen als diskrete Faltungen}
 Eigentlich handelt es sich bei einer Anwendung eines Filters auf ein Bild um
 eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.:
-\keyword{Convolution}).
+\keyword{convolution}).
 \footnote{
   Streng genommen wird in CNNs nicht eine diskrete Faltung durchgefuehrt, sondern
-  eine sogennante \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
+  eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
   Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
   gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Jedoch verwendet man
   begrifflich das Wort Faltung fuer beide Operationen. Im Verlauf dieser Arbeit
@@ -1982,7 +1983,7 @@ Daher ruehrt auch der Name des Convolutional Neural Networks.
 Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
 betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
 Bedeutung der Faltung fuer Filter beschraenken.
-Damit ihr die Defintion trotzdem mal gesehen habt:
+Die allgemeine Defintion wuerde so lauten:
 \\
 \begin{equation}
   (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
@@ -1990,22 +1991,22 @@ Damit ihr die Defintion trotzdem mal gesehen habt:
 \\
 Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen.
-Bei der Filteroperation handlet es sich lediglich um eine diskrete Faltung des
+Bei der Filteroperation handelt es sich lediglich um eine diskrete Faltung des
 Filtertensors $\ten{W}$ ueber den Bildtensor $\ten{B}$. Somit koennen wir
-folgende Formel verwenden um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
+folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
   (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} (\mat{W})_{v,u}(\mat{B})_{y+v,x+u}
 \end{equation}
 \\
-Fuer farbige Bilder ist das Vorgehen praktisch das selbe. Es werden nun
+Fuer farbige Bilder ist das Vorgehen praktisch das Selbe. Es werden nun
 lediglich 3D-Tensoren anstatt 2D-Tensoren verwendet. Wir betrachten den
 allgemeinen Bildtensor $\ten{B}_{h \times w \times c}$, wobei $c$ die Anzahl
 Farbkomponenten (engl.: channels) ist.
 Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Groesse
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\ten{B}$.
-Dadruch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
-gerade gleich tief ist, wie das Bild. Das hat zur Folge, dass das verarbeitete
+Dadurch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
+gerade gleich tief ist wie das Bild. Das hat zur Folge, dass das verarbeitete
 Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
 Die allgemeine Filtergleichung lautet:
 \\
@@ -2021,8 +2022,8 @@ Endbild erzeugen.
 Die Anzahl Filter bezeichnen wir mit $c$.
 Nun macht man pro Filter $\ten{W}_i$ eine Faltung ueber das Ursprungsbild $\ten{W}$, wobei
 jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert, wobei $i$ der Index des
-Filters ist. All diese gefalteten Bilder $\tilde{\mat{B}}_i$ sind zweidimensionale Matrizen, unabhaengig davon, wieviel
-Komponten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
+Filters ist. All diese gefalteten Bilder $\tilde{\mat{B}}_i$ sind zweidimensionale Matrizen, unabhaengig davon, wieviele
+Komponenten das Ursprungsbild hatte. Aus diesem Grund koennen die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
 $\tilde{\ten{B}}$ bilden.
 Hierfuer muessen alle Filter $\ten{W}_i$ gleich gross sein.
@@ -2037,11 +2038,12 @@ einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 
 \subsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man einen Filter auf sie anwendet.
-Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelement nur ein Pixel
+Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelements nur ein Pixel
 des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
 Ursprungspixeln zu liegen kommt. Die Raender fallen so weg. Diese Groesse des
-Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei giltet folgende Formel fuer die
-neue Groesse $n_1$ des Bildes, anhand der alten Groesse $n_0$.
+Wegfalls haengt von der Filtergroesse $f$ ab. Hierbei gilt folgende Formel fuer die
+neue Groesse $n_1$ des Bildes, anhand der alten Groesse $n_0$. $n$ bezeichnet
+eine der zwei Seitenlaengen.
 \begin{equation}
   n_1 = n_0 - f + 1
 \end{equation}
@@ -2052,9 +2054,9 @@ passieren. Ausserdem kommt es dabei zu einem relativen Informationverlust an den
 Innern des Bildes zu viel Ueberlappungen der Filterlagen kommt und es bei den
 Raendern nur seltener zur Ueberlappung kommt.
 \para{}
-Diese Probleme werden mit sogennantem \keyword{Padding} behoben. Padding ist ein
+Diese Probleme werden mit sogenanntem \keyword{Padding} behoben. Padding ist ein
 Schritt, welcher vor der eigentlichen Faltung stattfindet. Dabei werden einfach
-zusatzliche Raender (Zeilen und Spalten) an das Ursprungsbild angebracht. Der
+zusaetzliche Raender (Zeilen und Spalten) an das Ursprungsbild angebracht. Der
 Tensor wird der Laenge und der Breite nach (nicht der Tiefe entlang!) an den Enden erweitert. Die neuen Elemente werden dabei auf den Wert
 $0$ gesetzt.
 
@@ -2066,9 +2068,9 @@ $0$ gesetzt.
 Das Padding $p$ ist eine Zahl, welche angibt wieviele Elemente an allen Raendern
 hinzugefuegt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefuegt wird.
-Begrifflich unterscheidet man zwei Arten von Padding:
+Begrifflich unterscheidet man zwischen zwei Arten von Padding:
 \begin{itemize}
-\item{\keyword{Valid-Padding}: Es werden keine zuesaezlichen Elemente angebracht. $f$ ist also 0.}
+\item{\keyword{Valid-Padding}: Es werden keine zuesaezlichen Elemente angebracht. $p$ ist also 0.}
 \item{\keyword{Same-Padding}: Es werden so viele Reihen und Spalten angebracht, dass
     die Groesse des Bildes nach der Faltung unveraendert bleibt.}
 \end{itemize}
@@ -2077,7 +2079,7 @@ Um Same-Padding durchzufuehren, muss man $p$ so waehlen, dass es den Wegfall dur
 den Filter gerade kompensiert. Da durch das Padding das Bild der Laenge und
 Breite nach jeweils um zwei $p$ laenger wird, erhaelt man den Ausdruck $n_1 =
 n_0 - f + 1 + 2p$. Wenn man diese Formel jetzt nach $p$ aufloest,
-erhaelt man folgende Formel fuer das Waehlen des Valid-Paddings $p$.
+erhaelt man folgende Formel fuer das Waehlen des Same-Paddings $p$.
 \\
 \begin{equation}
   p = \frac{f-1}{2}
@@ -2090,11 +2092,11 @@ auch mit einer anderen Schrittgroesse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewaehlt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
 Position uebersprungen. Zur Folge hat dies, dass das neue Bild
-deutlich kleiner geworden ist, denn das Zentralelement uebspringt somit auch
+deutlich kleiner geworden ist, denn das Zentralelement ueberspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
 \para{}
 Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
-beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
+Beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 \\
 \begin{equation}
   n_1 = \frac{n_0 + 2p - f}{s} + 1
@@ -2104,12 +2106,12 @@ beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
 \subsection{Vorzuege von Filtern}
 Es stellt sich nun die Frage, weshalb sich Filter fuer Maschinelles
 Lernen mit Bildern eignen.
-Wie bereits erwaehnt besteht die Aufgabe von Filtern darin bestimmte Features
-eines Bildes hervorzuheben und die restlichen auszublenden. Genau die gleiche
+Wie bereits erwaehnt besteht die Aufgabe von Filtern darin, bestimmte Features
+eines Bildes hervorzuheben und die Restlichen auszublenden. Genau die gleiche
 Aufgabe erfuellen die Neuronen in einem KNN. Auch sie sollen Features der
-Inputsdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
+Inputdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
 Weshalb verwendet man also nicht einfach KNNs? (abgesehen
-von dem Problem mit der Ueberzahl an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem}).
+von dem Problem mit der Ueberzahl an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem})
 \para{}
 Man muss erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
 Bildfeatures bzw. Pixel sind nur im Kontext von ihren Nachbarn relevant. Denn
@@ -2124,31 +2126,31 @@ keine Rolle spielen, wo auf dem Bild es sich befindet, welche Groesse es
 hat und was fuer eine Lage es hat. Um diese Eigenschaften irrelevant fuer das
 Modell zu machen, muss dieses gewisse \keyword{Invarianzen} erfuellen.
 \para{}
-Die Eigenschaft, welche CNN geeignet macht fuer lokalisierte Features und
+Die Eigenschaft, welche CNNs geeignet macht fuer lokalisierte Features und
 solche Invarianzen, bezeichnet man als \keyword{Parameter-Sharing}.
-Sie bezeichnet den Umstand, dass auf
+Es bezeichnet den Umstand, dass auf
 mehrere oder alle Features die gleichen Modellparameter wirken. Bei CNNs wird
-dies durch die Bewegung der Filters bzw. seiner Eintraegen ueber (fast) alle
+dies durch die Bewegung des Filters bzw. seiner Eintraege ueber (fast) alle
 Pixel bewerkstelligt. Somit ist
-es egal wo und wie sich die lokalisierten Features befinden. Dies fuehrt dann eben zu
+es egal, wo und wie sich die lokalisierten Features befinden. Dies fuehrt dann eben zu
 den gewuenschten Invarianzen: Translations-, Rotations- und
 Helligkeitsinvarianz. \\
 Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
 beliebige Dimensionen besitzen koennen, da die Filter ihre Bewegung lediglich an
 die Groesse des Bildes anpassen muessen.
 
-\subsection{die Convolutional-Schicht}
+\subsection{Die Convolutional-Schicht}
 Nun moechten wir alles zusammentragen, was wir ueber Filter gelernt
 haben, um nun die Convolutional-Schicht zu definieren.
 \para{}
-Beginnen tut eine Convolutional Schicht $l$ mit seinem Input, also den
-Aktivierungen $\ten{A}^l \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherigen Schicht ($l-1$) produziert hat,
-oder falls es die erste Schicht ist erhaelt sie den Input $\ten{X}$ des Netzes,
+Beginnen tut eine Convolutional-Schicht $l$ mit seinem Input, also den
+Aktivierungen $\ten{A}^{l-1} \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherige Schicht ($l-1$) produziert hat,
+oder falls es die erste Schicht ist, erhaelt sie den Input $\ten{X}$ des Netzes,
 welchen man auch mit $\ten{A}^0$ bezeichnet. \\
 Die Schicht besitzt $c^l$ Varianten an Filtern $\ten{W}^l_i \in
 \set{R}^{f^l \times f^l \times c^{l-1}}$. Diese Filter haben alle die gleichen
 Eigenschaften, bezueglich: der Groesse $f^l$, der Tiefe $c^{l-1}$, dem Padding
-$p^l$, dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
+$p^l$ und dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
 $w^l_{i\,|\,\alpha,\beta,\gamma}$.
 \\
 \begin{equation*}
@@ -2168,7 +2170,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \end{bmatrix}
 \end{equation*}
 \\
-Nun wendet faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
+Nun faltet man jeden Filter $\ten{W}_i^l$ einzeln ueber das Bilder
 $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 \\
 \begin{equation}
@@ -2185,21 +2187,21 @@ Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
 Tiefe des neuen 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Hoehe
 $h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
-berchnet anhand der Hohe $h^l$ und der Breite $w^l$ des Ausgangsbild.
+berechnet anhand der Hoehe $h^l$ und der Breite $w^l$ des Ausgangsbildes.
 \\
 \begin{equation}
-  n_1 = \frac{n_0 + 2p - f}{s} + 1
+  n^{l+1} = \frac{n^l + 2p^l - f^l}{s^l} + 1
 \end{equation}
 \\
-Da die Faltungsoperation eine lineare Operation, braucht man wieder eine
-Aktivierungsfunktion, um das Modell zu befaehigen nicht-lineare Probleme zu
+Da die Faltungsoperation eine lineare Operation ist, braucht man wieder eine
+nicht-lineare Aktivierungsfunktion um das Modell zu befaehigen nicht-lineare Probleme zu
 loesen.
 Deshalb wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
 $\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
 neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Meistens waehlt man hier
 die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
 \begin{equation}
-  \ten{A}^{l+1} = \vecf{\varphi}(\tilde{\ten{A}}^l)
+  \ten{A}^{l+1} = \vecf{\varphi}[\tilde{\ten{A}}^l]
 \end{equation}
 
 
@@ -2213,15 +2215,15 @@ schrumpft das Bild entweder gar nicht (bei Same-Padding) oder es schrumpft nur
 sehr leicht (bei Valid-Padding). Dies ist ein Problem, da die Information in
 deutlich weniger Pixeln bzw. Tensorelementen codiert werden koennte. Deshalb
 haben wir einen unoetigen Ressourcenverbrauch und eine erhoehte Gefahr fuer
-Overfitting. Um diesem Problem entgegenzuwirken gibt es einerseits sogennante
+Overfitting. Um diesem Problem entgegenzuwirken, gibt es einerseits sogenannte
 \keyword{Pooling-Schichten} und als Gegenstueck dazu
-\keyword{Upsampling-Schichten}. Ersteres wird verwendet um die Dimensionalitaet
-der Bilder zu vermindern und letzteres um die Dimensionalitaet der Bilder zu
-erweitern. Somit ermoeglich diese Schichten eine kontrollierte Art (im Gegensatz zum
+\keyword{Upsampling-Schichten}. Ersteres wird verwendet, um die Dimensionalitaet
+der Bilder zu vermindern, und letzteres, um die Dimensionalitaet der Bilder zu
+erweitern. Somit ermoeglichen diese Schichten eine kontrollierte Art (im Gegensatz zum
 Padding) die Dimensionalitaet einzustellen.
 
-\subsection{die Pooling-Schicht}
-Die Pooling-Schicht verringert die Dimensionalitaet durch das Zusammenfassen eines Felds
+\subsection{Die Pooling-Schicht}
+Die Pooling-Schicht verringert die Dimensionalitaet durch das Zusammenfassen eines Feldes
 von Tensorelementen zu einem einzigen Tensorelement der naechsten Schicht.
 Dabei geht das Feld nur entlang der Laenge und Breite des Bildes und
 nicht entlang der Tiefe. Dies bedeutet, das Pooling wird auf jeden Channel
@@ -2229,31 +2231,31 @@ einzeln angewandt, dadurch aendert sich die Tiefe des Bildes nicht.
 \para{}
 Fuer die Beschreibung einer Pooling-Schicht wird viel Begrifflichkeit der
 Convolutional-Schicht und der Filter uebernommen.
-Die Groesse des Elementfelder, welches zusammengefasst wird, bezeichent man analog zur
-Filtergroesse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling wieder wie
-gross die Schrittgroesse beim Verschieben des Felder ist. Meistens waehlt man den
-Stride $s$ gerade gleich der Feldgroesse $f$, damit alle Pixel
-zusammengefasst werden. Kleiner als $f$ kann $s$ nicht gewaehlt werden.
+Die Groesse des Elementfeldes, welches zusammengefasst wird, bezeichent man analog zur
+Filtergroesse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling wieder, wie
+gross die Schrittgroesse beim Verschieben des Feldes ist. Meistens waehlt man den
+Stride $s^l$ gerade gleich der Feldgroesse $f^l$, damit alle Pixel
+zusammengefasst werden. Kleiner als $f^l$ kann $s^l$ nicht gewaehlt werden.
 \para{}
 Man unterscheidet zwischen zwei Arten von Pooling:
 \begin{itemize}
 \item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
-    man das arithmetische Mittel der Element bildet.}
+    man das arithmetische Mittel der Elemente bildet.}
 \item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
-    Element mit dem hoehsten Wert beibehalten wird und die anderen verworfen werden.}
+    Element mit dem hoechsten Wert beibehalten wird und die anderen verworfen werden.}
 \end{itemize}
 In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
-Resultate erziehlt.
+Resultate erzielt.
 \para{}
-Es ist festzustellen, dass eine Pooling-Schicht keinerlei Modellparameter
+Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
-Hyperparameter, wie die Feldgroesse $f$ und den Stride $s$.
+Hyperparameter, wie die Feldgroesse $f^l$ und den Stride $s^l$.
 \para{}
-Mit einer Pooling-Schicht, bei welcher $f = 2$ und $s = 2$ gewaehlt wurde, also
+Mit einer Pooling-Schicht, bei welcher $f^l = 2$ und $s^l = 2$ gewaehlt wurde, also
 ein ($2 \times 2$)-Feld zusammengefasst wird, kommt es zu einer
-Dimensionalitaetsreduktion von 75\%, da aus jeweils vier Element ein Element wird.
+Dimensionalitaetsreduktion von 75\%, da aus jeweils vier Elementen ein Element wird.
 \para{}
-Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten sie
+Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten die
 gleichen Formeln wie fuer die Filteroperationen:
 \\
 \begin{equation}
@@ -2261,13 +2263,13 @@ gleichen Formeln wie fuer die Filteroperationen:
 \end{equation}
 \\
 
-\subsection{die Upsampling-Schicht}
+\subsection{Die Upsampling-Schicht}
 Die Upsampling-Schicht bildet das Gegenstueck zur Pooling-Schicht, da sie die
-Dimensionaliaet der Bilder erhoeht. Auf den ersten Blick erscheint unklar,
+Dimensionalitaet der Bilder erhoeht. Auf den ersten Blick erscheint unklar,
 weshalb man die Dimensionalitaet erhoehen wollen koennte, da die eigentliche
 Motivation dieser Schichten in der Verhinderung von Overfitting besteht. Jedoch
-sollte in Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schicht
-noetig sind.
+sollte in Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schichten
+notwendig sind.
 \para{}
 Man verwendet auch hier wieder den Begriff der Feldgroesse $f^l$. Diesemal
 beschreibt dieser Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
