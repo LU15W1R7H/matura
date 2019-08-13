@@ -162,6 +162,8 @@ Eine eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \end{itemize}
 \para{}
 
+\cite{Nielsen}
+
 \subsubsection{Mittlere quadratische Abweichung}
 Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''.
 (engl.:\ mean squared error). Sie ist definiert als das arithmetische Mittel
@@ -358,6 +360,9 @@ Dabei hilft nur Ausprobieren. Falls $\eta$ nicht gut gewaehlt wurde, gibt es Pro
   \caption{Visualisierung verschiedener Lernraten}
 \end{figure}
 
+\para{}
+\cite{Nielsen}
+
 \subsection{Stochastisches Gradientenverfahren fuer Machine Learning}
 Wie oben erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}\ |\ \param_0,\ldots,\param_n)$
@@ -392,6 +397,7 @@ Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (
   \param_{k,t+1} = \param_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \partderiv{C_i}{\param_{k,t}}
 \end{equation}
 
+\cite{Nielsen}
 
 \subsection{Adam Optimizer?}
 
@@ -416,6 +422,9 @@ Es gibt nicht nur eine Art von Neuronalem Netz, sondern es exisitieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewaehlt werden
 muessen. Diese Arbeit wird vorallem von zwei solchen Architekturen gebrauch machen:
 Convolutional Neural Networks und sogenannte Autoencodern.
+
+\para{}
+\cite{wiki:kuenstliches_neuronales_netz}
 
 \section{Perzeptron}
 Um den Aufbau und die Funktion eines Kuenstlichen Neuronalen Netzes besser zu
@@ -485,6 +494,10 @@ Fuer das Trainieren des Perzeptrons existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann naemlich nicht verwendet
 werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen}) einleuchtend werden.
 
+\para{}
+\cite{wiki:perzeptron}
+\cite{Nielsen}
+
 \subsection{Was kann ein Perzeptron erlernen?}
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \keyword{linearer Klassifikator} der Form
@@ -535,6 +548,10 @@ sich fast nur in ihrer Aktivierungsfunktion.
 \end{figure}
 \\
 
+\para{}
+\cite{Nielsen}
+\cite{wiki:kuenstliches_neuron}
+
 \subsection{Perzeptronen als Kuenstliche Neuronen}
 Zuerst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
 Ein wesentlicher Unterschied des Perzeptron gegenueber sonstigen Kuenstlichen
@@ -579,6 +596,8 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
   \label{fig:heaviside}
 \end{figure}
 
+\cite{wiki:kuenstliches_neuron}
+\cite{wiki:perzeptron}
 
 \subsection{Stueckweise lineare Neuronen}
 Der naechste Schritt nach dem binaeren Perzeptron sind sogenannte stueckweise
@@ -633,6 +652,9 @@ Ausserdem koennen mit diesem Neuron auch nur lineare Probleme geloest werden.
   \label{fig:stueckweiselinear}
 \end{figure}
 
+\para{}
+\cite{wiki:kuenstliches_neuron}
+
 
 \subsection{Nicht-lineare Neuronen}
 Die logische naechste Erweiterung sind nicht-lineare Neuronen.
@@ -684,6 +706,10 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb. (\ref{fig:sigmo
   \caption{Definition, Ableitung und Graph der Sigmoid-Funktion $\sigma$}
   \label{fig:sigmoid}
 \end{figure}
+
+\para{}
+\cite{wiki:kuenstliches_neuron}
+\cite{wiki:sigmoidfunktion}
 
 
 \section{Topologie der Kuenstlichen Neuronalen Netzen}
@@ -779,6 +805,9 @@ und die zweite besitzt 4 Neuronen. \\
   \caption{Schichten eines KNNs}
   \label{fig:nn_layers}
 \end{figure}
+
+\cite{wiki:kuenstliches_neuronales_netz}
+\cite{Nielsen}
 
 \section{Lernverhalten}
 Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell fuer jede
@@ -1653,6 +1682,9 @@ Abb. (\ref{fig:bildmatrix})).
   \label{fig:bildmatrix}
 \end{figure}
 
+\cite{deeplearning.ai:cnn}
+\cite{wiki:tensor}
+
 \section{Topologie von CNNs}
 Ein CNN besteht, wie auch ein KNN, aus Schichten. Jede dieser Schichten erhaelt
 als Input ein Bild und hat auch wieder eines als Output. \\
@@ -1689,6 +1721,10 @@ In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
   \label{fig:cnn_topology}
 \end{figure}
 
+\para{}
+\cite{Goodfellow-et-al-2016}
+\cite{deeplearning.ai:cnn}
+\cite{wiki:cnn}
 
 
 \section{Convolutional-Schichten und Filter}
@@ -2014,6 +2050,11 @@ Die allgemeine Filtergleichung lautet:
   (\tilde{\mat{B}})_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c (\ten{W})_{v,u,w} (\ten{B})_{x+u,y+v,w}
 \end{equation}
 
+\para{}
+\cite{Goodfellow-et-al-2016}
+\cite{deeplearning.ai:cnn}
+\cite{wiki:cnn}
+
 \subsection{Mehrere Filter}
 Eine Filteroperation ist nicht auf einen einzigen Filter beschraenkt. Es koennen
 mehrere Filter auf das gleiche Ausgangsbild angewandt werden und zusammen ein
@@ -2035,6 +2076,10 @@ Die Tiefe des neuen Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter 
 Wir haben bereits frueher immer die Tiefe des Bildes (bzw. die Anzahl
 Farbkomponenten) mit $c$ bezeichnet. Somit ist $c$ sowohl die Anzahl Filter
 einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
+
+\para{}
+\cite{Goodfellow-et-al-2016}
+\cite{deeplearning.ai:cnn}
 
 \subsection{Padding}
 Wie bereits erwaehnt schrumpfen die Bilder (an den Raendern), wenn man einen Filter auf sie anwendet.
@@ -2085,6 +2130,8 @@ erhaelt man folgende Formel fuer das Waehlen des Same-Paddings $p$.
   p = \frac{f-1}{2}
 \end{equation}
 
+\cite{deeplearning.ai:cnn}
+
 \subsection{Stride}
 Bis jetzt haben wir bei den Filterfaltungen, den Filter pro Anwendung immer nur
 um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
@@ -2102,6 +2149,7 @@ Beruecksichtigung der Filtergroesse $f$, dem Padding $p$ und dem Stride $s$.
   n_1 = \frac{n_0 + 2p - f}{s} + 1
 \end{equation}
 
+\cite{deeplearning.ai:cnn}
 
 \subsection{Vorzuege von Filtern}
 Es stellt sich nun die Frage, weshalb sich Filter fuer Maschinelles
@@ -2138,6 +2186,8 @@ Helligkeitsinvarianz. \\
 Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
 beliebige Dimensionen besitzen koennen, da die Filter ihre Bewegung lediglich an
 die Groesse des Bildes anpassen muessen.
+
+\cite{deeplearning.ai:cnn}
 
 \subsection{Die Convolutional-Schicht}
 Nun moechten wir alles zusammentragen, was wir ueber Filter gelernt
@@ -2205,7 +2255,8 @@ die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
 \end{equation}
 
 
-
+\cite{wiki:cnn}
+\cite{deeplearning.ai:cnn}
 \cite{Goodfellow-et-al-2016}
 
 \section{Dimensionalitaetskontrolle}
@@ -2263,6 +2314,10 @@ gleichen Formeln wie fuer die Filteroperationen:
 \end{equation}
 \\
 
+
+\cite{deeplearning.ai:cnn}
+\cite{Goodfellow-et-al-2016}
+
 \subsection{Die Upsampling-Schicht}
 Die Upsampling-Schicht bildet das Gegenstueck zur Pooling-Schicht, da sie die
 Dimensionalitaet der Bilder erhoeht. Auf den ersten Blick erscheint unklar,
@@ -2286,6 +2341,10 @@ Zwei Arten sind besonders verbreitet:
 Wir werden hier nur die Naechste-Nachbar-Interpolation betrachten. Sie ist
 ziemlich trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
 Elements an. Der Wert wird also einfach vermehrt.
+
+
+\cite{deeplearning.ai:cnn}
+\cite{Goodfellow-et-al-2016}
 
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
@@ -2876,7 +2935,7 @@ Relevanz, da TF sich vorallem fuer GPU-Hardwarebeschleunigung eignet
 und dafuer optimiert ist. Ausserdem ist es praktisch unmoeglich die gleiche
 Performance von TF mit einer CPU zu erreichen, welche mit einer GPU moeglich ist.
 \para{}
-Hauptsaechlich parallelisiert TensorFlow mithilfe von der \keywoyd{SIMD}. SIMD
+Hauptsaechlich parallelisiert TensorFlow mithilfe von der \keyword{SIMD}. SIMD
 ist ein Prinzip zur Paralleliserung einer Insturktion fuer mehrere
 Dateneinheiten und steht deshalb fuer ``Single Instruction, Multiple Data''.
 SIMD umfasst einerseits die spezifische CPU-Architektur und den dazugehoerigen
@@ -2987,8 +3046,8 @@ To build a simple, fully-connected network (i.e. multi-layer perceptron):
 There are many tf.keras.layers available with some common constructor parameters:
 
 activation: Set the activation function for the layer. This parameter is specified by the name of a built-in function or as a callable object. By default, no activation is applied.
-kernel_initializer and bias_initializer: The initialization schemes that create the layer's weights (kernel and bias). This parameter is a name or a callable object. This defaults to the "Glorot uniform" initializer.
-kernel_regularizer and bias_regularizer: The regularization schemes that apply the layer's weights (kernel and bias), such as L1 or L2 regularization. By default, no regularization is applied.
+kernelinitializer and biasinitializer: The initialization schemes that create the layer's weights (kernel and bias). This parameter is a name or a callable object. This defaults to the "Glorot uniform" initializer.
+kernelregularizer and biasregularizer: The regularization schemes that apply the layer's weights (kernel and bias), such as L1 or L2 regularization. By default, no regularization is applied.
 
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -3042,7 +3101,7 @@ After the model is constructed, configure its learning process by calling the co
 tf.keras.Model.compile takes three important arguments:
 
 optimizer: This object specifies the training procedure. Pass it optimizer instances from the tf.train module, such as tf.train.AdamOptimizer, tf.train.RMSPropOptimizer, or tf.train.GradientDescentOptimizer.
-loss: The function to minimize during optimization. Common choices include mean square error (mse), categorical_crossentropy, and binary_crossentropy. Loss functions are specified by name or by passing a callable object from the tf.keras.losses module.
+loss: The function to minimize during optimization. Common choices include mean square error (mse), categorical crossentropy, and binary crossentropy. Loss functions are specified by name or by passing a callable object from the tf.keras.losses module.
 metrics: Used to monitor training. These are string names or callables from the tf.keras.metrics module.
 \para{}
 The following shows a few examples of configuring a model for training:
@@ -3083,33 +3142,38 @@ For small datasets, use in-memory NumPy arrays to train and evaluate a model. Th
 tf.keras.Model.fit takes three important arguments:
 
 epochs: Training is structured into epochs. An epoch is one iteration over the entire input data (this is done in smaller batches).
-batch_size: When passed NumPy data, the model slices the data into smaller batches and iterates over these batches during training. This integer specifies the size of each batch. Be aware that the last batch may be smaller if the total number of samples is not divisible by the batch size.
-validation_data: When prototyping a model, you want to easily monitor its performance on some validation data. Passing this argument—a tuple of inputs and labels—allows the model to display the loss and metrics in inference mode for the passed data, at the end of each epoch.
+batch size: When passed NumPy data, the model slices the data into smaller batches and iterates over these batches during training. This integer specifies the size of each batch. Be aware that the last batch may be smaller if the total number of samples is not divisible by the batch size.
+validation data: When prototyping a model, you want to easily monitor its performance on some validation data. Passing this argument—a tuple of inputs and labels—allows the model to display the loss and metrics in inference mode for the passed data, at the end of each epoch.
 
 \subsubsection{Predict}
 The tf.keras.Model.evaluate and tf.keras.Model.predict methods can use NumPy data and a tf.data.Dataset.
 
 To evaluate the inference-mode loss and metrics for the data provided:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 
 data = np.random.random((1000, 32))
-labels = random_one_hot_labels((1000, 10))
+labels = random one hot labels((1000, 10))
 
-model.evaluate(data, labels, batch_size=32)
+model.evaluate(data, labels, batch size=32)
 
 model.evaluate(dataset, steps=30)
 
 
 And to predict the output of the last layer in inference for the data provided, as a NumPy array:
 
-result = model.predict(data, batch_size=32)
+result = model.predict(data, batch size=32)
 print(result.shape)
+\end{minted}
 
 \subsection{Weiss nit}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
 
 # A layer instance is callable on a tensor, and returns a tensor.
 x = layers.Dense(64, activation='relu')(inputs)
 x = layers.Dense(64, activation='relu')(x)
+
 predictions = layers.Dense(10, activation='softmax')(x)
 
 Instantiate the model given inputs and outputs.
@@ -3123,25 +3187,197 @@ metrics=['accuracy'])
 
 # Trains for 5 epochs
 model.fit(data, labels, batch_size=32, epochs=5)
+\end{minted}
 
 
 % ------------------------------------
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
+Nun sind wir in dem Kapitel angelangt, in welchem das ganze erarbeitete Wissen
+zusammenfliesst. Wir werden ein konkretes Machine-Learning-Modell in Keras und
+TensorFlow programmieren. Dabei wird darauf eingegangen, welche Schritte die
+Entwicklung eines solchen Modells umfasst und wie dabei am besten vorgegangen
+wird. Dabei werden wir vorallem folgendes Lernen:
+\begin{itemize}
+  \item{Wie sucht man geeignete Trainingsdaten?}
+  \item{Wie muss man die Trainingsdaten formatieren?}
+  \item{Wie definiert man ein ML-Modell in Keras?}
+  \item{Wie laueft das Training ab?}
+  \item{Wie stellt man die Hyperparameter mithilfe von TensorBoard ein?}
+\end{itemize}
+
+\section{Das konkrete Modell}
+Als konkretes Modell werden wir einen Convolutional-Denoising-Autoencoder
+programmieren. Deshalb haben wir die dafuer relevanten Archtitekuren in der
+Theorie behandelt.
+Diesen werden wir verwenden um das Bildrauschen von handgeschrieben Ziffern zu entfernen und sie so wieder
+lesbar machen.
+\para{}
+\subsection{Daten}
+Als Trainingsdaten werden wir den \keyword{MNIST}-Datensatz. Er ist der wohl
+bekannteste Datensatz fuer beispielhaftes Maschinelles Lernen.
+Er besteht aus Bildern von handgeschrieben Ziffern mit einer Aufloesung von $26
+\times 26$. Zuesaetzlich gaebe es auch noch Labels zu den Ziffern, jedoch werden
+wir diese nicht brauchen, da wir einen Autoencoder trainieren.
 
 \section{Setup}
-Installationsschritte fuer Python, CUDA, CUDNN und Tensorflow auf arch-basierter Linuxdistribution mit Pacman.
+Zuallererst muessen wir unser Entwicklungsumfeld richtig konfigurieren. Das
+bedeutet, dass wir Python zusammen mit den verschiedenen Programmbibliotheken
+installieren muessen.
+\para{}
+Die Installationsschritte werden in dieser Arbeit fuer eine arch-basierte
+Linuxdistribution, welche den \keyword{Pacman}-Package-Manager verwendet, erklaert.
 
-Emacs und Spacemacs erwaehnen.
+\paragraph{Python3}
+Fuer unser Programm werden wir die Programmiersprache \keyword{Python3} verwenden.
 
-\section{das Modell}
-Denoising Autoencoder fuer den MNIST-Datensatz.
+Um Python3 mithilfe von Pacman zu installieren, muss man folgenden Befehl in
+der Kommandozeile ausfuehren.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S python
+\end{minted}
 
-\subsection{MNIST}
+\paragraph{Python-Module}
+Wir werden fuer unser Python-Programm von zwei Packages gebrauch machen, welche
+nicht in der Standardbibliothek von Python enthalten sind:
+\begin{itemize}
+  \item{NumPy: Ein Package welches verschiedene Mathematische Konzepte
+      implementiert. Vorallem Vektor- und Matrix-Arithmetik}
+    \item{Matplotlib: Ein Package zum erstellen von Plots und Grafiken}
+\end{itemize}
+
+Man installiert beide mit folgenden Kommandos.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S python-numpy
+  sudo pacman -S python-matplotlib
+\end{minted}
+
+Nun muessen wir CUDA installieren, damit wir TensorFlow auf der GPU ausfuehren koennen.
+\paragraph{CUDA}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S cuda
+\end{minted}
+
+Da wir nun CUDA installiert haben, koennen wir auch cuDNN installieren, das
+Deep-Learning-Framework fuer CUDA.
+\paragraph{cuDNN}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S cudnn
+\end{minted}
+
+Zu guter letzt installieren wir noch die GPU-version von TensorFlow mithilfe
+folgenden Kommandos.
+\paragraph{TensorFlow}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S tensorflow-cuda
+\end{minted}
+
 
 \section{Entwicklung}
+Nun beginnen wir mit der eigentlichen Programmierung.
+
+\subsection{Testprogramm}
+Zuallerst werden wir ein kleines Testprogramm schreiben, welches ueberprueft, ob
+alle Programmabhaengigkeiten korrekt installiert wurden und verwendet werden koennen.
+
+In den ersten Zeilen des Pythonprogamms werden wir die Importstatments schreiben.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+import numpy as np # NumPy wird impotiert
+import matplotlib.pyplot as plt # matplotlib wird impotiert
+
+import tensorflow as tf # tensorflow wird impotiert
+# Keras muss nicht explizit geladen werden, da es in TensorFlow drin ist.
+
+print(tf.__version__) # Schreibt die TensorFlow Version nach stdout.
+\end{minted}
+\para{}
+
+\subsection{Trainingsdaten}
+Da wir nun verfiziert haben, dass alle Programmabhaengigkeiten funktionieren,
+koennen wir mit dem eigentlichen Programm beginnen.
+
+\subsubsection{Laden des MNIST-Datensatzes}
+Zuerst werden wir die Daten laden. Da das MNIST-Datenset so bekannt ist, kann
+man mithilfe von Keras es direkt in das Programm laden.
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+ (x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
+\end{minted}
+Da wir nur an den Inputs \code{python}{x} interessiert sind, werden wir
+nur diese in einer Variable speichern und die Labels \code{y}
+werden wir verwerfen (\code{\_} ist eine wegwerf-Variabel).
+\code{x\_train} bezeichnet die  Trainingsinputs und \code{x\_test} die Inputs
+des Testdatensatzes, welcher benutzt wird um das Modell entgueltig zu bewerten.
+
+\subsubsection{Formatieren der Daten}
+Als naechstes muessen wir die Daten korrekt vorprozessieren. Das beinhaltet, sie
+richtig zu formatieren, sie zu normalisieren und sie zu shuffeln.
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  x_train = x_train.astype('float32') / 255.0 # Normalisierung
+  x_test = x_test.astype('float32') / 255.0 # Normalisierung
+\end{minted}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  x_
+\end{minted}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+\end{minted}
+
+\subsubsection{Generieren der verrauschten Bilder}
+Nun muessen wir noch die Inputs fuer unser Modell generieren, denn dies sind die
+Bilder, welche ein Rauschen beinhalten. Dieses Rauschen koennen wir relativ
+leicht einberechnen, indem wir
 
 
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+noise_factor = 0.5
+x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
+x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
+x_train_noisy = np.clip(x_train_noisy, 0., 1.)
+x_test_noisy = np.clip(x_test_noisy, 0., 1.)
+\end{minted}
+
+
+\subsection{Modell definieren}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+# define model
+input_data = tf.keras.Input(shape=(28,28,1))
+econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
+econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
+emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
+encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
+dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
+dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
+dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
+dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
+dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+decoded = dconv2
+
+# compile model
+autoencoder = tf.keras.Model(input_data, decoded)
+autoencoder.compile(optimizer='sgd',loss='binary_crossentropy')
+\end{minted}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  print(autoencoder.summary())
+\end{minted}
+
+\subsection{TensorBoard Konfiguration}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
+  tensorboard = tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
+  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
+\end{minted}
+
+
+\subsection{Training}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+
+\end{minted}
 
 
 \chapter{Diskussion}
