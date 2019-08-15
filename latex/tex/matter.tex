@@ -3194,31 +3194,39 @@ model.fit(data, labels, batch_size=32, epochs=5)
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
 Nun sind wir in dem Kapitel angelangt, in welchem das ganze erarbeitete Wissen
-zusammenfliesst. Wir werden ein konkretes Machine-Learning-Modell in Keras und
-TensorFlow programmieren. Dabei wird darauf eingegangen, welche Schritte die
+zusammenfliesst. Wir werden ein konkretes Machine-Learning-Modell in TensorFlow
+zusammen mit Keras programmieren. Dabei wird darauf eingegangen, welche Schritte die
 Entwicklung eines solchen Modells umfasst und wie dabei am besten vorgegangen
-wird. Dabei werden wir vorallem folgendes Lernen:
-\begin{itemize}
-  \item{Wie sucht man geeignete Trainingsdaten?}
-  \item{Wie muss man die Trainingsdaten formatieren?}
-  \item{Wie definiert man ein ML-Modell in Keras?}
-  \item{Wie laueft das Training ab?}
-  \item{Wie stellt man die Hyperparameter mithilfe von TensorBoard ein?}
-\end{itemize}
+wird.
 
 \section{Das konkrete Modell}
-Als konkretes Modell werden wir einen Convolutional-Denoising-Autoencoder
-programmieren. Deshalb haben wir die dafuer relevanten Archtitekuren in der
-Theorie behandelt.
-Diesen werden wir verwenden um das Bildrauschen von handgeschrieben Ziffern zu entfernen und sie so wieder
-lesbar machen.
+Als konkretes Modell werden wir einen Convolutional-Denoising-Autoencoder,
+welchen wir in der Theorie behandelt haben, programmieren.
+Wir werden ihn verwenden um das Bildrauschen von Bildern wegzurechnen und sie so
+wieder erkenntlich zu machen. Als
+Bilder werden wir handgeschriebene Ziffern vom MNIST-Datenset verwenden.
 \para{}
 \subsection{Daten}
-Als Trainingsdaten werden wir den \keyword{MNIST}-Datensatz. Er ist der wohl
+Als Trainingsdaten verwenden wir den \keyword{MNIST}-Datensatz. Er ist der wohl
 bekannteste Datensatz fuer beispielhaftes Maschinelles Lernen.
-Er besteht aus Bildern von handgeschrieben Ziffern mit einer Aufloesung von $26
-\times 26$. Zuesaetzlich gaebe es auch noch Labels zu den Ziffern, jedoch werden
+Er besteht aus schwarz-weiss Bildern von handgeschrieben Ziffern.
+Zuesaetzlich gaebe es auch noch Labels zu den Ziffern, da das Modell meistens
+fuer Ziffernerkennung trainiert wird. Jedoch werden
 wir diese nicht brauchen, da wir einen Autoencoder trainieren.
+\para{}
+Der Datensatz besteht aus einem Trainingsdatensatz von 60'000 Sampels und einem Testdatensatz
+von 10'000 Sampels. Alle Ziffern wurden in soefern schon korrekt formatiert,
+dass ihre Groesse auf $28 \times 28$ Pixel normalisiert wurde und im Bild
+zentriert sind.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{mnist.png}
+  \caption{ein Auszug an MNIST-Bildern}
+\end{figure}
+
+\para{}
+\cite{net:mnist}
 
 \section{Setup}
 Zuallererst muessen wir unser Entwicklungsumfeld richtig konfigurieren. Das
@@ -3229,7 +3237,7 @@ Die Installationsschritte werden in dieser Arbeit fuer eine arch-basierte
 Linuxdistribution, welche den \keyword{Pacman}-Package-Manager verwendet, erklaert.
 
 \paragraph{Python3}
-Fuer unser Programm werden wir die Programmiersprache \keyword{Python3} verwenden.
+Um TensorFlow und Keras verwenden zu koennen, muss Python3 installiert sein.
 
 Um Python3 mithilfe von Pacman zu installieren, muss man folgenden Befehl in
 der Kommandozeile ausfuehren.
@@ -3238,11 +3246,11 @@ der Kommandozeile ausfuehren.
 \end{minted}
 
 \paragraph{Python-Module}
-Wir werden fuer unser Python-Programm von zwei Packages gebrauch machen, welche
+Wir werden fuer unser Python-Programm von zwei Packages Gebrauch machen, welche
 nicht in der Standardbibliothek von Python enthalten sind:
 \begin{itemize}
   \item{NumPy: Ein Package welches verschiedene Mathematische Konzepte
-      implementiert. Vorallem Vektor- und Matrix-Arithmetik}
+      implementiert; vorallem Vektor- und Matrix-Arithmetik}
     \item{Matplotlib: Ein Package zum erstellen von Plots und Grafiken}
 \end{itemize}
 
@@ -3280,60 +3288,91 @@ Nun beginnen wir mit der eigentlichen Programmierung.
 Zuallerst werden wir ein kleines Testprogramm schreiben, welches ueberprueft, ob
 alle Programmabhaengigkeiten korrekt installiert wurden und verwendet werden koennen.
 
-In den ersten Zeilen des Pythonprogamms werden wir die Importstatments schreiben.
+In den ersten Zeilen des Pythonprogamms werden wir die Importstatments
+schreiben, um NumPy, MatPlotLib und TensorFlow verfuegbar zu machen.
+Keras muss nicht explizit geladen werden, da es in TensorFlow drin steckt.
+Dann schreiben wir die Versionnummern der verschiedenen Programmbibliotheken
+in die Konsole und koennen so ueberpruefen, ob alles richtig konfiguriert ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 import numpy as np # NumPy wird impotiert
-import matplotlib.pyplot as plt # matplotlib wird impotiert
+import matplotlib as mpl # matplotlib wird impotiert
 
 import tensorflow as tf # tensorflow wird impotiert
-# Keras muss nicht explizit geladen werden, da es in TensorFlow drin ist.
 
+print(np.__version__) # Schreibt die NumPy Version nach stdout.
+print(mpl.__version__) # Schreibt die MatplotLib Version nach stdout.
 print(tf.__version__) # Schreibt die TensorFlow Version nach stdout.
+\end{minted}
+Falls der Output in folgenden Charakter hat (die Versionnummern muessen nicht
+die gleichen sein) und keine Fehlermeldungen angezeigt
+werden, sollte alles funktionieren.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
+  1.17.0
+  3.1.1
+  1.14.0
 \end{minted}
 \para{}
 
 \subsection{Trainingsdaten}
 Da wir nun verfiziert haben, dass alle Programmabhaengigkeiten funktionieren,
 koennen wir mit dem eigentlichen Programm beginnen.
+\para{}
+Im den folgenden Auschnitten werden wir den Code immer weiter ausbauen und dabei
+erfahren, was er bewirkt. Wir beginnen unser eigentlichens Programm mit folgenden Importstatments.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  import numpy as np
+  import matplotlib.pyplot as plt
+  import tensorflow as tf
+\end{minted}
 
 \subsubsection{Laden des MNIST-Datensatzes}
-Zuerst werden wir die Daten laden. Da das MNIST-Datenset so bekannt ist, kann
-man mithilfe von Keras es direkt in das Programm laden.
-
+Der nun erste Schritt besteht darin, die Datensaetze zu laden. Wie bereits
+erwaehnt, werden wir den MNIST-Datensatz verwendet. Da dieser dermassen bekannt
+ist, gibt es eine Funktion in Keras, welche automatisch die Daten herunterlaedt
+und sie als NumPy Arrays zurueckgibt. Die Funktion gibt die verschiedenen
+Komponenten der Daten in folgendem Format zurueck \code{(x\_train, y\_train),
+  (x\_test, y\_test)}. Da wir nur an den Features \code{x} interessiert sind,
+verwerfen wir die Labels \code{y} einfach mithilfe der Wegwerf-Variabel \code{\_}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
  (x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
 \end{minted}
-Da wir nur an den Inputs \code{python}{x} interessiert sind, werden wir
-nur diese in einer Variable speichern und die Labels \code{y}
-werden wir verwerfen (\code{\_} ist eine wegwerf-Variabel).
-\code{x\_train} bezeichnet die  Trainingsinputs und \code{x\_test} die Inputs
-des Testdatensatzes, welcher benutzt wird um das Modell entgueltig zu bewerten.
+Nun sind die Features fuers Training in der Variabel \code{x\_train} und die
+Features des Trainingsdatensatzes in der Variabel \code{x\_test} gespeichert.
 
 \subsubsection{Formatieren der Daten}
-Als naechstes muessen wir die Daten korrekt vorprozessieren. Das beinhaltet, sie
-richtig zu formatieren, sie zu normalisieren und sie zu shuffeln.
-
+Nun muessen wir die Daten noch transformieren, dass sie die richtige Form fuer
+unser Modell haben. Wie bereits erklaert, ist der MNIST-Datensatz ziemlich
+handsam, da die Bilder alle die gleichen Masse haben und die Ziffern zentriert sind.
+\para{}
+Nun muessen wir die Grauwerte noch normalisieren, denn im Moment liegen sie noch
+im Intervall $[0, 255]$ und sind vom Typ Integer. Unser Modell kann am besten
+mit Kommazahlen im Intervall $[0,1]$ umgehen. Um diese Anpassung vorzunehmen
+brauchen wir folgenden Code.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   x_train = x_train.astype('float32') / 255.0 # Normalisierung
   x_test = x_test.astype('float32') / 255.0 # Normalisierung
 \end{minted}
-
+Desweiteren werden wir in unserem Modell ConvLayers verwenden. Diese in Keras
+implementieren ConvLayers erwarten die Inputs in folgender Form $(\text{Anzahl
+  Inputs}, Bildbreite, Bildhoehe, Bildtiefe)$. Deshalb muessen wir mithilfe von
+NumPy das Array umformen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  x_
+  x_train = np.reshape(x_train, (len(x_train), 28, 28, 1))
+  x_test = np.reshape(x_test, (len(x_test), 28, 28, 1))
 \end{minted}
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-\end{minted}
+Nun besitzen die Daten die richtige Form fuer unser Modell.
 
 \subsubsection{Generieren der verrauschten Bilder}
-Nun muessen wir noch die Inputs fuer unser Modell generieren, denn dies sind die
-Bilder, welche ein Rauschen beinhalten. Dieses Rauschen koennen wir relativ
-leicht einberechnen, indem wir
+Den Input in unser Modell stellen nicht die normalen MNIST-Bilder dar, sondern
+eine verrauschte Variante von ihnen. Diese werden wir nun generieren. Dazu
+addieren wir einfach verschiedene Zufallswerte auf die Grauwerte der Bilder.
 
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 noise_factor = 0.5
-x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
+
+x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0,
+size=x_train.shape) # loc = $\mu$, scale = $\sigma^2$, size = Anzahl Samples
 x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
 x_train_noisy = np.clip(x_train_noisy, 0., 1.)
 x_test_noisy = np.clip(x_test_noisy, 0., 1.)
