@@ -2406,29 +2406,36 @@ dem Originalinput sehr aehnlich bis auf ein paar qualitative Veluste.
 \para{}
 \bigskip
 Mathematisch gesehen handelt es sich bei einem Autoencoder um ein Funktionenpaar
-$(f,g)$, ueber einen $d$-dimensionalen Eingaberaum $X \subseteq \set{R}^d$. Die
-Elemente des Eingaberaums sind einfach die Features $\vec{x} \in X$.
-Neben dem Eingaberaum existiert noch ein Encodingraum $E$, welcher
-niedrig-diemensionale Codierung darstellt.
-Gesucht werden
-nun die Funktionen
+$(f,g)$, ueber einen $d$-dimensionalen Eingaberaum $\fspace{X} \subseteq \set{R}^d$. Die
+Elemente des Eingaberaums sind einfach die Features $\vec{x} \in \fspace{X}$.
+Neben dem Eingaberaum existiert noch ein ein $p$-dimensionaler Encodingraum
+$\fspace{E} \subseteq \set{R}^p$. Dabei ist $p \ll d$, wodurch er eine
+niedrige-dimensionale Coderiung darstellt.
+Gesucht werden nun die Funktionen
 \begin{itemize}
-\item{$f: X \to E$ (Encoder-Funktion)}
-\item{$g: F \to X$ (Decoder-Funktion)}
+\item{$f: \fspace{X} \to \fspace{E}$ (Encoder-Funktion)}
+\item{$g: \fspace{F} \to \fspace{X}$ (Decoder-Funktion)}
 \end{itemize}
-wobei $F \subseteq \set{R}^p$ ein $p$-dimensionaler Zwischenraum (Encoding-Repraesentation) mit $p \ll d$
-ist und fuer alle $x \in X$ gilt:
+Der Output $\vec{\hat{x}}$ eines Autoencoders bildet man durch die Anwendung der
+Funktion $g$ auf das Ergebniss der Anwendung von $f$ auf ein beliebiges Element
+$\vec{x} \in \fspace{X}$ des Eingaberaums.
 \begin{equation}
-  |x - (g \circ f)(x)| \to \text{min}
+  \vec{\hat{x}} = (g \circ f)(\vec{x})
 \end{equation}
-Bedeutung: Bei Anwendung der Funktion $g$ auf das Ergebniss der Anwendung von
-$f$ auf ein beliebiges Elemente $x$ des Eingaberaums, optimalerweise genau das
-urspruengliche Element $\hat{x} = x$ erhaelt. Dieses Verhalten wird
-durch die Minimierung des Fehlers zwischen $x$ und $\hat{x}$ gefordert. Da $p$
-kleiner als $d$ ist muss $F$ offentsichtlich eine niedrig-dimensionale Codierung
-von $X$ darstellen.
-$\hat{x} = (g \circ f)(x)$
-Optimal: $\hat{x} = x$ aber nicht moeglich, daher eigentlich $g: F \to D$
+\para{}
+Nun stellt man folgende Bedingung an die Funktionen $f$ und $g$.
+
+Fuer alle $\vec{x} \in \fspace{X}$ soll gelten:
+\begin{equation}
+  |\vec{x} - (g \circ f)(\vec{x})| \to \text{min}
+\end{equation}
+Daraus laesst sich lesen, dass Bedeutung: Bei Anwendung der Funktion $g$ auf das Ergebniss der Anwendung von
+$f$ auf ein beliebiges Elemente $\vec{x}$ des Eingaberaums, optimalerweise genau das
+urspruengliche Element $\vec{\hat{x}} = \vec{x}$ erhaelt. Dieses Verhalten wird
+durch die Minimierung des Fehlers zwischen $\vec{x}$ und $\vec{\hat{x}}$ gefordert. Da $p$
+kleiner als $d$ ist muss $\fspace{F}$ offentsichtlich eine niedrig-dimensionale Codierung
+von $\fspace{X}$ darstellen.
+Optimal: $\hat{x} = x$ aber nicht moeglich, daher eigentlich $g: \fspace{F} \to \fspace{D}$
 
 \section{Topologie}
 
