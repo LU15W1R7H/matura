@@ -2019,12 +2019,18 @@ Daher ruehrt auch der Name des Convolutional Neural Networks.
 Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
 betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
 Bedeutung der Faltung fuer Filter beschraenken.
-Die allgemeine Defintion wuerde so lauten:
-\\
-\begin{equation}
-  (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
-\end{equation}
-\\
+\begin{defbox}{Diskrete Faltung}
+  Definintion Faltung
+  \begin{equation}
+    (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
+  \end{equation}
+\end{defbox}
+
+\begin{examplebox}{Faltung Beispielrechnung}
+  Beispielsrechnung
+\end{examplebox}
+
+
 Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen.
 Bei der Filteroperation handelt es sich lediglich um eine diskrete Faltung des
@@ -2348,36 +2354,110 @@ Elements an. Der Wert wird also einfach vermehrt.
 
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
-Ein \keyword{Autoencoder} ist eine weitere KNN-Architektur eines KNNs. Diese
-Architekur beschreibt jedoch nicht die Schichtenarten, sondern beschreibt das
-Netzwerk auf der Ebene der Netzform. Autoencoder werden verwendet um \keyword{effiziente
-  Daten-Codierungen} zu erlernen. Dies bedeutet das Modell versucht die
-wichtigsten Features, welche die meisten Informationen codieren zu extrahieren
-und diese in einer neuer Form zu repraesentieren. Er kann dann aus dieser neuen
-Form dann wieder eine der Ursprungsform sehr aehnliche Repraesentation reproduzieren.
+Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Diese Architektur
+beschreibt das Netzwerk jedoch nicht bezueglich der Schichtenarten, sondern beschreibt es
+auf der Ebene der Netzform. Autoencoder werden verwendet um \keyword{effiziente
+  Daten-Codierungen} zu erlernen und kann so zur
+\keyword{Dimensionalitaetsreduktion} verwendet werden.
+Die Aufgabe eines Autoencoders besteht darin eine Repraesentation einer Datenmenge
+zu erlernen. Diese Repraesentation soll mit weniger Daten die fast gleiche
+Information codiernen.
+Dies bedeutet, dass das Netzwerk erlernt die wichtigen Features (die Features
+mit dem groesstem Informationsgehalt) aus den Daten zu extrahieren und nur diese
+beizubehalten. \\
+Neben dieser neuen Repraesentation erlernt das Netzwerk nebenbei noch, wie es
+aus dieser Repraesentation wieder die Ursprungsdaten reproduzieren kann, welche
+dem Input sehr aehnlich sind.
 \para{}
-
-benutzt um effiziente Codierungen von Daten zu erlernen. Strenggenommen gehoert
-er dem unueberwachtem Lernen bei, da die Daten keine Labels beinhalten. Jedoch
+Autoencoder gehoeren nicht dem klassischen ueberwachtem Lernen an. Strenggenommen gehoeren
+sie dem unueberwachtem Lernen an, da ihre Daten keine Labels beinhalten. Jedoch
 ist diese Begrifflichkeit etwas irrefuehrend, da der Autoencoder trotzdem darauf
-trainiert wird, gewisse gewuenschte Outputs zu liefern. Die Labels sind naemlich
-in diesem Fall einfach gerade die Inputs.
-Semi-unueberwacht deshalb, weil die Labels in den Features enthalten sind.
-
-Der Autoencoder soll eine komprimierte Repraesentation (Encoding) fuer einen
-Datensatz erlernen und somit die wesentlichen Features herausextrahieren. Er
-kann so zur \keyword{Dimensionalitaetsreduktion} verwendet werden. Dabei faellt
-das ``Rauschen''(engl.:Noise) der Daten weg. Das Netzwerk rekonstruiert dann
-anhand der Codierung wieder die urspruenglichen Daten.
+trainiert wird, gewisse gewuenschte Outputs zu liefern. Die Labels sind naemlich gerade
+gleich den Inputs. Also versucht ein Autoencoder mit seinen Vorhersagen einfach
+die Features so exakt wie moeglich zu reproduzieren.
 
 
+\section{Funktionsweise}
 
-\section{Topologie von Autoencodern}
+Wie bereits erwaehnt sind die ``Labels'' eines Autoencoders gleich
+den Features. Somit versucht ein Autoencoder einfach die Inputs
+moeglichst exakt in die Outputs zu kopieren. Diese Operation waere an sich
+ziemlich bedeutungslos und ziemlich trivial ausfuehrbar. Aus diesem Grund muss
+man gewisse Einschraenkungen einfuehren, welche dem Netzwerk nur eine
+approximative Rekonstruktion erlauben.
+\para{}
+Die Einschraekung besteht darin, dass dem Autoencoder nicht beliebig viele
+Variabeln zur Codierung zur Verfuegung stehen. Das Modell muss sich auf nur
+wenige Zahlenwerte beschraenken um die Features zu beschreiben. Deshalb wir das
+Netz dazu gezwungen eine neue Repraesentation, das sogennante \keyword{Encoding},
+zu erlernen. Das Encoding umfaesst lediglich noch die wichtigsten
+Merkmale der Daten, welche die ausdurckstaerksten Eigenschaften einfaegt. Somit
+hat das Encoding eine niedrigere Dimensionalitaet als die Inputs. Ein Datensatz
+welcher mehrere hundert Merkmale umfasst, koennte so auf nur wenige Merkmalen
+heruntergebrochen werden.
+Dabei geht das Rauschen der Daten, welches durch natuerliche Schwankungen der
+Werte zustande kommt, verloren und ist nicht im Encoding enthalten, da es nicht
+verallgemeinert werden kann.
+\para{}
+Nach dieser Komprimierung versucht der Autoencoder wieder aus dem
+Encoding die urspruengliche Repraesentation zu rekonsturieren. Diese
+Rekonstruktion bezeichnet man als das \keyword{Decoding}. Dieses Decoding ist
+dem Originalinput sehr aehnlich bis auf ein paar qualitative Veluste.
+\para{}
+\bigskip
+Mathematisch gesehen handelt es sich bei einem Autoencoder um ein Funktionenpaar
+$(f,g)$, ueber einen $d$-dimensionalen Eingaberaum $X \subseteq \set{R}^d$. Die
+Elemente des Eingaberaums sind einfach die Features $\vec{x} \in X$.
+Neben dem Eingaberaum existiert noch ein Encodingraum $E$, welcher
+niedrig-diemensionale Codierung darstellt.
+Gesucht werden
+nun die Funktionen
+\begin{itemize}
+\item{$f: X \to E$ (Encoder-Funktion)}
+\item{$g: F \to X$ (Decoder-Funktion)}
+\end{itemize}
+wobei $F \subseteq \set{R}^p$ ein $p$-dimensionaler Zwischenraum (Encoding-Repraesentation) mit $p \ll d$
+ist und fuer alle $x \in X$ gilt:
+\begin{equation}
+  |x - (g \circ f)(x)| \to \text{min}
+\end{equation}
+Bedeutung: Bei Anwendung der Funktion $g$ auf das Ergebniss der Anwendung von
+$f$ auf ein beliebiges Elemente $x$ des Eingaberaums, optimalerweise genau das
+urspruengliche Element $\hat{x} = x$ erhaelt. Dieses Verhalten wird
+durch die Minimierung des Fehlers zwischen $x$ und $\hat{x}$ gefordert. Da $p$
+kleiner als $d$ ist muss $F$ offentsichtlich eine niedrig-dimensionale Codierung
+von $X$ darstellen.
+$\hat{x} = (g \circ f)(x)$
+Optimal: $\hat{x} = x$ aber nicht moeglich, daher eigentlich $g: F \to D$
+
+\section{Topologie}
+
+Die Einschraenkungen welche das Netz zur Komprimierung der Daten zwingt werden
+durch die Topologie des Netzes realsiert. Die Netzform macht den Charakter des
+Autoencoder aus. Diese ist naemlich
+
+Einfachster Autoencoder ist ein KNN mit drei Schichten:
 
 \begin{itemize}
-\item{Eingabeschicht}
-\item{Flaschenhals/Encoding}
-\item{Ausgabeschicht/Decoding}
+\item{Eingabeschicht mit $d$ Eingabeneuronen}
+\item{Zwischenschicht mit $p$ Neuronen, bezeichnet als \keyword{Flaschenhals}}
+\item{Ausgabeschicht mit $d$ Ausgabeneuronen}
+\end{itemize}
+Der Trainingsdatensatz ist der Eingaberaum $X$.
+
+Man kann einen Autencoder auch aus mehr Zwischenschichten bauen und dabei jede
+Schicht zum Falschenhals hin kleiner machen und die Schichten die davon
+wegverlaufen wieder anwachsen lassen.
+
+Ein Autoencoder zeichnet sich durch seine Netzform aus. Diese sieht aehnlich zu
+einem Doppelkegel aus.
+Man kann einen Autoencoder grob in fuenf Teile eingliedern:
+\begin{itemize}
+\item{\keyword{Eingabeschicht}}
+\item{\keyword{Encoder}}
+\item{\keyword{Flaschenhals} mit der \keyword{Encoding}-Repraesentation}
+\item{\keyword{Decoder}}
+\item{\keyword{Ausgabeschicht} mit der \keyword{Decoding}-Repraesentation}
 \end{itemize}
 
 \begin{figure}[h!]
@@ -2454,21 +2534,14 @@ anhand der Codierung wieder die urspruenglichen Daten.
   \caption{Schichten eines Autoencoders}
 \end{figure}
 
-\section{Mathematische Betrachtung}
-Falls lineare Neuronen verwendet werden, ist der Prozess der
-Dimensionalitaetsreduktion sehr aehnlich zur Hauptkomponentenanalyse.
 
-
-\section{Bedeutung von Autoencodern}
-\subsection{Datenkompression}
-Falls ein Autoencoder nur aus linearen Neuronen besteht, ist die
-Dimensionsreduktion sehr aehnlich zu der Hauptkomponentenanalyse.
-
-Problem: Netzwerk versucht Durchschnitt aller Trainingsdaten zu erlernen.
-\subsection{Datengenerierung}
-\subsection{Eigenschaften erkennen}
+\section{Anwendungen}
+Dimensionalitaetsreduktion. Falls lineare Neuronen, aehnlich zur Hauptkomponentenanalyse
+Visualisierung als 2D-Daten oder 3D-Daten, Kompression braucht nur noch Anteil von
+$\frac{p}{d}$ des urspruenglichen Speicherbedarfs. Diese Komprimierung ist dabei Datenspezifisch.
 
 \section{Convolutional-Autoencoder}
+Convolutional-, Pooling- und Upsampling-Schichten anstatt Fully-Connected.
 
 \section{Denoising-Autoencoder}
 
@@ -2628,7 +2701,7 @@ die Form ersichtlich an.
   matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
 \end{minted}
 \[\text{skalar}=1 \quad \text{vector2}=\begin{pmatrix}1&2\end{pmatrix} \quad
-\text{matrix2x2}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
+  \text{matrix2x2}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
 
 \paragraph{tf.placeholder}
 Um den Graphen fuer Maschinelles Lernen zu verwenden, braucht man eine
@@ -2646,7 +2719,7 @@ Fuer den Datentyp waehlt man eigentlich immer
 Die Form gibt man einfach als $n$-Tupel von Integern an, welche die Anzahl
 Komponenten in der jeweiligen Dimension angeben. Somit bedeutet die Form
 \mintinline{python}{shape=(4,2,3)} einen Tensor im Tensorraum $\set{R}^{4 \times
-2 \times 3}$.
+  2 \times 3}$.
 
 \paragraph{tf.variable}
 Ein weiteres Kriterium um Maschinelles Lernen mit dem tf.Graph durchzufuehren,
@@ -2719,7 +2792,7 @@ Es ist Best-Practise eine Session, wie eine Datei ueber das
 \keycode{with}-Statment zu oeffen und zu schliessen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   with tf.Session() as sess:
-    # Code
+  # Code
 \end{minted}
 \para{}
 Um den Graphen nun zu berechnen, muss man lediglich die Session ausfuehren, das
@@ -2749,8 +2822,8 @@ Sigmoide Neurons mit drei Inputs implementiert. Es wird es mit den Inputs $x = \
   y = a
 
   with tf.Session() as sess:
-    res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-    print(res)
+  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
+  print(res)
 \end{minted}
 
 \subsubsection{Optimizer}
@@ -2864,9 +2937,9 @@ welchen die Berechnungen ausgefuehrt werden. Ein Device ist jedliche Art von
 Computerprozessor, auf welchem die Graphen ausfuehrt werden koennen.
 Zu diesen Prozessoren gehoeren die CPU (Hauptprozessor) und die GPU (Grafikprozessor).
 \footnote{
-Die normale TensorFlow Version ist nicht in der Lage die GPU zu verwenden. Um
-sie verfuegbar zu machen, muss man die GPU Version installieren. Wir werden im folgenden
-von der GPU-Version ausgehen, da sie erhebliche Performance Vorteile gewaehrt.
+  Die normale TensorFlow Version ist nicht in der Lage die GPU zu verwenden. Um
+  sie verfuegbar zu machen, muss man die GPU Version installieren. Wir werden im folgenden
+  von der GPU-Version ausgehen, da sie erhebliche Performance Vorteile gewaehrt.
 }
 \para{}
 
@@ -3152,42 +3225,42 @@ The tf.keras.Model.evaluate and tf.keras.Model.predict methods can use NumPy dat
 To evaluate the inference-mode loss and metrics for the data provided:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 
-data = np.random.random((1000, 32))
-labels = random one hot labels((1000, 10))
+  data = np.random.random((1000, 32))
+  labels = random one hot labels((1000, 10))
 
-model.evaluate(data, labels, batch size=32)
+  model.evaluate(data, labels, batch size=32)
 
-model.evaluate(dataset, steps=30)
+  model.evaluate(dataset, steps=30)
 
 
-And to predict the output of the last layer in inference for the data provided, as a NumPy array:
+  And to predict the output of the last layer in inference for the data provided, as a NumPy array:
 
-result = model.predict(data, batch size=32)
-print(result.shape)
+  result = model.predict(data, batch size=32)
+  print(result.shape)
 \end{minted}
 
 \subsection{Weiss nit}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
+  inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
 
-# A layer instance is callable on a tensor, and returns a tensor.
-x = layers.Dense(64, activation='relu')(inputs)
-x = layers.Dense(64, activation='relu')(x)
+  # A layer instance is callable on a tensor, and returns a tensor.
+  x = layers.Dense(64, activation='relu')(inputs)
+  x = layers.Dense(64, activation='relu')(x)
 
-predictions = layers.Dense(10, activation='softmax')(x)
+  predictions = layers.Dense(10, activation='softmax')(x)
 
-Instantiate the model given inputs and outputs.
+  Instantiate the model given inputs and outputs.
 
-model = tf.keras.Model(inputs=inputs, outputs=predictions)
+  model = tf.keras.Model(inputs=inputs, outputs=predictions)
 
-# The compile step specifies the training configuration.
-model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
-loss='categorical_crossentropy',
-metrics=['accuracy'])
+  # The compile step specifies the training configuration.
+  model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
+  loss='categorical_crossentropy',
+  metrics=['accuracy'])
 
-# Trains for 5 epochs
-model.fit(data, labels, batch_size=32, epochs=5)
+  # Trains for 5 epochs
+  model.fit(data, labels, batch_size=32, epochs=5)
 \end{minted}
 
 
@@ -3228,7 +3301,7 @@ zentriert sind.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{mnist.png}
-  \caption{ein Auszug an MNIST-Bildern}
+  \caption{ein Auszug an MNIST-Bildern \cite{res:mnist_images}}
 \end{figure}
 
 \para{}
@@ -3255,9 +3328,9 @@ der Kommandozeile ausfuehren.
 Wir werden fuer unser Python-Programm von zwei Packages Gebrauch machen, welche
 nicht in der Standardbibliothek von Python enthalten sind:
 \begin{itemize}
-  \item{NumPy: Ein Package welches verschiedene Mathematische Konzepte
-      implementiert; vorallem Vektor- und Matrix-Arithmetik}
-    \item{Matplotlib: Ein Package zum erstellen von Plots und Grafiken}
+\item{NumPy: Ein Package welches verschiedene Mathematische Konzepte
+    implementiert; vorallem Vektor- und Matrix-Arithmetik}
+\item{Matplotlib: Ein Package zum erstellen von Plots und Grafiken}
 \end{itemize}
 
 Man installiert beide mit folgenden Kommandos.
@@ -3300,14 +3373,14 @@ Keras muss nicht explizit geladen werden, da es in TensorFlow drin steckt.
 Dann schreiben wir die Versionnummern der verschiedenen Programmbibliotheken
 in die Konsole und koennen so ueberpruefen, ob alles richtig konfiguriert ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import numpy as np # NumPy wird impotiert
-import matplotlib as mpl # Matplotlib wird impotiert
+  import numpy as np # NumPy wird impotiert
+  import matplotlib as mpl # Matplotlib wird impotiert
 
-import tensorflow as tf # TensorFlow wird impotiert
+  import tensorflow as tf # TensorFlow wird impotiert
 
-print(np.__version__) # Schreibt die NumPy-Version nach stdout.
-print(mpl.__version__) # Schreibt die Matplotlib-Version nach stdout.
-print(tf.__version__) # Schreibt die TensorFlow-Version nach stdout.
+  print(np.__version__) # Schreibt die NumPy-Version nach stdout.
+  print(mpl.__version__) # Schreibt die Matplotlib-Version nach stdout.
+  print(tf.__version__) # Schreibt die TensorFlow-Version nach stdout.
 \end{minted}
 Falls der Output folgenden Charakter hat (die Versionsnummern muessen nicht
 die gleichen sein) und keine Fehlermeldungen angezeigt
@@ -3342,7 +3415,7 @@ Komponenten der Daten in folgendem Format zurueck \code{(x\_train, y\_train),
   (x\_test, y\_test)}. Da wir nur an den Features \code{x} interessiert sind,
 verwerfen wir die Labels \code{y} einfach mithilfe der Wegwerf-Variabel \code{\_}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
- (x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
+  (x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
 \end{minted}
 Nun sind die Features fuers Training in der Variabel \code{x\_train} und die
 Features des Trainingsdatensatzes in der Variabel \code{x\_test} gespeichert.
@@ -3372,55 +3445,68 @@ Nun besitzen die Daten die richtige Form fuer unser Modell.
 
 \subsubsection{Generieren der verrauschten Bilder}
 Den Input in unser Modell stellen nicht die normalen MNIST-Bilder dar, sondern
-eine verrauschte Variante von ihnen. Diese werden wir nun generieren.
+eine verrauschte Variante von ihnen. Diese werden wir nun generieren mithilfe
+von additivem Gauss'schem Rauschen.
 \para{}
 Zuerst erstellen wir eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$, welche die gleiche Form, wie die
-Bilder haben. Diese Matrix befuellen wir mit Zufallswerten. Fuer die
+Bilder hat. Diese Matrix befuellen wir mit Zufallswerten. Fuer die
 Zufallswerte verwenden wir eine Gauss'sche Normalverteilung
 $\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
 $\sigma^2 = 1$. Da wir fuer jedes Bild eine eigene Rauschmatrix brauchen,
 generieren wir eine Liste $(\mat{R}_1,\mat{R}_2,\ldots,\mat{R}_m$) der Laenge $m$ an
 Rauschmatrizen. Dafuer verwenden wir die NumPy Funktion
 \code{np.random.normal(loc=<$\mu$>, scale=<$\sigma^2$>,size=<Form>)}.
-Die somit erhaltenen Rauschmatrizen multipliieren wir dann mit einer
+Die somit erhaltenen Rauschmatrizen multiplizieren wir dann mit einer
 Rauschkonstane \code{noise\_factor} und addieren das Resulat auf die MNIST-Bilder.
 Nach dem Hinzufuegen der Rauschwerte, muessen wir die Grauwerte noch auf das Intervall
-$[0,1]$ kappen mithilfe von \code{np.clip(var, min, max)}. Diese Schritte wenden
-wir sowohl fuer den Trainingsdatensatz, wie auch den Testdatensatz an. \\
+$[0,1]$ kappen. Dafuer verwenden wir die NumPy-Funktion \code{np.clip(var, min, max)}. Diese Schritte wenden
+wir sowohl auf den Trainingsdatensatz, wie auch auf den Testdatensatz an. \\
 Somit lautet unser Code:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-noise_factor = 0.5
+  noise_factor = 0.5
 
-# fuer x_train
-noise_matrices = np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
-noise_matrices *= noise_factor
-x_train_noisy = x_train + noise_matrices
-x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
+  # fuer x_train
+  noise_matrices = np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
+  noise_matrices *= noise_factor
+  x_train_noisy = x_train + noise_matrices
+  x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
 
-# fuer x_test in Kurzfassung
-x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
-x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
+  # fuer x_test in Kurzfassung
+  x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
+  x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
+\para{}
+Nun haben wir die Daten vollstaendigt im richtigem Format. Damit koennen wir nun
+zur Definition des Modells uebergehen.
 
 \subsection{Modell definieren}
-Da wir nun die Daten haben, koennen wir unser Modell definieren.
-Der einfachheitshalber werden wir vorerst unbegruendete Werte waehlen.
+Nun werden wir mithilfe von Keras das Modell unseres
+Convolutional-Denoising-Autoencoders definieren.
+Wir werden das Modell nach dem Vorbild der Theorie bauen.
+Wie wir wissen umfasst die Topologie eines CNNs die verschiedentsten
+Hyperparameter. Wir werden der einfachheitshalber vorerst unbegruendete Werte
+dafuer waehlen. Spaeter werden wir diese Hyperparameter noch einstellen.
 \para{}
 Wir beginnen unser Modell mit der Inputsschicht $l=0$, welche einfach ein Tensor
-ist, welcher die Inputswerte haelt.
+ist, welcher die Inputswerte haelt. Die Schicht hat die gleiche Form, wie ein MNIST-Bild.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   input_data = tf.keras.Input(shape=(28,28,1))
 \end{minted}
-Gefolgt wird diese von einer Reihe an Convolutional-Schichten und
-Pooling-Schichten, welche sich abwechseln. Fuer die Convolutional Schicht
-waehlen wir eine Filtergroesse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
-einen Stride $s=1$, Same-Padding und die Aktivierungsfunktion $\varphi = \varphi^{\text{ReLU}}$.
+\para{}
+Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht aus
+zwei Convolutional-Schichten, auf welche jeweils eine Pooling-Schicht folgt.
+Wir werden wie gesagt fuer alle Schichten vorerst die gleichen unbegruendeten
+Hyperparameter waehlen. Fuer die Convolutional-Schichten waehlen wir
+eine Filtergroesse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
+einen Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi = \varphi^{\text{ReLU}}$.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+  conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3),
+  strides=(1,1),padding='same', activation='relu')(input_data)
 \end{minted}
-Fuer die Pooling-Schichten waehlen wir eine Feldgroesse $f = 2$, Stride $s = 2$ und Same-Padding.
+Fuer die Pooling-Schichten waehlen wir analog eine Feldgroesse $f = 2$, einen
+Stride $s = 2$, damit jedes Feld einmal zusammengefasst wird und Same-Padding.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=(2,2),padding='same')(econv0)
+  pool_layer = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=(2,2),padding='same')(econv0)
 \end{minted}
 Wir waehlen einen Convolutional-Autoencoder, welcher seinen Flaschenhals nach
 zwei Convolutional-Schichten hat. Danach folgt die Decoding-Schicht.
@@ -3433,18 +3519,18 @@ Feldgroesse $f = 2$ geaehlt wurde und als Interpolationsmethode Nearest-Neighbor
 
 Der ganze Graph wird durch folgenden Code gebildet.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-# define model
-econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
-emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
-econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
-emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
-encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
-dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
-dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
-dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
-dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
-dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
-decoded = dconv2
+  # define model
+  econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+  emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
+  econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
+  emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
+  encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
+  dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
+  dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
+  dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
+  dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
+  dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+  decoded = dconv2
 \end{minted}
 
 Nun definieren wir noch das eigentliche Modell.
