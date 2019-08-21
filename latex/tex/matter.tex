@@ -2335,7 +2335,7 @@ notwendig sind.
 \para{}
 Man verwendet auch hier wieder den Begriff der Feldgroesse $f^l$. Diesemal
 beschreibt dieser Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
-wird ein Element zu einem $(f \times f)$-Feld hochgerechnet und erweitert so die
+wird ein Element zu einem $(f^l \times f^l)$-Feld hochgerechnet und erweitert so die
 Dimensionalitaet.
 \para{}
 Es stellt sich natuerlich die Frage, was fuer Werte das neue Feld erhaelt.
@@ -2366,53 +2366,50 @@ Convolutional-Autoencoder, naemlich einen Denoiser.
 \bigskip
 Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Diese Architektur
 beschreibt das Netzwerk jedoch nicht bezueglich der Schichtenarten, sondern beschreibt es
-auf der Ebene der Netzform. Autoencoder werden verwendet um \keyword{effiziente
-  Daten-Codierungen} zu erlernen und koennen so zur
-\keyword{Dimensionalitaetsreduktion} verwendet werden.
+auf der Ebene der Netzform. \\
 Die Aufgabe eines Autoencoders besteht darin eine neue Repraesentation einer Datenmenge
 zu erlernen. Diese neuartige Repraesentation soll mit weniger Daten moeglichst die gleiche
-Information codiernen.
-Dies bedeutet, dass das Netzwerk erlernt die wichtigen Features (die Features
-mit dem groesstem Informationsgehalt) aus den Daten zu extrahieren und nur diese
-beizubehalten. \\
+Information codieren. Somit entwickelt das Modell eine \keyword{effiziente
+  Daten-Codierung} fuer einen Datensatz. Dadurch kann er zur
+\keyword{Dimensionalitaetsreduktion} verwendet werden. \\
 Neben dieser neuen Repraesentation erlernt das Netzwerk noch, wie es
-aus dieser Repraesentation wieder die Ursprungsdaten reproduzieren kann, welche
-dem Input sehr aehnlich sind.
+aus dieser Codierung wieder die Ursprungsdaten reproduzieren kann.
 \para{}
 Autoencoder gehoeren nicht dem klassischen ueberwachtem Lernen an. Strenggenommen gehoeren
 sie dem unueberwachtem Lernen an, da in den Trainingsdaten keine Labels
 enthalten sein muessen. Jedoch ist diese Begrifflichkeit etwas irrefuehrend,
-da nur deshalb keine Labels benoetigt werden, weil die Labels gleich den Features sind!
-Somit wird das Netzwerk soll wohl darauf trainiert gewisse gewuenschte Outputs
+weil nur deshalb keine Labels benoetigt werden, da die Labels gleich den Features sind!
+Somit wird das Netzwerk trotzdem darauf trainiert gewisse gewuenschte Outputs
 zu liefern.
-Ein Autoencoder muss also versuchen mit seinen Vorhersagen die
-Features so exakt wie moeglich zu reproduzieren.
 
 \section{Topologie}
+Ein Autoencoder besteht wie das klassische KNN auch aus Neuronen.
 Wie bereits erwaehnt sind die ``Labels'' eines Autoencoders gleich
-den Features. Somit versucht ein Autoencoder einfach die Inputs
-moeglichst exakt in die Outputs zu kopieren. Diese Operation waere an sich
-ziemlich bedeutungslos und nutzlos, da man anstatt ein KNN auch einfach eine
-Identitaetsfunktion verwenden koennte. Aus diesem Grund muss
-man gewisse Einschraenkungen einfuehren, welche das Netzwerk dazu bringen,
-interessante Methoden zu entwickeln um die Features approximativ zu
-Rekonsturieren.
+den Features. Somit versucht ein Autoencoder einfach die Werte der Inputneuronen
+moeglichst exakt in die Outputneuronen zu kopieren.
+Diese Operation waere an sich ziemlich bedeutungslos und nutzlos, da mit den
+Daten nichts passiert. Das Netzwerk wuerde einfach erlernen eine
+Identitaetsfunktion zu imitieren.
+Aus diesem Grund muss man gewisse Einschraenkungen einfuehren. Diese bringen das Netzwerk dazu,
+interessante Methoden zu entwickeln um die Features \textit{approximativ} zu rekonstruieren.
 \para{}
 Die angesprochene Einschraenkung besteht darin, dass dem Autoencoder nicht
-beliebig viele Kapatzitaet fuer die Codierung der Features gegeben wird.
+beliebig viel Kapatzitaet fuer die Codierung der Features gegeben wird.
 Es stehen dem Netzwerk nur wenige Zahlenwerte zur Verfuegung um die Features
-zwischenzuspeichern, bevor sie wieder in die urspruenliche Form umgeformt werden.
-Diese Kapazitaetseinschraekung wird durch die Topologie des Autoencoders erzwungen.
+in der neuen Repraesentation zwischenzuspeichern, bevor sie wieder in die urspruenliche Form gebracht werden.
+Diese Kapazitaetseinschraekung wird durch die Topologie des Autoencoders bezweckt.
 \para{}
-Die Topologie eines Autoencoders laesst sich grob in drei Teile eingliedern:
+\bigskip
+Der einfachste Autoencoder, besteht aus drei Schichten, welche sich wie folgt
+eingliedern lassen:
 \begin{itemize}
   \item{eine Inputschicht mit $d$ Neuronen}
-  \item{eine \keyword{Flaschenhalsschicht} mit $p$ Neuronen}
+  \item{eine Zwischenschicht mit $p$ Neuonen, bezeichnet als \keyword{Flaschenhals}}
   \item{eine Outputschicht mit $d$ Neuronen}
 \end{itemize}
 In Abbildung (\ref{fig:basic_autoencoder}) ist
-ein beispielhafter Autoencoder abbgebildet, bei welchem $d = 5$ und $p = 2$
-gewaehlt wurden.
+ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
+Flaschenhals der Groesse $p = 2$.
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[>=latex]
@@ -2463,24 +2460,13 @@ gewaehlt wurden.
   \caption{Schichten eines kurzen Autoencoders}
 \end{figure}
 \para{}
-Die Inputschicht $l=0$ enthaelt die Features $\vec{x}$. Die Outputschicht $l=2$ dagegen
-enthaelt die Rekonstruktionen der Features, welche wir mit $\vec{\hat{x}}$
+Die Inputschicht enthaelt die Features $\vec{x} \in \set{R}^d$. Die Outputschicht dagegen
+enthaelt die \keyword{Rekonstruktionen} der Features, welche wir mit $\vec{\hat{x}} \in \set{R}^d$
 bezeichnen. Als logische Konsequenz muessen die beiden Schichten die gleiche
 Anzahl $d$ an Neuronen besitzen.
 Die Flaschenhalsschicht hingegen besitzt nur $p$ Neuronen, wobei $p \ll d$.
-Somit ist die Flaschenhalsschicht deutlich kleiner als die anderen beiden Schichten und bildet
+Somit ist die sie deutlich kleiner als die anderen beiden Schichten und bildet
 so die Kapazitaetseinschraenkung.
-\para{}
-Durch diesen Flaschenhals wird der Autoencoder gezwungen, in einem ersten Schritt die vielen Features auf
-nur ein paar wenige Zahlenwerte herunterzubrechen, welche in der Zwischenschicht
-platz finden. Der Autoencoder muss gewissermassen einen Code entwickeln,
-mithilfe dessen er die vielen Informationen auf nur wenige wichtige
-Eigenschaften komprimieren kann.
-Diese neue Repraesentation der Features bezeichnet man als das
-\keyword{Encoding} (deutsch: Codierung).
-In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wieder
-versuchen die urspruenlichen Features zu rekonstruieren. Dies Rekonstruktion
-bezeichnet man als das \keyword{Decoding} (deutsch: Dekodierung).
 \para{}
 Wir haben nun einen Autoencoder nur mit einer Zwischenschicht betrachtet.
 Gaengier ist es jedoch das Netz aus mehreren Zwischenschichten zu bauen. Dabei
@@ -2546,6 +2532,7 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
     \foreach \ai in {4} {
       \foreach \aii in {3,5}
       \draw[->] (mat-\ai-4) -- (mat-\aii-5);
+
     }
 
     % hidden3 -> output
@@ -2566,100 +2553,144 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
 \end{figure}
 
 \section{Funktionsweise}
-Um die Funktionsweise eines Autoencoders zu verstehen, ist es hilfreich, die
-Hypothesenfunktion $h$ in ein Funktionenpaar $(\phi,\psi)$ aufzuspalten:
+Ein Autoencoder moechte die Features $\vec{x}$ von der Inputschicht in die
+Outputschicht kopieren. Jedoch zwingt der Flaschenhals den Autoencoder dazu eine
+neue Repraesenation der Features zu erlernen. Dies hat den Grund, dass die
+Features in ihrer jetzigen Form keinen Platz im Flaschenhals finden, da $p \ll d$.
+Somit muss das Modell die Informationen, welche in den Features stecken
+nur auf einige wenige Eigenschaften komprimieren. Es muss gewissermassen einen
+Code entwickeln. Diese neue Repraesentation nennt man das \keyword{Encoding}. \\
+In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wieder
+versuchen die urspruenlichen Features zu rekonstruieren. Diese Rekonstuktion
+bezeichnet man als das \keyword{Decoding}.
+
+\paragraph{Encoder und Decoder}
+Man kann einen Autoencoder gewissermassen als zwei Teilmodelle betrachten. Das
+einte Modell erzeugt das Encoding und das andere das Decoding. Wir spalten
+dafuer die Hypothesenfunktion $h$ in ein Funktionpaar $(\phi,\psi)$ auf.
 \begin{itemize}
-  \item{$\phi: \fspace{X} \to \fspace{E}$ Encoding-Funktion}
-  \item{$\psi: \fspace{E} \to \fspace{X}$ Decoding-Funktion}
+  \item{$\phi: \fspace{X} \to \fspace{E}$ Encoder-Funktion}
+  \item{$\psi: \fspace{E} \to \fspace{X}$ Decoder-Funktion}
 \end{itemize}
-Die erste Teilfunktion $\phi$ ist dafuer zustaendig das Encoding zu bilden. Sie
+Die erste Teilfunktion $\phi$ ist dafuer zustaendig das Encoding zu erzeugen. Sie
 bildet den Inputraum $\fspace{X} \subseteq \set{R}^d$, welcher die Features $\vec{x}$ enthaelt, auf
-den Encodingraum $\space{E} \subseteq \set{R}^p$ ab. Weil $p$ deutlich keliner
-als $d$ ist, muss der $p$-dimensionale Encodingraum $\space{E}$ eine
-niedrig-dimensionale Codierung der Features darstellen. Somit kann das Encoding
-nur noch die wichtigsten Merkmale der Daten, welche die ausdruckstaerksten
-Eingenschaften besitzten, umfassen.
-
-Ein Datensatz
-welcher mehrere hundert Merkmale umfasst, koennte so auf nur wenige Merkmalen
-heruntergebrochen werden.
-Dabei geht das Rauschen der Daten, welches durch natuerliche Schwankungen der
-Werte zustande kommt, verloren und ist nicht im Encoding enthalten, da es nicht
-verallgemeinert werden kann.
+den Encodingraum $\fspace{E} \subseteq \set{R}^p$, welcher die neuen
+Repraesenation $\vec{x^*}$ enthaelt, ab. \\
+Das Gegenstueck ist die Teilfunktion $\psi$. Sie bildet den Encodingraum
+$\fspace{E}$ zurueck auf den Inputraum $\fspace{X}$ ab.
 \para{}
-Nach dieser Komprimierung versucht der Autoencoder wieder aus dem
-Encoding die urspruengliche Repraesentation zu rekonstruieren. Diese
-Rekonstruktion bezeichnet man als das \keyword{Decoding}. Dieses Decoding ist
-dem Originalinput sehr aehnlich bis auf ein paar qualitative Veluste.
-\para{}
-\bigskip
-Mathematisch gesehen handelt es sich bei einem Autoencoder um ein Funktionenpaar
-$(f,g)$. \\
-Dabei ist $f: \fspace{X} \to \fspace{E}$ die sogennante
-Encoder-Funktion. Sie bildet den Eingaberaum $\fspace{X} \subseteq{R}^d$, welcher die $d$-dimensionalen-Features
-$\vec{x}$ enthaelt, auf den Encodingraum $\fspace{E}$, welcher die neue
-Repraesentation enthaelt ab. Der Encodingraum $\fspace{E} \subseteq \set{R}^p$
-ist dabei nur $p$-dimensional und es gilt: $p \ll d$. Dadurch muss das Encoding
-eine niedrig-dimensionael Codierung der Features darstellen. \\
-Das Gegenstueck zu $f$ ist $g: \fspace{E} \to \fspace{X}$, sie sogennante
-Decoding-Funktion. Sie bildet den Encodingraum zuerueck auf den Eingaberaum ab.
-\para{}
-Der Output des Autoencoder bezeichnet man mit $\vec{\hat{x}}$. Er bildet sich
-durch zuerstes Anwenden von $f$ auf die Features $\vec{x}$ und anschliessendes
-Anwenden der Funktion $g$ auf das Resultat.
+Der Output des Autoencoders $\vec{\hat{x}}$ wird somit durch die aufeinander
+folgende Anwendung der Teilfunktion auf die Features $\vec{x}$ gebildet:
 \begin{equation}
-  \vec{\hat{x}} = g(f(\vec{x})) = (g \circ f)(\vec{x})
-\end{equation}
-Die Aufgabe des Autoencoder besteht nun darin, diese beiden Funktionen $f$ und
-$g$ zu erlernen. Dabei soll folgende Bedingung gelten (falls Mittlerer Quadratischer Fehler)
-\begin{equation}
-  \min_{f,g} (\vec{x} - \vec{\hat{x}})^2
+  \vec{\hat{x}} = \psi(\phi(\vec{x})) = (\psi \circ \phi)(\vec{x})
 \end{equation}
 
+Wenn wir dieses Modell trainieren, minimieren wir die Kostenfunktion. Als
+Beispiel koennen wir den Mittleren-quadratischen-Fehler $C_{MSE}$ nehmen.
+Verwenden wir ihn als Kostenfunktion, minimieren wir folgenden Ausdruck:
+\begin{equation}
+  \min_{\phi,\psi} {|\vec{x} - \vec{\hat{x}}|}^2 = \min_{\phi,\psi} {|\vec{x} - (\psi \circ \phi)(\vec{x})|}^2
+\end{equation}
+Wir versuchen also Funktionen $\phi$ und $\psi$ zu finden, welche die Differenz
+zwischen den urspruenlichen Features $\vec{x}$ und den Rekonstruktionen
+$\vec{\hat{x}}$ minimieren.
 
+Anderst ausgedrueckt versuchen wir Funktion $\phi$ und $\psi$ zu finden, welche
+die Differenz der urspruenglichen Inputs $\vec{x}$ und den Rekonstruktionen
+$\vec{\hat{x}}$ minimieren. Dabei muss der Autoencoder
+Dimensionalitaetsreduktion betreiben. Er entwickelt einen Code um die Features
+in der Flaschenhalsschicht komprimiert zu repraesentieren. Durch die
+Kapazitaetseinschraekung $p \ll d$ muss $\fspace{E}$ eine niedrig-dimensionale
+Codierung der Features darstellen. Dem Modell ist es nicht moeglich die Inputs
+identisch wiederherzustellen, da bei der Abbildung $\phi$ Informationen verloren
+gegangen sind. Dadurch sollte der Code im Optimalen Fall nur noch die Merkmale
+der Features umfassen, welche fuer die groesste Information codieren.
+Dieser Code kann extrahiert werden, um eine Repraesentation der Features zu
+erhalten, welche nicht mehr mehrere Hundert Merkmale umfasst sonder nur noch ein
+paar wenige. Jedliche natuerliche Schwankungen in den Werten der Features gehen
+verloren, da sie nicht im COde enthalten sind. Sie koennen nicht verallgemeinert werden.
 
-Gesucht werden nun die Funktionen.
-Der Output $\vec{\hat{x}}$ eines Autoencoders bildet man durch die Anwendung der
-Funktion $g$ auf das Ergebniss der Anwendung von $f$ auf ein beliebiges Element
-$\vec{x} \in \fspace{X}$ des Eingaberaums.
+\paragraph{Der Code}
+Bei der Suche dieser Funktionen muss der Autoencoder einen gewissen ``Code''
+entwickeln, um die Features neu zu repraesentieren. Dies da der Falschenhals
+nicht den noetigen Kapazitaet bietet, um die Features in der urspruenlichen Form
+zu halten. Somit muss der Autoencoder Dimensionalitaetsreduktion betreiben, um
+die Features komprimiert darzustellen.
 \para{}
-Nun stellt man folgende Bedingung an die Funktionen $f$ und $g$.
-
-Fuer alle $\vec{x} \in \fspace{X}$ soll gelten:
-Daraus laesst sich lesen, dass Bedeutung: Bei Anwendung der Funktion $g$ auf das Ergebniss der Anwendung von
-$f$ auf ein beliebiges Elemente $\vec{x}$ des Eingaberaums, optimalerweise genau das
-urspruengliche Element $\vec{\hat{x}} = \vec{x}$ erhaelt. Dieses Verhalten wird
-durch die Minimierung des Fehlers zwischen $\vec{x}$ und $\vec{\hat{x}}$ gefordert. Da $p$
-kleiner als $d$ ist muss $\fspace{F}$ offentsichtlich eine niedrig-dimensionale Codierung
-von $\fspace{X}$ darstellen.
-Optimal: $\hat{x} = x$ aber nicht moeglich, daher eigentlich $g: \fspace{F} \to \fspace{D}$
-
-
-Der Trainingsdatensatz ist der Eingaberaum $X$.
-
-
-Ein Autoencoder zeichnet sich durch seine Netzform aus. Diese sieht aehnlich zu
-einem Doppelkegel aus.
-Man kann einen Autoencoder grob in fuenf Teile eingliedern:
-\begin{itemize}
-\item{\keyword{Eingabeschicht}}
-\item{\keyword{Encoder}}
-\item{\keyword{Flaschenhals} mit der \keyword{Encoding}-Repraesentation}
-\item{\keyword{Decoder}}
-\item{\keyword{Ausgabeschicht} mit der \keyword{Decoding}-Repraesentation}
-\end{itemize}
-
-
+Durch diese Komprimierung ist es dem Modell unmoeglich die Rekonstruktionen
+perfekt zu machen. Sie sind immer approximativ, da bei der Komprimierung
+Informationen verloren gegangen sind. Am effektivsten wird die Kostenfunktion
+minimiert, wenn das Modell einen Code entwickelt, welcher die Features mit dem
+hoechsten Informationsgehalt abstrahiert. Die Features, welche unwichtig sind
+oder nur durch zuefalliges Rauschen der Daten entsteht koennen verworfen werden,
+da sie nicht verallgemeinert werden koennen.
+\para{}
+Es ist wichtig zu erkennen, das der Code welcher der Autoencoder entwickelt
+\keyword{datenspezifisch} ist. Das heisst er kann nicht wie z.B ein
+Bildkompressionalgorithmus auf beliebige Daten angewendet werden. Stattdessen
+ist er nur sinnvoll fuer die Kompression von Daten, mit welchen er trainiert
+wurde. Der Autoencoder erlernt die Eigenschaften eines Datensatz zu abstrahieren
+und neu darzustellen.
+BEISPIEL EINER ABSTRAKTION (a la Menschliches Gesicht beschreiben).
 
 \section{Anwendungen}
+Die Eigenschaft, welche einen Autoencoder sich fuer die verschiedensten
+Anwendungen geeignet macht, ist die Dimensionalitaetsreduktion. \\
+Wir werden nun einige Anwendungen grob betrachten.
+
+\subsection{Kompression}
+Es handlet sich um Verlustbehaftete Kompression.
 Dimensionalitaetsreduktion. Falls lineare Neuronen, aehnlich zur Hauptkomponentenanalyse
-Visualisierung als 2D-Daten oder 3D-Daten, Kompression braucht nur noch Anteil von
 $\frac{p}{d}$ des urspruenglichen Speicherbedarfs. Diese Komprimierung ist dabei Datenspezifisch.
 
+Datenverkehr beschleunigen, weil weniger Daten.
+
+\subsection{Neue Datenrepraesentation}
+neues Datenformat
+
+\subsection{Visualisierung von Daten}
+Visualisierung von hochdimensionaler Daten in $\set{R}^2$ und $\set{R}^3$
+
+
+Im uebernachsten Kapitel werden wir eine Anwendung noch genauer Betrachten die
+des Denoisers.
+
 \section{Convolutional-Autoencoder}
-Convolutional-, Pooling- und Upsampling-Schichten anstatt Fully-Connected.
+Ein Convolutional-Autoencoder ist wie der Name es schon sagt, ein Autoencoder,
+welcher anstatt die normalen Fully-connected-Schichten eines KNNs die Schichten eines CNN verwendet. \\
+Er ist interessant, weil er zur Kompession von Bildern verwendet werden kann.
+Wie bereits erwaehnt ist auch hier die Kompression datenspezifisch.
+Beispielsweise koennte man einen Convolutional-Autoencoder mit einem Datensatz
+von menschlichen Gesichtern trainieren. Dieser wuerde dann einen
+datenspezifischen Code fuer diese Gesichter entwickeln. Mann kann sich
+vorstellen, dass das Modell nicht mehr die Farbwerte der Features im Encoding
+speichert, sondern stattdessen diese Features abstrahiert. Somit koennten
+Eigenschaften, wie die Augenfarbe, Breite der Nase, Mundposition und vieles mehr
+im Flaschenhals gespeichert werden. Diese Informationen brauchen offenkundig
+weniger Kapazitaet als alle Pixelwerte.
+\para{}
+Des weiteren sind Convolutional-Autoencoder interessant, da sie uns auf eine
+weitere Anwendung eines Autoencoders bringen: den Denoising-Autoencoder.
+Diesen betrachten wir im naechsten Abschnitt.
+
+\cite{yt:autoencoder_faces}
 
 \section{Denoising-Autoencoder}
+Ein Denoising-Autoencoder oder einfach Denoiser ist ein leicht abgeaenderter
+Autoencoder. Er wird verwendet um ein Rauschen aus Bildern zu entfernen.
+\para{}
+Er unterscheidet sich insofern von dem klassischen Autoencodern, dass er
+richtige Labels hat und nicht einfach die Features kopiert. Sein Input stellen
+die verrauschten Bilder dar und die Labels sind die unverrauschten Bilder. Somit
+wird er darauf trainiert das Rauschen zu entfernen. \\
+Man mag sich nun die Frage stellen, weshalb man hierfuer einene Autoencoder und
+kein normales CNN verwendet. Empirisch hat sich einfach gezeigt, dass sich
+Denoiser dafuer besser eignen. Das hat nachvollziehbare Gruende. Bei der
+Entwicklung des Code fuer Encoding-Repraesentation, kann das Rauschen nicht
+codiert werden, da es voellig zufaellig ist. Es existieren keine Muster oder
+Gesetzmaessigkeiten, welche anderst codiert werden koennten. Somit muss der
+Autoencoder diese Rausch-Features verwerfen. Somit hat er leichteres Spiel
+gegenueber sonstigen CNNs.
 
 
 % ------------------------------------
