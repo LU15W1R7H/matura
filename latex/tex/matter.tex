@@ -538,7 +538,8 @@ haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
 $w_{i}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
 Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
 die sogenannte \keyword{Aktivierung} $a$ gebildet werden. Sie ist der Output des Neurons.
-Die Aktivierung $a = \varphi(z)$ ist das Resultat der \keyword{Aktivierungsfunktion} $\varphi$ angewendet
+Die Aktivierung $a = \varphi(z)$ ist das Resultat der
+\keyword{Aktivierungsfunktion} $\varphi: \set{R} \to \set{R}$ angewendet
 auf $z$. Die verschiedenen Kuenstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
 \\
@@ -655,6 +656,59 @@ Ausserdem koennen mit diesem Neuron auch nur lineare Probleme geloest werden.
 \para{}
 \cite{wiki:kuenstliches_neuron}
 
+\subsection{ReLU Neuronen}
+LINEARE-NEURONEN MIT ReLU Abschnitt VERSCHMELZEN/ERSETZEN
+
+Konstante Ableitung -> Neuronen saturieren nicht. Das Trainings wird nicht
+verlangsamt. Kein Vanishing-Gradient-Problem.
+Probelm: nur lineare Funktionen haben konstante Ableitungen -> UAT giltet nicht!
+Dehslab nimmt man eine teil lienare Funktion wie der positive Teil der
+Einheitsfunktion:
+Diese Funktion nennt man Rectifier. Beziehungsweise einen \keyword{Rectified
+  Lienar Unit} (\keyword{ReLU}). Eigentlich der Name des Neurons nicht der Aktivierungsfunktion.
+
+Somit giltet UAT! Es handelt sich um ``nicht lineare Neuronen''
+
+\\
+\begin{figure}[h!]
+  \begin{minipage}[h!]{0.5\textwidth}
+    \begin{equation}
+      \varphi^{ReLU}(z) =
+      \begin{cases}
+        z & \quad \text{falls } z > 0\\
+        0 & \quad \text{falls } z \leq 0
+      \end{cases}
+      = \max(z,0)
+    \end{equation}
+  \end{minipage}
+  \begin{minipage}[h!]{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=2.5]
+      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
+      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
+      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
+
+      \foreach \x in {-1,-0.5,0.5,1}
+      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=pagecolor] {$\x$};
+
+      \foreach \y in {0.5,1}
+      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=pagecolor] {$\y$};
+
+      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
+
+      \draw[red,ultra thick] (-1.5,0) -- (0,0);
+      \draw[red,ultra thick] (0,0) -- (1,1);
+      \draw[red,ultra thick,dashed] (1,1) -- (1.2,1.2);
+
+      \draw[draw=red,fill=red] (0,0) circle (0.03);
+    \end{tikzpicture}
+  \end{minipage}
+  \caption{Formel und Graph einer stueckweisen linearen Funktion}
+  \label{fig:stueckweiselinear}
+\end{figure}
+
+\para{}
+\cite{wiki:kuenstliches_neuron}
 
 \subsection{Nicht-lineare Neuronen}
 Die logische naechste Erweiterung sind nicht-lineare Neuronen.
@@ -1525,7 +1579,34 @@ ALLES ZUSAMMENFASSEN
 
 
 \section{Universal Approximation Theorem?}\label{sec:UAT}
-Neural Network kann alles erlernen
+Es stellt sich nun die Frage, was ein Neuronales Netz alles erlernen kann.
+Diese Frage kann man mit dem \keyword{Universal Approximation Theorem} (UAT)
+beantworten. Dieser Satz ist ein mathematischer Beweis dafuer, dass ein KNN
+grundsaetzlich in der LAge ist jede kontinuerliche Funktion beliebig gut zu
+approximieren. Er wurde von Kurt Hornik in 1991 beweisen.
+
+Etwas genauer besagt der UAT, dass ein Feed-Forward Netzwerk mit einer einzigen
+Zwischenschicht, welche eine endliche Anzahl Neuron hat, jede Kontinuierliche
+Funktion approximieren kann. Voraussetzung dafuer ist, dass es sich bei den
+Neuronen und Nicht-lineare-Neuronen handelt. Dies ist nur eine theoretische
+Ausage ueber das Lernpotenzial eines KNNs. Jedoch macht es keinerlei Aussage
+darueber, ob ein KNN wirklich die Funtkionen erlernen wird.
+
+IAN GOODFELLOW:
+A feedworward network with a single layer is sufficient to represent any
+function, but the layer may be infeasibly large and may fail to lean and
+generalize correctly.
+
+Die meisten Klassen von Probleme koennen einfach als eine Funktion formuliert
+werden. Somit bedeutet der UAT, dass ein KNN theoretisch jedes Problem loesen kann.
+
+Der eigentliche Beweis ist mathematisch ziemlich anspruchsvoll, deshalb werden
+wir diesen nicht behandeln.
+
+AUF ANDERE RESOURCE (QR-CODE) VERWEISEN FUER ILLUSTRIEVEN BEWEIS ODER ANHANG VON
+MIR GESCHRIEBEN
+
+\cite{wiki:uat}
 
 \section{Vanishing Gradient Problem}
 
@@ -2382,6 +2463,8 @@ weil nur deshalb keine Labels benoetigt werden, da die Labels gleich den Feature
 Somit wird das Netzwerk trotzdem darauf trainiert gewisse gewuenschte Outputs
 zu liefern.
 
+\cite{book:autoencoder}
+
 \section{Topologie}
 Ein Autoencoder besteht wie das klassische KNN auch aus Neuronen.
 Wie bereits erwaehnt sind die ``Labels'' eines Autoencoders gleich
@@ -2591,12 +2674,8 @@ Verwenden wir ihn als Kostenfunktion, minimieren wir folgenden Ausdruck:
 \begin{equation}
   \min_{\phi,\psi} {|\vec{x} - \vec{\hat{x}}|}^2 = \min_{\phi,\psi} {|\vec{x} - (\psi \circ \phi)(\vec{x})|}^2
 \end{equation}
-Wir versuchen also Funktionen $\phi$ und $\psi$ zu finden, welche die Differenz
-zwischen den urspruenlichen Features $\vec{x}$ und den Rekonstruktionen
-$\vec{\hat{x}}$ minimieren.
-
 Anderst ausgedrueckt versuchen wir Funktion $\phi$ und $\psi$ zu finden, welche
-die Differenz der urspruenglichen Inputs $\vec{x}$ und den Rekonstruktionen
+die Differenz der urspruenglichen Features $\vec{x}$ und den Rekonstruktionen
 $\vec{\hat{x}}$ minimieren. Dabei muss der Autoencoder
 Dimensionalitaetsreduktion betreiben. Er entwickelt einen Code um die Features
 in der Flaschenhalsschicht komprimiert zu repraesentieren. Durch die
@@ -3679,6 +3758,9 @@ Der ganze Graph wird durch folgenden Code gebildet.
   dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
   decoded = dconv2
 \end{minted}
+Letzte Schicht hat Sigmoid, damit das Bild welches am Ende rauskommt
+Graustufenwerte im Intervall $[0,1]$ hat. Dies ist mit einer
+ReLU-Aktivierungsfunktion nicht moeglich.
 
 Nun definieren wir noch das eigentliche Modell.
 Diesen kompilieren wir dann im naechsten Schritt, dabei waehlen wir als
