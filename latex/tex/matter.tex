@@ -600,80 +600,47 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
 \cite{wiki:kuenstliches_neuron}
 \cite{wiki:perzeptron}
 
-\subsection{Stueckweise lineare Neuronen}
-Der naechste Schritt nach dem binaeren Perzeptron sind sogenannte stueckweise
-lineare Neuronen.
-Sie verwenden eine stueckweise lineare Aktivierungsfunktion. Diese bildet ein
-beschraenktes Intervall linear ab. Die Werte ausserhalb werden auf die
-konstanten Werte 0 oder 1 abbgebildet (siehe Abb. (\ref{fig:stueckweiselinear})).
+
+\subsection{ReLU Neuronen}\label{sec:ReLU}
+Der naechste Schritt nach einer Stufenfunktion als Aktivierungsfunktion, waren
+lineare Aktivierungsfunktionen. Fuer diese koennen die Inputs nun belibige reelle
+Zahlen sein.
+Jedoch sind solche lineare Neuronen in einem KNN von keinem Nutzen.
+Das hat den Grund, dass eine Verkettung von linearen Neuronen,
+immer auf eine einzige lineare Funktion reduziert werden kann. Somit hat
+die Verkettung keinen Mehrwert.
 \para{}
-Nun koennen die Outputs beliebige reele Zahlen sein. Auch fuer die Inputs duerfen
-jetzt beliebige reele Zahlen verwendet werden (vorzugsweise in der Nahe von 0
-und 1).
-Ein KNN aus ausschliesslich linearen Neuronen ist ziemlich nutzlos, da jegliche Verkettung von
-linearen Funktion auch durch eine einzige lineare Funktion dargestellt werden
-koennte. Somit hat ein KNN gegenueber einem einzelnen Neuron keinen Mehrwert.
-Ausserdem koennen mit diesem Neuron auch nur lineare Probleme geloest werden.
-\\
-\begin{figure}[h!]
-  \begin{minipage}[h!]{0.5\textwidth}
-    \begin{equation*}
-      \varphi^{\text{pwl}}(z) =
-      \begin{cases}
-        1 & \quad \text{falls } z > \frac{1}{2}\\
-        z + \frac{1}{2} & \quad \text{falls } -\frac{1}{2} < z < \frac{1}{2}\\
-        0 & \quad \text{falls } z < -\frac{1}{2}
-      \end{cases}
-    \end{equation*}
-  \end{minipage}
-  \begin{minipage}[h!]{0.5\textwidth}
-    \centering
-    \begin{tikzpicture}[scale=2.5]
-      \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$}; % x-axes
-      \draw[->] (0,-0.2) -- (0,1.2) node [above] {$y$}; % y-axes
-      \draw[style=help lines,step=0.5] (-1.4,0) grid (1.4, 1.1);
-
-      \foreach \x in {-1,-0.5,0.5,1}
-      \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below,fill=pagecolor] {$\x$};
-
-      \foreach \y in {0.5,1}
-      \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left,fill=pagecolor] {$\y$};
-
-      \draw[shift={(0,0)}] (0pt,0pt) node[below left,fill=pagecolor] {$O$};
-
-      \draw[red,ultra thick] (-1.5,0) -- (-0.5,0);
-      \draw[red,ultra thick] (0.5,1) -- (1.5,1);
-      \draw[red,ultra thick] (-0.5,0) -- (0.5,1);
-
-      \draw[draw=red,fill=red] (-0.5,0) circle (0.03);
-      \draw[draw=red,fill=red] (0.5,1) circle (0.03);
-    \end{tikzpicture}
-  \end{minipage}
-  \caption{Formel und Graph einer stueckweisen linearen Funktion}
-  \label{fig:stueckweiselinear}
-\end{figure}
-
+Stattdessen verwendet man sogennante ReLU Neuornen. Sie benutzen die
+\keyword{Rectified Linear Unit} (\keyword{ReLU}) Aktivierungsfunktion.
+Diese ist
+eine nur teilweise lineare Aktiverungsfunktion. Die Werte groesser als 0 werden
+auf sich selber linear abbgebildet und die Werte kleiner als 0 werden auf 0
+abbgebildet (siehe Abb. (\ref{fig:relu})).
+Eine sehr wichtige Eigenschaft von ihr ist, dass sie - im Gegensatz zu den vorhin
+genannten Aktivierungsfunktionen - fast ueberall differenzierbar%
+\footnote{%
+  Eigentlich ist die ReLU-Funktion in $x=0$ wegen des Knicks nicht
+  differenzierbar. Fuer die Gradientenberechnung definiert man jedoch einfach
+  die Ableitung $\varphi^{\text{ReLU}}'(0) \coloneqq 0$. Dies ist mathematisch zwar nicht
+  korrekt, loest aber das Problem.
+}%
+und strikt monoton
+steigend ist. Erst fuer diese Aktivierungsfunktion, kann das Gradientenverfahren
+angewendet werden und somit das KNN trainiert werden.
 \para{}
-\cite{wiki:kuenstliches_neuron}
-
-\subsection{ReLU Neuronen}
-LINEARE-NEURONEN MIT ReLU Abschnitt VERSCHMELZEN/ERSETZEN
-
-Konstante Ableitung -> Neuronen saturieren nicht. Das Trainings wird nicht
-verlangsamt. Kein Vanishing-Gradient-Problem.
-Probelm: nur lineare Funktionen haben konstante Ableitungen -> UAT giltet nicht!
-Dehslab nimmt man eine teil lienare Funktion wie der positive Teil der
-Einheitsfunktion:
-Diese Funktion nennt man Rectifier. Beziehungsweise einen \keyword{Rectified
-  Lienar Unit} (\keyword{ReLU}). Eigentlich der Name des Neurons nicht der Aktivierungsfunktion.
-
-Somit giltet UAT! Es handelt sich um ``nicht lineare Neuronen''
-
-\\
+Da sie nur teilweise linear ist, gehoert sie genaugenommen den
+Nicht-linearen-Aktiverungsfunktionen an. Diese Nicht-Linearitaet erlaubt es dem
+Neuronen deutlich komplexere Systeme zu modellieren und so deutlich komplexere
+Probleme zu loesen. Wir werden in Sektion (\ref{sec:UAT}) sogar erfahren, dass
+eine Kompostion von nicht-linearen Neuroen jede beliebige Funktion approximieren kann.
+\para{}
+Wir werden diese Art von Neuron vorerst zur Seite legen und erst wieder in
+Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung betrachten.
+\para{}
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
     \begin{equation}
-      \varphi^{ReLU}(z) =
+      \varphi^{\text{ReLU}}(z) =
       \begin{cases}
         z & \quad \text{falls } z > 0\\
         0 & \quad \text{falls } z \leq 0
@@ -703,34 +670,27 @@ Somit giltet UAT! Es handelt sich um ``nicht lineare Neuronen''
       \draw[draw=red,fill=red] (0,0) circle (0.03);
     \end{tikzpicture}
   \end{minipage}
-  \caption{Formel und Graph einer stueckweisen linearen Funktion}
-  \label{fig:stueckweiselinear}
+  \caption{Formel und Graph der ReLU-Funktion}
+  \label{fig:relu}
 \end{figure}
 
 \para{}
 \cite{wiki:kuenstliches_neuron}
+\cite{Nielsen}
 
-\subsection{Nicht-lineare Neuronen}
-Die logische naechste Erweiterung sind nicht-lineare Neuronen.
-Ein sehr beliebter Kandidat dafuer sind Sigmoide Neuronen.
+\subsection{Sigmoid Neuronen}
+Ein weiteres nicht-lineares Neuron, sind sogennante Sigmoid-Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
-Eine sehr wichtige Eigenschaft von ihr ist, dass sie - im Gegensatz zu den vorhin
-genannten Aktivierungsfunktionen - ueberall differenzierbar und strikt monoton
-steigend ist. Erst fuer diese Aktivierungsfunktion, kann das Gradientenverfahren
-angewendet werden und somit das KNN trainiert werden. Die anderen
-Funktionen haben Stellen bei welchen die Ableitungsfunktion null
-betraegt, somit kann das lokale Minimum nicht gefunden werden.
 \para{}
-Nicht nur die Sigmoidfunktion erfuellt diese Bedingungen, sondern auch andere.
-Trotzdem wird meistens die Sigmoidfunktion wird
-verwendet, auch weil ihre Ableitung sehr simpel ist (siehe Abb. (\ref{fig:sigmoid})).
-Die Nicht-linearitaet dieser Neuronen ermoeglicht ein Erlernen von deutlich komplexeren Sachverhalten.
-Und wie spaeter in Sektion (\ref{sec:UAT}) erlautert, ist es moeglich mit der Komposition von nicht-linearen
-Funktionen jede belibige Funktion zu approximieren!
+Auch sie kann aufgrund ihrer Nicht-linearitaet zur Approximation jeder Funktion
+in einem KNN verwendet werden. Sie ist die Aktivierungsfunktion, welche am
+meisten in KNNs eigesetzt wird. Da sie wirklich sehr stark von Lineartiaet
+abweicht und so am schnellsten komplexe Sachverhalte modellieren kann.
 \para{}
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
 zwei Asymptoten, eine $\ds\lim_{x \to -\infty} \sigma(x)=0$
-und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb. (\ref{fig:sigmoid})).
+und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
+(\ref{fig:sigmoid})). Desweiteren zeichnet sie sich durch ihre simple Ableitung aus.
 \\
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
@@ -1608,14 +1568,6 @@ MIR GESCHRIEBEN
 
 \cite{wiki:uat}
 
-\section{Vanishing Gradient Problem}
-
-Gleichung BP1 sagt uns, dass der Lernprozess langsam ist, falls $\varphi$ fast 0
-oder 1 ist. Sigmoid. Das Neuron ist saturiert und lernt nicht mehr. In letzter Schicht
-
-\subsection{Kreuzentropie-Kostenfunktion}
-
-\subsection{ReLU}
 
 \pagebreak
 \chapter{Convolutional Neural Networks}
@@ -2101,18 +2053,14 @@ Daher ruehrt auch der Name des Convolutional Neural Networks.
 Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
 betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
 Bedeutung der Faltung fuer Filter beschraenken.
+\para{}
 \begin{defbox}{Diskrete Faltung}
   Definintion Faltung
   \begin{equation}
     (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
   \end{equation}
 \end{defbox}
-
-\begin{examplebox}{Faltung Beispielrechnung}
-  Beispielsrechnung
-\end{examplebox}
-
-
+\para{}
 Mithilfe der Faltungsoperation koennen wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklaert wurden zusammenfassen.
 Bei der Filteroperation handelt es sich lediglich um eine diskrete Faltung des
@@ -2120,9 +2068,48 @@ Filtertensors $\ten{W}$ ueber den Bildtensor $\ten{B}$. Somit koennen wir
 folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
-  (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} (\mat{W})_{v,u}(\mat{B})_{y+v,x+u}
+  (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{v,u}(\mat{B})_{y+v-1,x+u-1}
 \end{equation}
-\\
+\para{}
+\begin{examplebox}{Faltung Beispielrechnung}
+  \begin{equation*}
+    \mat{B} =
+    \begin{pmatrix}
+      10 & 10 & 10 & 0 & 0 & 0 \\
+      10 & 10 & 10 & 0 & 0 & 0 \\
+      10 & 10 & 10 & 0 & 0 & 0 \\
+      10 & 10 & 10 & 0 & 0 & 0 \\
+      10 & 10 & 10 & 0 & 0 & 0 \\
+      10 & 10 & 10 & 0 & 0 & 0 \\
+    \end{pmatrix}
+    \text{ und } \mat{W} =
+    \begin{pmatrix}
+      1 & 0 & -1 \\
+      1 & 0 & -1 \\
+      1 & 0 & -1 \\
+    \end{pmatrix}
+  \end{equation*}
+
+  Fuer die Berechnung des ersten Pixels $(\tilde{\mat{B}})_{1,1}$ fuehren wir
+  folgende Rechnung aus.
+  \begin{align*}
+    (\tilde{\mat{B}})_{1,1} &= (\mat{W} * \mat{B})_{1,1} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{u,v} (\mat{B})_{u,v} \\
+    &= 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 \\
+    &= 0
+  \end{align*}
+
+  Das Gesamtergebniss lautet dann:
+  \begin{equation*}
+    \tilde{\mat{B}} = \mat{W} * \mat{B} =
+    \begin{pmatrix}
+      0 & 30 & 30 & 0 \\
+      0 & 30 & 30 & 0 \\
+      0 & 30 & 30 & 0 \\
+      0 & 30 & 30 & 0 \\
+    \end{pmatrix}
+  \end{equation*}
+\end{examplebox}
+\para{}
 Fuer farbige Bilder ist das Vorgehen praktisch das Selbe. Es werden nun
 lediglich 3D-Tensoren anstatt 2D-Tensoren verwendet. Wir betrachten den
 allgemeinen Bildtensor $\ten{B}_{h \times w \times c}$, wobei $c$ die Anzahl
@@ -2135,7 +2122,7 @@ Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
 Die allgemeine Filtergleichung lautet:
 \\
 \begin{equation}\tag{FO}
-  (\tilde{\mat{B}})_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c (\ten{W})_{v,u,w} (\ten{B})_{x+u,y+v,w}
+  (\tilde{\mat{B}})_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} \sum_{w=1}^c (\ten{W})_{v,u,w} (\ten{B})_{x+u-1,y+v-1,w}
 \end{equation}
 
 \para{}
@@ -2318,7 +2305,7 @@ $\ten{A}^l$ und erhaelt so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 Die Faltung berechnet man nach folgender Gleichung:
 \\
 \begin{equation}\tag{FO}
-  (\tilde{\mat{A}}_i)_{y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=0}^{f-1} \sum_{u=0}^{f-1} \sum_{w=0}^c (\ten{W}^l_i)_{v,u,w} (\ten{A}^l)_{x+v,y+u,w}
+  (\tilde{\mat{A}}_i)_{y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} \sum_{w=1}^c (\ten{W}^l_i)_{v,u,w} (\ten{A}^l)_{x+v-1,y+u-1,w}
 \end{equation}
 \\
 Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
@@ -2336,8 +2323,11 @@ nicht-lineare Aktivierungsfunktion um das Modell zu befaehigen nicht-lineare Pro
 loesen.
 Deshalb wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
 $\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ an und erhaelt so die
-neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Meistens waehlt man hier
-die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
+neue Aktiverung der naechsten Schicht $\ten{A}^{l+1}$. Empirisch hat man
+festgestellt, dass es fuer CNNs eine bessere Aktivierungsfunktion als die
+Sigmoidfunktion gibt. Die ReLU-Aktivierungsfunktion $\vecf{\varphi}^{ReLU}$ aus Sektion (\ref{sec:ReLU})
+erziehlt bessere Resultate als die Sigmoidfunktion. Deshalb verwendet man
+eigentlich nur diese in CNNs.
 \begin{equation}
   \ten{A}^{l+1} = \vecf{\varphi}[\tilde{\ten{A}}^l]
 \end{equation}
@@ -2346,6 +2336,7 @@ die ReLU-Aktiverungsfunktion $\vecf{\varphi}^{ReLU}$.
 \cite{wiki:cnn}
 \cite{deeplearning.ai:cnn}
 \cite{Goodfellow-et-al-2016}
+\cite{Nielsen}
 
 \section{Dimensionalitaetskontrolle}
 Beim Anwenden einer Convolutional Schicht gehen Informationen verloren, da nur
@@ -2385,6 +2376,22 @@ Man unterscheidet zwischen zwei Arten von Pooling:
 \end{itemize}
 In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
 Resultate erzielt.
+\begin{examplebox}{MaxPooling Beispiel}
+  \begin{equation*}
+    \begin{pmatrix}
+      5 & 2 & 4 & 3 \\
+      8 & 9 & 5 & 1 \\
+      3 & 8 & 6 & 7 \\
+      8 & 1 & 4 & 2 \\
+    \end{pmatrix}
+    \to_{\text{MaxPool}}
+    \begin{pmatrix}
+      9 & 5 \\
+      8 & 7 \\
+    \end{pmatrix}
+    \end{equation*}
+\end{examplebox}
+
 \para{}
 Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
@@ -2752,6 +2759,13 @@ Des weiteren sind Convolutional-Autoencoder interessant, da sie uns auf eine
 weitere Anwendung eines Autoencoders bringen: den Denoising-Autoencoder.
 Diesen betrachten wir im naechsten Abschnitt.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{conv-autoencoder.png}
+  \caption{Darstellung eines Convolutional Autoencoders}
+\end{figure}
+
+
 \cite{yt:autoencoder_faces}
 
 \section{Denoising-Autoencoder}
@@ -2770,6 +2784,8 @@ codiert werden, da es voellig zufaellig ist. Es existieren keine Muster oder
 Gesetzmaessigkeiten, welche anderst codiert werden koennten. Somit muss der
 Autoencoder diese Rausch-Features verwerfen. Somit hat er leichteres Spiel
 gegenueber sonstigen CNNs.
+\subsection{Generierung der verrauschten Bilder}
+
 
 
 % ------------------------------------
@@ -3526,7 +3542,7 @@ zentriert sind.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{mnist.png}
+  \includegraphics[width=0.7\textwidth]{mnist.png}
   \caption{ein Auszug an MNIST-Bildern \cite{res:mnist_images}}
 \end{figure}
 
@@ -3613,8 +3629,6 @@ die gleichen sein) und keine Fehlermeldungen angezeigt
 werden, sollte alles funktionieren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
   1.17.
-
-  0
   3.1.1
   1.14.0
 \end{minted}
@@ -3647,11 +3661,11 @@ Nun sind die Features fuers Training in der Variabel \code{x\_train} und die
 Features des Trainingsdatensatzes in der Variabel \code{x\_test} gespeichert.
 
 \subsubsection{Formatieren der Daten}
-Nun muessen wir die Daten noch transformieren, dass sie die richtige Form fuer
+Nun muessen wir die Daten transformieren, damit sie die richtige Form fuer
 unser Modell haben. Wie bereits erklaert, ist der MNIST-Datensatz ziemlich
 handsam, da die Bilder alle die gleichen Masse haben und die Ziffern zentriert sind.
 \para{}
-Nun muessen wir die Grauwerte normalisieren, denn im Moment liegen sie noch
+Wir muessen die Grauwerte normalisieren, denn im Moment liegen sie noch
 im Intervall $[0, 255]$ und sind vom Typ Integer. Unser Modell kann am besten
 mit Kommazahlen im Intervall $[0,1]$ umgehen. Um diese Anpassung vorzunehmen
 brauchen wir folgenden Code.
@@ -3702,8 +3716,37 @@ Somit lautet unser Code:
   x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
 \para{}
+Wir koennen mithilfe der Matplotlib einen Blick auf die verrauschten Bilder
+neben den Originalbildern werfen. Wir erstellen einfach einen Plot, welcher
+jeweils 10 Bilder beider Arrays rendert.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  n = 10 # jeweils 10 Bilder
+  plt.figure()
+  for i in range(n):
+    # verrauschte Bilder
+    ax = plt.subplot(2,n,i+1+n)
+    plt.imshow(x_test[i].reshape(28,28))
+    plt.gray()
+
+    # Original Bilder
+    ax = plt.subplot(2, n, i+1)
+    plt.imshow(x_test_noisy[i].reshape(28,28))
+    plt.gray()
+
+  plt.show()
+\end{minted}
+Wir erhalten so folgende Grafik:
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{noised_clipped.png}
+  \caption{Verrauschte Bilder neben den Orignalbildern}
+\end{figure}
+
+\para{}
 Nun haben wir die Daten vollstaendigt im richtigem Format. Damit koennen wir nun
 zur Definition des Modells uebergehen.
+
+
 
 \subsection{Modell definieren}
 Nun werden wir mithilfe von Keras das Modell unseres
@@ -3719,38 +3762,43 @@ ist, welcher die Inputswerte haelt. Die Schicht hat die gleiche Form, wie ein MN
   input_data = tf.keras.Input(shape=(28,28,1))
 \end{minted}
 \para{}
-Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht aus
-zwei Convolutional-Schichten, auf welche jeweils eine Pooling-Schicht folgt.
+Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht
+sowohl aus Convolutional-Schichten, wie auch aus Pooling-Schichten, welche sich abwechseln.
 Wir werden wie gesagt fuer alle Schichten vorerst die gleichen unbegruendeten
 Hyperparameter waehlen. Fuer die Convolutional-Schichten waehlen wir
 eine Filtergroesse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
 einen Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi = \varphi^{\text{ReLU}}$.
+Der Code fuer die Defition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3),
   strides=(1,1),padding='same', activation='relu')(input_data)
 \end{minted}
 Fuer die Pooling-Schichten waehlen wir analog eine Feldgroesse $f = 2$, einen
 Stride $s = 2$, damit jedes Feld einmal zusammengefasst wird und Same-Padding.
+Der Code fuer eine dieser Pooling-Schichten lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   pool_layer = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=(2,2),padding='same')(econv0)
 \end{minted}
-Wir waehlen einen Convolutional-Autoencoder, welcher seinen Flaschenhals nach
-zwei Convolutional-Schichten hat. Danach folgt die Decoding-Schicht.
-Dafuer verwenden wir die gleichen Convolutional-Schichten. Anstatt
-Pooling-Schichten benutzten wir nun UpSampling-Schichten, bei welchen die
-Feldgroesse $f = 2$ geaehlt wurde und als Interpolationsmethode Nearest-Neighbor.
+Nun folgt der Decoder.
+Fuer ihn verwenden wir die gleichen Convolutional-Schichten wie im Encoder. Anstatt
+Pooling-Schichten enthaelt er UpSampling-Schichten, bei welchen die
+Feldgroesse $f = 2$ gewaehlt wurde. Somit werden $4 \times 4$-Felder zu einem
+einzigen Pixel zusammengefasst. Als Interpolationsmethode benutzten wir den Naechsten-Nachbar-Algorithmus.
+Eine solche UpSampling-Schicht definiert man also so:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
 \end{minted}
-
-Der ganze Graph wird durch folgenden Code gebildet.
+Wir definieren jetzt alle Schichten und verknuepfen sie miteinander. Wir bauen
+einen Autoencoder, dessen Flaschenhals zwei Convolutional-Schichten tief ist.
+Somit besteht der Encoder aus zwei Convolutional-Layer-Pooling-Layer-Paar, dann
+folgt der Flaschenhals und aus zwei Convolutional-Layer-UpSampling-Layer-Paar.
+Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  # define model
   econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
   emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
   econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
   emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
-  encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
+  encoded =  emaxpool1 # Flaschenhals der Form (7,7,32)
   dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
   dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
   dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
@@ -3758,28 +3806,121 @@ Der ganze Graph wird durch folgenden Code gebildet.
   dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
   decoded = dconv2
 \end{minted}
-Letzte Schicht hat Sigmoid, damit das Bild welches am Ende rauskommt
-Graustufenwerte im Intervall $[0,1]$ hat. Dies ist mit einer
-ReLU-Aktivierungsfunktion nicht moeglich.
-
-Nun definieren wir noch das eigentliche Modell.
-Diesen kompilieren wir dann im naechsten Schritt, dabei waehlen wir als
-Optimizer SGD und als Verlustfunktion Binary-Corssentropy.
+Wie im Code zu sehen, haben wir fuer alle Convolutional-Layers die ReLU
+Aktivierungsfunktion gewaehlt, ausser der letzten Schicht. Fuer die letzte
+Schicht gebauren wir die Sigmoid-Aktivierungsfunktion. Dies hat den Grund, dass
+der Output unseres Netzwerk wieder ein Bild sein muss, dessen Grauwerte im
+Invervall $[0,1]$ liegen muessen. Eine Sigmoidfunktion hat genau dieses
+Intervall als Wertemenge.
+\para{}
+Nun muessen wir noch das Kerasmodell mit diesem Graphen definieren. Also
+definieren wir das Modell einfach als der Abschnitt des Graphen zwischen der
+Input und dem Decoding.
+Und es danach mit kompilieren. Bei der Kompilierung wahlen wir als
+Optimierungsverfahren einfach das Stochastische-Gradientenverfahren SGD. Als
+Kostenfunktion waehlen wir den Mittleren-Quadratischen-Fehler $C_{\text{MSE}}$.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder = tf.keras.Model(input_data, decoded)
-  autoencoder.compile(optimizer='sgd',loss='binary_crossentropy')
+  autoencoder.compile(optimizer='sgd',loss='mean_squared_error') # SGD und MSE
 \end{minted}
-
 Mithilfe von \code{tf.keras.Model.summary} kann man eine Zusammenfassung des
-Modells in Textform erhalten. Diese erhibt folgende Zusammenfassung:
+Modells in Textform erhalten. So kann man Informationen bezueglich der Form der
+verschiedenen Schichten extrahieren und ueberpruefen, ob alles stimmig ist.
+Fuer unser Modell erhalten wir folgende Summary:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
+Model: "model"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+input_1 (InputLayer)         [(None, 28, 28, 1)]       0
+_________________________________________________________________
+conv2d (Conv2D)              (None, 28, 28, 32)        320
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 14, 14, 32)        9248
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 7, 7, 32)          0
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 7, 7, 32)          9248
+_________________________________________________________________
+up_sampling2d (UpSampling2D) (None, 14, 14, 32)        0
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 14, 14, 32)        9248
+_________________________________________________________________
+up_sampling2d_1 (UpSampling2 (None, 28, 28, 32)        0
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 28, 28, 1)         289
+=================================================================
+Total params: 28,353
+Trainable params: 28,353
+Non-trainable params: 0
+_________________________________________________________________
 \end{minted}
-
-
 
 \subsection{Training}
+Nun muessen wir das definierte Modell trainieren.
+Mit Keras ist das mit einem Funktionsaufruf gemacht. Diese Funktion erwartet
+einige Argumente. Zuerst muessen wir die Features und die Labels angeben. Die
+Features haben wir in der Variabel \code{x\_train\_noisy} gespeichert. Die Labels
+sind die unverrauschten MNIST-Bilder, welche in Variable \code{x\_train} sind.
+Desweiteren spezifizieren wir die groesse eines Mini-Batches als 128. Wir werden
+fuer 100 Epochen trainieren und geben dies entsprechend an. Wichtig ist auch,
+dass wir die Trainingssampels vor dem Training mischen, damit keine Mustern
+innerhalb der Anordnung der Samples erlernt werden. Als letzen geben wir noch
+den Testdatensatz an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test))
+\end{minted}
+Wenn wir jetzt unser Modell trainieren, macht TensorFlow, falls eine geeignete
+Nvidia-Grafikarte gefunden wird, gebrauch von ihr. Somit sollte das Trainings
+erhalb einiger Minuten beendet sein.
+Waehrend des Trainings schreibt TensorFlow Informationen zum Fortschritt in die
+Kommandozeile. Diese hat folgenden Charakter und informiert uber Epochen und die
+Werte der Kostenfunktion.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
+Epoch 99/100
+60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
+\end{minted}
+Das Modell hat nach dem es trainiert wurde Kosten $C_{\text{MSE}} = 0.1089$
+bezueglich dem Testdatensatz.
+\para{}
+Jetzt, da das Modell trainiert ist, speichern wir es als Datei auf unserem Computer.
+So muessen wir es nicht jedesmal wieder neu trainieren, sondern koennen einfach
+die Modelldatei einlesen lassen.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder.save('denoiser.model')
+\end{minted}
 
+\subsection{Modell ausfuehren}
+Nun kann das trainierte Modell verwenden werden, um nun Bilder eben zu
+entrauschen. Wir verwenden dafuer Bilder aus dem Testdatensatz, da diese nicht
+zum Training verwenden wurden. Mit der Funktion \code{tf.Keras.Model.predict}
+kann man die Vorhersagen unseres Autoencoders zum ganzen Testdatensatz erhalten.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  denoised_imgs = autoencoder.predict(x_test)
+\end{minted}
+Mithilfe von der Matplotlib koennen wir nun diese Entrauschten Bilder mit den
+urspruenliche MNIST-Bildern Seite an Seite darstellen. So koennen wir von Auge
+beurteilen, wie gut die Ergebnisse sind.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  n = 10 # jeweils 10 Bilder
+  plt.figure(figsize=(20,4))
+  for i in range(n):
+  # Original-Bilder anzeigen
+  ax = plt.subplot(2, n, i+1)
+  plt.imshow(x_test_noisy[i].reshape(28,28))
+  plt.gray()
+  ax.get_xaxis().set_visible(False)
+  ax.get_yaxis().set_visible(False)
+
+  # reconstruction
+  ax = plt.subplot(2,n,i+1+n)
+  plt.imshow(decoded_imgs[i].reshape(28,28))
+  plt.gray()
+  ax.get_xaxis().set_visible(False)
+  ax.get_yaxis().set_visible(False)
+  plt.show()
 \end{minted}
 
 \subsection{Variationen}
@@ -3791,6 +3932,11 @@ analysieren koennen und somit Anpassungen vornehmen koennen.
   NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
   tensorboard = tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
+\end{minted}
+
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/denoiser',histogram_freq=0,write_graph=False)])
 \end{minted}
 
 \chapter{Diskussion}
