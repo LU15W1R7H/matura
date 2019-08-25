@@ -2784,8 +2784,20 @@ codiert werden, da es voellig zufaellig ist. Es existieren keine Muster oder
 Gesetzmaessigkeiten, welche anderst codiert werden koennten. Somit muss der
 Autoencoder diese Rausch-Features verwerfen. Somit hat er leichteres Spiel
 gegenueber sonstigen CNNs.
-\subsection{Generierung der verrauschten Bilder}
 
+Corrupted Input
+\subsection{Generierung der verrauschten Bilder}
+Um den Autoencoder zu trainieren, muss man die verrauschten Daten generieren.
+Dies macht man indem man auf die Features ein additives Gauss'sches Rauschen anwendet.
+Man verwendet dafuer einfach eine Gauss'sche Normalverteilung
+$\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
+$\sigma^2 = 1$. Man entnimmt dieser dann einfach jeweils einen Zufallswert und
+addiert ihn zu jedem Feature. Somit erhaelt man einen Datensatz, welcher aus
+verrauschten Daten besteht.
+\begin{gather*}
+  r \sim \mathcal{N}(\mu = 0, \sigma^2 = 1) \\
+  \tilde{x} = x + r
+\end{gather*}
 
 
 % ------------------------------------
@@ -2797,6 +2809,10 @@ groben Funktionsweise untersuchen. Diese Tools werden wir im
 naechsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
 
 \section{TensorFlow}
+\begin{wrapfigure}{l}{3cm}
+  \includegraphics[width=3cm]{tf_logo.png}
+  \caption{TF-Logo}
+\end{wrapfigure}
 \keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes \keyword{Framework} fuer
 \keyword{datenstromorientriere Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek fuer numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
@@ -2831,6 +2847,11 @@ genau zu sein betrachten wir Tensorflow-Core Version r1.14.
 Wir werden TF nur sehr grob betrachten, da wir spaeter nicht direkt damit
 arbeiten werden, sondern mit der High-Level-API Keras. Trotzdem ist er hilfreich
 ein grobes Verstaentniss ueber TF zu besitzen.
+\para{}
+Die wichtige Resource um TensorFlow zu lernen ist wohl die offizielle TensorFlow
+Website. Dort findet man auch die Dokumentation.
+\para{}
+\qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
 
 \para{}
 \cite{book:tensorflow}
@@ -3323,7 +3344,12 @@ in a web browser.
 
 \subsubsection{Visualization of Training}
 
+\pagebreak
 \section{Keras}
+\begin{wrapfigure}{l}{3cm}
+  \includegraphics[width=3cm]{keras_logo.jpg}
+  \caption{Keras-Logo}
+\end{wrapfigure}
 \keyword{Keras} ist ein Open-Source Deep-Learning Framework geschrieben in
 Python. Keras wurde entwickelt, um eine einheitliche Schnittstelle fuer
 verschieden Backends, wie TensorFlow, Microsoft Cognitive Toolkit und Theano zu
@@ -3794,16 +3820,29 @@ Somit besteht der Encoder aus zwei Convolutional-Layer-Pooling-Layer-Paar, dann
 folgt der Flaschenhals und aus zwei Convolutional-Layer-UpSampling-Layer-Paar.
 Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
-  emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
-  econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
-  emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
+  # Encoder
+  econv0 = tf.keras.layers.Conv2D(
+    filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+  emaxpool0 = tf.keras.layers.MaxPooling2D(
+    pool_size=(2,2),strides=None,padding='same')(econv0)
+  econv1 = tf.keras.layers.Conv2D(
+    filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
+  emaxpool1 = tf.keras.layers.MaxPooling2D(
+    pool_size=(2,2), strides=None,padding='same')(econv1)
+
   encoded =  emaxpool1 # Flaschenhals der Form (7,7,32)
-  dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
-  dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
-  dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
-  dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
-  dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+
+  # Decoder
+  dconv0 = tf.keras.layers.Conv2D(
+    filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
+  dupsample0 = tf.keras.layers.UpSampling2D(
+    size=(2,2), interpolation='nearest')(dconv0)
+  dconv1 = tf.keras.layers.Conv2D(
+    filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
+  dupsample1 = tf.keras.layers.UpSampling2D(
+    size=(2,2), interpolation='nearest')(dconv1)
+  dconv2 = tf.keras.layers.Conv2D(
+    filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
   decoded = dconv2
 \end{minted}
 Wie im Code zu sehen, haben wir fuer alle Convolutional-Layers die ReLU
@@ -3828,7 +3867,6 @@ Modells in Textform erhalten. So kann man Informationen bezueglich der Form der
 verschiedenen Schichten extrahieren und ueberpruefen, ob alles stimmig ist.
 Fuer unser Modell erhalten wir folgende Summary:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-Model: "model"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #
 =================================================================
@@ -3857,6 +3895,8 @@ Trainable params: 28,353
 Non-trainable params: 0
 _________________________________________________________________
 \end{minted}
+Wir sehen hier schoen, dass wir circa 28'000 Hyperparameter haben, welche wir zu
+trainieren haben.
 
 \subsection{Training}
 Nun muessen wir das definierte Modell trainieren.
@@ -3926,17 +3966,22 @@ beurteilen, wie gut die Ergebnisse sind.
 \subsection{Variationen}
 
 \subsection{TensorBoard Konfiguration}
-Wir richten nun noch TensorBoard ein, damit wir die Leistungen unseres Modells
-analysieren koennen und somit Anpassungen vornehmen koennen.
+Damit wir den Lernprozess und die Leistungen unseres Modells analysieren
+koennen, werden wir nun TensorBoard konfigurieren.
+Um TensorBoard einzurichten, muessen wir zuerst eine entsprechende TensorBoard
+Variable definieren. Hierbei muessen wir angeben wohin die TensorBoard-Daten
+geschrieben werden. Da wir die verschiedenten Hyperparameter-Einstellungen
+haben, welche wir alle vergleichen wollen, benennen wir die Dateien
+aussagekraeftig. \\
+Desweiteren spezifizieren wir gewisse Optionen fuer die Datenerfassung.
+Zuletzt muessen wir die TensorBoard Variable einfach als Callback in der
+\code{fit}-Funktion angeben, damit waehrend des Trainings die noetigen
+Informationen gesammelt werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
-  tensorboard = tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
+  tensorboard =
+  tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME), histogram_freq=0, write_graph=False)
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
-\end{minted}
-
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/denoiser',histogram_freq=0,write_graph=False)])
 \end{minted}
 
 \chapter{Diskussion}
