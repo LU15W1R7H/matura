@@ -2094,8 +2094,8 @@ folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bilde
   folgende Rechnung aus.
   \begin{align*}
     (\tilde{\mat{B}})_{1,1} &= (\mat{W} * \mat{B})_{1,1} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{u,v} (\mat{B})_{u,v} \\
-    &= 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 \\
-    &= 0
+                            &= 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 + 10 \cdot 1 + 10 \cdot 0 + 10 \cdot -1 \\
+                            &= 0
   \end{align*}
 
   Das Gesamtergebniss lautet dann:
@@ -2389,7 +2389,7 @@ Resultate erzielt.
       9 & 5 \\
       8 & 7 \\
     \end{pmatrix}
-    \end{equation*}
+  \end{equation*}
 \end{examplebox}
 
 \para{}
@@ -2493,9 +2493,9 @@ Diese Kapazitaetseinschraekung wird durch die Topologie des Autoencoders bezweck
 Der einfachste Autoencoder, besteht aus drei Schichten, welche sich wie folgt
 eingliedern lassen:
 \begin{itemize}
-  \item{eine Inputschicht mit $d$ Neuronen}
-  \item{eine Zwischenschicht mit $p$ Neuonen, bezeichnet als \keyword{Flaschenhals}}
-  \item{eine Outputschicht mit $d$ Neuronen}
+\item{eine Inputschicht mit $d$ Neuronen}
+\item{eine Zwischenschicht mit $p$ Neuonen, bezeichnet als \keyword{Flaschenhals}}
+\item{eine Outputschicht mit $d$ Neuronen}
 \end{itemize}
 In Abbildung (\ref{fig:basic_autoencoder}) ist
 ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
@@ -2659,8 +2659,8 @@ Man kann einen Autoencoder gewissermassen als zwei Teilmodelle betrachten. Das
 einte Modell erzeugt das Encoding und das andere das Decoding. Wir spalten
 dafuer die Hypothesenfunktion $h$ in ein Funktionpaar $(\phi,\psi)$ auf.
 \begin{itemize}
-  \item{$\phi: \fspace{X} \to \fspace{E}$ Encoder-Funktion}
-  \item{$\psi: \fspace{E} \to \fspace{X}$ Decoder-Funktion}
+\item{$\phi: \fspace{X} \to \fspace{E}$ Encoder-Funktion}
+\item{$\psi: \fspace{E} \to \fspace{X}$ Decoder-Funktion}
 \end{itemize}
 Die erste Teilfunktion $\phi$ ist dafuer zustaendig das Encoding zu erzeugen. Sie
 bildet den Inputraum $\fspace{X} \subseteq \set{R}^d$, welcher die Features $\vec{x}$ enthaelt, auf
@@ -3361,17 +3361,62 @@ Wir werden also anstatt TF direkt zu verwenden, ueber Keras das Modell definiere
 Deshalb ist ein tiefgehendes Verstaetniss von TF ueberfluessig.
 
 \subsection{Grundsaetliche Funktionsweise}
-In Keras ist es sehr einfach ein Modell zu bauen. Man reiht lediglich
-vordefinierte KNN-Schichten aneinander und baut so einen Graphen. Dafuer
-verwendet man meistens den \code{tf.keras.Sequential} Modus.
+In Keras kann man sehr einfach ein sogennantes \keyword{Sequential-Model} bauen.
+Dies ist ein Modell, welches einfach ein linearer Stapel von verschiedenen
+Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
+verfuegung, welche einfach aneinander gereiht werden koennen und so einen Graph bilden.
+\para{}
+Es gibt verschiedene Arten ein Modell zu definieren. Entweder definiert man eine
+\code{tf.keras.Sequential} Variabel, welcher dann mit der Methode \code{add()}
+neue Schichten hinzugefuegt werden.
+Oder man speichert die verschiedenene Schichten in Variabeln und gibt dann die
+Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariabel an.
 
 \subsection{Schichten}
-Keras ist hat verschiedene Schichten von Kuenstlichen Neuronalen Netzen
-implementiert. Dies koennen also einfach in den tf.Graph eingefuegt werden.
-Wir werden nun diese verschieden Schichten betrachten.
+Wir werden nun kurz die verschiedenen Schichttypen von Keras durchgehen, welche wir in
+der Theorie schon vorgestellt haben.
 
-\paragraph{Sequential-Modell/Dense-Layer}
-To build a simple, fully-connected network (i.e. multi-layer perceptron):
+\paragraph{Input-Schicht}
+Die Input-Schicht ist ziemlich selbsterklaerend. Sie ist einfach die
+Platzhalter-Schicht, welche alle Features enthaelt.
+Man definiert sie folgendermassen:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  tf.keras.Input(shape=(<Form>)
+\end{minted}
+
+\paragraph{Dense-Schicht}
+Wir beginnen mit dem Fully-Connected-Schicht. Diese wird in Keras als
+\code{Dense} bezeichnet. Der Name kommt davon, dass sie dicht mit jedem Neuron
+der vorherigen Schicht verbunden ist.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  tf.keras.layers.Dense(<Anzahl Neuronen>,
+  activation=<Aktivierungsfunktion>)(<vorherige Schicht>)
+\end{minted}
+
+\paragraph{Conv2D-Schicht}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  tf.keras.layers.Conv2D(filters=<#Filters>, kernel_size=<Filtergroesse>,
+  strides=<>, padding=<>, activation=<>, )
+\end{minted}
+Fuer alle Schichten eines CNNs gilt folgendes Datenformat:
+Input muss folgende Form haben $(samples, channels, rows, cols)$. Output hat
+analoge Form $(samples, filters, new\_rows, new\_cols)$
+
+\paragraph{MaxPool2D-Schicht}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  tf.keras.layers.MaxPool2D(pool_size=<Feldgroesse>, strides=<>, padding=<>)
+\end{minted}
+
+
+\paragraph{UpSampling2D-Schicht}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  tf.keras.layers.UpSampling2D(size=<>, interpolation=<>)
+\end{minted}
+
+
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   model = tf.keras.Sequential()
   # Adds a densely-connected layer with 64 units to the model:
@@ -3383,70 +3428,22 @@ To build a simple, fully-connected network (i.e. multi-layer perceptron):
 \end{minted}
 
 
-\paragraph{Configure the layers}
+\subsection{Training und Evaluierung}
 
-There are many tf.keras.layers available with some common constructor parameters:
-
-activation: Set the activation function for the layer. This parameter is specified by the name of a built-in function or as a callable object. By default, no activation is applied.
-kernelinitializer and biasinitializer: The initialization schemes that create the layer's weights (kernel and bias). This parameter is a name or a callable object. This defaults to the "Glorot uniform" initializer.
-kernelregularizer and biasregularizer: The regularization schemes that apply the layer's weights (kernel and bias), such as L1 or L2 regularization. By default, no regularization is applied.
-
-
+Nach dem das Modell definiert wurde, muss man es Kompilieren.
+Dies macht man mit der Methode \code{tf.keras.Model.compile} diese erwartet als
+Arugmente, den Optimzier und eine Kostenfunktion. Man kann optional noch gewisse
+Metriken angeben, welche wahrend des Trainings erfasst werden sollen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  # Create a sigmoid layer:
-  layers.Dense(64, activation='sigmoid')
-  # Or:
-  layers.Dense(64, activation=tf.sigmoid)
-
-  # A linear layer with L1 regularization of factor 0.01 applied to the kernel matrix:
-  layers.Dense(64, kernel_regularizer=tf.keras.regularizers.l1(0.01))
-
-  # A linear layer with L2 regularization of factor 0.01 applied to the bias vector:
-  layers.Dense(64, bias_regularizer=tf.keras.regularizers.l2(0.01))
-
-  # A linear layer with a kernel initialized to a random orthogonal matrix:
-  layers.Dense(64, kernel_initializer='orthogonal')
-
-  # A linear layer with a bias vector initialized to 2.0s:
-  layers.Dense(64, bias_initializer=tf.keras.initializers.constant(2.0))
-
-\end{minted}
-
-
-\paragraph{Conv2D}
-
-\paragraph{MaxPooling2D}
-\paragraph{UpSampling2D}
-
-\subsection{Train and evaluate}
-
-Train and evaluate
-Set up training
-
-After the model is constructed, configure its learning process by calling the compile method:
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  model = tf.keras.Sequential([
-  # Adds a densely-connected layer with 64 units to the model:
-  layers.Dense(64, activation='relu', input_shape=(32,)),
-  # Add another:
-  layers.Dense(64, activation='relu'),
-  # Add a softmax layer with 10 output units:
-  layers.Dense(10, activation='softmax')])
-
   model.compile(optimizer=tf.train.AdamOptimizer(0.001),
   loss='categorical_crossentropy',
   metrics=['accuracy'])
-
 \end{minted}
-
-tf.keras.Model.compile takes three important arguments:
-
-optimizer: This object specifies the training procedure. Pass it optimizer instances from the tf.train module, such as tf.train.AdamOptimizer, tf.train.RMSPropOptimizer, or tf.train.GradientDescentOptimizer.
-loss: The function to minimize during optimization. Common choices include mean square error (mse), categorical crossentropy, and binary crossentropy. Loss functions are specified by name or by passing a callable object from the tf.keras.losses module.
-metrics: Used to monitor training. These are string names or callables from the tf.keras.metrics module.
+Die Optimizer sind die gleichen wie die in TensorFlow-Core. Sie befinden sich
+alle in tf.train. Die Kostenfunktionen sind auch die gleichen wie in TF-Core.
+Zum beispeil tf.loss.mean\_squared\_error.
 \para{}
-The following shows a few examples of configuring a model for training:
+Hier ein Beispiel:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   # Configure a model for mean-squared error regression.
   model.compile(optimizer=tf.train.AdamOptimizer(0.01),
@@ -3835,27 +3832,27 @@ Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   # Encoder
   econv0 = tf.keras.layers.Conv2D(
-    filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
+  filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
   emaxpool0 = tf.keras.layers.MaxPooling2D(
-    pool_size=(2,2),strides=None,padding='same')(econv0)
+  pool_size=(2,2),strides=None,padding='same')(econv0)
   econv1 = tf.keras.layers.Conv2D(
-    filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
+  filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
   emaxpool1 = tf.keras.layers.MaxPooling2D(
-    pool_size=(2,2), strides=None,padding='same')(econv1)
+  pool_size=(2,2), strides=None,padding='same')(econv1)
 
   encoded =  emaxpool1 # Flaschenhals der Form (7,7,32)
 
   # Decoder
   dconv0 = tf.keras.layers.Conv2D(
-    filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
+  filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
   dupsample0 = tf.keras.layers.UpSampling2D(
-    size=(2,2), interpolation='nearest')(dconv0)
+  size=(2,2), interpolation='nearest')(dconv0)
   dconv1 = tf.keras.layers.Conv2D(
-    filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
+  filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
   dupsample1 = tf.keras.layers.UpSampling2D(
-    size=(2,2), interpolation='nearest')(dconv1)
+  size=(2,2), interpolation='nearest')(dconv1)
   dconv2 = tf.keras.layers.Conv2D(
-    filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+  filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
   decoded = dconv2
 \end{minted}
 Wie im Code zu sehen, haben wir fuer alle Convolutional-Layers die ReLU
@@ -3880,33 +3877,33 @@ Modells in Textform erhalten. So kann man Informationen bezueglich der Form der
 verschiedenen Schichten extrahieren und ueberpruefen, ob alles stimmig ist.
 Fuer unser Modell erhalten wir folgende Summary:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #
-=================================================================
-input_1 (InputLayer)         [(None, 28, 28, 1)]       0
-_________________________________________________________________
-conv2d (Conv2D)              (None, 28, 28, 32)        320
-_________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 14, 14, 32)        9248
-_________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 7, 7, 32)          0
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 7, 7, 32)          9248
-_________________________________________________________________
-up_sampling2d (UpSampling2D) (None, 14, 14, 32)        0
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 14, 14, 32)        9248
-_________________________________________________________________
-up_sampling2d_1 (UpSampling2 (None, 28, 28, 32)        0
-_________________________________________________________________
-conv2d_4 (Conv2D)            (None, 28, 28, 1)         289
-=================================================================
-Total params: 28,353
-Trainable params: 28,353
-Non-trainable params: 0
-_________________________________________________________________
+  _________________________________________________________________
+  Layer (type)                 Output Shape              Param #
+  =================================================================
+  input_1 (InputLayer)         [(None, 28, 28, 1)]       0
+  _________________________________________________________________
+  conv2d (Conv2D)              (None, 28, 28, 32)        320
+  _________________________________________________________________
+  max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0
+  _________________________________________________________________
+  conv2d_1 (Conv2D)            (None, 14, 14, 32)        9248
+  _________________________________________________________________
+  max_pooling2d_1 (MaxPooling2 (None, 7, 7, 32)          0
+  _________________________________________________________________
+  conv2d_2 (Conv2D)            (None, 7, 7, 32)          9248
+  _________________________________________________________________
+  up_sampling2d (UpSampling2D) (None, 14, 14, 32)        0
+  _________________________________________________________________
+  conv2d_3 (Conv2D)            (None, 14, 14, 32)        9248
+  _________________________________________________________________
+  up_sampling2d_1 (UpSampling2 (None, 28, 28, 32)        0
+  _________________________________________________________________
+  conv2d_4 (Conv2D)            (None, 28, 28, 1)         289
+  =================================================================
+  Total params: 28,353
+  Trainable params: 28,353
+  Non-trainable params: 0
+  _________________________________________________________________
 \end{minted}
 Wir sehen hier schoen, dass wir circa 28'000 Hyperparameter haben, welche wir zu
 trainieren haben.
@@ -3924,7 +3921,7 @@ innerhalb der Anordnung der Samples erlernt werden. Als letzen geben wir noch
 den Testdatensatz an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.fit(
-    x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test))
+  x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test))
 \end{minted}
 Wenn wir jetzt unser Modell trainieren, macht TensorFlow, falls die CUDA-Version
 von TF installiert ist und eine geeignete
@@ -3935,8 +3932,8 @@ Kommandozeile. Diese Infos haben folgenden Charakter und informieren ueber die a
 Werte der Kostenfunktion. Die Kosten fuer den Trainingsdatensatz werden mit
 \code{loss} bezeichnet und die fuer den Testdatensatz mit \code{val\_loss}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-Epoch 99/100
-60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
+  Epoch 99/100
+  60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
 \end{minted}
 Das Modell hat nach dem dem Training einen \code{val\_los} von $0.1089$,
 bezueglich dem Testdatensatz.
@@ -4003,8 +4000,39 @@ Hyperparametern trainiert. Beim Training erfassen wir mithilfe von TensorBoard
 Daten zum Lernfortschritt und den Kosten. Dann koennen wir mithilfe von
 TensorBoard eine Auswertung ausfuehren und so die besten Hyperparameter finden.
 \para{}
-Wir werden unser Programm mithilfe von For-Loops ausbauen, damit es die
-verschiedenen Modelle trainiert.
+Zuerst definieren wir einige Arrays, welche die Werte enthalten, welche wir als
+Hyperparameter testen wollen. Die Anzahl Epochen stellen auch einen
+Hyperparameter dar, diesen muessen wir aber nicht testen, da es auf der Hand
+liegt, dass mit mehr Epochen als Trainingszeit auch die Resulate besser werden.
+Wir werden fuer alle Hyperparameter 20 Epochen lang trainieren.
+\para{}
+Wir werden folgende Mini-Batch-Groessenen ausprobieren: 16, 32, 64, 128, 265.
+Die Vermutung ist nahezulegen, dass mit kleineren Mini-Batches die
+Gradientapproximationen besser mit dem reellen Gradienten ueberstimmen. Somit
+werden die Resulate vermutlich besser werden. \\
+Desweiteren werden wir folgende Anzahl Filter austesten: 16, 32, 64, 128, 256.
+Wir werden auch die beiden Aktivierungsfunktionen Sigmoid und ReLU ausprobieren.
+Wir werden fuer jede Schicht die gleiche waehlen, ausser fuer die letzte. Die
+letzte Schicht braucht immer eine Sigmoidfunktion, damit die Outputs das
+richtige Format haben.
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  EPOCHS = 20
+
+  POSSIBLE_BATCH_SIZES = [ 16, 32, 64, 128, 256]
+  POSSIBLE_NUMS_FILTER = [ 16, 32, 64, 128, 256]
+  POSSIBLE_ACITVATIONFUNCTIONS = [ 'sigmoid', 'relu' ]
+\end{minted}
+Nun werden wir den gesamten Code zum Bauen des Graphens, zur Kompilierung und
+zum Training des Modells in verschachtele For-Loops stecken, welche alle
+Kombinationen an Hyperparameter ausprobiert.
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  for activation_function in POSSIBLE_ACITVATIONFUNCTIONS:
+    for batch_size in POSSIBLE_BATCH_SIZES:
+      for num_filters in POSSIBLE_NUMS_FILTER:
+        # ganzer Modell-Code
+\end{minted}
 
 \subsection{TensorBoard Konfiguration}
 Damit wir den Lernprozess und die Leistungen unseres Modells analysieren
@@ -4027,7 +4055,6 @@ werden. Wir interessieren uns an der Akkuratesse des Modells.
 
 \chapter{Diskussion}
 \section{Auswertung mit TensorBoard}
-
 
 %%% TeX-command-extra-options: "--shell-escape"
 %%% Local Variables:
