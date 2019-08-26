@@ -39,7 +39,7 @@ decoded = dconv2
 
 # compile model
 autoencoder = tf.keras.Model(input_data, decoded)
-autoencoder.compile(optimizer='sgd',loss='binary_crossentropy')
+autoencoder.compile(optimizer='sgd',loss='mean_squared_error')
 
 print(autoencoder.summary())
 
@@ -50,21 +50,22 @@ autoencoder.save('denoiser.model')
 # let model make predictions
 decoded_imgs = autoencoder.predict(x_test)
 
-# show predictions
-n = 10
-plt.figure(figsize=(20,4))
+n = 10 # jeweils 10 Bilder
+plt.figure()
 for i in range(n):
-    # original
-    ax = plt.subplot(2, n, i+1)
+    # verrauschte Bilder
+    ax = plt.subplot(2, n, i+1+n)
     plt.imshow(x_test_noisy[i].reshape(28,28))
     plt.gray()
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
 
-    # reconstruction
-    ax = plt.subplot(2,n,i+1+n)
+    # entrauschte Bilder
+    ax = plt.subplot(2, n, i+1+n)
     plt.imshow(decoded_imgs[i].reshape(28,28))
     plt.gray()
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
+
+    # Original-Bilder
+    ax = plt.subplot(2, n, i+1)
+    plt.imshow(x_test[i].reshape(28,28))
+    plt.gray()
+
 plt.show()

@@ -3582,6 +3582,11 @@ installieren muessen.
 \para{}
 Die Installationsschritte werden in dieser Arbeit fuer eine arch-basierte
 Linuxdistribution, welche den \keyword{Pacman}-Package-Manager verwendet, erklaert.
+\para{}
+Falls der Leser ein anderes Betriebssystem verwendet, ist auf die offizielle
+TensorFlow Website fuer die Installationsschritte zu verweisen:
+\para{}
+\qrcode[height=2cm]{https://www.tensorflow.org/install}
 
 \paragraph{Python3}
 Um TensorFlow und Keras verwenden zu koennen, muss Python3 installiert sein.
@@ -3591,6 +3596,30 @@ der Kommandozeile ausfuehren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
   sudo pacman -S python
 \end{minted}
+
+\paragraph{TensorFlow}
+Um TensorFlow zu installieren muss man unter Arch Linux nur das entsprechende
+Package installieren.
+Falls man einen Computer mit einer Nvidia-Grafikkarte mit einer ``Compute
+Capability'' von mehr als 3.5 besitzten, kann man von der
+GPU-Hardwarebeschleunigung gebraucht machen. Somit installiert man die
+CUDA-Version von TF mithilfe folgenden Kommandos:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S python-tensorflow-cuda
+\end{minted}
+Pacman installiert nun automatisch zuerst alle Programmabhaengigkeiten, wie
+CUDA, cuDNN und das TensorFlow-Backend, bevor es das eigentliche
+Python-TensorFlow installiert.
+\para{}
+Falls man nicht eine geeignte Grafikkarte besitzt, installiert man am besten
+einfach die normale TF-Version ohne Unterstuetzung fuer die GPU. Dies macht man
+mit diesem Kommando:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
+  sudo pacman -S python-tensorflow
+\end{minted}
+\para{}
+Nun ist TF hoffentlich erfolgreich installiert. Keras muss nicht explizit
+installiert werden, da es in TensorFlow implementiert ist.
 
 \paragraph{Python-Module}
 Wir werden fuer unser Python-Programm von zwei Packages Gebrauch machen, welche
@@ -3606,27 +3635,6 @@ Man installiert beide mit folgenden Kommandos.
   sudo pacman -S python-numpy
   sudo pacman -S python-matplotlib
 \end{minted}
-
-Nun muessen wir CUDA installieren, damit wir TensorFlow auf der GPU ausfuehren koennen.
-\paragraph{CUDA}
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-  sudo pacman -S cuda
-\end{minted}
-
-Da wir nun CUDA installiert haben, koennen wir auch cuDNN installieren, das
-Deep-Learning-Framework fuer CUDA.
-\paragraph{cuDNN}
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-  sudo pacman -S cudnn
-\end{minted}
-
-Zu guter letzt installieren wir noch die GPU-version von TensorFlow mithilfe
-folgenden Kommandos.
-\paragraph{TensorFlow}
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-  sudo pacman -S tensorflow-cuda
-\end{minted}
-
 
 \section{Entwicklung}
 Nun beginnen wir mit der eigentlichen Programmierung.
@@ -3711,8 +3719,8 @@ Nun besitzen die Daten die richtige Form fuer unser Modell.
 
 \subsubsection{Generieren der verrauschten Bilder}
 Den Input in unser Modell stellen nicht die normalen MNIST-Bilder dar, sondern
-eine verrauschte Variante von ihnen. Diese werden wir nun generieren mithilfe
-von additivem Gauss'schem Rauschen.
+eine verrauschte Variante von ihnen. Diese werden wir nun generieren in dem wir
+ein additives Gauss'sches Rauschen anwenden.
 \para{}
 Zuerst erstellen wir eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$, welche die gleiche Form, wie die
 Bilder hat. Diese Matrix befuellen wir mit Zufallswerten. Fuer die
@@ -3742,9 +3750,14 @@ Somit lautet unser Code:
   x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
 \para{}
-Wir koennen mithilfe der Matplotlib einen Blick auf die verrauschten Bilder
-neben den Originalbildern werfen. Wir erstellen einfach einen Plot, welcher
-jeweils 10 Bilder beider Arrays rendert.
+Nun kann mithilfe der Matplotlib ein Blick auf die verrauschten Bilder
+neben den Originalbildern geworfen werden. Wir erstellen einfach einen Plot, welcher
+jeweils 10 Bilder beider Arrays rendert. \para{}
+Dazu erstellen wir zuerst eine \code{pyplot.figure}. Innerhalb dieser haben wir
+jeweils 10 \code{subplots}, fuer die verrauschten MNIST-Bilder und die
+Originale. Wir zeigen dann die entsprechenden Bilder an, nachdem wir sie in Form
+gebracht haben. Wir muessen der Grafik auch angeweben, dass sie schwarz-weiss
+Bilder anzeigen muss. Zu guter letzt zeigen wir den Plot einfach an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   n = 10 # jeweils 10 Bilder
   plt.figure()
@@ -3910,33 +3923,42 @@ dass wir die Trainingssampels vor dem Training mischen, damit keine Mustern
 innerhalb der Anordnung der Samples erlernt werden. Als letzen geben wir noch
 den Testdatensatz an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test))
+  autoencoder.fit(
+    x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test))
 \end{minted}
-Wenn wir jetzt unser Modell trainieren, macht TensorFlow, falls eine geeignete
-Nvidia-Grafikarte gefunden wird, gebrauch von ihr. Somit sollte das Trainings
-erhalb einiger Minuten beendet sein.
+Wenn wir jetzt unser Modell trainieren, macht TensorFlow, falls die CUDA-Version
+von TF installiert ist und eine geeignete
+Nvidia-Grafikarte gefunden wurde, gebrauch von ihr. Somit sollte das Training
+innerhalb einiger Minuten beendet sein.
 Waehrend des Trainings schreibt TensorFlow Informationen zum Fortschritt in die
-Kommandozeile. Diese hat folgenden Charakter und informiert uber Epochen und die
-Werte der Kostenfunktion.
+Kommandozeile. Diese Infos haben folgenden Charakter und informieren ueber die aktuelle Epoche und die
+Werte der Kostenfunktion. Die Kosten fuer den Trainingsdatensatz werden mit
+\code{loss} bezeichnet und die fuer den Testdatensatz mit \code{val\_loss}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 Epoch 99/100
 60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
 \end{minted}
-Das Modell hat nach dem es trainiert wurde Kosten $C_{\text{MSE}} = 0.1089$
+Das Modell hat nach dem dem Training einen \code{val\_los} von $0.1089$,
 bezueglich dem Testdatensatz.
 \para{}
-Jetzt, da das Modell trainiert ist, speichern wir es als Datei auf unserem Computer.
+Jetzt, da das Modell trainiert ist, speichern wir es und alle seine
+Modellparameter als Datei auf unserem Computer ab.
 So muessen wir es nicht jedesmal wieder neu trainieren, sondern koennen einfach
 die Modelldatei einlesen lassen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.save('denoiser.model')
 \end{minted}
+Um das Modell wieder einzulesen verwendet man folgenden Code:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder = tf.keras.models.load_model('denoiser.model')
+\end{minted}
+Mit der Summary-Funktion kann man ueberpruefen, ob das richtige Modell geladen wurde.
 
 \subsection{Modell ausfuehren}
-Nun kann das trainierte Modell verwenden werden, um nun Bilder eben zu
+Nun kann das trainierte Modell verwenden werden, um nun eben Bilder zu
 entrauschen. Wir verwenden dafuer Bilder aus dem Testdatensatz, da diese nicht
 zum Training verwenden wurden. Mit der Funktion \code{tf.Keras.Model.predict}
-kann man die Vorhersagen unseres Autoencoders zum ganzen Testdatensatz erhalten.
+erhaelt man alle Vorhersagen unseres Autoencoders zum ganzen Testdatensatz.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   denoised_imgs = autoencoder.predict(x_test)
 \end{minted}
@@ -3945,25 +3967,44 @@ urspruenliche MNIST-Bildern Seite an Seite darstellen. So koennen wir von Auge
 beurteilen, wie gut die Ergebnisse sind.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   n = 10 # jeweils 10 Bilder
-  plt.figure(figsize=(20,4))
+  plt.figure()
   for i in range(n):
-  # Original-Bilder anzeigen
-  ax = plt.subplot(2, n, i+1)
-  plt.imshow(x_test_noisy[i].reshape(28,28))
-  plt.gray()
-  ax.get_xaxis().set_visible(False)
-  ax.get_yaxis().set_visible(False)
+    # verrauschte Bilder
+    ax = plt.subplot(3, n, i+1)
+    plt.imshow(x_test_noisy[i].reshape(28,28))
+    plt.gray()
 
-  # reconstruction
-  ax = plt.subplot(2,n,i+1+n)
-  plt.imshow(decoded_imgs[i].reshape(28,28))
-  plt.gray()
-  ax.get_xaxis().set_visible(False)
-  ax.get_yaxis().set_visible(False)
+    # entrauschte Bilder
+    ax = plt.subplot(3, n, i+1+n)
+    plt.imshow(decoded_imgs[i].reshape(28,28))
+    plt.gray()
+
+    # Original-Bilder
+    ax = plt.subplot(3, n, i+1+2*n)
+    plt.imshow(x_test[i].reshape(28,28))
+    plt.gray()
+
   plt.show()
 \end{minted}
+In der Grafik, welche wir erhalten, sind zuoberst die verrauchsten Bilder, in
+der Mitte sind die Rekonstruktionen und ganz unten sind Original-Bilder.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{denoised_clipped.png}
+  \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
+\end{figure}
+Die Resultate sind schon verblueffend guet.
 
-\subsection{Variationen}
+\subsection{Hyperparameter einstellen}
+Wir in der Theorie so oft erkaert, muss man um die Hyperparameter einzustellen
+einfach verschiedene Werte ausprobieren. Wir werden nun unser Programm zu
+modifizeren, dass er verschiedene Modell mit jeweils unterschiedlichen
+Hyperparametern trainiert. Beim Training erfassen wir mithilfe von TensorBoard
+Daten zum Lernfortschritt und den Kosten. Dann koennen wir mithilfe von
+TensorBoard eine Auswertung ausfuehren und so die besten Hyperparameter finden.
+\para{}
+Wir werden unser Programm mithilfe von For-Loops ausbauen, damit es die
+verschiedenen Modelle trainiert.
 
 \subsection{TensorBoard Konfiguration}
 Damit wir den Lernprozess und die Leistungen unseres Modells analysieren
@@ -3974,13 +4015,13 @@ geschrieben werden. Da wir die verschiedenten Hyperparameter-Einstellungen
 haben, welche wir alle vergleichen wollen, benennen wir die Dateien
 aussagekraeftig. \\
 Desweiteren spezifizieren wir gewisse Optionen fuer die Datenerfassung.
-Zuletzt muessen wir die TensorBoard Variable einfach als Callback in der
-\code{fit}-Funktion angeben, damit waehrend des Trainings die noetigen
-Informationen gesammelt werden.
+Diese muessen bei der Komilierung des Modells unter \code{metrics} angegeben
+werden. Wir interessieren uns an der Akkuratesse des Modells.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder.compile(optimizer='sgd',loss=loss, metrics=['accuracy'])
   NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
   tensorboard =
-  tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME), histogram_freq=0, write_graph=False)
+  tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
 \end{minted}
 
