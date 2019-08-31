@@ -90,7 +90,7 @@ BEISPIEL
 
 \subsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
-\to \set{R}^n$, Hypothesenfunktion gennant, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
+\to \set{R}^n$, Hypothesenfunktion genannt, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
 Man kann diese Funktion gewissermassen als die Hypothese, welche das Modell bezueglich der Beziehung zwischen
 den Inputs und den Labels aufgestellt hat, betrachten.
 Diese Modelle koennen verwendet werden um vorallem entweder
@@ -2441,6 +2441,11 @@ Man unterscheidet zwischen zwei Arten von Pooling:
 In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
 Resultate erzielt.
 \begin{examplebox}{MaxPooling Beispiel}
+  Wir waehlen eine MaxPooling-Schicht mit $f^l = 2$ und $s^l = 2$.
+  Diese fasst also jedes $(2 \times 2)$-Feld zu einem Element zusammen. Da aus
+  vier Elementen jeweils eines wird, entspricht dies einer Informationsreduktion
+  von 75\%.
+  \para{}
   \begin{equation*}
     \begin{pmatrix}
       5 & 2 & 4 & 3 \\
@@ -2460,10 +2465,6 @@ Resultate erzielt.
 Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
 Hyperparameter, wie die Feldgroesse $f^l$ und den Stride $s^l$.
-\para{}
-Mit einer Pooling-Schicht, bei welcher $f^l = 2$ und $s^l = 2$ gewaehlt wurde, also
-ein ($2 \times 2$)-Feld zusammengefasst wird, kommt es zu einer
-Dimensionalitaetsreduktion von 75\%, da aus jeweils vier Elementen ein Element wird.
 \para{}
 Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten die
 gleichen Formeln wie fuer die Filteroperationen:
@@ -2867,7 +2868,7 @@ verrauschten Daten besteht.
 % ------------------------------------
 
 \chapter{Implementation fuer Maschinelles Lernen}
-In diesem Kapitel werden wir einige Frameworks betrachten, welche eine
+In diesem Kapitel werden wir zwei Frameworks betrachten, welche eine
 Implementation der ML-Algorithemen realisiert haben. Wir werden sie in ihrer
 groben Funktionsweise untersuchen. Diese Tools werden wir im
 naechsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
@@ -2878,7 +2879,7 @@ naechsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
   \caption{TF-Logo}
 \end{wrapfigure}
 \keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes \keyword{Framework} fuer
-\keyword{datenstromorientriere Programmierung}. Es ist im Grunde genommen eine
+\keyword{datenstromorientierte Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek fuer numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
 liegt. Die Vorteile von TF bestehen vorallem darin, dass die praktische
 Anwendung des Frameworks sehr
@@ -2889,13 +2890,14 @@ Vorwaertspropagierung und die Rueckwaertspropagierung, sehr schnell ausfuehren
 laesst. Somit geht das Training von ML-Modellen deutlich schneller als bei
 selbstgeschriebenen Implementationen.
 TF ist gratis und ein Open-Source-Projekt. Es kann auf Github gefunden werden
-unter: https://github.com/tensorflow/tensorflow.
+(siehe QR-Code). \\
+\qrcode[height=2cm]{https://github.com/tensorflow/tensorflow}
 \para{}
 In der Industrie ist TensorFlow sehr weit verbreitet. Es wird von den
-verschiedensten Unternehmen fuer ihre Anwendungen gebraucht, darunter waren:
+verschiedensten Unternehmen fuer ihre ML-Anwendungen gebraucht; darunter waren:
 Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele mehr.
 \para{}
-Grundsaetzlich wurde TF fuer Maschinelles Lernen entwickelt. Speziell eigenet es
+Grundsaetzlich wurde TF fuer Maschinelles Lernen entwickelt. Speziell eignet es
 sich fuer Deep Learning mit kuenstlichen neuronalen Netzen. Es ist ein
 Interface, welches das definieren von Modellen erlaubt, welche dann mit den
 eingebauten ML-Algorithmen trainiert werden koennen. \\
