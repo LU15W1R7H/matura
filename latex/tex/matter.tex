@@ -829,8 +829,8 @@ Verstäntnis der Nomenklatur studiert werden.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{knn2.pdf}
-  \label{fig:nomenklatur1}
   \caption{zum Verstäntniss der Nomenklatur}
+  \label{fig:nomenklatur1}
 \end{figure}
 \para{}
 \begin{figure}[h!]
@@ -845,8 +845,8 @@ Verstäntnis der Nomenklatur studiert werden.
     \draw[->] (n12) -- node[above,pos=0.75,sloped]{$w^1_{1,2}$} (n21);
     \draw[->] (n12) -- node[above,sloped]{$w^1_{2,2}$} (n22);
   \end{tikzpicture}
-  \label{fig:nomenklatur2}
   \caption{zum Verstäntnis der Gewichtebeschriftungen}
+  \label{fig:nomenklatur2}
 \end{figure}
 \para{}
 Die Vorwärtspropagierung beginnt bei den Inputneuronen, welche jeweils
@@ -1417,7 +1417,8 @@ MIR GESCHRIEBEN
 
 
 \pagebreak
-\chapter{Convolutional Neural Networks}
+\chapter{Convolutional Neural Networks}\label{sec:CNN}
+
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
 Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
 Spracherkennung.
@@ -2257,8 +2258,8 @@ Flaschenhals der Grösse $p = 2$.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{ae1.pdf}
-  \label{fig:basic_autoencoder}
   \caption{Schichten eines kurzen Autoencoders}
+  \label{fig:basic_autoencoder}
 \end{figure}
 \para{}
 Die Inputschicht enthält die Features $\vec{x} \in \set{R}^d$. Die Outputschicht dagegen
@@ -2279,8 +2280,8 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{ae2.pdf}
-  \label{fig:big_autoencoder}
   \caption{Schichten eines tieferen Autoencoders}
+  \label{fig:big_autoencoder}
 \end{figure}
 
 \section{Funktionsweise}
@@ -2449,7 +2450,7 @@ Implementation der ML-Algorithemen realisiert haben. Wir werden sie in ihrer
 groben Funktionsweise untersuchen. Diese Tools werden wir im
 nächsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
 
-\section{TensorFlow}
+\section{TensorFlow}\label{sec:tensorflow}
 \begin{wrapfigure}{l}{3cm}
   \includegraphics[width=3cm]{tf_logo.png}
   \caption{TF-Logo}
@@ -3700,8 +3701,7 @@ werden. Wir interessieren uns an der Akkuratesse des Modells.
 \subsection{Leistung unseres Modells}
 Echt gut.
 
-%%% TeX-command-extra-options: "-shell-escape"
 %%% Local Variables:
-%%% mode: latex
+%%% TeX-command-extra-options: "--shell-escape"
 %%% TeX-master: "../main"
 %%% End:

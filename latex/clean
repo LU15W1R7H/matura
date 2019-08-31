@@ -1,3 +1,6 @@
 #!/bin/bash
 
-find . -type f -name 'main.*' -not -name 'main.tex' -delete
+find . -type f -name 'main*' -not -name 'main.tex' -delete
+find . -name "_minted-main" -exec rm -r {} +
+
+find ./figs/ -type f -name 'figs*' -not -name '*.tex' -not -name '*.pdf' -delete
