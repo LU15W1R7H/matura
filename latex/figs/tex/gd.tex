@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+  \begin{axis}[
+    % hide axis,
+    xticklabels={,,},
+    yticklabels={,,},
+    zticklabels={,,},
+    xlabel=$x_1$,
+    ylabel=$x_2$,
+    colormap/cool,
+    legend style={at={(1,1.2)},anchor=north east},
+    reverse legend
+    ]
+    \addplot3[domain=-1:1,orange, quiver={u={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*x)}, v={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*y)}, scale arrows=0.4}, -stealth,samples=10] {0.5};
+    \addlegendentry{$-\vecf{\nabla}_{\vec{x}}f$}
+
+    \addplot3[
+    mesh,
+    samples=50,
+    domain=-1:1,
+    ]
+    {1/(1+exp(-(x^2+y^2)))};
+    \addlegendentry{$f(x_1,x_2)$}
+
+    \coordinate (ballpos) at (axis cs:-0.8,0.8,{1/(1+exp(-((-0.8)^2+(0.8)^2)))});
+    \coordinate (bottom) at (axis cs:0,0,0.5);
+    \draw[red,very thick,->,>=latex] (ballpos) -- ($(ballpos)!0.3!(bottom)$);
+    \shade [ball color=yellow] (ballpos) circle (0.25cm);
+  \end{axis}
+\end{tikzpicture}

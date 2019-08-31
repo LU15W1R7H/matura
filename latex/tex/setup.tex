@@ -5,6 +5,15 @@
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
 
+% for drawing
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns}
+% \tikzexternalize
+\usepackage{tikzpagenodes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+
 % latex
 \usepackage{environ}
 
@@ -34,18 +43,10 @@ citestyle=authortitle
 
 % for graphics
 \usepackage{graphicx}
-\graphicspath{{./res/}}
+%\usepackage{pdfpages}
+\graphicspath{{./res/}{./figs/}}
 \usepackage{wrapfig} % for Text around images
 \usepackage{caption}
-
-% for drawing
-\usepackage{xcolor}
-\usepackage{tikz}
-\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns}
-% \tikzexternalize[prefix=tikz/]
-\usepackage{tikzpagenodes}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.9}
 
 % for page layout
 \usepackage{geometry}

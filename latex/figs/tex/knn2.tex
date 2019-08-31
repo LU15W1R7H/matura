@@ -1,0 +1,64 @@
+\begin{tikzpicture}[>=latex]
+  \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1.25cm},column sep=0.5cm,row sep=-9pt]
+  \tikzstyle{cl} = [draw=none,fill=none]
+  \tikzstyle{sy} = [cl,font=\LARGE]
+  \tikzstyle{heading} = [clear,text width=15mm,text centered]
+  \tikzstyle{inp} = [fill=red!70!pagecolor]
+  \tikzstyle{hid} = [fill=blue!70!pagecolor]
+  \tikzstyle{ou} = [fill=green!70!pagecolor]
+
+  \matrix[netstyle] (mat)
+  {
+    |[inp]|$n_1^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_1^L$ \\
+    |[cl]| & |[cl]| & |[hid]|$n_1^1$   & |[sy]| $\cdots$ & |[hid]|$n_1^{L-1}$ & |[cl]| & |[cl]| \\
+    |[inp]|$n_2^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_2^L$ \\
+    |[cl]| & |[cl]| & |[hid]|$n_2^1$   & |[sy]| $\cdots$ & |[hid]|$n_2^{L-1}$ & |[cl]| & |[cl]| \\
+    |[inp]|$n_3^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$n_3^L$ \\
+    |[sy]| $\vdots$ & |[cl]| & |[hid]|$n_{|1|}^1$ & |[sy]|$\cdots$ & |[hid]|$n_{|L-1|}^{L-1}$ & |[cl]| & |[sy]| $\vdots$ \\
+    |[inp]|$n_{|0|}^0$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_{|L|}^L$ \\
+  };
+
+  % titels
+  \node [yshift=1.5cm] at (mat-1-1) {Inputschicht};
+  \node [yshift=1.5cm] at (mat-2-4) {Zwischenschichten};
+  \node [yshift=1.5cm] at (mat-1-7) {Outputschicht};
+
+  % input -> hidden1
+  \foreach \ai in {1,3,...,7} {
+    \foreach \aii in {2,4,...,6}
+    \draw[->] (mat-\ai-1) -- node[above,sloped]{} (mat-\aii-3);
+  }
+
+  % hidden1 ->...
+  \foreach \ai in {2,4,...,6} {
+    \foreach \aii in {2,4,...,6} {
+      \node (A) at (mat-\ai-3) {};
+      \node (B) at (mat-\aii-5) {};
+      \draw[left color=black,right color=white] (mat-\ai-3) -- ($(A)!0.3!(B)$);
+    }
+  }
+
+  % ...-> hidden2
+  \foreach \ai in {2,4,...,6} {
+    \foreach \aii in {2,4,...,6} {
+      \node (A) at (mat-\ai-3) {};
+      \node (B) at (mat-\aii-5) {};
+      \draw[left color=black,right color=white] ($(A)!0.7!(B)$) -- (mat-\aii-5);
+    }
+  }
+
+  % hidden3 -> output
+  \foreach \ai in {2,4,...,6} {
+    \foreach \aii in {1,3,...,7}
+    \draw[->] (mat-\ai-5) -- node[above,sloped]{} (mat-\aii-7);
+  }
+
+  \node[below=2mm of mat-7-1.south] {$l=0$};
+  \node[below=2mm of mat-6-3.south] {$l=1$};
+  \node[below=2mm of mat-6-5.south] {$l=L-1$};
+  \node[below=2mm of mat-7-7.south] {$l=L$};
+\end{tikzpicture}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

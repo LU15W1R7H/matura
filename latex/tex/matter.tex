@@ -8,7 +8,7 @@ Die Grundidee dabei ist, dass man Daten erfasst, generiert oder misst, welche
 analysiert werden sollen. Innerhalb dieser Daten existieren gewisse
 Gesetzmässigkeiten und Muster. Diese Muster sollen vom Modell
 erkannt werden und verallgemeinert werden. Nach dem erfolgreichen Lernen,
-kann das Modell Vorhersagen für neün Daten machen.
+kann das Modell Vorhersagen für neuen Daten machen.
 \para{}
 Man unterscheidet zwischen zwei Arten von Maschinellem Lernen.
 \begin{itemize}
@@ -191,32 +191,30 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 
 
 \subsection{Gradientenverfahren}\label{sec:gradientenverfahren}
-Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
-Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
-Funktionswerte der Kostenfunktion am kleinsten sind.
-Deshalb muss diese Kostenfunktion $C$ minimiert werden.
-Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
-werden, sondern als Funktion der Modellparameter
-$C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden,
-um das Modell zu verbessern.
-Für diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
-\footnote{%
-  Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
-  bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
-  wird.Dies ist hier nicht möglich, da die Funktion
-  $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
-  Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
-  verwendet.
-}
-\para{}
-Allgemein können mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
-Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen
-Komponenten den Input von $f(\vec{p}_0)$ darstellen, gewählt wird.
-Nun werden iterativ neü Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
-Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimun ist.
-\para{}
-Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{p}_t$ addiert einen neün Punkt $\vec{p}_{t+1}$ bildet,
-bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
+% Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
+% Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
+% Funktionswerte der Kostenfunktion am kleinsten sind.
+% Deshalb muss diese Kostenfunktion $C$ minimiert werden.
+% Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
+% werden, sondern als Funktion der Modellparameter
+% $C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden,
+% um das Modell zu verbessern.
+% Für diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
+% \footnote{Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
+%   bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
+%   wird.Dies ist hier nicht möglich, da die Funktion
+%   $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
+%   Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
+%   verwendet.
+% }
+% Allgemein können mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
+% Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen
+% Komponenten den Input von $f(\vec{p}_0)$ darstellen, gewählt wird.
+% Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
+% Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimun ist.
+% \para{}
+% Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{p}_t$ addiert einen neuen Punkt $\vec{p}_{t+1}$ bildet,
+% bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der stärksten Funktionswertabnahme zeigt.
 
 Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
@@ -259,28 +257,7 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 \para{}
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-      domain=-2:2,
-      view={0}{90},
-      axis background/.style={fill=white},
-      legend style={cells={align=left},at={(1.2,1)},anchor=east}
-      ]
-      \addplot3[contour gnuplot={number=9,
-        labels=false},thick]
-      {exp(0-x^2-y^2)*x};
-      \addlegendentry{Isolinien\\ von $f(x_1,x_2)$}
-      \addplot3[blue,
-      quiver={
-        u={exp(0-x^2-y^2)*(1-2*x^2)},
-        v={exp(0-x^2-y^2)*(-2*x*y)},
-        scale arrows=0.3,
-      },
-      -stealth,samples=15]
-      {exp(0-x^2-y^2)*x};
-      \addlegendentry{$\vecf{\nabla}f$}
-    \end{axis}
-  \end{tikzpicture}
+  \includegraphics[width=0.7\textwidth]{grad.pdf}
   \caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
 \end{figure}
 \para{}
@@ -297,35 +274,7 @@ werden (wobei $\eta$ eine später erklärte Schrittgrösse darstellt).
 \ifcp%
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-      % hide axis,
-      xticklabels={,,},
-      yticklabels={,,},
-      zticklabels={,,},
-      xlabel=$x_1$,
-      ylabel=$x_2$,
-      colormap/cool,
-      legend style={at={(1,1.2)},anchor=north east},
-      reverse legend
-      ]
-      \addplot3[domain=-1:1,orange, quiver={u={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*x)}, v={(1+exp(-(x^2+y^2)))^(-2)*exp(-(x^2+y^2))*(-2*y)}, scale arrows=0.4}, -stealth,samples=10] {0.5};
-      \addlegendentry{$-\vecf{\nabla}_{\vec{x}}f$}
-
-      \addplot3[
-      mesh,
-      samples=50,
-      domain=-1:1,
-      ]
-      {1/(1+exp(-(x^2+y^2)))};
-      \addlegendentry{$f(x_1,x_2)$}
-
-      \coordinate (ballpos) at (axis cs:-0.8,0.8,{1/(1+exp(-((-0.8)^2+(0.8)^2)))});
-      \coordinate (bottom) at (axis cs:0,0,0.5);
-      \draw[red,very thick,->,>=latex] (ballpos) -- ($(ballpos)!0.3!(bottom)$);
-      \shade [ball color=yellow] (ballpos) circle (0.25cm);
-    \end{axis}
-  \end{tikzpicture}
+  \includegraphics[width=0.7\textwidth]{gd.pdf}
   \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
     Gradientenfeld hinab in das lokale Minimum.}
 \end{figure}
@@ -488,7 +437,7 @@ müssen. Diese Arbeit wird vorallem von zwei solchen Architekturen gebrauch mach
 Convolutional Neural Networks und sogenannte Autoencodern.
 
 \para{}
-\cite{wiki:künstliches_neuronales_netz}
+\cite{wiki:kuenstliches_neuronales_netz}
 
 \section{Perzeptron}
 Um den Aufbau und die Funktion eines Künstlichen Neuronalen Netzes besser zu
@@ -517,7 +466,7 @@ Andernfalls ist er 0 (siehe erster Teil der Hypothesenfunktion $h$ in Gleichung 
 Es ist gängig die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \keyword{Neigung} (engl.: bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
-> 0$. Der neü Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
+> 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
 Die Neigung gibt an wie stark das Neuron dazu neigt zu feürn. Eine grosse
 Neigung lässt ein Neuron auch dann noch feürn, wenn nur wenige Inputs
 eingeschaltet sind. SCHLECHT \\
@@ -558,7 +507,6 @@ Für das Trainieren des Perzeptrons existieren spezielle Verfahren, welche hier
 aber nicht relevant sind. Das Gradientenverfahren kann nämlich nicht verwendet
 werden. Der Grund dafür sollte später in Sektion (\ref{sec:künstlicheNeuronen}) einleuchtend werden.
 
-\para{}
 \cite{wiki:perzeptron}
 \cite{Nielsen}
 
@@ -615,7 +563,7 @@ sich fast nur in ihrer Aktivierungsfunktion.
 
 \para{}
 \cite{Nielsen}
-\cite{wiki:künstliches_neuron}
+\cite{wiki:kuenstliches_neuron}
 
 \subsection{Perzeptronen als Künstliche Neuronen}
 Zürst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
@@ -661,7 +609,7 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
   \label{fig:heaviside}
 \end{figure}
 
-\cite{wiki:künstliches_neuron}
+\cite{wiki:kuenstliches_neuron}
 \cite{wiki:perzeptron}
 
 
@@ -685,7 +633,7 @@ genannten Aktivierungsfunktionen - fast überall differenzierbar%
 \footnote{%
   Eigentlich ist die ReLU-Funktion in $x=0$ wegen des Knicks nicht
   differenzierbar. Für die Gradientenberechnung definiert man jedoch einfach
-  die Ableitung $\varphi^{\text{ReLU}}'(0) \coloneqq 0$. Dies ist mathematisch zwar nicht
+  die Ableitung $\varphi'^{\text{ReLU}}(0) \coloneqq 0$. Dies ist mathematisch zwar nicht
   korrekt, löst aber das Problem.
 }%
 und strikt monoton
@@ -739,7 +687,7 @@ Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung betrachten.
 \end{figure}
 
 \para{}
-\cite{wiki:künstliches_neuron}
+\cite{wiki:kuenstliches_neuron}
 \cite{Nielsen}
 
 \subsection{Sigmoid Neuronen}
@@ -786,7 +734,7 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
 \end{figure}
 
 \para{}
-\cite{wiki:künstliches_neuron}
+\cite{wiki:kuenstliches_neuron}
 \cite{wiki:sigmoidfunktion}
 
 
@@ -822,69 +770,12 @@ und die zweite besitzt 4 Neuronen. \\
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-
-    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
-    \tikzstyle{cl} = [draw=none,fill=none]
-    \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!pagecolor]
-    \tikzstyle{hid} = [fill=blue!70!pagecolor]
-    \tikzstyle{ou} = [fill=green!70!pagecolor]
-
-    \matrix[netstyle] (mat)
-    {
-      |[inp]| $x_1$     & |[cl]| & |[cl]| & |[hid]|$h_1^2$ & |[cl]| & |[cl]| & |[ou]|$y_1$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_1^1$   & |[cl]| & |[hid]|$h_1^3$ & |[cl]| & |[cl]| \\
-      |[inp]| $x_2$     & |[cl]| & |[cl]| & |[hid]|$h_2^2$ & |[cl]| & |[cl]| & |[ou]|$y_2$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_2^1$   & |[cl]| & |[hid]|$h_2^3$ & |[cl]| & |[cl]| \\
-      |[inp]| $x_3$     & |[cl]| & |[cl]| & |[hid]|$h_3^2$ & |[cl]| & |[cl]| & |[ou]|$y_3$ \\
-      |[cl]| & |[cl]| & |[hid]|$h_3^1$   & |[cl]| & |[hid]|$h_3^3$ & |[cl]| & |[cl]| \\
-      |[inp]| $x_4$     & |[cl]| & |[cl]| & |[hid]|$h_4^2$ & |[cl]| & |[cl]| & |[ou]|$y_4$ \\
-    };
-
-    % titels
-    \node [yshift=1cm] at (mat-1-1) {Inputschicht};
-    \node [yshift=1cm] at (mat-1-4) {Zwischenschichten};
-    \node [yshift=1cm] at (mat-1-7) {Outputschicht};
-
-    % dots
-    % \node [yshift=-1cm,scale=2] at (mat-7-1) {$\vdots$}; % for inputs
-    % \node [yshift=-1cm,scale=2] at (mat-6-3) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-4) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-6-5) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-7) {$\vdots$}; % for outputs
-
-    % input -> hidden1
-    \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-3);
-    }
-
-    % hidden1 -> hidden2
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
-    }
-
-    % hidden2 -> hidden3
-    \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-4) -- (mat-\aii-5);
-    }
-
-    % hidden3 -> output
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-5) -- (mat-\aii-7);
-    }
-
-
-  \end{tikzpicture}
+  \includegraphics[width=0.8\textwidth]{knn1.pdf}
   \caption{Schichten eines KNNs}
   \label{fig:nn_layers}
 \end{figure}
 
-\cite{wiki:künstliches_neuronales_netz}
+\cite{wiki:kuenstliches_neuronales_netz}
 \cite{Nielsen}
 
 \section{Lernverhalten}
@@ -937,66 +828,7 @@ Verstäntnis der Nomenklatur studiert werden.
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1.25cm},column sep=0.5cm,row sep=-9pt]
-    \tikzstyle{cl} = [draw=none,fill=none]
-    \tikzstyle{sy} = [cl,font=\LARGE]
-    \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!pagecolor]
-    \tikzstyle{hid} = [fill=blue!70!pagecolor]
-    \tikzstyle{ou} = [fill=green!70!pagecolor]
-
-    \matrix[netstyle] (mat)
-    {
-      |[inp]|$n_1^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_1^L$ \\
-      |[cl]| & |[cl]| & |[hid]|$n_1^1$   & |[sy]| $\cdots$ & |[hid]|$n_1^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$n_2^0$     & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_2^L$ \\
-      |[cl]| & |[cl]| & |[hid]|$n_2^1$   & |[sy]| $\cdots$ & |[hid]|$n_2^{L-1}$ & |[cl]| & |[cl]| \\
-      |[inp]|$n_3^0$     & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[sy]| $\vdots$ & |[cl]| & |[ou]|$n_3^L$ \\
-      |[sy]| $\vdots$ & |[cl]| & |[hid]|$n_{|1|}^1$ & |[sy]|$\cdots$ & |[hid]|$n_{|L-1|}^{L-1}$ & |[cl]| & |[sy]| $\vdots$ \\
-      |[inp]|$n_{|0|}^0$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$n_{|L|}^L$ \\
-    };
-
-    % titels
-    \node [yshift=1.5cm] at (mat-1-1) {Inputschicht};
-    \node [yshift=1.5cm] at (mat-2-4) {Zwischenschichten};
-    \node [yshift=1.5cm] at (mat-1-7) {Outputschicht};
-
-    % input -> hidden1
-    \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {2,4,...,6}
-      \draw[->] (mat-\ai-1) -- node[above,sloped]{} (mat-\aii-3);
-    }
-
-    % hidden1 ->...
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {2,4,...,6} {
-        \node (A) at (mat-\ai-3) {};
-        \node (B) at (mat-\aii-5) {};
-        \draw[left color=black,right color=white] (mat-\ai-3) -- ($(A)!0.3!(B)$);
-      }
-    }
-
-    % ...-> hidden2
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {2,4,...,6} {
-        \node (A) at (mat-\ai-3) {};
-        \node (B) at (mat-\aii-5) {};
-        \draw[left color=black,right color=white] ($(A)!0.7!(B)$) -- (mat-\aii-5);
-      }
-    }
-
-    % hidden3 -> output
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-5) -- node[above,sloped]{} (mat-\aii-7);
-    }
-
-    \node[below=2mm of mat-7-1.south] {$l=0$};
-    \node[below=2mm of mat-6-3.south] {$l=1$};
-    \node[below=2mm of mat-6-5.south] {$l=L-1$};
-    \node[below=2mm of mat-7-7.south] {$l=L$};
-  \end{tikzpicture}
+  \includegraphics[width=0.8\textwidth]{knn2.pdf}
   \label{fig:nomenklatur1}
   \caption{zum Verstäntniss der Nomenklatur}
 \end{figure}
@@ -1108,14 +940,14 @@ Vektor der gewichteten Summen $\vec{z}^{l+1}$ bilden können.
 \\
 Der letzte Schritt besteht noch darin die Aktivierungsfunktion auf $\vec{z}^{l+1}$
 anzuwenden um den Aktivierungsvektor $\vec{a}^{l+1}$ zu bilden.
-Hierfür muss aber noch ein neüs mathematisches
+Hierfür muss aber noch ein neues mathematisches
 Konzept eingeführt werden: die Vektorisierung einer Funktion.
 \para{}
 
 \begin{defbox}{Vektorisierung einer Funktion}
   Die Vektorisierung einer skalaren Funktion $f$, geschrieben als
   $\vecf{f}[\vec{v}]$ hat als Argument einen Vektor $\vec{v}$, auf dessen
-  Komponenten jeweils \textit{einzeln} die Funktion $f$ angewandt wird. Dieser neü
+  Komponenten jeweils \textit{einzeln} die Funktion $f$ angewandt wird. Dieser neue
   Vektor ist der Rückgabewert der Funktion. Er besitzt die gleichen Dimensionen
   wie der Argumentvektor.
   \\
@@ -1164,61 +996,12 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion.
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
 
-\ifcp
-\pgfplotsset{compat=1.15}
-\pgfmathdeclarefunction{gauss}{2}{%
-  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
-}
-\pgfmathdeclarefunction{gausseval}{3}{%
-  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((#3-#1)^2)/(2*#2^2))}%
-}
-\usetikzlibrary{arrows.meta}    % <--- added
-
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[
-    every pin/.style = {pin edge={Latex-,thin,black}},>=latex
-    ]
-    \begin{axis}[
-      width=15cm,height=6cm,
-      scale only axis,
-      axis lines=middle,
-      ymin=0,ymax=0.45,
-      axis line style = thick,
-      xtick={-3,-2,-1,1,2,3},
-      x label style={anchor=west},
-      y label style={anchor=south},
-      extra x ticks={0},
-      extra x tick style={%
-        grid=major,
-        ticklabel pos=top,
-      },
-      extra x tick labels={$\mu$},
-      xlabel={$x$},
-      ylabel={$\phi(x)$},
-      axis on top,
-      samples=50]
-      \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
-      \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
-      \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};
-      \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp2) at (1,{gausseval(0,1,1)}) {};
-      \coordinate (zero) at (0,0);
-      \newcommand{\equal}{=}
-      % \path [fill=black] (wp1) circle (2pt);
-      % \path [fill=black] (wp2) circle (2pt);
-      \path [draw=black,<->,very thick] (wp1) -- node[above]{$\sigma^2$} (wp1 -| zero);
-      \path [draw=black,<->,very thick] (wp2) -- node[above]{$\sigma^2$} (wp2 -| zero);
-      \node [pin=120:$\phi(x_{WS1})'' \equal 0$] at (wp1) {};
-      \node [pin=60:$\phi(x_{WS2})'' \equal 0$] at (wp2) {};
-
-      \node [pin=60:$\ds A \equal \int_{-\infty}^{\infty} \phi(x) \text{d}x \equal 1$] at (1.4,0.05) {};
-    \end{axis}
-  \end{tikzpicture}
+  \includegraphics[width=0.8\textwidth]{gauss.pdf}
   \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit ihren
     wichtigsten Eigenschaften}%
 \end{figure}
-\fi
-
 
 Um die Neigungen $b_{t=0}$ zu initialisieren benutzt man eine Normalverteilung
 $\mathcal{N}(0,1)$ mit Erwartungswert $\mu = 0$ und Varianz $\sigma^2 =
@@ -1309,7 +1092,7 @@ $\ds\partderiv{C}{b_j^l}$ berechnen.
 \para{}
 Zur Übersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ für
 jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezüglich der
-gewichteten Summe dieses Neurons ist (siehe Gl. (\ref{eq:BP0)}). Ebenfalls definiert man analog einen Fehlervektor
+gewichteten Summe dieses Neurons ist (siehe Gl. (\ref{eq:BP0}). Ebenfalls definiert man analog einen Fehlervektor
 $\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
 zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es diesen für jedes Neuron jeder Schicht zu
 berechnen.
@@ -1386,7 +1169,7 @@ wichtigen Gleichungen für die Rückwärtsprogagierung.
 \\
 Nun möchten wir diese Ausdrücke wieder in Matrixschreibweise realisieren,
 welche die ganze Schicht $L$ zusammenfasst. Dazu
-muss eine neü Operation eingeführt werden: das Hadamard-Produkt.
+muss eine neue Operation eingeführt werden: das Hadamard-Produkt.
 
 \begin{defbox}{Hadamard-Produkt}
   Das Hadamard-Produkt (auch elementweises Produkt) ist ein spezielles Produkt zweier gleichgrossen Matrizen
@@ -1842,7 +1625,7 @@ erlernen.
 \para{}
 Ein Filter ist einfach eine Region, deutlich kleiner als das verarbeitete Bild
 $\ten{B}$, welche
-über alle Pixel wandert, diese manipuliert und so wieder ein neüs Bild
+über alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
 $\tilde{\ten{B}}$ liefert.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
 den sogennanten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
@@ -1874,7 +1657,7 @@ horizontale Kanten akzentuiert. Die Einträge dieses Filters lauten wie folgt:
   \end{pmatrix}
 \end{equation*}
 
-Angewandt auf ein schwarz-weisses Bild, erhält man ein neüs Bild, bei welchem alle erkannten
+Angewandt auf ein schwarz-weisses Bild, erhält man ein neues Bild, bei welchem alle erkannten
 Kanten weiss eingefärbt sind und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
@@ -1932,7 +1715,7 @@ graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlaütert. Später werden 
 Bilder erklärt.
 \para{}
 Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf einen Bildtensor
-$\ten{B}$ an und erhält so ein neüs Bild $\tilde{\ten{B}}$. Man schreibt dafür:
+$\ten{B}$ an und erhält so ein neues Bild $\tilde{\ten{B}}$. Man schreibt dafür:
 $\tilde{\ten{B}} = \ten{W} * \ten{B}$.
 \para{}
 Um nun diese Operation zu erklären, verwenden wir als Beispiel eine
@@ -1967,12 +1750,12 @@ Filter darf nicht über die Ränder des Bildes hinausragen.
 Nun werden die Elemente der Filters mit den Elementen des rezeptiven Feldes
 verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird einfach das
 Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
-gebildet. Nun erhalten wir eine neü Matrix $\mat{W} \odot
+gebildet. Nun erhalten wir eine neue Matrix $\mat{W} \odot
 \hat{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
-Nun werden noch alle Elemente der neün Matrix $\mat{P}$
+Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
 aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\tilde{\mat{B}})_{1,1}$ des bearbeiteten
 Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
-bestimmt, wie die neün Pixel aussehen.
+bestimmt, wie die neuen Pixel aussehen.
 \\
 \begin{equation}\label{eq:filter1}
   (\tilde{\mat{B}})_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
@@ -1991,109 +1774,15 @@ verschobenen Filters kommt.
 \ifcp
 \begin{figure}[h!]
   \centering
-  % \includegraphics[width=0.5\textwidth]{conv.jpg}
-
-  \makeatletter
-  \tikzoption{canvas is xy plane at z}[]{%
-    \def\tikz@plane@origin{\pgfpointxyz{0}{0}{#1}}%
-    \def\tikz@plane@x{\pgfpointxyz{1}{0}{#1}}%
-    \def\tikz@plane@y{\pgfpointxyz{0}{1}{#1}}%
-    \tikz@canvas@is@plane
-  }
-  \makeatother
-
-  \begin{tikzpicture}[x={(0.866cm,0.5cm)}, y={(-0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=0.7,every pin/.style = {pin edge={Latex-,thin,black}}]
-
-
-    \begin{scope}[canvas is xz plane at y=0,transform shape]
-      % \draw[blue] (0,0) -- (10,0)--(10,10)--(0,10)--cycle;
-      \foreach \ii [count = \xi] in {-3,-2,...,3}{
-        \foreach \jj  [count = \yi] in {-3,-2,...,3}{
-          \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj))}
-          \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
-        }
-      }
-      \foreach \ii [count = \xi] in {-3,-2,-1}{
-        \foreach \jj [count = \yi] in {-3,-2,-1}{
-          \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
-          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num}; % rename nodes
-        }
-      }
-
-      \path[draw=textcolor] (n-1-1-1.north west) -- (n-1-7-1.north east) -- (n-1-7-7.south east) -- (n-1-1-7.south west) -- cycle;
-      \path[draw=blue] (n-1-1-1.north west) -- (n-1-3-1.north east) -- (n-1-3-3.south east) -- (n-1-1-3.south west) -- cycle;
-
-
-    \end{scope}
-
-    \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
-      \foreach \ii [count = \xi] in {-1,0,1}{
-        \foreach \jj  [count = \yi]in {-1,0,1}{
-          \pgfmathsetmacro{\num}{int(\ii)}
-          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,text=textcolor,minimum size=1cm] (n-2-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
-        }
-      }
-
-      \path[draw=blue] (n-2-1-1.north west) -- (n-2-3-1.north east) -- (n-2-3-3.south east) -- (n-2-1-3.south west) -- cycle;
-    \end{scope}
-
-    \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
-      \foreach \ii [count = \xi] in {1,2,3,...,7}{
-        \foreach \jj  [count = \yi]in {1,2,3,...,7}{
-          \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
-        }
-      }
-
-      \foreach \ii [count = \xi] in {-3,-2,-1}{
-        \foreach \jj [count = \yi] in {-3,-2,-1}{
-          \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
-          \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {}; % rename nodes
-        }
-      }
-
-      \path[draw=blue,dashed] (n-3-1-1.north west) -- (n-3-3-1.north east) -- (n-3-3-3.south east) -- (n-3-1-3.south west) -- cycle;
-      \path[draw=textcolor] (n-3-2-2.north west) -- (n-3-6-2.north east) -- (n-3-6-6.south east) -- (n-3-2-6.south west) -- cycle;
-    \end{scope}
-
-    % red box
-    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north east) -- (n-2-2-2.north east) -- (n-3-2-2.north east) -- (n-3-2-2.north west) -- (n-2-2-2.north west) -- (n-1-2-2.north west); % top
-    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.south east) -- (n-2-2-2.south east) -- (n-3-2-2.south east) -- (n-3-2-2.south west) -- (n-2-2-2.south west) -- (n-1-2-2.south west); % bottom
-    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north east) -- (n-2-2-2.north east) -- (n-3-2-2.north east) -- (n-3-2-2.south east) -- (n-2-2-2.south east) -- (n-1-2-2.south east); % right
-    \path[draw=red,fill=red!50,opacity=0.3] (n-1-2-2.north west) -- (n-2-2-2.north west) -- (n-3-2-2.north west) -- (n-3-2-2.south west) -- (n-2-2-2.south west) -- (n-1-2-2.south west); % left
-
-
-    % blue lines connecting
-    \path[draw=blue!40!pagecolor] (n-1-1-3.south west) -- (n-2-1-3.south west) -- (n-3-1-3.south west);
-    \path[draw=blue!40!pagecolor] (n-1-3-1.north east) -- (n-2-3-1.north east) -- (n-3-3-1.north east);
-
-    \node [pin=120:Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$] at (n1-1-1.north west) {};
-    \node [pin=180:Qüllenpixel $(\mat{B})_S$] at (n1-2-2.east) {};
-    \begin{scope}[canvas is xz plane at y=0,transform shape]
-      \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 2};
-      % \node[] (sp-tag) at (n-1-2-2.north) {Qüllenpixel $(\mat{B})_S$};
-    \end{scope}
-
-    \node [pin=180:Filter $\mat{F}$] at (n2-1-3.east) {};
-    \begin{scope}[canvas is xz plane at y=-7.3,transform shape]
-      \node[draw=red,text=textcolor,minimum size=1cm] (marked2) at (2,-2) {\LARGE 0};
-      \node[] (rf-tag) at (n-2-2-1.north) {Filter $\mat{F}$};
-      \node[] (ze-tag) at (n-2-2-2.north) {Zentralelement $(\mat{F})_C$};
-    \end{scope}
-
-    \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
-      \node[draw=red,fill=blue!10!white,text=textcolor,minimum size=1cm] (marked3) at (2,-2) {\LARGE -3};
-    \end{scope}
-
-  \end{tikzpicture}
-
+  \includegraphics[width=0.7\textwidth]{conv.pdf}
   \caption{Schema, wie ein Filter über ein Bild laüft}
 \end{figure}
 \fi
 
-Es ist zu bemerken, dass das neü Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
+Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
 hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
-Lage des Filters jeweils nur ein Pixel des neün Bildes berechnet wird. Man kann
-sich vorstellen, dass an der Position des Qüllenpixel jeweils ein neür
+Lage des Filters jeweils nur ein Pixel des neuen Bildes berechnet wird. Man kann
+sich vorstellen, dass an der Position des Qüllenpixel jeweils ein neuer
 Pixel entsteht. Dabei muss der Filter immer eine vollständige Region als
 rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf die Ränder des
 Bildes zu liegen. Somit fallen diese weg.
@@ -2129,7 +1818,7 @@ Mithilfe der Faltungsoperation können wir die Schritte welche in Sektion
 (\ref{sec:filteroperation_intuitiv}) erklärt wurden zusammenfassen.
 Bei der Filteroperation handelt es sich lediglich um eine diskrete Faltung des
 Filtertensors $\ten{W}$ über den Bildtensor $\ten{B}$. Somit können wir
-folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neün Bildes zu berechnen.
+folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
   (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{v,u}(\mat{B})_{y+v-1,x+u-1}
@@ -2201,7 +1890,7 @@ Endbild erzeugen.
 \para{}
 Die Anzahl Filter bezeichnen wir mit $c$.
 Nun macht man pro Filter $\ten{W}_i$ eine Faltung über das Ursprungsbild $\ten{W}$, wobei
-jede Faltung einen neü Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert, wobei $i$ der Index des
+jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert, wobei $i$ der Index des
 Filters ist. All diese gefalteten Bilder $\tilde{\mat{B}}_i$ sind zweidimensionale Matrizen, unabhängig davon, wieviele
 Komponenten das Ursprungsbild hatte. Aus diesem Grund können die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
@@ -2211,7 +1900,7 @@ Hierfür müssen alle Filter $\ten{W}_i$ gleich gross sein.
   \caption{aufeinander gelegte gefaltene Bilder}
 
 \end{figure}
-Die Tiefe des neün Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter $c$.
+Die Tiefe des neuen Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter $c$.
 Wir haben bereits früher immer die Tiefe des Bildes (bzw. die Anzahl
 Farbkomponenten) mit $c$ bezeichnet. Somit ist $c$ sowohl die Anzahl Filter
 einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
@@ -2223,10 +1912,10 @@ einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 \subsection{Padding}
 Wie bereits erwähnt schrumpfen die Bilder (an den Rändern), wenn man einen Filter auf sie anwendet.
 Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelements nur ein Pixel
-des neün Bildes entsteht und das Zentralelement nunmal nicht auf allen
+des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
 Ursprungspixeln zu liegen kommt. Die Ränder fallen so weg. Diese Grösse des
 Wegfalls hängt von der Filtergrösse $f$ ab. Hierbei gilt folgende Formel für die
-neü Grösse $n_1$ des Bildes, anhand der alten Grösse $n_0$. $n$ bezeichnet
+neue Grösse $n_1$ des Bildes, anhand der alten Grösse $n_0$. $n$ bezeichnet
 eine der zwei Seitenlängen.
 \begin{equation}
   n_1 = n_0 - f + 1
@@ -2241,7 +1930,7 @@ Rändern nur seltener zur Überlappung kommt.
 Diese Probleme werden mit sogenanntem \keyword{Padding} behoben. Padding ist ein
 Schritt, welcher vor der eigentlichen Faltung stattfindet. Dabei werden einfach
 zusätzliche Ränder (Zeilen und Spalten) an das Ursprungsbild angebracht. Der
-Tensor wird der Länge und der Breite nach (nicht der Tiefe entlang!) an den Enden erweitert. Die neün Elemente werden dabei auf den Wert
+Tensor wird der Länge und der Breite nach (nicht der Tiefe entlang!) an den Enden erweitert. Die neuen Elemente werden dabei auf den Wert
 $0$ gesetzt.
 
 \begin{figure}[h!]
@@ -2277,11 +1966,11 @@ um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
 auch mit einer anderen Schrittgrösse verschieben. Diese Eigenschaft bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewählt wird, bedeutet das, dass der
 Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
-Position übersprungen. Zur Folge hat dies, dass das neü Bild
+Position übersprungen. Zur Folge hat dies, dass das neue Bild
 deutlich kleiner geworden ist, denn das Zentralelement überspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
 \para{}
-Folgende Formel beschreibt die Dimensionen des neün Bildes unter
+Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
 Berücksichtigung der Filtergrösse $f$, dem Padding $p$ und dem Stride $s$.
 \\
 \begin{equation}
@@ -2360,7 +2049,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
 \end{equation*}
 \\
 Nun faltet man jeden Filter $\ten{W}_i^l$ einzeln über das Bilder
-$\ten{A}^l$ und erhält so mehrere neü 2D-Bilder $\tilde{\mat{A}}_i^l$.
+$\ten{A}^l$ und erhält so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
 \\
 \begin{equation}
   \tilde{\mat{A}}_i^l = \ten{W}_i^l * \ten{A}^l
@@ -2373,7 +2062,7 @@ Die Faltung berechnet man nach folgender Gleichung:
 \end{equation}
 \\
 Jede dieser Matrizen ist ein Qürschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
-Tiefe des neün 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
+Tiefe des neuen 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Höhe
 $h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
 berechnet anhand der Höhe $h^l$ und der Breite $w^l$ des Ausgangsbildes.
@@ -2387,7 +2076,7 @@ nicht-lineare Aktivierungsfunktion um das Modell zu befähigen nicht-lineare Pro
 lösen.
 Deshalb wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
 $\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ an und erhält so die
-neü Aktiverung der nächsten Schicht $\ten{A}^{l+1}$. Empirisch hat man
+neue Aktiverung der nächsten Schicht $\ten{A}^{l+1}$. Empirisch hat man
 festgestellt, dass es für CNNs eine bessere Aktivierungsfunktion als die
 Sigmoidfunktion gibt. Die ReLU-Aktivierungsfunktion $\vecf{\varphi}^{ReLU}$ aus Sektion (\ref{sec:ReLU})
 erziehlt bessere Resultate als die Sigmoidfunktion. Deshalb verwendet man
@@ -2466,7 +2155,7 @@ Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
 Hyperparameter, wie die Feldgrösse $f^l$ und den Stride $s^l$.
 \para{}
-Um zu berechnen, was die neün Dimensionen nach dem Pooling sind, gelten die
+Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten die
 gleichen Formeln wie für die Filteroperationen:
 \\
 \begin{equation}
@@ -2491,7 +2180,7 @@ beschreibt dieser Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
 wird ein Element zu einem $(f^l \times f^l)$-Feld hochgerechnet und erweitert so die
 Dimensionalität.
 \para{}
-Es stellt sich natürlich die Frage, was für Werte das neü Feld erhält.
+Es stellt sich natürlich die Frage, was für Werte das neue Feld erhält.
 Dafür muss man eine Interpolationsart wählen.
 Zwei Arten sind besonders verbreitet:
 \begin{itemize}
@@ -2499,7 +2188,7 @@ Zwei Arten sind besonders verbreitet:
 \item{\keyword{Nächste-Nachbar-Interpolation} (engl.: nearest-neighbor-interpolation)}
 \end{itemize}
 Wir werden hier nur die Nächste-Nachbar-Interpolation betrachten. Sie ist
-ziemlich trivial, denn alle neün Feldelemente nehmen einfach den Wert des alten
+ziemlich trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
 Elements an. Der Wert wird also einfach vermehrt.
 
 
@@ -2520,12 +2209,12 @@ Convolutional-Autoencoder, nämlich einen Denoiser.
 Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Diese Architektur
 beschreibt das Netzwerk jedoch nicht bezüglich der Schichtenarten, sondern beschreibt es
 auf der Ebene der Netzform. \\
-Die Aufgabe eines Autoencoders besteht darin eine neü Repräsentation einer Datenmenge
+Die Aufgabe eines Autoencoders besteht darin eine neue Repräsentation einer Datenmenge
 zu erlernen. Diese neuartige Repräsentation soll mit weniger Daten möglichst die gleiche
 Information codieren. Somit entwickelt das Modell eine \keyword{effiziente
   Daten-Codierung} für einen Datensatz. Dadurch kann er zur
 \keyword{Dimensionalitätsreduktion} verwendet werden. \\
-Neben dieser neün Repräsentation erlernt das Netzwerk noch, wie es
+Neben dieser neuen Repräsentation erlernt das Netzwerk noch, wie es
 aus dieser Codierung wieder die Ursprungsdaten reproduzieren kann.
 \para{}
 Autoencoder gehören nicht dem klassischen überwachtem Lernen an. Strenggenommen gehören
@@ -2551,7 +2240,7 @@ interessante Methoden zu entwickeln um die Features \textit{approximativ} zu rek
 Die angesprochene Einschränkung besteht darin, dass dem Autoencoder nicht
 beliebig viel Kapatzität für die Codierung der Features gegeben wird.
 Es stehen dem Netzwerk nur wenige Zahlenwerte zur Verfügung um die Features
-in der neün Repräsentation zwischenzuspeichern, bevor sie wieder in die ursprünliche Form gebracht werden.
+in der neuen Repräsentation zwischenzuspeichern, bevor sie wieder in die ursprünliche Form gebracht werden.
 Diese Kapazitätseinschräkung wird durch die Topologie des Autoencoders bezweckt.
 \para{}
 \bigskip
@@ -2567,50 +2256,7 @@ ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
 Flaschenhals der Grösse $p = 2$.
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-
-    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=1.0cm,row sep=-9pt]
-    \tikzstyle{cl} = [draw=none,fill=none]
-    \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!pagecolor]
-    \tikzstyle{hid} = [fill=blue!70!pagecolor]
-    \tikzstyle{ou} = [fill=green!70!pagecolor]
-
-    \matrix[netstyle] (mat)
-    {
-      |[inp]| $x_1$  & |[cl]| & |[ou]|$\hat{x}_1$ \\
-      |[cl]| & |[cl]| & |[cl]|  \\
-      |[inp]| $x_2$ & |[hid]| $h_1^1$ & |[ou]|$\hat{x}_2$ \\
-      |[cl]| & |[cl]| & |[cl]| \\
-      |[inp]| $x_3$ & |[hid]|$h_2^1$ & |[ou]|$\hat{x}_3$ \\
-      |[cl]| & |[cl]| & |[cl]| \\
-      |[inp]| $x_4$ & |[cl]| & |[ou]|$\hat{x}_4$ \\
-    };
-
-    % titels
-    \node [yshift=0.1cm] (text) at (mat-2-4) {Flaschenhals};
-
-    % dots
-    % \node [yshift=-1cm,scale=2] at (mat-7-1) {$\vdots$}; % for inputs
-    % \node [yshift=-1cm,scale=2] at (mat-6-3) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-4) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-6-5) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-7) {$\vdots$}; % for outputs
-
-    % input -> hidden1
-    \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {3,5}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-2);
-    }
-
-    % % hidden1 -> hidden2
-    \foreach \ai in {3,5} {
-      \foreach \aii in {1,3,5,7} {
-        \draw[->] (mat-\ai-2) -- (mat-\aii-3);
-      }
-    }
-
-  \end{tikzpicture}
+  \includegraphics[width=0.8\textwidth]{ae1.pdf}
   \label{fig:basic_autoencoder}
   \caption{Schichten eines kurzen Autoencoders}
 \end{figure}
@@ -2632,77 +2278,7 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
 
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-
-    \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
-    \tikzstyle{cl} = [draw=none,fill=none]
-    \tikzstyle{heading} = [clear,text width=15mm,text centered]
-    \tikzstyle{inp} = [fill=red!70!pagecolor]
-    \tikzstyle{hid} = [fill=blue!70!pagecolor]
-    \tikzstyle{ou} = [fill=green!70!pagecolor]
-
-    \matrix[netstyle] (mat)
-    {
-      |[inp]| $x_1$  & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_1$ \\
-      |[cl]| & |[hid]|$h_1^1$   & |[cl]| & |[cl]| & |[cl]| & |[hid]|$h_1^3$  & |[cl]|  \\
-      |[inp]| $x_2$  & |[cl]| & |[hid]|$h_2^2$ & |[cl]| & |[hid]| $h_2^4$ & |[cl]| & |[ou]|$\tilde{x}_2$ \\
-      |[cl]| & |[hid]|$h_2^1$   & |[cl]| & |[hid]| $h_2^3$ & |[cl]| & |[hid]|$h_2^3$ & |[cl]| \\
-      |[inp]| $x_3$ & |[cl]| & |[hid]|$h_3^2$ & |[cl]| & |[hid]| $h_3^4$ & |[cl]| & |[ou]|$\tilde{x}_3$ \\
-      |[cl]| & |[hid]|$h_3^1$   & |[cl]| & |[cl]| & |[cl]| & |[hid]|$h_3^3$ & |[cl]| \\
-      |[inp]| $x_4$ & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]|$\tilde{x}_4$ \\
-    };
-
-    % titels
-    \node [yshift=1cm] (text) at (mat-1-4) {Flaschenhals};
-    \path [draw,ultra thick,->,>=stealth] (text) -- ($(text)!0.7!(mat-3-4)$);
-
-    % dots
-    % \node [yshift=-1cm,scale=2] at (mat-7-1) {$\vdots$}; % for inputs
-    % \node [yshift=-1cm,scale=2] at (mat-6-3) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-4) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-6-5) {$\vdots$};
-    % \node [yshift=-1cm,scale=2] at (mat-7-7) {$\vdots$}; % for outputs
-
-    % input -> hidden1
-    \foreach \ai in {1,3,...,7} {
-      \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-1) -- (mat-\aii-2);
-
-
-    }
-
-    % hidden1 -> hidden2
-    \foreach \ai in {2,4,...,6} {
-      \foreach \aii in {3,5}
-      \draw[->] (mat-\ai-2) -- (mat-\aii-3);
-    }
-
-    % hidden2 -> hidden3
-    \foreach \ai in {3,5} {
-      \foreach \aii in {4}
-      \draw[->] (mat-\ai-3) -- (mat-\aii-4);
-    }
-
-    % hidden3 -> output
-    \foreach \ai in {4} {
-      \foreach \aii in {3,5}
-      \draw[->] (mat-\ai-4) -- (mat-\aii-5);
-
-    }
-
-    % hidden3 -> output
-    \foreach \ai in {3,5} {
-      \foreach \aii in {2,4,6}
-      \draw[->] (mat-\ai-5) -- (mat-\aii-6);
-    }
-
-    % hidden3 -> output
-    \foreach \ai in {2,4,6} {
-      \foreach \aii in {1,3,...,7}
-      \draw[->] (mat-\ai-6) -- (mat-\aii-7);
-    }
-
-  \end{tikzpicture}
+  \includegraphics[width=0.8\textwidth]{ae2.pdf}
   \label{fig:big_autoencoder}
   \caption{Schichten eines tieferen Autoencoders}
 \end{figure}
@@ -2710,11 +2286,11 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
 \section{Funktionsweise}
 Ein Autoencoder möchte die Features $\vec{x}$ von der Inputschicht in die
 Outputschicht kopieren. Jedoch zwingt der Flaschenhals den Autoencoder dazu eine
-neü Repräsenation der Features zu erlernen. Dies hat den Grund, dass die
+neue Repräsenation der Features zu erlernen. Dies hat den Grund, dass die
 Features in ihrer jetzigen Form keinen Platz im Flaschenhals finden, da $p \ll d$.
 Somit muss das Modell die Informationen, welche in den Features stecken
 nur auf einige wenige Eigenschaften komprimieren. Es muss gewissermassen einen
-Code entwickeln. Diese neü Repräsentation nennt man das \keyword{Encoding}. \\
+Code entwickeln. Diese neue Repräsentation nennt man das \keyword{Encoding}. \\
 In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wieder
 versuchen die ursprünlichen Features zu rekonstruieren. Diese Rekonstuktion
 bezeichnet man als das \keyword{Decoding}.
@@ -2729,7 +2305,7 @@ dafür die Hypothesenfunktion $h$ in ein Funktionenpaar $(\phi,\psi)$ auf.
 \end{itemize}
 Die erste Teilfunktion $\phi$ ist dafür zuständig das Encoding zu erzeugen. Sie
 bildet den Inputraum $\fspace{X} \subseteq \set{R}^d$, welcher die Features $\vec{x}$ enthält, auf
-den Encodingraum $\fspace{E} \subseteq \set{R}^p$, welcher die neün
+den Encodingraum $\fspace{E} \subseteq \set{R}^p$, welcher die neuen
 Repräsenation $\vec{x^*}$ enthält, ab. \\
 Das Gegenstück ist die Teilfunktion $\psi$. Sie bildet den Encodingraum
 $\fspace{E}$ zurück auf den Inputraum $\fspace{X}$ ab.
@@ -2796,8 +2372,8 @@ $\frac{p}{d}$ des ursprünglichen Speicherbedarfs. Diese Komprimierung ist dabei
 
 Datenverkehr beschleunigen, weil weniger Daten.
 
-\subsection{Neü Datenrepräsentation}
-neüs Datenformat
+\subsection{Neue Datenrepräsentation}
+neues Datenformat
 
 \subsection{Visualisierung von Daten}
 Visualisierung von hochdimensionaler Daten in $\set{R}^2$ und $\set{R}^3$
@@ -3063,9 +2639,9 @@ Trainingsdurchlauf angepasst werden.
 Folgender Python-Code kreirt eine tf.Varaible mit einem Anfangswert und ändert ihren Wert danach.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   <Varname> = tf.Variable(<Initialwert>, name=<optionaler Name>)
-  <Varname>.assign(<neür Wert>)
+  <Varname>.assign(<neuer Wert>)
 \end{minted}
-Bei der neün Wertebesetzung kann auch der alte Wert des Tensors referenziert
+Bei der neuen Wertebesetzung kann auch der alte Wert des Tensors referenziert
 werden, um den Wert zum Beispiel zu erhöhen:
 \mintinline{python}{var.assign(var + 2.0)}.
 
@@ -3076,10 +2652,10 @@ als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils einen Namen und re
 abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
 Input, wie auch als Output.
 \para{}
-Man definiert meistens keine neün Operationen, sondern verwendet einfach die vordefinierten.
+Man definiert meistens keine neuen Operationen, sondern verwendet einfach die vordefinierten.
 Ein Beispiel dafür wäre die \keycode{tf.matmul(a,b)}, welche eine
 Matrixmultiplikation zwischen \mintinline{python}{a} und \mintinline{python}{b}
-ausführt. Im folgenden Code wird das Resulat im neün Tensor
+ausführt. Im folgenden Code wird das Resulat im neuen Tensor
 \mintinline{python}{c} gespeichert.
 ``MatMul'' bezeichnet).
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -3300,7 +2876,7 @@ Hardwarebeschleunigung bezeichnet eine Sammlung an Methoden,
 bei welchen man spezialisierte Hardware verwendet um rechenintensive Aufgaben
 schneller auszuführen. Die Architektur einer CPU ist zwar so ausgelegt, dass
 sie beliebige Aufgaben ausführen kann, jedoch meistens nicht besonders
-effizient. Deshalb wurden einerseits neü externe Hardwarebausteine, wie die
+effizient. Deshalb wurden einerseits neue externe Hardwarebausteine, wie die
 GPU, welche sich für Grafikberechnungen besonders eignet, entwickelt.
 Andererseits wurde auch die interne Architektur der CPU so angepasst, dass sie
 auch spezielisierte Aufgaben besser meistert.
@@ -3436,7 +3012,7 @@ verfügung, welche einfach aneinander gereiht werden können und so einen Graph 
 \para{}
 Es gibt verschiedene Arten ein Modell zu definieren. Entweder definiert man eine
 \code{tf.keras.Seqüntial} Variabel, welcher dann mit der Methode \code{add()}
-neü Schichten hinzugefügt werden.
+neue Schichten hinzugefügt werden.
 Oder man speichert die verschiedenene Schichten in Variabeln und gibt dann die
 Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariabel an.
 
@@ -3777,8 +3353,8 @@ implementieren ConvLayers erwarten die Inputs in der Form $(m, w, h, c)$, wobei
 $m$ die Anzahl Bilder ist, $w$ die Bildbreite, $h$ die Bildhöhe und $c$ die
 Anzahl Farbkomponenten. Wir formen nun mithilfe von NumPy das Array um.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  x_train = np.reshape(x_train, (len(x_train), 28, 28, 1)) # neü Form: (60'000, 28, 28, 1)
-  x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neü Form: (10'000, 28, 28, 1)
+  x_train = np.reshape(x_train, (len(x_train), 28, 28, 1)) # neue Form: (60'000, 28, 28, 1)
+  x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neue Form: (10'000, 28, 28, 1)
 \end{minted}
 Nun besitzen die Daten die richtige Form für unser Modell.
 
@@ -4124,7 +3700,7 @@ werden. Wir interessieren uns an der Akkuratesse des Modells.
 \subsection{Leistung unseres Modells}
 Echt gut.
 
-%%% TeX-command-extra-options: "--shell-escape"
+%%% TeX-command-extra-options: "-shell-escape"
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../main"

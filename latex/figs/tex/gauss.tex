@@ -1,0 +1,48 @@
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+\pgfmathdeclarefunction{gausseval}{3}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((#3-#1)^2)/(2*#2^2))}%
+}
+\begin{tikzpicture}[
+  every pin/.style = {pin edge={Latex-,thin,black}},>=latex
+  ]
+  \begin{axis}[
+    width=15cm,height=6cm,
+    scale only axis,
+    axis lines=middle,
+    ymin=0,ymax=0.45,
+    axis line style = thick,
+    xtick={-3,-2,-1,1,2,3},
+    x label style={anchor=west},
+    y label style={anchor=south},
+    extra x ticks={0},
+    extra x tick style={%
+      grid=major,
+      ticklabel pos=top,
+    },
+    extra x tick labels={$\mu$},
+    xlabel={$x$},
+    ylabel={$\phi(x)$},
+    axis on top,
+    samples=50]
+    \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
+    \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
+    \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};
+    \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp2) at (1,{gausseval(0,1,1)}) {};
+    \coordinate (zero) at (0,0);
+    \newcommand{\equal}{=}
+    % \path [fill=black] (wp1) circle (2pt);
+    % \path [fill=black] (wp2) circle (2pt);
+    \path [draw=black,<->,very thick] (wp1) -- node[above]{$\sigma^2$} (wp1 -| zero);
+    \path [draw=black,<->,very thick] (wp2) -- node[above]{$\sigma^2$} (wp2 -| zero);
+    \node [pin=120:$\phi(x_{WS1})'' \equal 0$] at (wp1) {};
+    \node [pin=60:$\phi(x_{WS2})'' \equal 0$] at (wp2) {};
+
+    \node [pin=60:$\ds A \equal \int_{-\infty}^{\infty} \phi(x) \text{d}x \equal 1$] at (1.4,0.05) {};
+  \end{axis}
+\end{tikzpicture}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

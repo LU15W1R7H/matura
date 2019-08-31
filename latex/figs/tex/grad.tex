@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+  \begin{axis}[
+    domain=-2:2,
+    view={0}{90},
+    axis background/.style={fill=white},
+    legend style={cells={align=left},at={(1.2,1)},anchor=east}
+    ]
+    \addplot3[contour gnuplot={number=9,
+      labels=false},thick]
+    {exp(0-x^2-y^2)*x};
+    \addlegendentry{Isolinien\\ von $f(x_1,x_2)$}
+    \addplot3[blue,
+    quiver={
+      u={exp(0-x^2-y^2)*(1-2*x^2)},
+      v={exp(0-x^2-y^2)*(-2*x*y)},
+      scale arrows=0.3,
+    },
+    -stealth,samples=15]
+    {exp(0-x^2-y^2)*x};
+    \addlegendentry{$\vecf{\nabla}f$}
+  \end{axis}
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

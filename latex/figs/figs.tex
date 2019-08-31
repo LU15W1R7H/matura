@@ -1,0 +1,32 @@
+\documentclass{standalone}
+
+% math and formulas
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[amssymb]{SIunits}
+\usepackage{mathtools}
+\usepackage{esvect} % for vector typesetting
+\usepackage{bm} % for matrix typesetting
+\usepackage{xfrac}
+
+\usepackage{environ}
+
+
+\input{../tex/utils.tex}
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns,arrows.meta}
+%\tikzexternalize
+\usepackage{tikzpagenodes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+
+\begin{document}
+\colorlet{pagecolor}{white}
+\colorlet{textcolor}{black}
+
+\input{tex/ae2.tex}
+
+\end{document}
