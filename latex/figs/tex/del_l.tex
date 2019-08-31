@@ -1,0 +1,41 @@
+\begin{tikzpicture}[>=latex]
+  % \colorlet{sumcolor}{red!70!textcolor}
+  % \colorlet{actcolor}{green!70!textcolor}
+  % \tikzstyle{act} = [fill=actcolor]
+  % \tikzstyle{sum} = [fill=sumcolor]
+
+  \path (0,2) node [circle,draw](z1){$z_1^L$};
+  \path (0,0) node [circle,draw](z2){$z_2^L$};
+  \path (0,-2) node [circle,draw](z3){$z_3^L$};
+  \path (3,2) node [circle,draw](a1){$a_1^L$};
+  \path (3,0) node [circle,draw](a2){$a_2^L$};
+  \path (3,-2) node [circle,draw](a3){$a_3^L$};
+  \path (6,0) node [circle,draw](C){$C$};
+
+  \draw[->] (z1) -- node[above,sloped]{$\varphi(z_1^L)$} (a1);
+  \draw[->] (z2) -- node[above,sloped]{$\varphi(z_2^L)$} (a2);
+  \draw[->] (z3) -- node[above,sloped]{$\varphi(z_3^L)$} (a3);
+
+  \draw[->] (a1) -- node[above,sloped]{$c(a_1^L,\hat{y}_1$)} (C);
+  \draw[->] (a2) -- node[above,sloped,pos=0.4]{$c(a_2^L,\hat{y}_2$)} (C);
+  \draw[->] (a3) -- node[above,sloped]{$c(a_3^L,\hat{y}_3$)} (C);
+
+  % endings
+  \node (beg1) at (-3,2) {};
+  \node (beg2) at (-3,0) {};
+  \node (beg3) at (-3,-2) {};
+
+  \draw[dashed] ($(beg1)!0.6!(z1)$) -- (z1);
+  \draw[dashed] ($(beg1)!0.6!(z2)$) -- (z2);
+  \draw[dashed] ($(beg1)!0.6!(z3)$) -- (z3);
+  \draw[dashed] ($(beg2)!0.6!(z1)$) -- (z1);
+  \draw[dashed] ($(beg2)!0.6!(z2)$) -- (z2);
+  \draw[dashed] ($(beg2)!0.6!(z3)$) -- (z3);
+  \draw[dashed] ($(beg3)!0.6!(z1)$) -- (z1);
+  \draw[dashed] ($(beg3)!0.6!(z2)$) -- (z2);
+  \draw[dashed] ($(beg3)!0.6!(z3)$) -- (z3);
+\end{tikzpicture}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

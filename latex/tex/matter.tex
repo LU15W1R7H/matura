@@ -1,6 +1,6 @@
-\chapter{Machinelles Lernen}
+\chapter{Maschinelles Lernen}
 
-Der Themenbereich des \keyword{Machinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu lösen.
+Der Themenbereich des \keyword{Maschinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu lösen.
 Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu lösen
 hat, stattdessen wird das Modell trainiert, optimiert sich von selbst und findet selber
 einen Weg, das Problem zu lösen.
@@ -17,14 +17,14 @@ Man unterscheidet zwischen zwei Arten von Maschinellem Lernen.
     Lernverfahren, bei welchem die Daten aus zwei Teilen bestehen, aus Inputs und
     Outputs. Man bezeichnet dabei die Outputs als Labels. Die Aufgabe des Modells
     ist es eine \keyword{Korrelation} zwischen den Inputs und den Labels zu
-    erlernen und so ihre Beziehung züinander zu verstehen.
+    erlernen und so ihre Beziehung zueinander zu verstehen.
     Anhand der Informationen, welche in den Inputs enthalten
     sind, sind dann die Labels vorherzusagen. Man gleicht dann die
     vorhergesagten Labels des Modells mit den wahren Labels ab (man
     ``überwacht'' sie) und bewertet so die Fähigkeiten des Modells..
     \para{}
-    Voraussetztung dafür ist, dass die Daten eben ``gelabelt'' sein müssen.
-    Man muss schon im vorhinein Daten haben, bei welchen man die gewünschten
+    Voraussetzung dafür ist, dass die Daten eben ``gelabelt'' sein müssen.
+    Man muss schon im Vorhinein Daten haben, bei welchen man die gewünschten
     Labels hat. Natürlich muss auch die erwähnte Korrelation bestehen. Falls
     kein Zusammenhang zwischen den Inputs und den Outputs besteht, kann das
     Modell auch keine Vorhersagen machen und so auch nichts erlernen.
@@ -33,8 +33,8 @@ Man unterscheidet zwischen zwei Arten von Maschinellem Lernen.
     \keyword{Unüberwachtes Lernen} (engl.:\ unsupervised learning) ist ein anderes
     Lernverfahren, bei welchem eben diese Labels nicht vorhanden sind. Dem
     Modell stehen nur die Inputdaten zur Verfügung. Diese werden ebenfalls analysiert
-    und das Modell soll Muster herausextrahieren, welche sich von sonstigem
-    züfälligen Rauschen unterscheiden.
+    und das Modell soll Muster heraus extrahieren, welche sich von sonstigem
+    zufälligen Rauschen unterscheiden.
   }
 \end{itemize}
 
@@ -54,7 +54,7 @@ mit überwachtem Lernen beschäftigen.
 Um ein Modell zu trainieren, braucht man Daten. Diese Daten bestehen immer aus
 \keyword{Inputs} und \keyword{Outputs}. Man unterscheidet hierbei zwischen zwei Arten
 von Outputs. Die \keyword{Labels} sind die erwarteten Outputs, welche die
-gewüschten Zielwerte sind. Die \keyword{Vorhersagen} sind die Outputs, welche
+gewünschten Zielwerte sind. Die \keyword{Vorhersagen} sind die Outputs, welche
 das Modell produziert und hoffentlich möglichst genau mit den Labels
 übereinstimmen.
 \para{}
@@ -72,18 +72,18 @@ Die Vorhersagen werden ebenfalls in einem Vektor
 \[\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_n \end{pmatrix}} \]
 zusammengefasst.
 \para{}
-Die Inputs beinhalten sogennanten \keyword{Features} (deutsch: Merkmale). Sie
+Die Inputs beinhalten sogenannte \keyword{Features} (deutsch: Merkmale). Sie
 zeichnen die Inputs aus und umfassen ihren ganzen Informationsgehalt.
 Der Algorithmus soll
 anhand dieser Features seine Vorhersagen machen.
 Diese Vorhersagen werden dann mit den Labels abgeglichen und so bewertet.
 Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
-Unter korrekten Bedingungen (kein Overfitting) findet kein Auswendiglernen der Trainingsdaten statt,
-sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmassigkeiten.
+Unter korrekten Bedingungen (kein Overfitting) findet kein Auswendig lernen der Trainingsdaten statt,
+sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmässigkeiten.
 \para{}
 Um eine endgültige Bewertung des Modells durchzuführen, wird ein Testdatensatz
 $\set{T}$, welcher nicht Teil des Trainingsdatensatz ist, genutzt, um Vorhersagen zu machen.
-Dies garantiert, dass kein Auswendiglernen möglich ist.
+Dies garantiert, dass kein Auswendig lernen möglich ist.
 \para{}
 BEISPIEL
 
@@ -93,7 +93,7 @@ Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
 \to \set{R}^n$, Hypothesenfunktion genannt, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
 Man kann diese Funktion gewissermassen als die Hypothese, welche das Modell bezüglich der Beziehung zwischen
 den Inputs und den Labels aufgestellt hat, betrachten.
-Diese Modelle können verwendet werden um vorallem entweder
+Diese Modelle können verwendet werden um vor allem entweder
 Klassifizierungsprobleme oder Regressionsprobleme zu lösen. Falls es sich um
 letzteres handelt, spricht man von einem Regressionsmodell. Ein solches
 Regressionsproblem werden wir in dieser Arbeit lösen.
@@ -106,7 +106,7 @@ Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den
 Parametern vorgenommen werden, bis das Modell die gewünschten Resultate liefert.
 \para{}
 Neben den gelernten Parametern, gibt es auch noch sogenannte \keyword{Hyperparameter}.
-Diese können nicht erlernt werden, sondern müssen manüll vor dem Training gewählt werden und können den Lernvorgang erheblich beeinflussen.
+Diese können nicht erlernt werden, sondern müssen manuell vor dem Training gewählt werden und können den Lernvorgang erheblich beeinflussen.
 Dies bedeutet, dass man ausprobieren muss, welche Werte für die Hyperparameter
 die besten Resultate liefern.
 \para{}
@@ -116,7 +116,7 @@ angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\param_1x +
 Nun müssten nur noch $\param_0$ und $\param_1$ bestimmt werden.
 BEISPIELMODELL AUTO
 \para{}
-Für Machine Learning haben sich gewisse Modelle besonders gut etabliert,
+Für Maschinelles Lernen haben sich gewisse Modelle besonders gut etabliert,
 darunter wären: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \\
@@ -129,13 +129,13 @@ Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 
 \section{Training}
 \subsection{Verlust- und Kostenfunktionen}
-Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zürst die Genauigkeit des Modells bewertet werden.
-Dies wird mithilfe von sogennaten Kostenfunktionen bzw. Verlustfunktionen erreicht.
+Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
+Dies wird mithilfe von sogenannten Kostenfunktionen bzw. Verlustfunktionen erreicht.
 \para{}
 Eine \keyword{Verlustfunktion} $L(y,\hat{y})$ soll ein Mass für die
 Abweichung der Vorhersage $y$ von dem Label $\hat{y}$ sein.
 Aus ihr bildet man die \keyword{Kostenfunktion} $C(\vec{y},\vec{\hat{y}})$, indem man die
-Verluste der einzelnen Ouputs aufsummiert. Somit erhält man die Kosten
+Verluste der einzelnen Outputs aufsummiert. Somit erhält man die Kosten
 einer gesamten Vorhersage mit $m$ Outputs (siehe Gl. (\ref{eq:errorfunc})). Bei
 gewissen Kostenfunktionen gibt es keine Verlustfunktion, da sie nicht auf die
 einzelnen Outputpaare aufgebrochen werden kann. \\
@@ -253,13 +253,12 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
   Geometrisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in
   einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten
   Anstiegs von $f$ zeigt. Sein Betrag gibt die Stärke des Anstiegs an.
+  \para{}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{grad.pdf}
+    % \caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
+  \end{center}
 \end{defbox}
-\para{}
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.7\textwidth]{grad.pdf}
-  \caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
-\end{figure}
 \para{}
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
 $\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
@@ -1059,9 +1058,10 @@ Es ist sinnvoll für das Aufstellen dieser Gleichungen das Netzwerk als
   Untenstehend ist ein Beispiel eines Computation
   Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
   \para{}
-  \includegraphics[width=0.8\textwidth]{compgraph.pdf}
-  %\caption{Computational Graph einer exemplarischen Verkettung von Funktionen}
-
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{compgraph.pdf}
+    % \caption{Computational Graph einer exemplarischen Verkettung von Funktionen}
+  \end{center}
 \end{examplebox}
 \para{}
 Der erste Schritt der Rückwärtsprogagierung besteht darin, dass man die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
@@ -1088,43 +1088,7 @@ Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bi
 \para{}
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-    % \colorlet{sumcolor}{red!70!textcolor}
-    % \colorlet{actcolor}{green!70!textcolor}
-    % \tikzstyle{act} = [fill=actcolor]
-    % \tikzstyle{sum} = [fill=sumcolor]
-
-    \path (0,2) node [circle,draw](z1){$z_1^L$};
-    \path (0,0) node [circle,draw](z2){$z_2^L$};
-    \path (0,-2) node [circle,draw](z3){$z_3^L$};
-    \path (3,2) node [circle,draw](a1){$a_1^L$};
-    \path (3,0) node [circle,draw](a2){$a_2^L$};
-    \path (3,-2) node [circle,draw](a3){$a_3^L$};
-    \path (6,0) node [circle,draw](C){$C$};
-
-    \draw[->] (z1) -- node[above,sloped]{$\varphi(z_1^L)$} (a1);
-    \draw[->] (z2) -- node[above,sloped]{$\varphi(z_2^L)$} (a2);
-    \draw[->] (z3) -- node[above,sloped]{$\varphi(z_3^L)$} (a3);
-
-    \draw[->] (a1) -- node[above,sloped]{$c(a_1^L,\hat{y}_1$)} (C);
-    \draw[->] (a2) -- node[above,sloped,pos=0.4]{$c(a_2^L,\hat{y}_2$)} (C);
-    \draw[->] (a3) -- node[above,sloped]{$c(a_3^L,\hat{y}_3$)} (C);
-
-    % endings
-    \node (beg1) at (-3,2) {};
-    \node (beg2) at (-3,0) {};
-    \node (beg3) at (-3,-2) {};
-
-    \draw[dashed] ($(beg1)!0.6!(z1)$) -- (z1);
-    \draw[dashed] ($(beg1)!0.6!(z2)$) -- (z2);
-    \draw[dashed] ($(beg1)!0.6!(z3)$) -- (z3);
-    \draw[dashed] ($(beg2)!0.6!(z1)$) -- (z1);
-    \draw[dashed] ($(beg2)!0.6!(z2)$) -- (z2);
-    \draw[dashed] ($(beg2)!0.6!(z3)$) -- (z3);
-    \draw[dashed] ($(beg3)!0.6!(z1)$) -- (z1);
-    \draw[dashed] ($(beg3)!0.6!(z2)$) -- (z2);
-    \draw[dashed] ($(beg3)!0.6!(z3)$) -- (z3);
-  \end{tikzpicture}
+  \includegraphics[width=0.7\textwidth]{del_l.pdf}
   \caption{Computation Graph zur Berechnung von $\vec{\delta}^L$}
   \label{fig:cg_L}
 \end{figure}
@@ -1210,38 +1174,7 @@ erarbeiten. Dafür stellen wir zuallererst wieder einen Computation Graph auf
 \para{}
 \begin{figure}[h!]
   \centering
-  \begin{tikzpicture}[>=latex]
-    \path (0,1) node [circle,draw](z1-){$z_1^{l-1}$};
-    \path (0,-1) node [circle,draw](z2-){$z_2^{l-1}$};
-    \path (3,1) node [circle,draw](a1-){$a_1^{l-1}$};
-    \path (3,-1) node [circle,draw](a2-){$a_2^{l-1}$};
-    \path (7,2) node [circle,draw](z1){$z_1^l$};
-    \path (7,0) node [circle,draw](z2){$z_2^l$};
-    \path (7,-2) node [circle,draw](z3){$z_3^l$};
-
-    \draw[->] (z1-) -- node[above,sloped]{$\varphi(z_1^L)$} (a1-);
-    \draw[->] (z2-) -- node[above,sloped]{$\varphi(z_2^L)$} (a2-);
-
-    \draw[->] (a1-) -- node[sloped,above]{$\times w_{1,1}$} (z1);
-    \draw[->] (a1-) -- node[sloped,above,pos=0.8]{$\times w_{2,1}$} (z2);
-    \draw[->] (a1-) -- node[sloped,below,pos=0.65]{$\times w_{3,1}$} (z3);
-    \draw[->] (a2-) -- node[sloped,above,pos=0.65]{$\times w_{1,2}$} (z1);
-    \draw[->] (a2-) -- node[sloped,above,pos=0.65]{$\times w_{2,2}$} (z2);
-    \draw[->] (a2-) -- node[sloped,below]{$\times w_{3,2}$} (z3);
-
-    % endings
-    \node (beg1) at (-3,1) {};
-    \node (beg2) at (-3,-1) {};
-    \draw[dashed] ($(beg1)!0.6!(z1-)$) -- (z1-);
-    \draw[dashed] ($(beg1)!0.6!(z2-)$) -- (z2-);
-    \draw[dashed] ($(beg2)!0.6!(z1-)$) -- (z1-);
-    \draw[dashed] ($(beg2)!0.6!(z2-)$) -- (z2-);
-
-    \draw[dashed] (z1) -- ++(1.5,0);
-    \draw[dashed] (z2) -- ++(1.5,0);
-    \draw[dashed] (z3) -- ++(1.5,0);
-
-  \end{tikzpicture}
+  \includegraphics[width=0.7\textwidth]{del_l-1.pdf}
   \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
   \label{fig:cg_L-1}
 \end{figure}
@@ -2189,7 +2122,7 @@ ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
 Flaschenhals der Grösse $p = 2$.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{ae1.pdf}
+  \includegraphics[width=0.5\textwidth]{ae1.pdf}
   \caption{Schichten eines kurzen Autoencoders}
   \label{fig:basic_autoencoder}
 \end{figure}
@@ -2937,7 +2870,7 @@ Deep-Learning-Modeln welche dann sehr einfach trainiert werden können.
 Wir werden also anstatt TF direkt zu verwenden, über Keras das Modell definieren.
 Deshalb ist ein tiefgehendes Verstätniss von TF überflüssig.
 
-\subsection{Grundsätliche Funktionsweise}
+\subsection{Grundsätzliche Funktionsweise}
 In Keras kann man sehr einfach ein sogennantes \keyword{Seqüntial-Model} baün.
 Dies ist ein Modell, welches einfach ein linearer Stapel von verschiedenen
 Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
@@ -3567,7 +3500,7 @@ der Mitte sind die Rekonstruktionen und ganz unten sind Original-Bilder.
   \includegraphics[width=0.9\textwidth]{denoised_clipped.png}
   \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
 \end{figure}
-Die Resultate sind schon verblueffend güt.
+Die Resultate sind schon verblüffend gut.
 
 \subsection{Hyperparameter einstellen}
 Wir in der Theorie so oft erkärt, muss man um die Hyperparameter einzustellen
@@ -3637,3 +3570,12 @@ Echt gut.
 %%% TeX-command-extra-options: "--shell-escape"
 %%% TeX-master: "../main"
 %%% End:
+
+% LocalWords:  gelabelt Unüberwachtes unsupervised Inputdaten Grossteil Vector
+% LocalWords:  unüberwachtem Hauptkomponentenanalysen Adversial Networks bzw
+% LocalWords:  Trainingssample Inputsvektor Labelvektor Overfitting Machines
+% LocalWords:  Trainingsdaten Testdatensatz Trainingsdatensatz gewissermassen
+% LocalWords:  Hypothesenfunktion Klassifizierungsprobleme Regressionsprobleme
+% LocalWords:  Regressionsmodell Regressionsproblem Modellparameter Machine
+% LocalWords:  Hyperparameter Regressionsgerade Kostenfunktionen BEISPIELMODELL
+% LocalWords:  Verlustfunktionen Verlustfunktion Label Kostenfunktion Ouputs

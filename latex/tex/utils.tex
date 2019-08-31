@@ -23,6 +23,7 @@
 
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 
+
 % machine learning
 \newcommand{\param}{\lambda}
 
@@ -89,15 +90,15 @@
 {
   \centering
 
-  \tikzstyle{mybox} = [draw=green, fill=yellow!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-  \tikzstyle{fancytitle} = [fill=green, text=white]
+  \tikzstyle{mybox} = [draw=green!80!black, fill=yellow!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{fancytitle} = [fill=green=!80!black, text=white]
   \begin{tikzpicture}
     \node [mybox] (box) {%
       \begin{minipage}{1.0\textwidth}
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=green!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
+    \node [right,inner xsep=1em,fill=green!80!black, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
     at ([shift={(-1em,0pt)}]box.north west) {#1};
     \fill[green!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
     \fill[green!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;

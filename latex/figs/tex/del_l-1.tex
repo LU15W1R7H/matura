@@ -1,0 +1,36 @@
+\begin{tikzpicture}[>=latex]
+  \path (0,1) node [circle,draw](z1-){$z_1^{l-1}$};
+  \path (0,-1) node [circle,draw](z2-){$z_2^{l-1}$};
+  \path (3,1) node [circle,draw](a1-){$a_1^{l-1}$};
+  \path (3,-1) node [circle,draw](a2-){$a_2^{l-1}$};
+  \path (7,2) node [circle,draw](z1){$z_1^l$};
+  \path (7,0) node [circle,draw](z2){$z_2^l$};
+  \path (7,-2) node [circle,draw](z3){$z_3^l$};
+
+  \draw[->] (z1-) -- node[above,sloped]{$\varphi(z_1^L)$} (a1-);
+  \draw[->] (z2-) -- node[above,sloped]{$\varphi(z_2^L)$} (a2-);
+
+  \draw[->] (a1-) -- node[sloped,above]{$\times w_{1,1}$} (z1);
+  \draw[->] (a1-) -- node[sloped,above,pos=0.8]{$\times w_{2,1}$} (z2);
+  \draw[->] (a1-) -- node[sloped,below,pos=0.65]{$\times w_{3,1}$} (z3);
+  \draw[->] (a2-) -- node[sloped,above,pos=0.65]{$\times w_{1,2}$} (z1);
+  \draw[->] (a2-) -- node[sloped,above,pos=0.65]{$\times w_{2,2}$} (z2);
+  \draw[->] (a2-) -- node[sloped,below]{$\times w_{3,2}$} (z3);
+
+  % endings
+  \node (beg1) at (-3,1) {};
+  \node (beg2) at (-3,-1) {};
+  \draw[dashed] ($(beg1)!0.6!(z1-)$) -- (z1-);
+  \draw[dashed] ($(beg1)!0.6!(z2-)$) -- (z2-);
+  \draw[dashed] ($(beg2)!0.6!(z1-)$) -- (z1-);
+  \draw[dashed] ($(beg2)!0.6!(z2-)$) -- (z2-);
+
+  \draw[dashed] (z1) -- ++(1.5,0);
+  \draw[dashed] (z2) -- ++(1.5,0);
+  \draw[dashed] (z3) -- ++(1.5,0);
+
+\end{tikzpicture}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:
