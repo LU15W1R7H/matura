@@ -118,14 +118,14 @@ Wir werden folgenden groben Aufbau verfolgen:
 
 \end{enumerate}
 
-Fuer das konkrete Modell werden wir einen sogennante
+Für das konkrete Modell werden wir einen sogenannte
 Convolutional-Denoising-Autoencoder entwickeln. In den Theorie Teilen werden wir
-lernen wie dieser Funktioniert. Der Grund fuer die Wahl dieses kokreten Modells,
+lernen wie dieser Funktioniert. Der Grund fuer die Wahl dieses konkreten Modells,
 besteht darin, dass es sich dabei um ein Convolutional Neural Network handelt,
-welche in den letzten Jahren sehr populaer geworden sind und deshalb interessant
+welche in den letzten Jahren sehr populär geworden sind und deshalb interessant
 zu betrachten sind. Wir werden dieses Konzept eines Convolutional Neural Network
 mit einem Autoencoder koppeln, um einen Convolutional-Denoising-Autoencoder zu
-erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lassen.
+erhalten. Mithilfe von ihm können wir Bildrauschen von Bildern wegrechnen lassen.
 
 
 \addcontentsline{toc}{chapter}{Konvention und Notation}
@@ -153,9 +153,7 @@ erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lasse
   $\set{A}$ & eine Menge \\
   $\set{R}$ & die Menge aller reellen Zahlen \\
   $\set{Z}$ & die Menge aller ganzen Zahlen \\
-  $\set{N}$ & die Menge aller natuerlichen Zahlen \\
-  % $\set{E}$ & die Menge aller gerader (engl.:\ even) Zahlen \\
-  % $\set{O}$ & die Menge aller ungerader (engl.:\ odd) Zahlen \\
+  $\set{N}$ & die Menge aller natürlichen Zahlen \\
   $\{a,b\}$ & die Menge, welche aus den Elementen $a$ und $b$ besteht \\
   $\{1,\ldots,n\}$ & die Menge aller ganzen Zahlen von 1 bis $n$ \\
   $a \in \set{A}$ & $a$ ist ein Element der Menge $\set{A}$ \\
@@ -169,11 +167,11 @@ erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lasse
   $\matelem{A}_{i,j}$ & das Matrixelement in der $i$-ten Zeile und der $j$-ten Spalte \\
   $\mat{A}_{i,:}$ & die Zeile $i$ der Matrix $\mat{A}$ \\
   $\mat{A}_{:,i}$ & die Spalte $i$ der Matrix $\mat{A}$\ \\
-  $\ten{A}_{i,:,:}$ & der $i$-te Querschnitt entlang der Hoehe des Tensors $\ten{A}$ \\
+  $\ten{A}_{i,:,:}$ & der $i$-te Querschnitt entlang der Höhe des Tensors $\ten{A}$ \\
   $\ten{A}_{:,i,:}$ & der $i$-te Querschnitt entlang der Breite des Tensors $\ten{A}$ \\
   $\ten{A}_{:,:,i}$ & der $i$-te Querschnitt entlang der Tiefe des Tensors $\ten{A}$ \\
   $\mat{A} = \begin{pmatrix} \end{pmatrix}$ & Definition einer Matrix $\mat{A}$ \\
-  $\ten{A} = \begin{bmatrix} \mat{A}_{:,:,1} & \cdots & \mat{A}_{:,:,c} \end{bmatrix}$ & Definiton eines Tensors $\ten{A}$ \\
+  $\ten{A} = \begin{bmatrix} \mat{A}_{:,:,1} & \cdots & \mat{A}_{:,:,c} \end{bmatrix}$ & Definition eines Tensors $\ten{A}$ \\
 
 \end{tabular}
 
@@ -188,13 +186,13 @@ erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lasse
 
 \begin{center}\textbf{Infinitesimalrechnung}\end{center}
 \begin{tabular}{cl}
-  $f'(x)$ & die Ableitung der Funktion $f$ bezueglich seinem Argument $x$ \\
-  $\ds\deriv{y}{x}$ & die Ableitung von $y$ bezueglich $x$ \\[2ex]
-  $\ds\partderiv{y}{x}$ & die partielle Ableitung von $y$ bezueglich $x$ \\[2ex]
+  $f'(x)$ & die Ableitung der Funktion $f$ bezüglich seinem Argument $x$ \\
+  $\ds\deriv{y}{x}$ & die Ableitung von $y$ bezüglich $x$ \\[2ex]
+  $\ds\partderiv{y}{x}$ & die partielle Ableitung von $y$ bezüglich $x$ \\[2ex]
   $\vecf{\nabla} y$ & der Gradient von $y$\\
-  $\vecf{\nabla}_{\vec{x}}y$ & der Gradient von $y$ bezueglich $\vec{x}$ (Vektor) \\
-  $\ds\int f(x)\,\text{d}x$ & das unbestimmte Integral der Funktion $f$ bezueglich $x$ \\
-  $\ds\int_a^b f(x)\,\text{d}x$ & das bestimmte Integral der Funktion $f$ bezueglich $x$ von $a$ bis $b$ \\
+  $\vecf{\nabla}_{\vec{x}}y$ & der Gradient von $y$ bezüglich $\vec{x}$ (Vektor) \\
+  $\ds\int f(x)\,\text{d}x$ & das unbestimmte Integral der Funktion $f$ bezüglich $x$ \\
+  $\ds\int_a^b f(x)\,\text{d}x$ & das bestimmte Integral der Funktion $f$ bezüglich $x$ von $a$ bis $b$ \\
 
 \end{tabular}
 
@@ -205,7 +203,7 @@ erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lasse
   $f(\vec{v})$ & eine Funktion $f$ mit Argument $\vec{v}$ (Vektor) \\
   $\vecf{f}[\vec{v}]$ & die vektorisierte Funktion $\vecf{f}$ mit Argument $\vec{v}$ (Vektor) \\
   $\mathcal{A}$ & ein Funktionenraum \\
-  $f * g$ & die Faltung von $f$ ueber $g$ \\
+  $f * g$ & die Faltung von $f$ über $g$ \\
   $f \circ g$ & die Komposition von den Funktionen $f$ und $g$ \\
 
 \end{tabular}
@@ -223,7 +221,7 @@ erhalten. Mithilfe von ihm koennen wir Bildrauschen von Bildern wegrechnen lasse
   $\ds\sum_{i=a}^b x$ & die Summe mit von $a$ bis $b$ ueber $x$ mit Laufvariable $i$ \\
 \end{tabular}
 
-Eraehnung von Notation $\set{R}$ fuer Skalare und $\set{R}^n$ fuer Vektoren/Vektorraueme...
+Erwähnung von Notation $\set{R}$ für Skalare und $\set{R}^n$ für Vektoren/Vektorräume...
 
 %%% Local Variables:
 %%% mode: latex
