@@ -1,0 +1,40 @@
+\newcommand{\arrayfilling}[2]{
+  \fill[#2!30, opacity=.5] ([shift={(1mm,1mm)}]#1.north west) coordinate(#1auxnw)--([shift={(1mm,1mm)}]#1.north east)coordinate(#1auxne) to[out=-75, in=75] ([shift={(1mm,-1mm)}]#1.south east)coordinate(#1auxse)--([shift={(1mm,-1mm)}]#1.south west)coordinate(#1auxsw) to[out=105, in=-105] cycle;
+  \fill[#2!80!black, opacity=1] (#1auxne) to[out=-75, in=75] (#1auxse) to[out=78, in=-78] cycle;
+  \fill[#2!80!black, opacity=1] (#1auxnw) to[out=-105, in=105] (#1auxsw) to[out=102, in=-102] cycle;
+}
+
+\begin{tikzpicture}[font=\ttfamily,
+  mymatrix/.style={
+    matrix of math nodes, inner sep=0pt, color=#1,
+    column sep=-\pgflinewidth, row sep=-\pgflinewidth, anchor=south west,
+    nodes={anchor=center, minimum width=5mm,
+      minimum height=3mm, outer sep=0pt, inner sep=0pt,
+      text width=5mm, align=right,
+      draw=none, font=\small},
+  }
+  ]
+
+  \matrix (C) [mymatrix=green] at (6mm,5mm)
+  {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
+  \arrayfilling{C}{green}
+
+  \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
+  \arrayfilling{B}{red}
+
+  \matrix (A) [mymatrix=purple] at (0,0)
+  {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
+  \arrayfilling{A}{purple}
+
+  \foreach \i in {auxnw, auxne, auxse, auxsw}
+  \draw[brown, ultra thin] (A\i)--(C\i);
+
+  \node[left=3mm of B.west] {$\ten{T} =$};
+  \node[right=5mm of B.east] {$\in \set{R}^{3 \times 3 \times 3}$};
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:
