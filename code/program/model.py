@@ -17,7 +17,7 @@ x_test = x_test.astype('float32') / 255.
 x_train = np.reshape(x_train, (len(x_train),28,28,1))
 
 # generate noise images / inputs
-noise_factor = 0.5
+noise_factor = 0.8
 x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
 x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
 x_train_noisy = np.clip(x_train_noisy, 0., 1.)

@@ -363,7 +363,7 @@ Dabei hilft nur Ausprobieren. Falls $\eta$ nicht gut gewaehlt wurde, gibt es Pro
 \para{}
 \cite{Nielsen}
 
-\subsection{Stochastisches Gradientenverfahren fuer Machine Learning}
+\subsection{Stochastisches Gradientenverfahren}
 Wie oben erklaert, wird fuer das Trainieren eines Modells das Gradientenverfahren benutzt.
 Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}\ |\ \param_0,\ldots,\param_n)$
 ($\param_i$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
@@ -399,12 +399,76 @@ Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (
 
 \cite{Nielsen}
 
-\subsection{Adam Optimizer?}
-
 \section{Trainingsphaenomene}
 
 \subsection{Konvergenz und Divergenz}
+Beim Training eines Modells, kann es entweder zu \keyword{Konvergenz} oder \keyword{Divergenz} kommen.
+Falls die Vorhersagen im Verlaufe des Trainings immer besser mit den Labels
+uebereinstimmen, bzw. die Kostenfunktion immer kleiner wird, sagt man, dass das
+Modell konvergiert. Also findet das Gradientenverfahren erfolgreich ein lokales Minimum.
+\para{}
+Es passiert aber auch oft, dass ein Modell nicht konvergiert oder vielleicht
+sogar divergiert; die Kosten werden also groesser im Verlaufe des Training.
+Dies kann verschiedene Gruende haben. Einige davon koennen sein:
+\begin{itemize}
+  \item{zu wenig Trainingsdaten}
+  \item{zu schwache Korrelation zwischen Inputs und Labels}
+  \item{falsche Hyperparameter}
+  \item{falsches Modell}
+\end{itemize}
+
+
 \subsection{Underfitting und Overfitting}
+Falls ein Modell konvergiert, heisst das noch nicht, dass es die
+Gesetzmaessigkeiten innerhalb der Trainingsdaten richtig erlernt hat.
+Es kann dabei zu zwei Problemen kommen: Overfitting und Underfitting.
+\para{}
+\keyword{Overfitting} bezeichnet das Problem, dass ein Modell Vorhersagen
+erzeugt, welche zu stark an die Trainingssamples angepasst sind.
+Meistens liegt das daran, dass das Modell zu viele Modellparameter besitzt oder
+der Trainingsdatensatz zu wenige Samples besitzt.
+Somit uebersteigt die Komplexitaet des Modells gewissermassen die des Problems.
+\para{}
+Um das Problem zu verdeutlichen betrachten wir ein lineares Regressionmodell.
+Dieses besitzt eine Hypothesenfunktion $h = a_0 + a_1 x + a_2 x^2 + \ldots + a_n
+x^n$, welcche einfach ein Polynom $n$-ter Ordnung ist. Falls der
+Trainingsdatensatz nun aus $n$ oder weniger Samples besteht, kann das Modell die
+Regressionkurve der Hypothesenfunktion exakt durch jeden Datenpunkt legen.
+Dies entspricht dem Verhalten, dass ein Modell mit $n$ Modellparametern, welches
+mit $n$ Samples trainiert wird, exakt jedes Samples auswendig lernt, anstatt die
+Gesetzmaessigkeiten zu erlernen.
+Beim Auswendiglernen
+wiegt das Modell dem Datenrauschen, welches durch die natuerliche Varianz
+innerhalb der Trainingsdaten entsteht, zu viel Gewicht zu. Somit nutzt es
+eigentlich unrelevante Modellparameter dazu dieses Rauschen zu erlernen. \\
+Dadurch kann das Modell zwar sehr gute Vorhersagen zum Trainingsdatensatz
+$\set{X}$ machen, jedoch wuerde es sehr schlechte Vorhersagen fuer einen
+zusaetzlichen Testdatensatz $\set{T}$ liefern.
+\para{}
+Somit koennen wir Overfitting folgendermassen definieren. Eine
+Hypothesenfunktion overfittet dann, wenn eine alternative Hypothesenfunktion
+$h'$ exisitert, fuer welche die Kosten bezueglich dem Trainingsdatensatz
+groesser sind $\bar{C}_{h'}(\set{X}) > \bar{C}_h(\set{X})$, jedoch die Kosten
+fuer Testdatensatz kleiner sind $\bar{C}_{h'}(\set{T}) < \bar{C}_h(\set{T})$.
+\para{}
+Das Gegenteil von Overfitting ist \keyword{Underfitting}. Dabei handelt es sich um das Problem, dass eine
+Hypothesenfunktion $h$ zu
+wenige Modelparameter $\param_k$ besitzt, um die Komplexitaet eines Problems zu bewaeltigen.
+Die Parameter reichen nicht aus, damit das Modell die Korrelation zwischen
+Inputs und Labels erlernen kann, beziehungsweise durch die Hyptothesenfunktion
+die gewuenschte Abbildung durchzufuehren.
+\para{}
+Bezogen auf das lineare Regressionmodell, bedeutet dies, dass der Grad $n$ des
+polynomen Hypothesenfunktion $h$ zu gering ist, um sich an die Datenpunkte der
+Sampels anzuschmiegen.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{overunderfitting.jpg}
+  \caption{Visalierung von Under- und Overfitting}
+\end{figure}
+
+\cite{wiki:overfitting}
 
 % ------------------------------------------------------------
 
@@ -498,7 +562,7 @@ werden. Der Grund dafuer sollte spaeter in Sektion (\ref{sec:kuenstlicheNeuronen
 \cite{wiki:perzeptron}
 \cite{Nielsen}
 
-\subsection{Was kann ein Perzeptron erlernen?}
+\subsection{Lernpotenzial eines Perzeptrons}
 Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofuer es genutzt werden kann.
 Das Perzeptron ist lediglich ein \keyword{linearer Klassifikator} der Form
 $y = w_1x_1 + \cdots + w_m x_m$. Es ist also ein Klassifizierungsmodell, kein Regressionsmodell.
@@ -1538,7 +1602,7 @@ ALLES ZUSAMMENFASSEN
 \cite{Nielsen}
 
 
-\section{Universal Approximation Theorem?}\label{sec:UAT}
+\section{Universal Approximation Theorem}\label{sec:UAT}
 Es stellt sich nun die Frage, was ein Neuronales Netz alles erlernen kann.
 Diese Frage kann man mit dem \keyword{Universal Approximation Theorem} (UAT)
 beantworten. Dieser Satz ist ein mathematischer Beweis dafuer, dass ein KNN
@@ -2657,7 +2721,7 @@ bezeichnet man als das \keyword{Decoding}.
 \paragraph{Encoder und Decoder}
 Man kann einen Autoencoder gewissermassen als zwei Teilmodelle betrachten. Das
 einte Modell erzeugt das Encoding und das andere das Decoding. Wir spalten
-dafuer die Hypothesenfunktion $h$ in ein Funktionpaar $(\phi,\psi)$ auf.
+dafuer die Hypothesenfunktion $h$ in ein Funktionenpaar $(\phi,\psi)$ auf.
 \begin{itemize}
 \item{$\phi: \fspace{X} \to \fspace{E}$ Encoder-Funktion}
 \item{$\psi: \fspace{E} \to \fspace{X}$ Decoder-Funktion}
@@ -2679,7 +2743,7 @@ Wenn wir dieses Modell trainieren, minimieren wir die Kostenfunktion. Als
 Beispiel koennen wir den Mittleren-quadratischen-Fehler $C_{MSE}$ nehmen.
 Verwenden wir ihn als Kostenfunktion, minimieren wir folgenden Ausdruck:
 \begin{equation}
-  \min_{\phi,\psi} {|\vec{x} - \vec{\hat{x}}|}^2 = \min_{\phi,\psi} {|\vec{x} - (\psi \circ \phi)(\vec{x})|}^2
+  \min_{\phi,\psi} {\|\vec{x} - \vec{\hat{x}}\|}^2 = \min_{\phi,\psi} {\|\vec{x} - (\psi \circ \phi)(\vec{x})\|}^2
 \end{equation}
 Anderst ausgedrueckt versuchen wir Funktion $\phi$ und $\psi$ zu finden, welche
 die Differenz der urspruenglichen Features $\vec{x}$ und den Rekonstruktionen
@@ -3217,14 +3281,6 @@ welchem Device die Berechnugen ausgefuert werden.
 Insofern GPUs zur Verfuegung stehen, waehlt TF grundsaetzlich immer diese, da
 sie Tensoroperationen deutlich schneller als CPUs verarbeiten koennen.
 
-\subsubsection{Why dataflow}
-Reasons:
-\begin{itemize}
-\item{Parallelism. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.}
-\item{Compilation. TensorFlow's XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.}
-\item{Portability. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.}
-\end{itemize}
-
 \subsubsection{Performance und Hardwarebeschleunigung}
 Nun moechten wir die Gruende fuer die beachtliche Performance von TF erschliessen.
 Der erste wichtiger Faktor dabei ist, dass der Master hauptsaechlich in C++
@@ -3234,7 +3290,6 @@ schneller ausgefuehrt werden. Der Nachteil besteht dafuer darin, dass die Progra
 ziemlich verbos ist. Das bedeutet man braucht viel Code um eine relativ einfach Idee
 auszudruecken. Deshalb wurde der Client von TF in Python geschrieben, was
 Abhilfe verschafft und so ein relativ einfaches und unverboses Entwickeln ermoeglicht.
-\para{}
 \para{}
 Der andere wichtige Aspekt fuer die Performance ist wohl die sogennante
 \keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
@@ -3310,39 +3365,50 @@ TF auch datenstromorient.
 
 
 \subsection{Tensorboard}
-\subsubsection{Notizen}
-TensorBoard is a companion visualitzayion yool for TensorFlow for understanding
-the structure of the computation graphs as well as the overall behaviour of the
-ML-Modell.
+TensorBoard ist eine externes Zusatzprogramm zu TensorFlow. Mit dessen Hilfe
+kann man Daten zum Modell-Graph und zu dem Trainingsprozess sammeln
+und diese dann Visualisieren.
+Die wohl praktischste Anwendung von TensorBoard liegt darin, dass man es zum
+Einstellen der Hyperparameter benutzen kann.
+\para{}
+TensorBoard ist als WebServer geschrieben und kann ueber einen WebBrowser
+benutzt werden.
+Man muss TensorBoard als Backend/Callback in TensorFlow aktivieren, damit die
+noetigen Daten waehrend der Graphausfuehrung gesammelt werden.
 
-Muss im terminal als Programm gestartet werden: tensorboard --logdir .
+\begin{figure}[h!]
+  \centering
 
-\subsubsection{Visualizing computational graphs}
-Due to the size and topology of these graphs with maybe over 10'000 nodes the
-nodes are groupped and collapsed into high-level blocks. The visualtionsation is
-interactive and can pan, zoom and expand.
+  \caption{das TensorBoard-Webinterface}
+\end{figure}
 
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  writer = tf.summary.FIleWriter('.')
-  writer.add_graph(tf.get_default_graph())
-  writer.flush()
-\end{minted}
-
-\subsubsection{Visualization of Summary Data/Training}
-When training Ml-models users often want to examine the state of various aspect
-of the model and how they change over time. In this way the can observe the
-learning behaviour of the model, whetever or not it converges and how fast it
-does this. With this informations the best hyper parameters can be chosen. The
-operations used to compute these summarisations are then inserted into the
-TF.graph. Interesting values to examine are value of the loss function or the
-time taken to execute the graph, histogrambased summaries. The data for
-TensorBoard is written by TensorFlow in a log file, which then can be read by
-the TensorBoard program. The tensorboard starts a http server and shows the data
-in a web browser.
+\subsubsection{Visualisierung des Computational Graphs}
+TensorBoard kann dazu benutzt werden den Computational Graph eines Modell zu
+visualisieren und zu untersuchen.
+Da ein Modell aus tausenden von Knotenpunkten bestehen kann, gruppiert
+TensorBoard die Knoten sinnvoll und sorgt so fuer Uebersichtlichkeit.
 
 
-\subsubsection{Visualization of Training}
+\begin{figure}[h!]
+  \centering
+
+  \caption{ein Graph in TensorBoard}
+\end{figure}
+
+\subsubsection{Visualisierung des Trainings}
+Mithilfe von TensorBoard kann man das Trainings eines Modells beurteilen. Man
+bekommt Funktionsgraphen zur Entwicklung der Kostenfunktion.
+TensorBoard eignet sich sehr gut um die Kostenfunktionentwicklung verschiedener
+Modelle zu vergleichen. Somit kann man verschiedene Modell guet gegeinander
+ueberstellen. Desweitern ist es so Modelle mit verschiedene Hyperparameter zu
+erstellen, zu visualisieren und dann das beste auszuwahlen.
+
+\begin{figure}[h!]
+  \centering
+
+  \caption{Trainingsvisualisierungen in TensorBoard}
+\end{figure}
+
 
 \pagebreak
 \section{Keras}
@@ -4053,8 +4119,8 @@ werden. Wir interessieren uns an der Akkuratesse des Modells.
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
 \end{minted}
 
-\chapter{Diskussion}
-\section{Auswertung mit TensorBoard}
+\subsection{Leistung unseres Modells}
+Echt gut.
 
 %%% TeX-command-extra-options: "--shell-escape"
 %%% Local Variables:
