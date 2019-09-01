@@ -2292,6 +2292,13 @@ Gesetzmässigkeiten, welche anderst codiert werden könnten. Somit muss der
 Autoencoder diese Rausch-Features verwerfen. Somit hat er leichteres Spiel
 gegenüber sonstigen CNNs.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{cae.pdf}
+  \caption{Visualisierung eines Convolutional-Denoising-Autoencoder}
+\end{figure}
+
+
 Corrupted Input
 \subsection{Generierung der verrauschten Bilder}
 Um den Autoencoder zu trainieren, muss man die verrauschten Daten generieren.
@@ -3544,7 +3551,7 @@ for num_filters in POSSIBLE_NUMS_FILTER:
 # ganzer Modell-Code
 \end{minted}
 
-\subsection{TensorBoard Konfiguration}
+\subsubsection{TensorBoard Konfiguration}
 Damit wir den Lernprozess und die Leistungen unseres Modells analysieren
 können, werden wir nun TensorBoard konfigurieren.
 Um TensorBoard einzurichten, müssen wir zürst eine entsprechende TensorBoard
@@ -3563,8 +3570,13 @@ tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
 autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=Trü,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
 \end{minted}
 
-\subsection{Leistung unseres Modells}
-Echt gut.
+\subsubsection{Die optimalen Hyperparameter}
+Die TensorBoard-Analyse hat ergeben, dass folgende Hyperparameter sich am besten eignen:
+
+\subsection{Analyse unseres Modells}
+Echt gutes Modell.
+\subsubsection{Maximale Leistung}
+Wie hoch kann man den Noise-Factor stellen?
 
 %%% Local Variables:
 %%% TeX-command-extra-options: "--shell-escape"

@@ -17,17 +17,24 @@
 
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns,arrows.meta}
+\usetikzlibrary{external,3d,matrix,chains,positioning,calc,intersections,shapes,arrows,fadings,patterns,arrows.meta,quotes}
+\usepackage{tikz-3dplot}
 %\tikzexternalize
 \usepackage{tikzpagenodes}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
 
+\usepackage{graphicx}
+\graphicspath{{../res/}}
+
+\usepackage{pgf-umlsd}
+\usepackage{ifthen}
+
 \begin{document}
 \colorlet{pagecolor}{white}
 \colorlet{textcolor}{black}
 
-\input{tex/del_l-1.tex}
+\input{tex/cae.tex}
 
 \end{document}
 
