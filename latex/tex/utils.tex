@@ -44,65 +44,82 @@
 
 % --- TIKZ ---
 
-\NewEnviron{defbox}[1]
-{
-  \centering
 
-  \tikzstyle{mybox} = [draw=red, fill=blue!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-  \tikzstyle{fancytitle} = [fill=red, text=white]
+\NewEnviron{textbox}[3]
+{
+  \colorlet{color1}{#2}
+  \colorlet{color2}{#3}
+
+  \tikzstyle{thebox} = [draw=color1, fill=color2, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{thetitle} = [fill=color1, text=white,right, inner xsep=1em, outer sep=0pt, text height=2ex, text depth=.5ex]
   \begin{tikzpicture}
-    \node [mybox] (box) {%
-      \begin{minipage}{1.0\textwidth}
+    \node [thebox] (box) {%
+      \begin{minipage}{1.0\textwidth - 4em}
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=red!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
-    at ([shift={(-1em,0pt)}]box.north west) {#1};
-    \fill[red!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
-    \fill[red!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
-
+    \node [thetitle] (title) at ([shift={(-1em,0pt)}]box.north west) {#1};
+    \fill[color1!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[color1!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
   \end{tikzpicture}
 }
 
 
-\NewEnviron{infobox}[1]
+\NewEnviron{defbox}[1]
 {
-  \centering
+  \colorlet{color1}{red}
+  \colorlet{color2}{red!40!pagecolor}
 
-  \tikzstyle{mybox} = [draw=blue, fill=green!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-  \tikzstyle{fancytitle} = [fill=blue, text=white]
+  \tikzstyle{thebox} = [draw=color1, fill=color2, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{thetitle} = [fill=color1, text=white,right, inner xsep=1em, outer sep=0pt, text height=2ex, text depth=.5ex]
   \begin{tikzpicture}
-    \node [mybox] (box) {%
-      \begin{minipage}{1.0\textwidth}
+    \node [thebox] (box) {%
+      \begin{minipage}{1.0\textwidth - 4em}
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=blue!75, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
-    at ([shift={(-1em,0pt)}]box.north west) {#1};
-    \fill[blue!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
-    \fill[blue!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
+    \node [thetitle] (title) at ([shift={(-1em,0pt)}]box.north west) {#1};
+    \fill[color1!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[color1!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
+  \end{tikzpicture}
+}
 
+\NewEnviron{infobox}[1]
+{
+  \colorlet{color1}{blue}
+  \colorlet{color2}{blue!40!pagecolor}
+
+  \tikzstyle{thebox} = [draw=color1, fill=color2, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{thetitle} = [fill=color1, text=white,right, inner xsep=1em, outer sep=0pt, text height=2ex, text depth=.5ex]
+  \begin{tikzpicture}
+    \node [thebox] (box) {%
+      \begin{minipage}{1.0\textwidth - 4em}
+        \BODY
+      \end{minipage}
+    };
+    \node [thetitle] (title) at ([shift={(-1em,0pt)}]box.north west) {#1};
+    \fill[color1!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[color1!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
   \end{tikzpicture}
 }
 
 
 \NewEnviron{examplebox}[1]
 {
-  \centering
+  \colorlet{color1}{yellow}
+  \colorlet{color2}{yellow!40!pagecolor}
 
-  \tikzstyle{mybox} = [draw=green!80!black, fill=yellow!40!pagecolor, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-  \tikzstyle{fancytitle} = [fill=green=!80!black, text=white]
+  \tikzstyle{thebox} = [draw=color1, fill=color2, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{thetitle} = [fill=color1, text=black,right, inner xsep=1em, outer sep=0pt, text height=2ex, text depth=.5ex]
   \begin{tikzpicture}
-    \node [mybox] (box) {%
-      \begin{minipage}{1.0\textwidth}
+    \node [thebox] (box) {%
+      \begin{minipage}{1.0\textwidth - 4em}
         \BODY
       \end{minipage}
     };
-    \node [right,inner xsep=1em,fill=green!80!black, text=white,outer sep=0pt,text height=2ex,text depth=.5ex] (title)
-    at ([shift={(-1em,0pt)}]box.north west) {#1};
-    \fill[green!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
-    \fill[green!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
-
+    \node [thetitle] (title) at ([shift={(-1em,0pt)}]box.north west) {#1};
+    \fill[color1!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[color1!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
   \end{tikzpicture}
 }
 

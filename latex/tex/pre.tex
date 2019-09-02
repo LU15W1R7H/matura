@@ -6,6 +6,9 @@
 }
 
 \begin{titlepage}
+  \pagecolor{black}
+  \color{white}
+
   \centering
 
   {\scshape\LARGE Gymnasium Oberwil\par}
@@ -30,49 +33,52 @@
   {\large Abgegeben im September 2019\par}
 \end{titlepage}
 
+\pagecolor{pagecolor}
+\color{textcolor}
 
 \addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
 \tableofcontents
+
 \pagebreak
+
 
 \addcontentsline{toc}{chapter}{Vorwort}
 \chapter*{Vorwort}
 \section*{Persönliche Themenwahl}
 Ich beschäftige mich schon seit geraumer Zeit mit Maschinellem Lernen und bin
-sehr fasziniert von diesem Themengebiet. Ich hatte bereits 2018 die Möglichkeit
-ein Praktikum beim Department für Computational Physics ein eigenes Künstliches
-Neuronales Netz in C++ zu programmieren und dieses auf eine Physikalische
-Problemstellung anzuwenden. Dieses Praktikum hat mich dazu inspiriert die
-vorliegende Arbeit zu schreiben. Das Praktikum hat mich dazu gebracht mich
-tiefgehend mit dem Thema zu befassen, somit war mir die Funktionsweise schon
-ziemlich geläufig.
+sehr fasziniert von diesem Themengebiet. \\
+Im Jahre 2017 habe ich bereits erste eigene Applikationen programmiert, welche
+gebrauch von Machinellem Lernen machten. Damals habe ich einen Genetischen
+Algorithmus geschrieben. \\
+2018 habe ich die Möglichkeit erhalten ein Praktikum beim Departement für
+Computational Physics zu machen. Dort durfte ich ein Künstliches Neuronales Netz
+in C++ programmieren, welches ic hdann auf eine konkrete Physikalische
+Problemstellung angewendet habe. Das Prkatikum hat mich dazu verleitet, mich
+tiefgehdend mit Thema zu befassen und die grundlegende Funktionsweise von ML zu verstehen. \\
+Diese Erfahrungen haben mich dazu inspiriert die vorliegende Arbeit zu schreiben.
+Ich wollte mir durch diese Arbeit ein noch grundlegenderes mathematisches
+Verstaentniss fuer Maschinelles Lernen aneignen und auch fortgeschritternere
+Modelle betrachten. Desweiteren wusste ich von den begerten
+Deep-Learning-Frameworks TensorFlow und Keras, welche ich schon lange einmal
+lernen wollte zu verwenden. Somit versuchte ich mir eine passende Maturarbeit zu überlegen.
 \para{}
-Für diese Arbeit wollte ich ein etwas fortgeschritteneres Modell nehmen, als ein
-KNN. Ich entschied mich meine Arbeit um Convolutional Neural Networks und
-Autoencoder zu entwickeln. Desweiteren wollte ich anstatt eine eigene
-Implementation zu schreiben, die gut etablierten Deep-Learning-Frameworks
-TensorFlow und Keras verwenden. Dies da sie auch professionnel in der Industrie
-gebraucht werden.
+Ich entschied mich einen Convolutional-Autoencoder in TensorFlow zu
+programmieren und die nötige Theorie zu erklären. Ich wollte diesen Autoencoder
+als ein generatives Modell verwenden um Bilder von künstlichen (erfundenen)
+meschlichen Gesichtern zu generieren. \\
+Im Verlauf der Arbeit musste ich jedoch feststellen, dass meine Arbeit anfing
+den Rahmen einer Maturarbeit zu sprengen. Desweiteren habe ich simultan noch in
+den Sommerferien ein 6-wöchiges Praktikum bei Adobe in San Francisco gemacht.
+Auch dort habe ich ein Machine-Learning-Modell programmiert. Durch meine
+praktikumsbezogenen Recherchen kam ich zur Erkenntnis, das meine Vorhaben mit
+bezüglich der generativen Nutzung eines Autoencoder meine Resourcen übersteigen.
+Ich hätte nämlich nicht nur einen Autoencoder programmieren müssen, sondern
+sogar einen Variational Autoencoder. Dies wäre defintiv zu viel gewesen.
 \para{}
-Autoencoder fand ich deshalb so interessant, weil sie
-als Generative Modelle verwendet werden können. Das bedeutet, man kann mit ihnen
-neue Daten generieren. Mein Plan war es einen Autoencoder zu nutzen um Bilder
-von künstlichen meschlichen Gesichtern zu generieren.
-\para{}
-Im Verlaufe der Arbeit musste ich schon feststellen, dass meine Arbeit
-anfing den Rahmen einer Maturarbeit zu sprengen. Ich habe in den Sommerferien
-2019 noch ein 6-wöchiges Praktikum bei Adobe in San Francisco gemacht. Auch dort
-habe ich Maschinelles Lernen mit TensorFlow gebraucht. Durch meine
-praktikumsbedingten Recherchen musste ich feststellen, dass meine Vorhaben
-bezueglich der generativen Nutzung eines Autoencoders meine Resourcen
-übersteigt. Ich hätte noch die Funktionsweise eines Variatonal Autoencoder
-erklären müssen, was definitv zu viel gewesen wäre.
-\para{}
-Deshalb entschloss ich mich meine Leitfrage anzupassen. Ich beschränkte mich
-darauf einen Convolutional Denoising Autoencoder in TensorFlow zu entwickeln und
-dessen Funktionsweise zu erklären.
-\para{}
-Interessante Aspekte: viele Anwendungszwecke von ML, Mathematik interesse
+Somit beschloss ich meine Leitfrage anzupassen. Ich beschränkte mich darauf
+einen Convolutional \textit{Denoising} Autoencoder in TensorFLow und Keras zu
+entwickeln und die nötige Theorie zu erklären.
+
 
 \section*{Danksagung}
 Ich möchte mich herzlich bei meiner Mutter Doris Fellenstein bedanken für das
@@ -86,6 +92,7 @@ Er bitet unglaubliche Innovationspotential für die verschiedensten
 Industriezweige. Selbstfahrende Autos, Google Assistent, Snapchat Filter; als
 diese Technologien sind ein direktes Produkt vom Erfolg von Künstlicher
 Intelligenz.
+Interessante Aspekte: viele Anwendungszwecke von ML, Mathematik interesse
 ALLGEMEINES ZUM THEMENGEBIET MACHINELLES LERNEN
 
 INFORMATIONEN ZU DIESER ARBEIT: INHALT AUFBAU ETC
@@ -138,9 +145,6 @@ erhalten. Mithilfe von ihm können wir Bildrauschen von Bildern wegrechnen lasse
   $\mat{A}$ & eine Matrix \\
   $\mat{A} \in \set{R}^{m \times n}$ & eine Matrix mit $m$ Zeilen und $n$ Spalten \\
   $\ten{A}$ & ein Tensor \\
-  $\mathfrak{A,B,C,D,E,\cdots}$ & a \\
-  $\mathfrak{a,b,c,d,e,f,g,\cdots}$ & a \\
-
 
 \end{tabular}
 
