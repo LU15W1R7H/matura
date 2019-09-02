@@ -2816,11 +2816,11 @@ TF auch datenstromorient.
 
 
 \subsection{Tensorboard}
-TensorBoard ist eine externes Zusatzprogramm zu TensorFlow. Mit dessen Hilfe
-kann man Daten zum Modell-Graph und zu dem Trainingsprozess sammeln
-und diese dann Visualisieren.
-Die wohl praktischste Anwendung von TensorBoard liegt darin, dass man es zum
-Einstellen der Hyperparameter benutzen kann.
+TensorBoard ist ein externes Zusatzprogramm zu TensorFlow. Mit dessen Hilfe
+man Daten zum Modell-Graph und zu dem Trainingsprozess sammeln kann
+und diese dann Visualisieren kann. \\
+Es ist möglich eine Visualisierung des Modell-Graphs zu betrachten. Desweiteren
+kann man Funktionsgraphen der Kostenfunktionentwicklung betrachten.
 \para{}
 TensorBoard ist als WebServer geschrieben und kann über einen WebBrowser
 benutzt werden.
@@ -2829,34 +2829,31 @@ nötigen Daten während der Graphausführung gesammelt werden.
 
 \begin{figure}[h!]
   \centering
-
+  \includegraphics[width=1\textwidth]{tensorboard.png}
   \caption{das TensorBoard-Webinterface}
 \end{figure}
 
-\subsubsection{Visualisierung des Computational Graphs}
-TensorBoard kann dazu benutzt werden den Computational Graph eines Modell zu
-visualisieren und zu untersuchen.
-Da ein Modell aus tausenden von Knotenpunkten bestehen kann, gruppiert
-TensorBoard die Knoten sinnvoll und sorgt so für Übersichtlichkeit.
-
-
-\begin{figure}[h!]
-  \centering
-
-  \caption{ein Graph in TensorBoard}
-\end{figure}
-
-\subsubsection{Visualisierung des Trainings}
-Mithilfe von TensorBoard kann man das Trainings eines Modells beurteilen. Man
-bekommt Funktionsgraphen zur Entwicklung der Kostenfunktion.
-TensorBoard eignet sich sehr gut um die Kostenfunktionentwicklung verschiedener
-Modelle zu vergleichen. Somit kann man verschiedene Modell güt gegeinander
-überstellen. Desweitern ist es so Modelle mit verschiedene Hyperparameter zu
-erstellen, zu visualisieren und dann das beste auszuwahlen.
+\subsubsection{Hyperparameter einstellen}
+Der wichtigste Aspekt für uns von TensorBoard stellt die Tatsache dar, dass man
+die Trainingsfortschritte visualisieren kann. Man kann verschiedene
+Funktionsgraphen der Kostenfunktion betrachten. Es ist sogar möglich mehrere
+solcher Graphen miteinander zu vergleichen. Somit kann man ein Modell, bei
+welchem man mehrere Trainings mit jeweils verschiedene Hyperparameter gemacht
+hat, miteinander vergleichen. So ist es ziemlich einfach gute Hyperparameter
+herauszusuchen. Genau dieses Verfahren werden wir dann bei unserem eigenen
+Modell anwenden. \\
+Der Graph ist interaktiv, was bedeutet, dass man mit ihm interagieren kann und
+so detailiertere Angaben erhalten kann. Zum Beispiel kann man so auch die
+beanspruchte Trainingszeit des Modells erfassen, welche meistens von Interesse ist.
+\para{}
+In der untenstehenden Abbildung ist ein Graph von TensorBoard dargestellt,
+welcher die Entwicklung der Kostenfunktion für den Testdatensatz verschiedener
+Modell anzeigt. In diesem Beispiel hätte die orange Kurve ganz unten am besten
+Abgeschnitten. Dieses Modell hat die kleinsten Kosten verursacht.
 
 \begin{figure}[h!]
   \centering
-
+  \includegraphics[width=1\textwidth]{tensorboard_graph.png}
   \caption{Trainingsvisualisierungen in TensorBoard}
 \end{figure}
 
@@ -2962,66 +2959,33 @@ Zum beispeil tf.loss.mean\_squared\_error.
 \para{}
 Hier ein Beispiel:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-# Configure a model for mean-squared error regression.
-model.compile(optimizer=tf.train.AdamOptimizer(0.01),
-loss='mse',       # mean squared error
-metrics=['mä'])  # mean absolute error
-
-# Configure a model for categorical classification.
-model.compile(optimizer=tf.train.RMSPropOptimizer(0.01),
-loss=tf.keras.losses.categorical_crossentropy,
-metrics=[tf.keras.metrics.categorical_accuracy])
-
+model.compile(optimizer='sgd', loss='mean_squared_error')
 \end{minted}
+Das Kompilieren bildet dann aus den gegeben Schichten den eigentlichen
+Computational Graph.
 
 \subsubsection{Fit}
-Input NumPy data
-For small datasets, use in-memory NumPy arrays to train and evaluate a model. The model is "fit" to the training data using the fit method:
-
+Nach der Kompilierung kann das Modell trainiert werden. Dies wird durch einen
+einzigen Methodenaufruf gemacht. Mann muss nur die \code{fit} Methode aufrufen.
+Diese erwartet als Parameter ein NumPy-Array aller Inputdaten, ein NumPy-Array
+aller Labels, die Anzahl Epochen und die Minibatch-Grösse.
+Optional kann man noch einen Testdatensatz angeben, welcher benutzt wird um die
+Kosten zu bestimmen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import numpy as np
-
-def random_one_hot_labels(shape):
-n, n_class = shape
-classes = np.random.randint(0, n_class, n)
-labels = np.zeros((n, n_class))
-labels[np.arange(n), classes] = 1
-return labels
-
-data = np.random.random((1000, 32))
-labels = random_one_hot_labels((1000, 10))
-
-model.fit(data, labels, epochs=10, batch_size=32)
-
+  model.fit(<inputs>, <labels>, epochs=<>, batch_size=<>)
 \end{minted}
-
-tf.keras.Model.fit takes three important arguments:
-
-epochs: Training is structured into epochs. An epoch is one iteration over the entire input data (this is done in smaller batches).
-batch size: When passed NumPy data, the model slices the data into smaller batches and iterates over these batches during training. This integer specifies the size of each batch. Be aware that the last batch may be smaller if the total number of samples is not divisible by the batch size.
-validation data: When prototyping a model, you want to easily monitor its performance on some validation data. Passing this argument—a tuple of inputs and labels—allows the model to display the loss and metrics in inference mode for the passed data, at the end of each epoch.
 
 \subsubsection{Predict}
-The tf.keras.Model.evaluate and tf.keras.Model.predict methods can use NumPy data and a tf.data.Dataset.
+Sobald das Modell trainiert wurde, kann man es dazu verwenden, Vorhersagen für
+neue Daten zu machen. Dazu benutzt man die \textt{Predict}-Methode. Sie erwartet
+einfach ein Array mit Inputs. Als Rückgabewert hat sie die Vorhersagen zu den
+gegeben Inputs.
 
-To evaluate the inference-mode loss and metrics for the data provided:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-
-data = np.random.random((1000, 32))
-labels = random one hot labels((1000, 10))
-
-model.evaluate(data, labels, batch size=32)
-
-model.evaluate(dataset, steps=30)
-
-
-And to predict the output of the last layer in inference for the data provided, as a NumPy array:
-
 result = model.predict(data, batch size=32)
-print(result.shape)
 \end{minted}
 
-\subsection{Weiss nit}
+\subsection{Keras Beispielmodell}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
