@@ -100,49 +100,55 @@ Gloor für seine wertvollen fachlichen Inputs.
 
 \addcontentsline{toc}{chapter}{Einleitung}
 \chapter*{Einleitung}
-Maschinelles Lernen ist schon seit längerer Zeit ein sehr heisser Themenbereich.
-Er bitet unglaubliche Innovationspotential für die verschiedensten
-Industriezweige. Selbstfahrende Autos, Google Assistent, Snapchat Filter; als
-diese Technologien sind ein direktes Produkt vom Erfolg von Künstlicher
-Intelligenz.
-Interessante Aspekte: viele Anwendungszwecke von ML, Mathematik interesse
-ALLGEMEINES ZUM THEMENGEBIET MACHINELLES LERNEN
-
-INFORMATIONEN ZU DIESER ARBEIT: INHALT AUFBAU ETC
-Das Ziel dieser Arbeit ist es, dem Leser ein umfangreiches Grundverstaentniss
-ueber Maschinelles Lernen zu bieten. Dieses umfasst die theoretischen Grundlagen
-zu modellbasiertem Lernen, Kuenstlichen Neuronalen Netzen, Convolutional Neural
-Networks und Autoencodern. Mithilfe dieser erarbeiten Theorie wird dann noch die
-die praktische Umsetzung eines Modells mithilfe von TensorFlow und Keras
-erklaert. Bei TensorFlow und Keras handelt es sich um Frameworks fuer
-Maschinelles Lernen mit Python. Sie sind in der Industrie sehr verbreitet und
-wurden deshalb fuer diese Arbeit gewaehlt.
+Maschinelles Lernen erfreut sich aktuell grosser Beliebtheit und wird
+sehr erfolgreich in naturwissenschaftlichen, medizinischen oder auch
+wirtschaftlichen Themenbezügen angewendet. Es bietet ein enormes
+Innovationspotential und wird laufend weiterentwickelt.
+Obwohl das Schlagwort ``Künstliche Intelligenz'' in aller Munde ist, wissen die
+Wenigsten, wie sie tatsächlich funktioniert.
 \para{}
-Somit wurde die Leitfrage folgendermassen formuliert:
-\textbf{Wie funktioniert Maschinelles Lernen und wie entwickelt man mit diesem
-  Wissen ein konkretes Modell in TensorFlow?}
+Das Ziel dieser Arbeit ist daher, dem Leser ein umfassendes Grundverstäntniss
+über Maschinelles Lernen zu vermitteln, sowie auf dieser Basis ein konkretes
+Anwendungsbeispiel zu entwickeln. Zu diesem Zweck werden zunächst die
+theoretischen Grundlagen zum modellbasierten Lernen dargelegt. Darauf aufbauend
+ist es möglich, ein konkretes Modell, namentlich Künstliche Neuronale Netze
+(KNN), in
+ihrer Funktionsweise zu erläutern. In logischer Konsequenz wird anschliessend
+die spezifische Architektur eines KNNs präsentiert. Namentlich handelt sich um
+ein Convolutional Neural Networks (CNN), welches sich besonders gut für
+Bildverarbeitungszwecke eignet und daher eine grosse Verbreitung in der Praxis aufweist.
+Mit der anschliessenden Erläuterung der mathematischen Beschreibung eines Autoencoders sind
+die theoretischen Grundlagen für ein konkretes Anwendungsbeispiel geschaffen.
+\para{}
+Nachdem ein mathematisch fundiertes Verständnis für Maschinelles Lernen
+vermittelt wurde, sollen im Weiteren zwei Open-Source Implementationen vorgestellt
+werden. Dabei handelt es sich um TensorFlow, ein ursprünlich von Google
+entwickeltes Framework für Deep-Learning, und um Keras, eine übergeordnete
+Schnittstelle für eine vereinfachte TensorFlow-Verwendung. Neben ihrer grossen
+Verbreitung besitzen sie den Vorteil eines verkürzten Einstiegs in die
+ML-Programmierung.
+\para{}
+Für das konkrete Modell werden wir einen sogenannten
+Convolutional-Denoising-Autoencoder entwickeln. Mit dessen Hilfe kann das
+Bildrauschen von Bildern entfernt werden. Eine beispielshafte
+Anwendungsmöglichkeit bildet das korrekte Einlesen von standardisierten (verrauschten) Formularen.
+\para{}
+Die Leitfrage lässt sich demnach folgendermassen formulieren:
+\begin{center}
+  \textbf{Wie funktioniert Maschinelles Lernen und wie entwickelt man mit diesem
+    Wissen ein konkretes Modell in TensorFlow und Keras?}
+\end{center}
 \para{}
 
-Wir werden folgenden groben Aufbau verfolgen:
-
+Dabei lassen sich folgende Teilschritte unterscheiden:
 \begin{enumerate}
-  \item{Wir erarbeiten die allgemeine Theorie zum Maschinellen Lernen.}
-  \item{Wir betrachten Kuenstliche Neuronale Netze als Modelle fuer ML.}
-  \item{Wir betrachten Convolutional Neural Networks und Autoencoder als
-      konkrete KNN Architekturen.}
-  \item{Wir betrachten die ML-Frameworks TensorFlow und Keras bezueglich ihrer Funktionsweise.}
-  \item{Wir programmieren mithilfe der erarbeiten Theorie ein konkretes Modell
-      in TensorFlow / Keras.}
+  \item{Erarbeiten der allgemeine Theorie zum Maschinellen Lernen}
+  \item{Kuenstliche Neuronale Netze als Modelle fuer ML}
+  \item{Convolutional Neural Networks und Autoencoder als konkrete KNN-Architekturen}
+  \item{Funktionsweise der ML-Frameworks TensorFlow und Keras}
+  \item{Programmierung eines konkreten ML-Modells mit TensorFlow und Keras}
 \end{enumerate}
 
-Für das konkrete Modell werden wir einen sogenannte
-Convolutional-Denoising-Autoencoder entwickeln. In den Theorie Teilen werden wir
-lernen wie dieser Funktioniert. Der Grund fuer die Wahl dieses konkreten Modells,
-besteht darin, dass es sich dabei um ein Convolutional Neural Network handelt,
-welche in den letzten Jahren sehr populär geworden sind und deshalb interessant
-zu betrachten sind. Wir werden dieses Konzept eines Convolutional Neural Network
-mit einem Autoencoder koppeln, um einen Convolutional-Denoising-Autoencoder zu
-erhalten. Mithilfe von ihm können wir Bildrauschen von Bildern wegrechnen lassen.
 
 
 \addcontentsline{toc}{chapter}{Konvention und Notation}
