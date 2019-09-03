@@ -970,7 +970,7 @@ $\vec{z}^{l+1}$ angewandt werden.
 \para{}
 \cite{Nielsen}
 
-\subsection{Modellparameter initialisieren}\label{sec:parameter_initalisieren}
+\subsection{Initialisierung der Modellparameter}\label{sec:parameter_initalisieren}
 Ein Schritt der getan werden muss, bevor das Training beginnt, ist das
 Initialisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
 Dies ist ein sehr essentieller Schritt, denn diese Startwerte entscheiden
@@ -994,29 +994,39 @@ Zufallsvariabeln sondern man benutzt die Gauss'sche Normalverteilung
 $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion.
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
-
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{gauss.pdf}
   \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit ihren
     wichtigsten Eigenschaften}%
 \end{figure}
-
-Um die Neigungen $b_{t=0}$ zu initialisieren benutzt man eine Normalverteilung
-$\mathcal{N}(0,1)$ mit Erwartungswert $\mu = 0$ und Varianz $\sigma^2 =
-1$. Um die Gewichte $w_{t=0}$ zu initialisieren benutzt man ebenfalls eine
-Normalverteilung mit Erwartungswert $\mu = 0$, jedoch wird die Varianz
-$\sigma^2$ so skaliert, dass die Summe aller Zufallesvariabeln der Gewichte
-einer Schicht eine Varianz von $\sigma^2_{tot} = 1$ hat. ERKLÄREN
-\begin{align}
-  w_{t=0}^l &\sim \mathcal{N}(\mu = 0, \sigma^2 = \frac{1}{|l|}) \\
-  b_{t=0}^l &\sim \mathcal{N}(\mu = 0, \sigma^2 = 1)
-\end{align}
-
+In den Anfängen des Maschinellen Lernens verwendet man einfach die normierte
+Normalverteilung. Jedoch hatte dies zur Konsequenz, dass mit jeder Schicht die
+Outputs eine stetig grösser werdende Standardabweichung $\sigma$ aufweisten.
+Dadurch saturierten gewisse Neuronen eher.
+\para{}
+Als Konsequenz wurde eine neue Technik entwickelt: die Glorot-Initalisierung
+(auch Xavier-Initalisierung gennant). Man verwendet erneut eine Normalverteilung
+mit Erwartungswert $\mu = 0$. Die Standardabweichung $\sigma$ skaliert man nun, angepasst
+an die Grösse einer Schicht.
+Für eine Schicht $l$ berechnet man den Durchschnitt zwischen der Anzahl Inputs
+und der Anzahl Neuronen einer Schicht $r = \frac{|l-1| + |l|}{2}$. Der Kehrwert
+davon ist nun die Varianz.
+Somit initalisiert man die Gewichte folgendermassen.
+\begin{equation}
+  w_{t=0}^l &\sim \mathcal{N}\left(\mu = 0, \sigma^2 = \frac{2}{|l-1| + |l|}\right)
+\end{equation}
+Durch dieses Verfahren bleibt die Varianz der Outputneuronen gleich der Varianz
+Für die Neigungen $b$ verwendet man teilweise das selbe Verfahren. Zum Teil aber
+initalisiert man die Neigungen auch einfach mit 0. Keras macht dies zum Beispiel.
+\begin{equation}
+  b_{t=0}^l = 0
+\end{equation}
 
 \para{}
 \cite{wiki:normal_distribution}
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \section{Rückwärtspropagierung}\label{sec:backpropagation}
 Die wahre Herausforderung besteht beim Gradientenverfahren darin,
@@ -1883,7 +1893,7 @@ die Grösse des Bildes anpassen müssen.
 
 \cite{deeplearning.ai:cnn}
 
-\subsection{Die Convolutional-Schicht}
+\subsection{Convolutional-Schicht}
 Nun möchten wir alles zusammentragen, was wir über Filter gelernt
 haben, um nun die Convolutional-Schicht zu definieren.
 \para{}
@@ -1971,7 +1981,7 @@ der Bilder zu vermindern, und letzteres, um die Dimensionalität der Bilder zu
 erweitern. Somit ermöglichen diese Schichten eine kontrollierte Art (im Gegensatz zum
 Padding) die Dimensionalität einzustellen.
 
-\subsection{Die Pooling-Schicht}
+\subsection{Pooling-Schicht}
 Die Pooling-Schicht verringert die Dimensionalität durch das Zusammenfassen eines Feldes
 von Tensorelementen zu einem einzigen Tensorelement der nächsten Schicht.
 Dabei geht das Feld nur entlang der Länge und Breite des Bildes und
@@ -2033,7 +2043,7 @@ gleichen Formeln wie für die Filteroperationen:
 \cite{deeplearning.ai:cnn}
 \cite{Goodfellow-et-al-2016}
 
-\subsection{Die Upsampling-Schicht}
+\subsection{Upsampling-Schicht}
 Die Upsampling-Schicht bildet das Gegenstück zur Pooling-Schicht, da sie die
 Dimensionalität der Bilder erhöht. Auf den ersten Blick erscheint unklar,
 weshalb man die Dimensionalität erhöhen wollen könnte, da die eigentliche
@@ -2136,7 +2146,7 @@ Somit ist die sie deutlich kleiner als die anderen beiden Schichten und bildet
 so die Kapazitätseinschränkung.
 \para{}
 Wir haben nun einen Autoencoder nur mit einer Zwischenschicht betrachtet.
-Gängier ist es jedoch das Netz aus mehreren Zwischenschichten zu baün. Dabei
+Gängier ist es jedoch das Netz aus mehreren Zwischenschichten zu bauen. Dabei
 werden die Schichten zum Flaschenhals hin immer schmaler und die Schichten nach
 dem Flaschenhals wieder immer dicker. In Abbildung (\ref{fig:big_autoencoder})
 ist dies gut ersichtlich. Wir werden nun aber weiterhin mit dem Autoencoder,
@@ -2316,7 +2326,7 @@ verrauschten Daten besteht.
 
 % ------------------------------------
 
-\chapter{Implementation für Maschinelles Lernen}
+\chapter{Frameworks für Maschinelles Lernen}
 In diesem Kapitel werden wir zwei Frameworks betrachten, welche eine
 Implementation der ML-Algorithemen realisiert haben. Wir werden sie in ihrer
 groben Funktionsweise untersuchen. Diese Tools werden wir im
@@ -2856,7 +2866,7 @@ Abgeschnitten. Dieses Modell hat die kleinsten Kosten verursacht.
   \includegraphics[width=1\textwidth]{tensorboard_graph.png}
   \caption{Trainingsvisualisierungen in TensorBoard}
 \end{figure}
-
+\para{}
 
 \pagebreak
 \section{Keras}
@@ -2874,8 +2884,13 @@ Deep-Learning-Modeln welche dann sehr einfach trainiert werden können.
 Wir werden also anstatt TF direkt zu verwenden, über Keras das Modell definieren.
 Deshalb ist ein tiefgehendes Verstätniss von TF überflüssig.
 
-\subsection{Grundsätzliche Funktionsweise}
-In Keras kann man sehr einfach ein sogennantes \keyword{Seqüntial-Model} baün.
+\subsection{Funktionsweise}
+Keras baut auf TensorFlow auf. Es verwendet die verschiedenene Konzepte von TF,
+wie Variabeln, Operationen und Graphen und abstrahiert sie.
+Dadurch bietet Keras eine einfacheres Vorgehen dem Benutzer an.
+\para{}
+Die gängigste Vorgehensweise besteht darin, ein sogennantes
+\keyword{Sequential-Modell} zu bauen.
 Dies ist ein Modell, welches einfach ein linearer Stapel von verschiedenen
 Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
 verfügung, welche einfach aneinander gereiht werden können und so einen Graph bilden.
@@ -2887,8 +2902,18 @@ Oder man speichert die verschiedenene Schichten in Variabeln und gibt dann die
 Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariabel an.
 
 \subsection{Schichten}
+Bei der Initalizsierung der Modellparameter, benutzt Keras standardmässig
+anderes Vorgehen als in der Theorie in Sektion \ref{sec:parameter_initalisieren} erklärt. Es benutzt nämlich eine
+Glorot-Initalisierung mit einer Uniformen Verteilung. Wir werden spezifizieren
+bei der Schicht-Erstellung, dass wir die in der Theorie erklärte Variante
+verwenden wollen.
+
 Wir werden nun kurz die verschiedenen Schichttypen von Keras durchgehen, welche wir in
 der Theorie schon vorgestellt haben.
+\para{}
+
+
+\cite{net:keras_init}
 
 \paragraph{Input-Schicht}
 Die Input-Schicht ist ziemlich selbsterklärend. Sie ist einfach die
@@ -2904,7 +2929,7 @@ Wir beginnen mit dem Fully-Connected-Schicht. Diese wird in Keras als
 der vorherigen Schicht verbunden ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 tf.keras.layers.Dense(<Anzahl Neuronen>,
-activation=<Aktivierungsfunktion>)(<vorherige Schicht>)
+activation=<Aktivierungsfunktion>)(<vorherige Schicht>, kernel_initalizer='glorot_normal')
 \end{minted}
 
 \paragraph{Conv2D-Schicht}
@@ -3047,7 +3072,7 @@ zentriert sind.
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{mnist.png}
-  \caption{ein Auszug an MNIST-Bildern \cite{res:mnist_images}}
+  \caption{ein Auszug an MNIST-Bildern (invertierte Farben) \cite{res:mnist_images}}
 \end{figure}
 
 \para{}
@@ -3150,7 +3175,7 @@ werden, sollte alles funktionieren.
 Da wir nun verfiziert haben, dass alle Programmabhängigkeiten funktionieren,
 können wir mit dem eigentlichen Programm beginnen.
 \para{}
-Im den folgenden Auschnitten werden wir den Code immer weiter ausbaün und dabei
+Im den folgenden Auschnitten werden wir den Code immer weiter ausbauen und dabei
 erfahren, was er bewirkt. Wir beginnen unser eigentlichens Programm mit folgenden Importstatments.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 import numpy as np
@@ -3268,7 +3293,7 @@ zur Definition des Modells übergehen.
 \subsection{Modell definieren}
 Nun werden wir mithilfe von Keras das Modell unseres
 Convolutional-Denoising-Autoencoders definieren.
-Wir werden das Modell nach dem Vorbild der Theorie baün.
+Wir werden das Modell nach dem Vorbild der Theorie bauen.
 Wie wir wissen umfasst die Topologie eines CNNs die verschiedentsten
 Hyperparameter. Wir werden der einfachheitshalber vorerst unbegründete Werte
 dafür wählen. Später werden wir diese Hyperparameter noch einstellen.
@@ -3305,7 +3330,7 @@ Eine solche UpSampling-Schicht definiert man also so:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
 \end{minted}
-Wir definieren jetzt alle Schichten und verknüpfen sie miteinander. Wir baün
+Wir definieren jetzt alle Schichten und verknüpfen sie miteinander. Wir bauen
 einen Autoencoder, dessen Flaschenhals zwei Convolutional-Schichten tief ist.
 Somit besteht der Encoder aus zwei Convolutional-Layer-Pooling-Layer-Paar, dann
 folgt der Flaschenhals und aus zwei Convolutional-Layer-UpSampling-Layer-Paar.
@@ -3389,7 +3414,7 @@ _________________________________________________________________
 Wir sehen hier schön, dass wir circa 28'000 Hyperparameter haben, welche wir zu
 trainieren haben.
 
-\subsection{Training}
+\subsection{Modell trainieren}
 Nun müssen wir das definierte Modell trainieren.
 Mit Keras ist das mit einem Funktionsaufruf gemacht. Diese Funktion erwartet
 einige Argumente. Zürst müssen wir die Features und die Labels angeben. Die
@@ -3504,7 +3529,7 @@ POSSIBLE_BATCH_SIZES = [ 16, 32, 64, 128, 256]
 POSSIBLE_NUMS_FILTER = [ 16, 32, 64, 128, 256]
 POSSIBLE_ACITVATIONFUNCTIONS = [ 'sigmoid', 'relu' ]
 \end{minted}
-Nun werden wir den gesamten Code zum Baün des Graphens, zur Kompilierung und
+Nun werden wir den gesamten Code zum Bauen des Graphens, zur Kompilierung und
 zum Training des Modells in verschachtele For-Loops stecken, welche alle
 Kombinationen an Hyperparameter ausprobiert.
 
@@ -3535,12 +3560,42 @@ autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS
 \end{minted}
 
 \subsubsection{Die optimalen Hyperparameter}
-Die TensorBoard-Analyse hat ergeben, dass folgende Hyperparameter sich am besten eignen:
+Die TensorBoard-Analyse hat ergeben, dass folgende Modelle mit den angegeben
+Hyperparameter am besten eignen:
+\para{}
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ |c|c|c|c|c| }
+    \hline
+    Rang & Aktivierungsfunktion & Minibatch-Grösse & Anzahl Filter & Kosten \\
+    \hline
+    1 & ReLU & 16 & 265 & 0.01502 \\
+    2 & ReLU & 16 & 128 & 0.0153 \\
+    3 & ReLU & 16 & 64 & 0.01598 \\
+    4 & ReLU & 16 & 32 & 0.01694 \\
+    \hline
+  \end{tabular}
+  \caption{Rangliste der besten Modelle mit ihren Hyperparametern}
+\end{table}
+\para{}
+Diese Ergebnisse stimmen ziemlich gut mit den Erwartungen überein. Wie bereits
+in der Theorie behauptet, liefern die ReLU-Aktivierungsfunktion bessere Ergebnisse
+in CNNs als die Sigmoid-Aktivierungsfunktion. \\
+Auch das die kleinste Minibatch-Grösse die besten Resultate liefert ist
+naheliegend. Durch die kleine Grösse sind die Fehler bei der Approximation des
+wahren Gradienten kleiner als bei grossen Batches. \\
+Die Anzahl Filter haben den geringsten Einfluss, jedoch gibt es trotzdem
+minimale Vorteile von einer grösseren Anzahl davon.
 
-\subsection{Analyse unseres Modells}
+
+\subsection{Diskussion des Modells}
 Echt gutes Modell.
 \subsubsection{Maximale Leistung}
 Wie hoch kann man den Noise-Factor stellen?
+
+\subsubsection{Mögliche Verbesserungen}
+Kreuzentropie-Kostenfunktion
+andere Topologien ausprobieren
 
 %%% Local Variables:
 %%% TeX-command-extra-options: "--shell-escape"

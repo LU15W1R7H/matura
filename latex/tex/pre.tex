@@ -44,45 +44,59 @@
 \addcontentsline{toc}{chapter}{Vorwort}
 \chapter*{Vorwort}
 \section*{Persönliche Themenwahl}
-Ich beschäftige mich schon seit geraumer Zeit mit Maschinellem Lernen und bin
-sehr fasziniert von diesem Themengebiet. \\
-Im Jahre 2017 habe ich bereits erste eigene Applikationen programmiert, welche
-gebrauch von Machinellem Lernen machten. Damals habe ich einen Genetischen
-Algorithmus geschrieben. \\
-2018 habe ich die Möglichkeit erhalten ein Praktikum beim Departement für
-Computational Physics zu machen. Dort durfte ich ein Künstliches Neuronales Netz
-in C++ programmieren, welches ic hdann auf eine konkrete Physikalische
-Problemstellung angewendet habe. Das Prkatikum hat mich dazu verleitet, mich
-tiefgehdend mit Thema zu befassen und die grundlegende Funktionsweise von ML zu verstehen. \\
-Diese Erfahrungen haben mich dazu inspiriert die vorliegende Arbeit zu schreiben.
-Ich wollte mir durch diese Arbeit ein noch grundlegenderes mathematisches
-Verstaentniss fuer Maschinelles Lernen aneignen und auch fortgeschritternere
-Modelle betrachten. Desweiteren wusste ich von den begerten
-Deep-Learning-Frameworks TensorFlow und Keras, welche ich schon lange einmal
-lernen wollte zu verwenden. Somit versuchte ich mir eine passende Maturarbeit zu überlegen.
+Maschinelles Lernen (machine learning, kurz: ML) stösst seit einigen Jahren auf grosses
+Interesse sowohl in der Wissenschaft, als auch in der Wirtschaft. Dies
+motivierte mich, Näheres im Selbststudium darüber in Erfahrung bringen zu wollen.
+Bereits im Jahr 2017 begann ich, eine erste eigene Applikationen zu programmieren, welche
+einen Genetischen Algorithmus zur Anwendung brachte (Evolutionäre Entwicklung
+von lernfähigen Agenten). \\
+Diese erste Erfahrung öffnete mir die Tür für ein Praktikum am Departement für
+Computational Sciences der Universität Basel.
+Dort durfte ich ein Künstliches Neuronales Netz
+in C++ programmieren, welches ich dann auf eine konkrete physikalische
+Problemstellung anwenden konnte (Vorhersage zu den Energiezuständen von
+Wassermolekülen in verschiedenen atomaren Konfigurationen). \\
+Dieses erste Praktikum hatte mich dazu motiviert, mich tiefgehender mit der Thematik zu befassen
+und die grundlegende Funktionsweise von ML durchdringen zu wollen.
 \para{}
-Ich entschied mich einen Convolutional-Autoencoder in TensorFlow zu
-programmieren und die nötige Theorie zu erklären. Ich wollte diesen Autoencoder
-als ein generatives Modell verwenden um Bilder von künstlichen (erfundenen)
-meschlichen Gesichtern zu generieren. \\
-Im Verlauf der Arbeit musste ich jedoch feststellen, dass meine Arbeit anfing
-den Rahmen einer Maturarbeit zu sprengen. Desweiteren habe ich simultan noch in
-den Sommerferien ein 6-wöchiges Praktikum bei Adobe in San Francisco gemacht.
-Auch dort habe ich ein Machine-Learning-Modell programmiert. Durch meine
-praktikumsbezogenen Recherchen kam ich zur Erkenntnis, das meine Vorhaben mit
-bezüglich der generativen Nutzung eines Autoencoder meine Resourcen übersteigen.
+Daraufhin enstand die Idee, die vorliegende Arbeit zu verfassen.
+Auf diese Weise wollte ich mir ein ausgeprägteres mathematisches
+Verständnis für Maschinelles Lernen aneignen und auch fortgeschrittene
+Modelle betrachten. Zudem hatte ich auch schon von den verbeiteten
+Deep-Learning-Frameworks TensorFlow und Keras gehört, welche ich unbedingt
+erlernen wollte. Daher entschied ich mich, einen Convolutional-Autoencoder in
+TensorFlow zu programmieren und voher die nötige Theorie zu erklären.
+Zuerst verfolgte ich das Ziel, diesen Autoencoder als ein generatives Modell zu entwickeln,
+um Bilder von künstlich generierten meschlichen Gesichter zu erzeugen.
+\para{}
+Während meiner Sommerferien konnte ich ein 6-wöchiges Praktikum im
+Forschungszentrum von Adobe in San Francisco leisten, wo ich ebenfalls ein
+ML-Modell programmiert habe (Nutzung von Gesichtserkennung für Marketing-Zwecke).
+Durch meine praktikumsbezogenen Recherchen gelangte ich jedoch schnell zu der
+Erkenntnis, dass mein ursprünliches ambitiöses Vorhaben bezüglich der generativen Nutzung eines
+Autoencoder den vorgegebenen Rahmen einer Maturaarbeit deutlich sprengen würde.
 Ich hätte nämlich nicht nur einen Autoencoder programmieren müssen, sondern
-sogar einen Variational Autoencoder. Dies wäre defintiv zu viel gewesen.
+sogar einen Variational Autoencoder, welcher mathematisch noch deutlich
+anspruchsvoller gewesen wäre.
 \para{}
-Somit beschloss ich meine Leitfrage anzupassen. Ich beschränkte mich darauf
-einen Convolutional \textit{Denoising} Autoencoder in TensorFLow und Keras zu
-entwickeln und die nötige Theorie zu erklären.
-
+Aus diesem Grund beschloss ich, meine Leitfrage in Abstimmung mit meiner
+Betreuungsperson anzupassen. Diese beschränkt sich nunmehr auf die Entwicklung
+eines Convolutional \textit{Denoising} Autoencoder in TensorFlow und Keras sowie
+vorgängig die zugrundeliegende Theorie zu erklären.
 
 \section*{Danksagung}
-Ich möchte mich herzlich bei meiner Mutter Doris Fellenstein bedanken für das
-Korrekturlesen und bei meiner Betreuungslehrperson, Jonas Gloor.
-
+Mein herzlicher Dank gilt dem Department für Computational Sciences der
+Universität Basel, namentlich Herrn Professor Stefan Goedecker, weil er und sein Team
+mir die ersten wissenschaftliche Einblicke in das Thema Machine Learning
+eröffnet haben. \\
+Danken möchte ich ebenso der Firma Adobe, welche mir ermöglicht hat, im Rahmen
+eines 6-wöchigen Praktikums die kommerzielle Anwendung von Machine Learning
+vertieft kennenzulernen. \\
+Ebenso danke ich meinen Eltern, Frau Dr. Doris Fellenstein und Herrn Dr. Victor
+Wirth für ihre Begleitung und Unterstützung während des Erstellungsprozesses
+meiner Maturaarbeit. \\
+Last but not least gilt mein besonderer Dank meiner Betreuungsperson Herrn Dr. Jonas
+Gloor für seine wertvollen fachlichen Inputs.
 
 \addcontentsline{toc}{chapter}{Einleitung}
 \chapter*{Einleitung}
@@ -214,6 +228,7 @@ erhalten. Mithilfe von ihm können wir Bildrauschen von Bildern wegrechnen lasse
   $\mathcal{N}$ & die Gauss'sche Normalverteilung \\
   $\phi$ & die Gauss'sche Dichtefunktion \\
   $\mu$ & der Erwartungswert/Mittelwert \\
+  $\sigma$ & die Standardabweichung \\
   $\sigma^2$ & die Varianz
 \end{tabular}
 
