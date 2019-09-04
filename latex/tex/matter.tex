@@ -1014,7 +1014,7 @@ und der Anzahl Neuronen einer Schicht $r = \frac{|l-1| + |l|}{2}$. Der Kehrwert
 davon ist nun die Varianz.
 Somit initalisiert man die Gewichte folgendermassen.
 \begin{equation}
-  w_{t=0}^l &\sim \mathcal{N}\left(\mu = 0, \sigma^2 = \frac{2}{|l-1| + |l|}\right)
+  w_{t=0}^l \sim \mathcal{N}\left(\mu = 0, \sigma^2 = \frac{2}{|l-1| + |l|}\right)
 \end{equation}
 Durch dieses Verfahren bleibt die Varianz der Outputneuronen gleich der Varianz
 Für die Neigungen $b$ verwendet man teilweise das selbe Verfahren. Zum Teil aber
@@ -2415,7 +2415,7 @@ ist. Also ist die Zeit zum Auführen eines Programmes sehr kurz. Dafür ist der
 Programmcode deutlich anspruchsvoller und verboser. Da der Benutzer jedoch keine
 direkte Interaktion mit dem Master hat, bekommt er davon nichts mit.
 
-\subsection{Verwendung - der Client}
+\subsection{Verwendung --- der Client}
 Nun möchten wir betrachten wie man TensorFlow zu verwenden hat, damit wir
 später ein ML-Modell damit basteln können. Dafür werden gewisse
 Python-Kenntnisse vorausgesetzt. Wir betrachten nun also
@@ -2709,7 +2709,7 @@ print(loss_valü)
 \end{minted}
 
 
-\subsection{Implementation - der Master}
+\subsection{Implementation --- der Master}
 TF ist gerade deshalb sehr attraktiv für ML, da es sehr performant (schnell
 ausführbar) ist und dadurch die Trainingszeit für die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
@@ -3002,7 +3002,7 @@ Kosten zu bestimmen.
 
 \subsubsection{Predict}
 Sobald das Modell trainiert wurde, kann man es dazu verwenden, Vorhersagen für
-neue Daten zu machen. Dazu benutzt man die \textt{Predict}-Methode. Sie erwartet
+neue Daten zu machen. Dazu benutzt man die \code{Predict}-Methode. Sie erwartet
 einfach ein Array mit Inputs. Als Rückgabewert hat sie die Vorhersagen zu den
 gegeben Inputs.
 
@@ -3038,18 +3038,20 @@ model.fit(data, labels, batch_size=32, epochs=5)
 % ------------------------------------
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
-Nun sind wir in dem Kapitel angelangt, in welchem das ganze erarbeitete Wissen
-zusammenfliesst. Wir werden ein konkretes Machine-Learning-Modell in TensorFlow
-zusammen mit Keras programmieren. Dabei wird darauf eingegangen, welche Schritte die
+In diesem Kapitel soll nun das bisherige Wissen zusammengeführt werden, indem
+unter Anwendung von TensorFlow und Keras ein konkretes
+Anwendungsbeispiel programmiert wird.
+
+ Dabei wird darauf eingegangen, welche Schritte die
 Entwicklung eines solchen Modells umfasst und wie dabei am besten vorgegangen
 wird.
 
 \section{Das konkrete Modell}
-Als konkretes Modell werden wir einen Convolutional-Denoising-Autoencoder,
-dessen Theorie wir bereits behandelt haben, programmieren.
-Wir werden ihn verwenden um das Bildrauschen von Bildern wegzurechnen und sie so
-wieder erkenntlich zu machen. Als
-Bilder werden wir handgeschriebene Ziffern vom MNIST-Datenset verwenden.
+Wir werden nun einen Convolutional-Denoising-Autoencoder programmieren.
+Dieser kann verwendet werden um das Bildrauschen von Bildern zu eliminieren und
+sie so wieder erkenntlich zu machen.
+Zu Demonstrationszwecken werden handgeschriebene Ziffern vom MNIST-Datenset
+verwendet, weil die Funktionsfähigkeit auf dieser Basis sehr einfach erkennbar ist.
 
 \begin{figure}
   \caption{grobes Schema des Modells}
@@ -3060,14 +3062,14 @@ Bilder werden wir handgeschriebene Ziffern vom MNIST-Datenset verwenden.
 Als Trainingsdaten verwenden wir den \keyword{MNIST}-Datensatz. Er ist der wohl
 bekannteste Datensatz für beispielhaftes Maschinelles Lernen.
 Er besteht aus schwarz-weiss Bildern von handgeschrieben Ziffern.
-Züsätzlich gäbe es auch noch Labels zu den Ziffern, da das Modell meistens
-für Ziffernerkennung trainiert wird. Jedoch werden
-wir diese nicht brauchen, da wir einen Autoencoder trainieren.
+Zusätzlich würde es auch noch Labels zu den Ziffern geben, um das Modell beispielweise
+für Ziffernerkennung zu trainieren. Jedoch werden
+wir diese nicht brauchen, da wir einen Autoencoder entwickeln, dessen Labels den
+Inputs entsprechen.
 \para{}
 Der Datensatz besteht aus einem Trainingsdatensatz von 60'000 Sampels und einem Testdatensatz
-von 10'000 Sampels. Alle Ziffern wurden in söfern schon korrekt formatiert,
-dass ihre Grösse auf $28 \times 28$ Pixel normalisiert wurde und sie im Bild
-zentriert sind.
+von 10'000 Sampels. Alle Ziffern sind bereits korrekt formatiert, da ihre Grösse
+auf $28 \times 28$ Pixel normalisiert wurde und sie im Bild zentriert sind.
 
 \begin{figure}
   \centering
@@ -3079,58 +3081,58 @@ zentriert sind.
 \cite{net:mnist}
 
 \section{Setup}
-Zuallererst müssen wir unser Entwicklungsumfeld richtig konfigurieren. Das
-bedeutet, dass wir Python zusammen mit den verschiedenen Programmbibliotheken
-installieren müssen.
+Zunächst ist es wichtig, das Entwicklungsumfeld richtig zu konfigurieren. Das
+bedeutet konkret, dass Python zusammen mit den verschiedenen Programmbibliotheken
+installieren werden muss.
 \para{}
 Die Installationsschritte werden in dieser Arbeit für eine arch-basierte
-Linuxdistribution, welche den \keyword{Pacman}-Package-Manager verwendet, erklärt.
+Linuxdistribution erklärt, welche den \keyword{Pacman}-Package-Manager verwendet.
 \para{}
-Falls der Leser ein anderes Betriebssystem verwendet, ist auf die offizielle
+Falls der Leser ein anderes Betriebssystem verwendet möchte, ist auf die offizielle
 TensorFlow Website für die Installationsschritte zu verweisen:
 \para{}
 \qrcode[height=2cm]{https://www.tensorflow.org/install}
 
 \paragraph{Python3}
-Um TensorFlow und Keras verwenden zu können, muss Python3 installiert sein.
-
-Um Python3 mithilfe von Pacman zu installieren, muss man folgenden Befehl in
-der Kommandozeile ausführen.
+Damit TensorFlow und Keras verwenden werden können, bedingt dies, dass Python3
+installiert sein muss.
+Folgender Befehl muss in der Kommandozeile ausgeführt werden, um die
+Installation vorzunehmen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
 sudo pacman -S python
 \end{minted}
 
 \paragraph{TensorFlow}
-Um TensorFlow zu installieren muss man unter Arch Linux nur das entsprechende
-Package installieren.
-Falls man einen Computer mit einer Nvidia-Grafikkarte mit einer ``Compute
-Capability'' von mehr als 3.5 besitzten, kann man von der
-GPU-Hardwarebeschleunigung gebraucht machen. Somit installiert man die
-CUDA-Version von TF mithilfe folgenden Kommandos:
+Für die Installation von TensorFlow muss unter Arch Linux das entsprechende
+Package installieren werden.
+Falls der Leser über eine Nvidia-Grafikkarte verfügt, welche eine ``Compute
+Capability'' von mehr als 3.5 besitzt, kann er von der
+GPU-Hardwarebeschleunigung Gebrauch machen.
+Somit ist die CUDA-Version von TF mihtilfe des folgenden Kommandos zu installieren:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
 sudo pacman -S python-tensorflow-cuda
 \end{minted}
-Pacman installiert nun automatisch zürst alle Programmabhängigkeiten, wie
-CUDA, cuDNN und das TensorFlow-Backend, bevor es das eigentliche
-Python-TensorFlow installiert.
+Pacman installiert nun automatisch zuerst alle Programmabhängigkeiten, wie
+CUDA, cuDNN und das TensorFlow-Backend, bevor das eigentliche
+Python-TensorFlow installiert wird.
 \para{}
-Falls man nicht eine geeignte Grafikkarte besitzt, installiert man am besten
-einfach die normale TF-Version ohne Unterstützung für die GPU. Dies macht man
-mit diesem Kommando:
+Falls keine geeignete Grafikkarte vorliegt, ist es ebenso möglich die normale
+TF-Version ohne Unterstützung für die GPU zu verwenden.
+Dies kann durch nachstehendes Kommando vorgenommen werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
 sudo pacman -S python-tensorflow
 \end{minted}
 \para{}
-Nun ist TF hoffentlich erfolgreich installiert. Keras muss nicht explizit
-installiert werden, da es in TensorFlow implementiert ist.
+Dabei muss Keras nicht explizit installiert werden, da es in TensorFlow implementiert ist.
 
 \paragraph{Python-Module}
-Wir werden für unser Python-Programm von zwei Packages Gebrauch machen, welche
+
+Für das Python-Programm werden zwei Packages benötigt, welche
 nicht in der Standardbibliothek von Python enthalten sind:
 \begin{itemize}
-\item{NumPy: Ein Package welches verschiedene Mathematische Konzepte
+\item{NumPy: Ein Package, welches verschiedene mathematische Konzepte
     implementiert; vorallem Vektor- und Matrix-Arithmetik}
-\item{Matplotlib: Ein Package zum erstellen von Plots und Grafiken}
+\item{Matplotlib: Ein Package zum Erstellen von Plots und Grafiken}
 \end{itemize}
 
 Man installiert beide mit folgenden Kommandos.
@@ -3140,17 +3142,18 @@ sudo pacman -S python-matplotlib
 \end{minted}
 
 \section{Entwicklung}
-Nun beginnen wir mit der eigentlichen Programmierung.
+Nun beginnt die eigentliche Programmierung.
 
 \subsection{Testprogramm}
-Zuallerst werden wir ein kleines Testprogramm schreiben, welches überprüft, ob
+Zunächst wird ein kleines Testprogramm geschrieben, welches überprüft, ob
 alle Programmabhängigkeiten korrekt installiert wurden und verwendet werden können.
 
-In den ersten Zeilen des Pythonprogamms werden wir die Importstatments
-schreiben, um NumPy, Matplotlib und TensorFlow verfügbar zu machen.
-Keras muss nicht explizit geladen werden, da es in TensorFlow drin steckt.
-Dann schreiben wir die Versionnummern der verschiedenen Programmbibliotheken
-in die Konsole und können so überprüfen, ob alles richtig konfiguriert ist.
+In den ersten Zeilen des Pythonprogamms werden die Importstatments
+geschreiben, um NumPy, Matplotlib und TensorFlow verfügbar zu machen.
+Keras muss wie gesagt nicht explizit geladen werden, da es in TensorFlow
+enthalten ist.
+Nun können die Versionnummern der verschiedenen Programmbibliotheken
+in die Konsole geschrieben werden, um zu überprüfen, ob alles richtig konfiguriert ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 import numpy as np # NumPy wird impotiert
 import matplotlib as mpl # Matplotlib wird impotiert
@@ -3162,8 +3165,7 @@ print(mpl.__version__) # Schreibt die Matplotlib-Version nach stdout.
 print(tf.__version__) # Schreibt die TensorFlow-Version nach stdout.
 \end{minted}
 Falls der Output folgenden Charakter hat (die Versionsnummern müssen nicht
-die gleichen sein) und keine Fehlermeldungen angezeigt
-werden, sollte alles funktionieren.
+die gleichen sein) und keine Fehlermeldungen erfolgen, sollte alles funktionieren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 1.17.
 3.1.1
@@ -3172,11 +3174,13 @@ werden, sollte alles funktionieren.
 \para{}
 
 \subsection{Trainingsdaten}
-Da wir nun verfiziert haben, dass alle Programmabhängigkeiten funktionieren,
-können wir mit dem eigentlichen Programm beginnen.
+Nun haben wir mit dem kleinen Testprogramm verifiziert, dass alle
+Programmabhängigkeiten funktionieren. Auf dieser Basis können wir mit dem
+eigentlichen Programm beginnnen.
 \para{}
-Im den folgenden Auschnitten werden wir den Code immer weiter ausbauen und dabei
-erfahren, was er bewirkt. Wir beginnen unser eigentlichens Programm mit folgenden Importstatments.
+In den folgenden Auschnitten wird der Code laufend weiter ausgebaut.
+Auf diese Weise zeigt sich, was er bewirkt.
+Das eigentliche Programm beginnt mit folgenden Importstatements.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -3184,13 +3188,14 @@ import tensorflow as tf
 \end{minted}
 
 \subsubsection{Laden des MNIST-Datensatzes}
-Der nun erste Schritt besteht darin, die Datensätze zu laden. Wie bereits
-erwähnt, werden wir den MNIST-Datensatz verwendet. Da dieser dermassen bekannt
-ist, gibt es eine Funktion in Keras, welche automatisch die Daten herunterlädt
-und sie als NumPy Arrays zurückgibt. Die Funktion gibt die verschiedenen
-Komponenten der Daten in folgendem Format zurück \code{(x\_train, y\_train),
-  (x\_test, y\_test)}. Da wir nur an den Features \code{x} interessiert sind,
-verwerfen wir die Labels \code{y} einfach mithilfe der Wegwerf-Variabel \code{\_}.
+Der erste Schritt besteht darin, die Datensätze zu laden. Wie bereits
+erwähnt, wird dabei vom MNIST-Datensatz Gebrauch gemacht. Da dieser stark verbreitet ist,
+existiert eine Funktion in Keras, welche automatisch diese Daten herunterlädt
+und sie als NumPy-Arrays zur Verfügung stellt.
+Die Funktion gibt die verschiedenen Komponenten der Daten in folgendem Format zurück \code{(x\_train, y\_train),
+  (x\_test, y\_test)}.
+Da nur Interesse an den Features \code{x} besteht, werden die überflüssigen
+Labels \code{y} mithilfe der Wegwerf-Variabel \code{\_} verworfen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 (x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
 \end{minted}
@@ -3198,47 +3203,52 @@ Nun sind die Features fürs Training in der Variabel \code{x\_train} und die
 Features des Trainingsdatensatzes in der Variabel \code{x\_test} gespeichert.
 
 \subsubsection{Formatieren der Daten}
-Nun müssen wir die Daten transformieren, damit sie die richtige Form für
-unser Modell haben. Wie bereits erklärt, ist der MNIST-Datensatz ziemlich
-handsam, da die Bilder alle die gleichen Masse haben und die Ziffern zentriert sind.
+In einem nächsten Schritt müssen die Daten transformiert werden, damit sie die
+richtige Form für das Modell haben.
+Wie bereits erwähnt, ist der MNIST-Datensatz einfach verwendbar,
+da alle Bilder die gleichen Masse aufweisen und die Ziffern zentriert sind.
 \para{}
-Wir müssen die Grauwerte normalisieren, denn im Moment liegen sie noch
-im Intervall $[0, 255]$ und sind vom Typ Integer. Unser Modell kann am besten
-mit Kommazahlen im Intervall $[0,1]$ umgehen. Um diese Anpassung vorzunehmen
-brauchen wir folgenden Code.
+Jedoch sind die Grauwerte zu normalisieren, denn im Moment liegen sie noch im
+Intervall $[0, 255]$ und sind vom Typ Integer.
+Das Modell kann am besten mit Kommazahlen, welche im Intervall $[0,1]$ liegen,
+umgehen. Um diese Anpassung vorzunehmen, kann folgender Code angefügt werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 x_train = x_train.astype('float32') / 255.0 # Normalisierung
 x_test = x_test.astype('float32') / 255.0 # Normalisierung
 \end{minted}
-Desweiteren werden wir in unserem Modell ConvLayers verwenden. Diese in Keras
-implementieren ConvLayers erwarten die Inputs in der Form $(m, w, h, c)$, wobei
-$m$ die Anzahl Bilder ist, $w$ die Bildbreite, $h$ die Bildhöhe und $c$ die
-Anzahl Farbkomponenten. Wir formen nun mithilfe von NumPy das Array um.
+Desweiteren werden im Modell ConvLayers verwendet. Diese in Keras
+implementierten ConvLayers erwarten Inputs in der Form $(m, w, h, c)$, wobei
+$m$ die Anzahl der Bilder ist, $w$ die Bildbreite, $h$ die Bildhöhe und $c$ die
+Anzahl der Farbkomponenten. Die Bildbreite $w$ und -höhe $h$ von 28 Pixeln wird beibehalten, wie auch
+die Anzahl Farbkomponeten $c=1$. Die Anzahl Bilder $m$ lässt sich aus der Länge
+des Arrays entnehmen \code{len(x\_train)}. Mithilfe vom NumPy lässt sich das Array wie folgt umformen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 x_train = np.reshape(x_train, (len(x_train), 28, 28, 1)) # neue Form: (60'000, 28, 28, 1)
 x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neue Form: (10'000, 28, 28, 1)
 \end{minted}
-Nun besitzen die Daten die richtige Form für unser Modell.
+Die Daten besitzen nun die richtige Form für das Modell.
 
 \subsubsection{Generieren der verrauschten Bilder}
-Den Input in unser Modell stellen nicht die normalen MNIST-Bilder dar, sondern
-eine verrauschte Variante von ihnen. Diese werden wir nun generieren in dem wir
-ein additives Gauss'sches Rauschen anwenden.
+Den Input in das Modell stellen nicht die normalen MNIST-Bilder dar, sondern
+eine verrauschte Variante von diesen. Sie werden nun generiert, indem ein
+additives Gauss'sches Rauschen auf sie angewendet wird.
 \para{}
-Zürst erstellen wir eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$, welche die gleiche Form, wie die
-Bilder hat. Diese Matrix befüllen wir mit Zufallswerten. Für die
-Zufallswerte verwenden wir eine Gauss'sche Normalverteilung
+Zuerst wird eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$ erstellt, welche die gleiche Form, wie die
+Bilder besitzt. Diese Matrix wird mit Zufallswerten gefüllt. Für die
+Zufallswerte wird eine normalisierte Gauss'sche Normalverteilung
 $\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
-$\sigma^2 = 1$. Da wir für jedes Bild eine eigene Rauschmatrix brauchen,
-generieren wir eine Liste $(\mat{R}_1,\mat{R}_2,\ldots,\mat{R}_m$) der Länge $m$ an
-Rauschmatrizen. Dafür verwenden wir die NumPy Funktion
-\code{np.random.normal(loc=<$\mu$>, scale=<$\sigma^2$>,size=<Form>)}.
-Die somit erhaltenen Rauschmatrizen multiplizieren wir dann mit einer
-Rauschkonstane \code{noise\_factor} und addieren das Resulat auf die MNIST-Bilder.
-Nach dem Hinzufügen der Rauschwerte, müssen wir die Grauwerte noch auf das Intervall
-$[0,1]$ kappen. Dafür verwenden wir die NumPy-Funktion \code{np.clip(var, min, max)}. Diese Schritte wenden
-wir sowohl auf den Trainingsdatensatz, wie auch auf den Testdatensatz an. \\
-Somit lautet unser Code:
+$\sigma^2 = 1$ verwendet. Da jedes Bild eine eigene Rauschmatrix verlangt,
+wird zu diesem Zweck eine Liste $(\mat{R}_1,\mat{R}_2,\ldots,\mat{R}_m$) der Länge $m$ an
+Rauschmatrizen erzeugt. Dafür kann die NumPy Funktion
+\code{np.random.normal(loc=<$\mu$>, scale=<$\sigma^2$>,size=<Form>)} verwendet werden.
+Die somit erhaltenen Rauschmatrizen werden dann mit einer Rauschkonstante
+\code{noise\_factor} multiplziert und anschliessend wird das Produkt auf die
+MNIST-Bilder addiert.
+Nach dem Hinzufügen der Rauschwerte müssen die Grauwerte noch auf das Intervall
+$[0,1]$ zurecht gestutzt werden. Auch hierfür kann eine NumPy-Funktion
+\code{np.clip(var, min, max)} angewendet werden. Diese Schritte werden sowohl mit dem
+Trainingsdatensatz, als auch mit dem Testdatensatz vollzogen. \\
+Somit lautet der Code:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 noise_factor = 0.5
 
@@ -3253,87 +3263,94 @@ x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size
 x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
 \para{}
-Nun kann mithilfe der Matplotlib ein Blick auf die verrauschten Bilder
-neben den Originalbildern geworfen werden. Wir erstellen einfach einen Plot, welcher
-jeweils 10 Bilder beider Arrays rendert. \para{}
-Dazu erstellen wir zürst eine \code{pyplot.figure}. Innerhalb dieser haben wir
-jeweils 10 \code{subplots}, für die verrauschten MNIST-Bilder und die
-Originale. Wir zeigen dann die entsprechenden Bilder an, nachdem wir sie in Form
-gebracht haben. Wir müssen der Grafik auch angeweben, dass sie schwarz-weiss
-Bilder anzeigen muss. Zu guter letzt zeigen wir den Plot einfach an.
+Mithilfe der Matplotlib ein Blick auf die verrauschten Bilder im Vergleich zu
+den Originalbildern geworfen werden.
+Dafür wird ein Plot erstellt, welcher jeweils 10 Bilder beider Arrays zeigt.
+\para{}
+Für diesen Zweck wird eine \code{pyplot.figure} erstellt. Innerhalb dieser
+werden jeweils 10 \code{subplots} definiert, sowohl für die verrauschten Bilder, als
+auch für die Originale.
+Bevor die Bilder angezeigt werden können, müssen sie in die richtige Form für
+die Matplotlib gebracht werden. Sie sollen die Form $(28 \times 28)$ aufweisen.
+Ausserdem ist der Plot als schwarz-weiss Grafik zu spezifizieren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 n = 10 # jeweils 10 Bilder
 plt.figure()
 for i in range(n):
 # verrauschte Bilder
 ax = plt.subplot(2,n,i+1+n)
-plt.imshow(x_test[i].reshape(28,28))
+img_clean = x_test[i].reshape(28, 28)
 plt.gray()
+plt.imshow(img_clean)
 
 # Original Bilder
 ax = plt.subplot(2, n, i+1)
-plt.imshow(x_test_noisy[i].reshape(28,28))
+img_noisy = x_test_noisy[i].reshape(28, 28)
 plt.gray()
+plt.imshow(img_noisy)
 
 plt.show()
 \end{minted}
-Wir erhalten so folgende Grafik:
+
+Das Ergebniss ist in Abbildung (\ref{fig:noisy_clean_mnist}) sichtbar.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{noised_clipped.png}
   \caption{Verrauschte Bilder neben den Orignalbildern}
+  \label{fig:noisy_clean_mnist}
 \end{figure}
-
 \para{}
-Nun haben wir die Daten vollständigt im richtigem Format. Damit können wir nun
-zur Definition des Modells übergehen.
-
-
+Die Daten liegen nun vollständig und im richtigem Format vor.
+Somit kann zur Definition des Modells übergegangen werden.
 
 \subsection{Modell definieren}
-Nun werden wir mithilfe von Keras das Modell unseres
-Convolutional-Denoising-Autoencoders definieren.
-Wir werden das Modell nach dem Vorbild der Theorie bauen.
-Wie wir wissen umfasst die Topologie eines CNNs die verschiedentsten
-Hyperparameter. Wir werden der einfachheitshalber vorerst unbegründete Werte
-dafür wählen. Später werden wir diese Hyperparameter noch einstellen.
+Mithilfe von Keras kann das Modell eines Convolutional-Denoising-Autoencoder
+definiert werden. Dies geschieht nach dem Vorbild der Theorie.
+Wie bereits erklärt umfasst die Topologie eines CNNs die verschiedensten Hyperparameter.
+Für diese werden der Einfachheit halber zunächst unbegründeten Werte verwendet.
+Zu einem späteren Zeitpunkt werden die passenden Hyperparameter durch iteratives Ausprobieren ermittelt.
 \para{}
-Wir beginnen unser Modell mit der Inputsschicht $l=0$, welche einfach ein Tensor
-ist, welcher die Inputswerte hält. Die Schicht hat die gleiche Form, wie ein MNIST-Bild.
+Das Modell beginnt mit der Inputschicht $l=0$, welche ein Tensor ist, der
+die Inputwerte enthält. Die Schicht hat logischerweise die gleiche Form, wie ein MNIST-Bild.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 input_data = tf.keras.Input(shape=(28,28,1))
 \end{minted}
 \para{}
 Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht
 sowohl aus Convolutional-Schichten, wie auch aus Pooling-Schichten, welche sich abwechseln.
-Wir werden wie gesagt für alle Schichten vorerst die gleichen unbegründeten
-Hyperparameter wählen. Für die Convolutional-Schichten wählen wir
+Für alle Schichten werden vorerst unbegründeten Hyperparameter gewählt.
+Für die Convolutional-Schichten wird
 eine Filtergrösse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
-einen Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi = \varphi^{\text{ReLU}}$.
+ein Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
+\varphi^{\text{ReLU}}$ verwendet. \\
 Der Code für die Defition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3),
 strides=(1,1),padding='same', activation='relu')(input_data)
 \end{minted}
-Für die Pooling-Schichten wählen wir analog eine Feldgrösse $f = 2$, einen
-Stride $s = 2$, damit jedes Feld einmal zusammengefasst wird und Same-Padding.
+Für die Pooling-Schichten wird analog eine Feldgrösse $f = 2$, ein
+Stride $s = 2$ und Same-Padding gewählt. Dies hat zur Wirkung, dass jedes $(2
+\times 2)$-Feld zu einem einzigen Element zusammengefasst wird. \\
 Der Code für eine dieser Pooling-Schichten lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 pool_layer = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=(2,2),padding='same')(econv0)
 \end{minted}
-Nun folgt der Decoder.
-Für ihn verwenden wir die gleichen Convolutional-Schichten wie im Encoder. Anstatt
-Pooling-Schichten enthält er UpSampling-Schichten, bei welchen die
-Feldgrösse $f = 2$ gewählt wurde. Somit werden $4 \times 4$-Felder zu einem
-einzigen Pixel zusammengefasst. Als Interpolationsmethode benutzten wir den Nächsten-Nachbar-Algorithmus.
-Eine solche UpSampling-Schicht definiert man also so:
+Für den Decoder werden die gleichen Convolutional-Schichten wie für den Encoder
+verwendet. Anstelle von Pooling-Schichten verwendet er UpSampling-Schichten,
+welche jeweils nach einer Convolutional-Schicht folgen.
+Für die UpSampling-Schichten wurde eine Feldgrösse $f = 2$ gewählt. Somit wird
+ein einziger Pixel auf ein $2 \times 2$-Felder hochskaliert.
+Als Interpolationsmethode wird der Nächste-Nachbar-Algorithmus verwendet.
+Die beschriebene UpSampling-Schicht wird folgendermassen definiert:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
 \end{minted}
-Wir definieren jetzt alle Schichten und verknüpfen sie miteinander. Wir bauen
-einen Autoencoder, dessen Flaschenhals zwei Convolutional-Schichten tief ist.
-Somit besteht der Encoder aus zwei Convolutional-Layer-Pooling-Layer-Paar, dann
-folgt der Flaschenhals und aus zwei Convolutional-Layer-UpSampling-Layer-Paar.
+Nun folgt die Deklarierung aller Schichten und deren Verknüpfung. \\
+Das Modell weist einen Flaschenhals auf, welcher zwei Convolutional-Schichten
+tief ist. Das bedeutet, dass der Encoder aus zwei
+Convoutional-Layer-Pooling-Player-Paaren besteht. Danach folgt der einschichtige
+Flaschenhals. Im Anschluss liegt der Decoder, der zwei
+Convolutional-Layer-Upsampling-Layer-Paaren umfasst. \\
 Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 # Encoder
@@ -3361,27 +3378,29 @@ dconv2 = tf.keras.layers.Conv2D(
 filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
 decoded = dconv2
 \end{minted}
-Wie im Code zu sehen, haben wir für alle Convolutional-Layers die ReLU
-Aktivierungsfunktion gewählt, ausser der letzten Schicht. Für die letzte
-Schicht gebauren wir die Sigmoid-Aktivierungsfunktion. Dies hat den Grund, dass
-der Output unseres Netzwerk wieder ein Bild sein muss, dessen Grauwerte im
-Invervall $[0,1]$ liegen müssen. Eine Sigmoidfunktion hat genau dieses
-Intervall als Wertemenge.
+Auffallend im Code ist, dass der Decoder nicht etwa zwei Convolutional-Layers
+besitzt, sondern sogar drei. Die letzte Schicht wird benötigt, damit
+die Daten wieder die richtige Formatierung aufweisen. Das heisst einerseits,
+dass die Outputs wieder in der Ursprungsform $(28 \times 28)$ vorliegen müssen.
+Andererseits sollen die Outputs wieder im Intervall
+$[0,1]$ befinden. Mithilfe der Sigmoid-Funktion als Aktivierungsfunktion werden
+sie genau auf dieses Intervall abgebildet. \\
+Für alle anderen Schichten wurde die ReLU-Aktivierungsfunktion gewählt.
 \para{}
-Nun müssen wir noch das Kerasmodell mit diesem Graphen definieren. Also
-definieren wir das Modell einfach als der Abschnitt des Graphen zwischen der
-Input und dem Decoding.
-Und es danach mit kompilieren. Bei der Kompilierung wahlen wir als
-Optimierungsverfahren einfach das Stochastische-Gradientenverfahren SGD. Als
-Kostenfunktion wählen wir den Mittleren-Quadratischen-Fehler $C_{\text{MSE}}$.
+Nun muss noch eine Modellvariable deklariert werden, indem man die Input- \code{input\_data} und
+die Outputschicht \code{decoded} angibt.
+Danach ist das Modell zu kompilieren. Bei der Kompilierung kann das
+Optimierungsverfahren und die Kostenfunktion gewählt werden. Für die Optimierung
+wird das Stochastische-Gradientenverfahren SGD verwendet.
+Als Kostenfunktion wird der Mittlere-Quadratische-Fehler $C_{\text{MSE}}$ gewählt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 autoencoder = tf.keras.Model(input_data, decoded)
 autoencoder.compile(optimizer='sgd',loss='mean_squared_error') # SGD und MSE
 \end{minted}
 Mithilfe von \code{tf.keras.Model.summary} kann man eine Zusammenfassung des
-Modells in Textform erhalten. So kann man Informationen bezüglich der Form der
-verschiedenen Schichten extrahieren und überprüfen, ob alles stimmig ist.
-Für unser Modell erhalten wir folgende Summary:
+Modells in Textform erhalten. So können Informationen bezüglich der Form der
+verschiedenen Schichten abgerufen werden, um zu überprüfen, ob alles stimmig ist.
+Nachfolgende Summary gilt für unser Modell:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #
@@ -3411,43 +3430,42 @@ Trainable params: 28,353
 Non-trainable params: 0
 _________________________________________________________________
 \end{minted}
-Wir sehen hier schön, dass wir circa 28'000 Hyperparameter haben, welche wir zu
-trainieren haben.
+Es zeigt sich, dass das Modell gesamthaft circa 28'000 Parameter umfasst,
+welche zu trainieren sind.
 
 \subsection{Modell trainieren}
-Nun müssen wir das definierte Modell trainieren.
-Mit Keras ist das mit einem Funktionsaufruf gemacht. Diese Funktion erwartet
-einige Argumente. Zürst müssen wir die Features und die Labels angeben. Die
-Features haben wir in der Variabel \code{x\_train\_noisy} gespeichert. Die Labels
-sind die unverrauschten MNIST-Bilder, welche in Variable \code{x\_train} sind.
-Desweiteren spezifizieren wir die grösse eines Mini-Batches als 128. Wir werden
-für 100 Epochen trainieren und geben dies entsprechend an. Wichtig ist auch,
-dass wir die Trainingssampels vor dem Training mischen, damit keine Mustern
-innerhalb der Anordnung der Samples erlernt werden. Als letzen geben wir noch
-den Testdatensatz an.
+Nun gilt es das definierte Modell zu trainieren.
+Mit Keras kann dies mit einem einzigen Funktionsaufruf durchgeführt werden.
+Diese Funktion erwartet einige Argumente. Zuerst sind die Features und Labels anzugeben. Die
+Features wurden in der Variable \code{x\_train\_noisy} gespeichert. Die Labels
+sind die unverrauschten MNIST-Bilder, welche in der Variable \code{x\_train} enthalten sind.
+Desweiteren wird die Grösse eines Mini-Batches als 128 Sampels spezifiziert. Das
+Training erfolgt über 100 Epochen.
+Wichtig ist auch, dass die Trainingssampels vor dem Training druchmischt werden, damit keine Mustern
+innerhalb der Anordnung der Samples erlernt werden. Als letzen Argument wird noch
+der Testdatensatz angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 autoencoder.fit(
 x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=Trü,validation_data=(x_test_noisy,x_test))
 \end{minted}
-Wenn wir jetzt unser Modell trainieren, macht TensorFlow, falls die CUDA-Version
-von TF installiert ist und eine geeignete
-Nvidia-Grafikarte gefunden wurde, gebrauch von ihr. Somit sollte das Training
-innerhalb einiger Minuten beendet sein.
-Während des Trainings schreibt TensorFlow Informationen zum Fortschritt in die
-Kommandozeile. Diese Infos haben folgenden Charakter und informieren über die aktülle Epoche und die
+Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet und auch die
+CUDA-Version von TF installiert ist, erfolgt das Training mithilfe von GPU-Hardwarebeschleunigung.
+Dadurch sollte das Trainings innherhalb einiger Minuten abgeschlossen sein.
+Während des Trainings schreibt TensorFlow Informationen zum aktuellen Fortschritt in die
+Kommandozeile. Diese Infos weisen nachstehenden Charakter auf und geben Auskunft über die aktuelle Epoche und die
 Werte der Kostenfunktion. Die Kosten für den Trainingsdatensatz werden mit
 \code{loss} bezeichnet und die für den Testdatensatz mit \code{val\_loss}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 Epoch 99/100
 60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
 \end{minted}
-Das Modell hat nach dem dem Training einen \code{val\_los} von $0.1089$,
+Das Modell hat nach dem Training einen \code{val\_los} von $0.1089$,
 bezüglich dem Testdatensatz.
 \para{}
-Jetzt, da das Modell trainiert ist, speichern wir es und alle seine
-Modellparameter als Datei auf unserem Computer ab.
-So müssen wir es nicht jedesmal wieder neu trainieren, sondern können einfach
-die Modelldatei einlesen lassen.
+Jetzt, da das Modell trainiert wurde, ist es sinnvoll es auf dem Computer als
+Modelldatei abzuspeichern.
+So muss das es nicht jedesmal wieder neu trainieren werden, sondern kann über
+die Modelldatei eingelesen werden. Für dieses Einlesen, wird folgender Code benötigt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 autoencoder.save('denoiser.model')
 \end{minted}
@@ -3458,16 +3476,19 @@ autoencoder = tf.keras.models.load_model('denoiser.model')
 Mit der Summary-Funktion kann man überprüfen, ob das richtige Modell geladen wurde.
 
 \subsection{Modell ausführen}
-Nun kann das trainierte Modell verwenden werden, um nun eben Bilder zu
-entrauschen. Wir verwenden dafür Bilder aus dem Testdatensatz, da diese nicht
-zum Training verwenden wurden. Mit der Funktion \code{tf.Keras.Model.predict}
-erhält man alle Vorhersagen unseres Autoencoders zum ganzen Testdatensatz.
+Da das Modell nun trainiert ist, kann es nun für seinen eigentlichen Zweck
+genutzt werden.
+Dieser besteht darin, Bilder zu entrauschen. Dafür gelangen die
+Bilder aus dem Testdatensatz zur Anwendung. Damit ist garantiert, dass diese
+unbenutzten Daten vom Modell nicht auswenig gelernt werden konnten.
+Mit der Funktion \code{tf.keras.model.predict}
+erhält man alle Vorhersagen des Autoencoders zum gesamten Testdatensatz.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 denoised_imgs = autoencoder.predict(x_test)
 \end{minted}
-Mithilfe von der Matplotlib können wir nun diese Entrauschten Bilder mit den
-ursprünliche MNIST-Bildern Seite an Seite darstellen. So können wir von Auge
-beurteilen, wie gut die Ergebnisse sind.
+Mithilfe von der Matplotlib können die entrauschten Bilder mit den
+ursprünglichen MNIST-Bilder direkt verglichen werden.
+So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse tatsächlich sind.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 n = 10 # jeweils 10 Bilder
 plt.figure()
@@ -3489,38 +3510,42 @@ plt.gray()
 
 plt.show()
 \end{minted}
-In der Grafik, welche wir erhalten, sind zuoberst die verrauchsten Bilder, in
-der Mitte sind die Rekonstruktionen und ganz unten sind Original-Bilder.
+In der ersten Zeile der Grafik sind die verrauschten Bilder dargestellt.
+Darunter folgen die Rekonstuktionen als Ergebniss des Modells und ganz unten
+sind die Original-Bilder zu sehen.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{denoised_clipped.png}
   \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
 \end{figure}
-Die Resultate sind schon verblüffend gut.
+Wirkliche Unterschiede zwischen der zweiten und der dritten Zeile sind kaum zu erkennen.
 
 \subsection{Hyperparameter einstellen}
-Wir in der Theorie so oft erkärt, muss man um die Hyperparameter einzustellen
-einfach verschiedene Werte ausprobieren. Wir werden nun unser Programm zu
-modifizeren, dass er verschiedene Modell mit jeweils unterschiedlichen
-Hyperparametern trainiert. Beim Training erfassen wir mithilfe von TensorBoard
-Daten zum Lernfortschritt und den Kosten. Dann können wir mithilfe von
-TensorBoard eine Auswertung ausführen und so die besten Hyperparameter finden.
+Um die Hyperparameter einzustellen, müssen lediglich verschiedene Werte
+ausprobiert werden. Die Applikation wird insofern modifiziert, als dass
+verschiedene Modelle konstruiert werden, welche unterschiedliche
+Hyperparametern verwenden.
+Beim Training werden mithilfe von TensorBoard
+Daten zum Lernfortschritt und den Kosten der verschiedenen Modelle erfasst. Auf
+diese Weise kann eine Auswertung erstellt werden, um die besten Hyperparameter
+zu identifizieren.
 \para{}
-Zürst definieren wir einige Arrays, welche die Werte enthalten, welche wir als
-Hyperparameter testen wollen. Die Anzahl Epochen stellen auch einen
-Hyperparameter dar, diesen müssen wir aber nicht testen, da es auf der Hand
-liegt, dass mit mehr Epochen als Trainingszeit auch die Resulate besser werden.
-Wir werden für alle Hyperparameter 20 Epochen lang trainieren.
+Zuerst werden einige Arrays definiert, welche die zu testenden Hyperparameter beinhalten.
+Ein Hyperparameter ist die Anzahl Epochen. Diesen werden wir aber nicht testen,
+da es offensichtlich ist, dass mit einer längeren Trainingszeit auch die
+Resultate verbessern.
+Alle Modelle werden für 20 Epochen traniert.
 \para{}
-Wir werden folgende Mini-Batch-Grössenen ausprobieren: 16, 32, 64, 128, 265.
-Die Vermutung ist nahezulegen, dass mit kleineren Mini-Batches die
-Gradientapproximationen besser mit dem reellen Gradienten überstimmen. Somit
-werden die Resulate vermutlich besser werden. \\
-Desweiteren werden wir folgende Anzahl Filter austesten: 16, 32, 64, 128, 256.
-Wir werden auch die beiden Aktivierungsfunktionen Sigmoid und ReLU ausprobieren.
-Wir werden für jede Schicht die gleiche wählen, ausser für die letzte. Die
-letzte Schicht braucht immer eine Sigmoidfunktion, damit die Outputs das
-richtige Format haben.
+Folgende Mini-Batch-Grössen sollen ausprobiert werden: 16, 32, 64, 128, 265.
+Die Vermutung liegt nahe, dass mit kleineren Mini-Batches die
+Gradientapproximationen besser mit dem reellen Gradienten übereinstimmt und
+damit die Resultate besser werden. \\
+Als zu testende Anzahl von Filtern werden definiert: 16, 32, 64, 128, 256.
+Für die Aktivierungsfunktionen werden Sigmoid und ReLU ausprobiert und gelangen
+für das ganze Modell zur Anwendung.
+Jedoch wird die letzte Schicht immer die
+Sigmoid-Aktivierungsfunktion verwendet, damit die Outputs im Intervall $[0,1]$
+liegen.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 EPOCHS = 20
@@ -3541,16 +3566,15 @@ for num_filters in POSSIBLE_NUMS_FILTER:
 \end{minted}
 
 \subsubsection{TensorBoard Konfiguration}
-Damit wir den Lernprozess und die Leistungen unseres Modells analysieren
-können, werden wir nun TensorBoard konfigurieren.
-Um TensorBoard einzurichten, müssen wir zürst eine entsprechende TensorBoard
-Variable definieren. Hierbei müssen wir angeben wohin die TensorBoard-Daten
-geschrieben werden. Da wir die verschiedenten Hyperparameter-Einstellungen
-haben, welche wir alle vergleichen wollen, benennen wir die Dateien
-aussagekräftig. \\
-Desweiteren spezifizieren wir gewisse Optionen für die Datenerfassung.
+Um den Lernprozess und die Leistungen des Modells zu analysieren,
+wird nun nun TensorBoard konfiguriert.
+Um TensorBoard einzurichten, ist zuerst eine entsprechende
+Variable zu definieren. Hierbei ist anzugeben, wo die TensorBoard-Daten
+gespeichert werden sollen. Um Verwechslungen bei den Hyperparametereinstellungen
+zu vermeiden, sind die Dateien aussagekräftig zu benennen. \\
+Auch sind gewisse Optionen für die Trainings-Datenerfassung zu spezifizieren.
 Diese müssen bei der Komilierung des Modells unter \code{metrics} angegeben
-werden. Wir interessieren uns an der Akkuratesse des Modells.
+werden. Wichtig ist die Präzision des Modells. Die entsprechende Option wird \code{accuracy} genannt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
 autoencoder.compile(optimizer='sgd',loss=loss, metrics=['accuracy'])
 NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
