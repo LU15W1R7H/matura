@@ -187,112 +187,46 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 \end{itemize}
 
 
-\subsubsection{Cross-entropy}
-
-
-\subsection{Gradientenverfahren}\label{sec:gradientenverfahren}
-% Um ein Modell nun zu trainieren, muss man verstehen, dass es sich um ein Optimierungsproblem handelt.
-% Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
-% Funktionswerte der Kostenfunktion am kleinsten sind.
-% Deshalb muss diese Kostenfunktion $C$ minimiert werden.
-% Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
-% werden, sondern als Funktion der Modellparameter
-% $C(\param_1, \param_2, \ldots, \param_k)$, denn diese sollen angepasst werden,
-% um das Modell zu verbessern.
-% Für diese Optimiertung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
-% \footnote{Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
-% bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
-% wird.Dies ist hier nicht möglich, da die Funktion
-% $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
-% Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
-% verwendet.
-% }
-%   Allgemein können mithilfe des Gradientenverfahrens Funkionen $f(x_1, x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion) minimiert werden.
-%   Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen
-%   Komponenten den Input von $f(\vec{p}_0)$ darstellen, gewählt wird.
-%   Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
-%   Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimun ist.
-%   \para{}
-%   Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{p}_t$ addiert einen neuen Punkt $\vec{p}_{t+1}$ bildet,
-%   bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
-Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der stärksten Funktionswertabnahme zeigt.
-
-Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
+\subsection{Stochastisches Gradientenverfahren}\label{sec:gradientenverfahren}
+Um ein Modell nun zu trainieren, ist zu verstehen, dass es sich um ein Optimierungsproblem handelt.
+Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
+Funktionswerte der Kostenfunktion am kleinsten sind.
+Deshalb muss diese Kostenfunktion $C$ minimiert werden.
+Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
+werden, sondern als Funktion der Modellparameter
+$C(\param_1, \param_2, \ldots, \param_k)$. Denn diese Werte sollten angepasst
+werden, um das Modell zu verbessern.
 \para{}
-\begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
-  Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf
-  multidimensionale Funktionen $f(\vec{x}) = f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$.
-  Man leitet dabei nur nach einem Argument $x_i$ ab und betrachtet die restlichen Argumente als Konstanten.
-  Es gelten die gleichen Ableitungsregeln wie bei der nicht-partiellen Ableitung.
-  Die partielle Ableitung einer Funktion $f(x_1,\ldots,x_n)$ bezüglich einer
-  Variable $x_i$ in einem Punkt $\vec{a} = \trans{\begin{pmatrix} a_1 & \cdots & a_n \end{pmatrix}}$
-  ist analog zur normalen Ableitung folgendermassen definiert:
-  \begin{equation*}
-    \partderiv{f}{x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\ldots,a_i + h,\ldots,a_n)-f(a_1,\ldots,a_i,\ldots,a_n)}{h}
-  \end{equation*}
-  Geometrisch ist dies die Steigung der Tangente an die Funktion $f$ im Punkt
-  $\vec{a}$. Die Tangente liegt in der Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
-\end{defbox}
-\\
-\begin{defbox}{Gradient}
-  Der Gradient $\vecf{\nabla}$ ist ein Differentialoperator, den man auf eine
-  Funktion $f(\vec{x}) = f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$ anwendet kann, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
-  Um den Gradienten $\vecf{\nabla}f$ der Funktion $f$ zu bilden, fasst man alle partiellen Ableitungen der Funktion $f$, nach jedem
-  Argument $x_i$, in einem Vektor zusammen. Meistens bestimmt man den Gradienten
-  $\vecf{\nabla} f(\vec{p})$ in einem spezifischen Punkt $\vec{p} =
-  \trans{\begin{pmatrix} p_1 & \cdots & p_n \end{pmatrix}}$.
-  \begin{equation*}
-    \vecf{\nabla}_{\vec{x}} f(\vec{p}) = \ds\partderiv{f}{\vec{x}}(\vec{p}) =
-    \begin{pmatrix}
-      \ds\partderiv{f}{x_1}(\vec{p}) \\
-      \vdots \\
-      \ds\partderiv{f}{x_n}(\vec{p}) \\
-    \end{pmatrix}
-  \end{equation*}
-
-  Geometrisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in
-  einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten
-  Anstiegs von $f$ zeigt. Sein Betrag gibt die Stärke des Anstiegs an.
-  \para{}
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{grad.pdf}
-    % \caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
-  \end{center}
-\end{defbox}
+Für diese Optimierung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
+Das Gradientenverfahren ist eine gängige Methode um Funktionen $f: \set{R}^n \to
+\set{R}$ zu minimieren
+\footnote{Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
+  bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
+  wird.Dies ist hier nicht möglich, da die Funktion
+  $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
+  Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
+  verwendet.
+}.
+Falls dem Leser das Prinzip nicht vertraut ist, ist auf Anhang
+(\ref{sec:anhang_gd}) zu verweisen, in
+welchem die Funktionsweise des Gradientenverfahrens erklärt wird.
 \para{}
-Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
-$\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
-Also kann jetzt das iterative Annähern an das lokale Minimum folgendermassen beschrieben
-werden (wobei $\eta$ eine später erklärte Schrittgrösse darstellt).
-\\
-\begin{equation}\label{eq:gradientdescent}
-  \vec{p}_{t+1} = \vec{p}_t - \eta \cdot \vecf{\nabla} \mathit{f}(\vec{p}_t)
+Das Gradientenverfahren zur Minimierung verläuft iterativ nach folgender
+Gleichung ab:
+\begin{equation}\label{eq:gd_ml}
+  \vec{\param}_{t+1} = \vec{\param}_t - \eta \cdot \vecf{\nabla} \mathit{C}(\vec{\param}_t)
 \end{equation}
-\\
-
-\ifcp%
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.7\textwidth]{gd.pdf}
-  \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
-    Gradientenfeld hinab in das lokale Minimum.}
-\end{figure}
-\fi%
-
-Während des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
-beliebigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt
-$\vec{p}_0$ gewählt wurde.
-Wie man diesen Startpunkt zu wählen hat, wird in Sektion
-(\ref{sec:parameter_initalisieren}) erlaütert.
-Da dieser meist zufällig bestimmt wird, ist es eine Glückssache ein sehr niedriges Minimum zu finden.
+Wie die initialen Modellparameter $\vec{\param}_{t=0}$ zu wählen sind, wird in Sektion
+(\ref{sec:parameter_initalisieren}) erläutert.
 \para{}
-Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gradientdescent}) ist ein Hyperparameter.
-Sie ist ein positiver Proportionalitatsfaktor, welcher die Schrittgrösse des
-Gradientenabstiegs bestimmt. Sie muss je nach zu minimierender Funktion anders gewählt werden.
+Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gd_ml}) stellt
+einen Hyperparameter dar. Sie ist der positive Proportionalitätsfaktor, welcher die Schrittgrösse des
+Gradientenabstiegs bestimmt.
+Sie muss je nach zu minimierender Funktion anders gewählt werden.
 Dabei hilft nur Ausprobieren. Falls $\eta$ nicht gut gewählt wurde, gibt es Probleme beim Training:
 \begin{itemize}
-\item{Falls $\eta$ zu klein ist, verlaüft das Trainings unnötig langsam und braucht sehr lange.
-    Ausserdem kann es passieren, dass man bei einem hohen lokalen Minimum stecken bleibt.}
+\item{Falls $\eta$ zu klein ist, verläuft das Trainings unnötig langsam und braucht sehr lange.
+    Ausserdem kann es passieren, dass die Optimierung bei einem hohen lokalen Minimum stecken bleibt.}
 
 \item{Falls $\eta$ zu gross ist, kann es passiert, dass man über das lokale
     Minimum hinaus schiesst und somit nur darum herum springt.}
@@ -308,27 +242,23 @@ Dabei hilft nur Ausprobieren. Falls $\eta$ nicht gut gewählt wurde, gibt es Pro
   \caption{Visualisierung verschiedener Lernraten}
 \end{figure}
 
+Aus nachfolgend erläuterten Gründen wird für ML ein etwas angepasstes
+Verfahren des Gradientenabstiegs verwendet: das \keyword{Stochastische
+  Gradientenverfahren} (SGD).
+Das Problem des herkömmlichen Gradientenverfahrens besteht darin, dass der
+Gradient für den \textit{gesamten} Trainingsdatensatz berechnet werden muss.
+Dies ist zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
+Bei grossen Datensätzen würde es eine Ewigkeit dauern, bis das Modell nur annahernd gute Vorhersagen machen würde.
+Somit steht die Genauigkeit in keinem Verhältniss zur effizienz dieser Methode.
 \para{}
-\cite{Nielsen}
-
-\subsection{Stochastisches Gradientenverfahren}
-Wie oben erklärt, wird für das Trainieren eines Modells das Gradientenverfahren benutzt.
-Konkret wird die Kostenfunktion $C(\vec{y},\vec{\hat{y}}\ |\ \param_0,\ldots,\param_n)$
-($\param_i$ sind die Modellparameter, $\vec{y}$ die Vorhersagen und $\vec{\hat{y}}$
-die Labels) minimiert, indem die Parameter angepasst werden. Dadurch macht das Modell immer bessere Vorhersagen.
-Für nur eine Iteration des Gradientenverfahren, müsste man den Gradienten für den
-\textit{gesamten} Trainingsdatensatz berechnen.
-Dies wäre zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
-Bei grossen Datensätzen würde es eine Ewigkeit daürn, bis das Modell nur annahernd güte Vorhersagen machen würde.
-\para{}
-Aus diesem Grund verwendet man eine leicht abgeänderte Variante dieses
-Verfahren, nämlich das \keyword{Stochastische Gradientenverfahren} (engl.:
-Stochastic Gradient Descent) (SGD).
-Hierfür wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingssamples approximiert.
+Bei SGD wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingssamples approximiert.
 Dazu wird der Trainingsdatensatz in sogennante \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
-Als Konseqünz finden deutlich mehr Iterationen in \textit{einer}
-Durchkämmung der Trainingsdaten statt. Eine solche Durchkämmung bezeichnet man als
-\keyword{Epoche}. Oft wird mehrere Epochen lang trainiert.
+Als Konsequenz finden deutlich mehr Iterationen in einer einzigen
+Durchkämmung der Trainingsdaten statt. Eine solche vollständige Durchkämmung der Trainingsdaten
+bezeichnet man als eine \keyword{Epoche}.
+Oft wird mehrere Epochen lang trainiert, bis das Modell genügend gute Resultate
+liefert. Jedoch sollte auch nicht zu oft mit den gleichen Daten trainiert
+werden, da es sonst zu Overfitting kommt.
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genügend gut.
 Sowohl die Mini-Batch Grösse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \para{}
@@ -339,7 +269,7 @@ arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Grösse 
   \partderiv{\bar{C}}{\param_k} \approx \frac{1}{q}\sum_{i=1}^{q} \partderiv{C_i}{\param_k}
 \end{equation}
 \\
-Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (\ref{eq:gradientdescent}) folgendermassen durchgeführt.
+Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (\ref{eq:gd_ml}) folgendermassen durchgeführt.
 \\
 \begin{equation}\label{eq:sgd}
   \param_{k,t+1} = \param_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \partderiv{C_i}{\param_{k,t}}
@@ -429,7 +359,7 @@ beschäftigt, bezeichnet man als \keyword{Deep Learning}.
 \para{}
 Künstliche Neuronale Netze sind zum Teil biologisch von Nervensystemen vieler
 Lebewesen inspiriert.
-Sie sind aber lediglich eine Abstraktion ihrer Informationverarbeitung und versuchen nicht eine möglichst genaü biologische Abbildung darzustellen.
+Sie sind aber lediglich eine Abstraktion ihrer Informationverarbeitung und versuchen nicht eine möglichst genäu biologische Abbildung darzustellen.
 Es gibt nicht nur eine Art von Neuronalem Netz, sondern es exisitieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewählt werden
 müssen. Diese Arbeit wird vorallem von zwei solchen Architekturen gebrauch machen:
@@ -546,7 +476,7 @@ besonders gut als Baustein für KNNs eignet.
 \subsection{Künstliche Neuronen im Allgemeinen}
 Künstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
 haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
-$w_{i}$ assoziert. Zürst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
+$w_{i}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
 Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
 die sogenannte \keyword{Aktivierung} $a$ gebildet werden. Sie ist der Output des Neurons.
 Die Aktivierung $a = \varphi(z)$ ist das Resultat der
@@ -565,7 +495,7 @@ sich fast nur in ihrer Aktivierungsfunktion.
 \cite{wiki:kuenstliches_neuron}
 
 \subsection{Perzeptronen als Künstliche Neuronen}
-Zürst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
+Zuerst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
 Ein wesentlicher Unterschied des Perzeptron gegenüber sonstigen Künstlichen
 Neuronen, besteht darin, dass seine Inputs und Outputs nur binäre Werte
 annehmen können. Um dieses Verhalten des Perzeptrons zu erhalten,
@@ -790,7 +720,9 @@ WEITERFÜHREN
 
 \section{Vorwärtspropagierung}
 Jetzt, da der Aufbau eines KNNs erklärt wurde, sollte nun die mathematische Funktionsweise
-des Modells erklärt werden. Hierfür müssen einige Konventionen zur
+des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte, wird
+Vorwärtspropagierung genannt. Dieses Verfahren gibt dieser Art von KNN auch den
+Namen Feed-Forward-Neural-Network. Für das Verstäntnis müssen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden. Es sollten vorallem noch
 Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum
 Verstäntnis der Nomenklatur studiert werden.
@@ -856,7 +788,7 @@ Nun müssen die restlichen Aktivierungen der Neuronen bis und mit den Ouputneuro
 Aktivierungen der voherigen Schicht und zwar folgendermassen (ersichtlich in
 Gleichung (\ref{eq:gewichtete_summe_normal})).
 \para{}
-Zürst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetztigen Schicht
+Zuerst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetztigen Schicht
 $l$. Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l}$ mit den
 assozierten Gewichten $w_{j,k}^l$ gebildet. ZU KOMPLIZIERT RELEVANT?: Hierbei ist das Gewicht jenes, welches das
 $k$-te Neuron der $l$-ten Schicht mit dem $j$-ten Neuron der ($l+1$)-ten Schicht verbindet.
@@ -1029,313 +961,50 @@ initalisiert man die Neigungen auch einfach mit 0. Keras macht dies zum Beispiel
 \cite{book:hands-on}
 
 \section{Rückwärtspropagierung}\label{sec:backpropagation}
-Die wahre Herausforderung besteht beim Gradientenverfahren darin,
-die partiellen Ableitungen der Modellparameter,
-also die Komponenten des Gradienten, zu bestimmen.
+Ein KNN wird wie die meisten Modelle mithilfe des Stochastischen
+Gradientenverfahrens trainiert.
+Die wahre Herausforderung besteht dabei darin, die partiellen Ableitungen der
+Kostenfunktion bezüglich der Modellparameter zu berechnen.
 Anders gesagt müssen alle Terme
 $\ds\partderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ds\partderiv{C}{b_k^l}$
 berechnet werden.
 Das Verfahren zum bestimmen dieser Ausdrücke ist so spezifisch und aufwendig,
-dass das Gradientenverfahren für KNNs einen eigenen Namen hat: die
-\keyword{Rückwärtspropagierung} (engl.: backpropagation) (auch Fehlerrückführung).
-Im Verlauf der Arbeit ist es nicht notwendig die Rückwärtspropagierung bis ins
-Detail zu verstehen. Man sollte lediglich ein Gespür dafür entwickeln, wie
-der Gradient berechnet wird.
+dass das SGD für KNNs einen eigenen Namen besitzt: die
+\keyword{Rückwärtspropagierung} (engl.: backpropagation) (auch
+Fehlerrückführung). \\
+Es ist nicht essentiel für das Verstäntnis von ML, die Rückwärtspropagierung zu
+verstehen, jedoch kann so nachvollzogen werden, wie SGD in Praxis funktioniert.
 \para{}
-Da ein KNN, wie der Name es schon sagt, vernetzt ist, können die partiellen
-Ableitungen einer Schicht bezüglich seiner Nachbarsschichten berechnet werden.
-Dies ist auch der namensgebende Grundgedanke der Rückwärtsprogagierung: Man
-beginnt in der letzten Schicht die partiellen Ableitungen zu bestimmen und
-berechnet dann im Rückwärtsgang Schicht für Schicht die vorherigen
-partiellen Ableitungen, bis zur Inputsschicht. \\
-Dies macht man mithilfe der Kettenregel der Ableitungen.
-Es ist sinnvoll für das Aufstellen dieser Gleichungen das Netzwerk als
-\keyword{Computation Graph} zu betrachten.
+Grob umrissen besteht der Grundgedanke darin, die Werte der Kostenfunktion
+rückwärts durch das Modell zu schicken und dabei die partiellen Ableitungen
+mithilfe der Kettenregel zu bestimmen. Dadurch hat das Verfahren auch seinen Namen.
 \para{}
-\begin{infobox}{Computational Graph}
-  Ein Computation Graph ist eine Darstellung einer Verkettung von Funktionen als Netzwerk von Operationen.
-  Die Knoten im Graph stellen Variabeln dar und die Pfade, welche die Knoten
-  verbinden, sind die Funktionen, welche die Variabeln aufeinander abbilden. Die
-  Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Der Knoten
-  in welchem der Pfad endet, nimmt dann den Funktionswert an. Falls
-  mehrere Pfade in einem Knoten enden, werden die einzelnen Werte der Pfade
-  zusammenaddiert, um die Variable zu bilden. \\
-  KETTENREGEL NOCHMALS ERWÄHNEN ODER
-  IN ABBILDUNG (LEIBNIZ-SCHREIBWEISE!)
-\end{infobox}
-\para{}
-\begin{examplebox}{Beispiel: Computational Graph}
-  Untenstehend ist ein Beispiel eines Computation
-  Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
-  \para{}
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{compgraph.pdf}
-    % \caption{Computational Graph einer exemplarischen Verkettung von Funktionen}
-  \end{center}
-\end{examplebox}
-\para{}
-Der erste Schritt der Rückwärtsprogagierung besteht darin, dass man die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
-der Kostenfunktion $C$ bezüglich den gewichteten Summen $z_j^l$ aller Schichten
-berechnet. Daraus lässt sich dann später sehr einfach die partiellen Ableitungen
-bezüglich den Gewichten $\ds\partderiv{C}{w_{j,k}^l}$ und bezüglich den Neigung
-$\ds\partderiv{C}{b_j^l}$ berechnen.
-\para{}
-Zur Übersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ für
-jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezüglich der
-gewichteten Summe dieses Neurons ist (siehe Gl. (\ref{eq:BP0}). Ebenfalls definiert man analog einen Fehlervektor
-$\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
-zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es diesen für jedes Neuron jeder Schicht zu
-berechnen.
-\\
-\begin{gather}
-  \tag{BP0}\label{eq:BP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
-  \tag{BP0a}\label{eq:BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
-\end{gather}
-\\
-Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewandt wird, beginnt
-man auch dort mit der Berechnung des Fehlers $\vec{\delta}^L$.
-Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
-\para{}
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.7\textwidth]{del_l.pdf}
-  \caption{Computation Graph zur Berechnung von $\vec{\delta}^L$}
-  \label{fig:cg_L}
-\end{figure}
-\para{}
-Wir können dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
-in Abhängigkeit von den letzten Aktivierungen $a_j^L$ ist, welche wiederum in
-Abhängigkeit von der jeweiligen gewichteten Summe $z_j^L$ berechnet werden.
-Somit können wir mithilfe der Kettenregel die Beziehung (\ref{eq:BPh1}) aufstellen.
-\\
-\begin{equation}\label{eq:BPh1}
-  \delta_j^L = \partderiv{C}{z_j^L} = \partderiv{C}{a_j^L} \cdot \partderiv{a_j^L}{z_j^L}
-\end{equation}
-\\
-Da $a_j^L$ durch die Anwendung der Aktivierungsfunktion $\varphi$ auf $z_j^L$
-gebildet wird, ist $\ds\partderiv{a_j^L}{z_j^L}$ einfach die Ableitung der Aktivierungsfunktion
-$\varphi'(z_j^L)$. Somit erhalten wir die erste (\ref{eq:BP1}) von vier
-wichtigen Gleichungen für die Rückwärtsprogagierung.
-\\
-\begin{equation}\tag{BP1}\label{eq:BP1}
-  \delta_j^L = \partderiv{C}{a_j^L} \cdot \varphi'(z_j^L)
-\end{equation}
-\\
-Nun möchten wir diese Ausdrücke wieder in Matrixschreibweise realisieren,
-welche die ganze Schicht $L$ zusammenfasst. Dazu
-muss eine neue Operation eingeführt werden: das Hadamard-Produkt.
-
-\begin{defbox}{Hadamard-Produkt}
-  Das Hadamard-Produkt (auch elementweises Produkt) ist ein spezielles Produkt zweier gleichgrossen Matrizen
-  $\mat{A} \in \set{R}^{m \times n}$ und $\mat{B} \in \set{R}^{m \times n}$.
-  Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
-
-  \begin{minipage}{0.5\textwidth}
-    \begin{equation*}
-      \mat{A} \odot \mat{B} =
-      \begin{pmatrix}
-        \matelem{A}_{1,1} \matelem{B}_{1,1} & \cdots & \matelem{A}_{1,n} \matelem{B}_{1,n} \\[0.3em]
-        \vdots & \ddots & \vdots \\[0.3em]
-        \matelem{A}_{m,1} \matelem{B}_{m,1} & \cdots & \matelem{A}_{m,n} \matelem{B}_{m,n} \\[0.3em]
-      \end{pmatrix}
-      \in \set{R}^{m \times n}
-    \end{equation*}
-  \end{minipage}
-  %
-  \begin{minipage}{0.5\textwidth}
-    \begin{equation*}
-      \vec{v} \odot \vec{w} =
-      \begin{pmatrix}
-        v_1 w_1 \\
-        \vdots \\
-        v_n w_n
-      \end{pmatrix}
-    \end{equation*}
-
-  \end{minipage}
-\end{defbox}
-\para{}
-
-Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
-könne wir den Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0}) berechnen.
-
-\begin{equation}\label{eq:BPh0}
-  \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'[\vec{z}^L]
-\end{equation}
-
-Dabei ist der erste Operand des Hadamard-Produkts nichts anderes als
-der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezüglich dem Aktivierungsvektor
-$\vec{a}^L$ der letzten Schicht. Dieser Gradient kann einfach berechnet werden, indem man die
-vektorisierte Ableitungsfunktion für die gewählte Kostenfunktion bildet. Würde man die
-Mittlere quadratischen Abweichung $C = \frac{1}{2|L|}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion wählen, hätten wir
-$\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}}) \cdot \frac{1}{|L|}$.
-\para{}
-Daraus folgt die kompakte matrix-version (\ref{eq:BP1a}) der Gleichung
-(\ref{eq:BP1}), welche den Fehlervektor für die letzte Schicht berechnet.
-\\
-\begin{equation}\tag{BP1a}\label{eq:BP1a}
-  \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
-\end{equation}
-\\
-Nun müssen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
-der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetzigen Schicht
-erarbeiten. Dafür stellen wir zuallererst wieder einen Computation Graph auf
-(siehe Abb. (\ref{fig:cg_L-1})).
-\para{}
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.7\textwidth]{del_l-1.pdf}
-  \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
-  \label{fig:cg_L-1}
-\end{figure}
-\para{}
-Es gilt erneut die Gleichung (\ref{eq:BPh1}) für die Berechnung des Fehlers $\delta_j^{l-1}$.
-\\
-\begin{equation}\tag{\ref{eq:BPh1}}
-  \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
-\end{equation}
-\\
-Zürst einmal ist der erste Faktor wieder die Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
-Desweiteren beeinflusst beim Übergang der Schicht ($l-1$) zur Schicht $l$ eine Aktivierungen
-$a_j^{l-1}$ alle gewichteten Summen $z_k^l$. Mit der Kettenregel folgt daher,
-dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
-$\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^l}{a_j^{l-1}}$ sein muss. Wir
-erhalten Gleichung (\ref{eq:BPh2}).
-\\
-\begin{equation}\label{eq:BPh2}
-  \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \partderiv{C}{z_k^l} \cdot \partderiv{z_k^l}{a_j^{l-1}} \right)
-\end{equation}
-\\
-Um die gewichtete Summe $z_k^l$ zu bilden, multipliziert man einfach die
-Aktivierung $a_j^{l-1}$ der vorherigen Schicht mit den entsprechenden Gewichten $w_{k,j}^{l-1}$.
-Dadurch ist diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade das
-Gewicht selbst. Desweiteren ist $\ds\partderiv{C}{z_k^l}$ per Definition der
-Fehler $\delta_k^l$. Mit dieser Erkenntnis erhalten wir die zweite essentielle
-Gleichung (\ref{eq:BP2}) für die Rückwärtsprogagierung.
-\\
-\begin{equation}\tag{BP2}\label{eq:BP2}
-  \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \delta_k^l \cdot w_{k,j}^{l-1} \right)
-\end{equation}
-\\
-Auch diese Gleichung hätten wir gerne in der Matrixschreibweise. Wir beginnen
-mit der Erweiterung auf alle gewichteten Summen.
-\\
-\begin{equation*}
-  \vec{\delta}^{l-1} = \vecf{\varphi}'[\vec{z}^{l-1}] \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|}^{l-1} \cdot \delta_k^l \end{pmatrix}}
-\end{equation*}
-\\
-Der zweite Operant des Hadamard-Produkts ist hierbei gerade das Produkt der
-Matrixmultiplikation zwischen
-der transponierten Gewichtsmatrix $\trans{(\mat{W}^{l-1})}$ der Schicht ($l-1$)
-und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$ (ersichtlich in folgender Gleichung).
-
-\begin{gather*}
-  \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|} \cdot \delta_k^l \end{pmatrix}} =
-  \begin{pmatrix}
-    w_{1,1}^{l-1} & w_{2,1}^{l-1} & \cdots & w_{|l|,1}^{l-1} \\
-    w_{1,2}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{|l|,2}^{l-1} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    w_{1,|l-1|}^{l-1} & w_{2,|l-1|}^{l-1} & \cdots & w_{|l|,|l-1|}^{l-1}
-  \end{pmatrix}
-  \trans{\begin{pmatrix} \delta_1^l & \cdots & \delta_{|l|}^l \end{pmatrix}} \\=
-  \trans{\begin{pmatrix}
-      w_{1,1}^{l-1} & w_{1,2}^{l-1} & \cdots & w_{1,|l-1|}^{l-1} \\
-      w_{2,1}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{2,|l-1|}^{l-1} \\
-      \vdots & \vdots & \ddots & \vdots \\
-      w_{|l|,1}^{l-1} & w_{|l|,2}^{l-1} & \cdots & w_{|l|,|l-1|}^{l-1}
-    \end{pmatrix}}
-  \vec{\delta}^l = \trans{(\mat{W}^{l-1})} \vec{\delta}^l
-\end{gather*}
-
-Nun haben wir unsere rekursive Fehlerdefinition in Matrixschreibweise und somit
-die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2}).
-\\
-\begin{equation}\tag{BP2a}\label{eq:BP2a}
-  \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
-\end{equation}
-\\
-In einem letzten Schritt müssen wir jetzt noch Formeln herleiten, mit welchen
-man anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
-der Neigungen berechnen kann.
-\para{}
-Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
-Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel (\ref{eq:BPh3}).
-\\
-\begin{equation}\label{eq:BPh3}
-  \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{b_k^l}
-\end{equation}
-\\
-Der erste Term ist hierbei per Definition unser Fehler $\delta_j^{l+1}$ und der
-zweite Term lässt sich zu 1 evaluieren, da die Summe $z_k^{l+1}$ nur aus
-$b_k^l$ besteht und aus Summanden, welche für die partielle Ableitung als konstant gelten.
-Somit ist die Ableitung der Neigung gerade unser Fehler und wir erhalten die
-dritte (\ref{eq:BP3}) von vier essentielen Gleichungen.
-\\
-\begin{equation}\tag{BP3}\label{eq:BP3}
-  \partderiv{C}{b_j^l} = \delta_j^{l+1}
-\end{equation}
-\\
-Somit ist der Kostengradient bezüglich der Neigung gerade der Fehlervektor
-(siehe Gl. (\ref{eq:BP3a})).
-\\
-\begin{equation}\tag{BP3a}\label{eq:BP3a}
-  \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
-\end{equation}
-\\
-Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
-gewichteten Summe $z_j^{l+1}$. Dadurch gilt für die partiellen Ableitungen der
-Kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
-\\
-\begin{equation}\label{eq:BPh4}
-  \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
-\end{equation}
-\\
-Dabei lässt sich der erste Teil wieder zum Fehler $\delta_j^{l+1}$ evaluieren.
-Die zweite partielle Ableitung ist gerade die Aktivierung $a_k^l$, da sich die
-gewichtete Summe aus der Multiplikation des Gewichtes mit der Aktivierung ergibt.
-Somit erhalten wir die letzte der vier essentiellen Gleichungen (\ref{eq:BP4}).
-\begin{equation}\tag{BP4}\label{eq:BP4}
-  \partderiv{C}{w_{j,k}^l} = \delta_j^{l+1} \cdot a_k^l
-\end{equation}
-\\
-Die Matrix-version davon ist Gleichung (\ref{eq:BP4a}).
-\begin{equation}\tag{BP4a}\label{eq:BP4a}
-  \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
-\end{equation}
-
-ALLES ZUSAMMENFASSEN
-
-\cite{Nielsen}
-
+Für eine Ausführliche Herleitung der Ausdrücke ist auf Anhang
+(\ref{sec:anhang_bp}) zu verweisen, in welchem auf das Konzepte eines
+Computational Graphs eingegangen wird.
 
 \section{Universal Approximation Theorem}\label{sec:UAT}
 Es stellt sich nun die Frage, was ein Neuronales Netz alles erlernen kann.
-Diese Frage kann man mit dem \keyword{Universal Approximation Theorem} (UAT)
-beantworten. Dieser Satz ist ein mathematischer Beweis dafür, dass ein KNN
-grundsätzlich in der LAge ist jede kontinürliche Funktion beliebig gut zu
-approximieren. Er wurde von Kurt Hornik in 1991 beweisen.
-
-Etwas genaür besagt der UAT, dass ein Feed-Forward Netzwerk mit einer einzigen
-Zwischenschicht, welche eine endliche Anzahl Neuron hat, jede Kontinuierliche
+Diese Frage kann mithilfe des \keyword{Universal Approximation Theorem} (UAT)
+beantwortet werden. Dieser Satz ist ein mathematischer Beweis dafür, dass ein KNN
+grundsätzlich in der Lage ist jede kontinuierliche Funktion beliebig gut zu
+approximieren.
+\para{}
+Etwas genauer ausgedrückt, besagt der UAT, dass ein KNN mit einer einzigen
+Zwischenschicht, welche eine endliche Anzahl Neuron besitzt, jede kontinuierliche
 Funktion approximieren kann. Voraussetzung dafür ist, dass es sich bei den
-Neuronen und Nicht-lineare-Neuronen handelt. Dies ist nur eine theoretische
-Ausage über das Lernpotenzial eines KNNs. Jedoch macht es keinerlei Aussage
-darüber, ob ein KNN wirklich die Funtkionen erlernen wird.
-
-IAN GOODFELLOW:
-A feedworward network with a single layer is sufficient to represent any
-function, but the layer may be infeasibly large and may fail to lean and
-generalize correctly.
-
-Die meisten Klassen von Probleme können einfach als eine Funktion formuliert
-werden. Somit bedeutet der UAT, dass ein KNN theoretisch jedes Problem lösen kann.
-
-Der eigentliche Beweis ist mathematisch ziemlich anspruchsvoll, deshalb werden
-wir diesen nicht behandeln.
-
-AUF ANDERE RESOURCE (QR-CODE) VERWEISEN FÜR ILLUSTRIEVEN BEWEIS ODER ANHANG VON
-MIR GESCHRIEBEN
-
+Neuronen um Nicht-lineare-Neuronen handelt.
+Da die meisten Klassen von Problemen sich einfach als eine Funktion formulieren
+lassen, bedeutet dies, dass ein KNN theoretisch jedes Problem lösen kann!
+Beim UAT handelt es sich nur um eine theoretische
+Ausage über das Lernpotenzial eines KNNs. Jedoch macht er keinerlei Aussage
+darüber, ob ein KNN wirklich erfolgreich darin ist eine jeweilige Funktion zu erlernen.
+Beispielsweise könnte ein Hinderniss Overfitting darstellen.
+\para{}
+Der eigentliche Beweis ist mathematisch ziemlich anspruchsvoll. Deshalb wird
+dieser hier nicht behandelt.
+\para{}
+\cite{Nielsen}
 \cite{wiki:uat}
 
 
@@ -1348,7 +1017,7 @@ Spracherkennung.
 Vorallem aber für hochauflösende Bilder sind die KNNs, die wir söben
 kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
 Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
-Um diesen Umstand zu erklären, wird nun ein kleines Beispielmodell erlaütert:
+Um diesen Umstand zu erklären, wird nun ein kleines Beispielmodell erläutert:
 \para{}
 \label{sec:CNN_parameter_problem}
 Es soll ein KNN designed werden, welches eine Photographie klassifizieren
@@ -1388,7 +1057,7 @@ CNNs operieren an Bildern. Diese Bilder stellen den Input für die Modelle dar.
 Um mit diesen Bildern rechnen zu können, ist es sinnvoll, sie als sogenannte
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
 Pixeln zu betrachten. \\
-Um zu verstehen, was ein Tensor dritten Ranges ist, müssen wir zürst verstehen, was ein Tensor im Allgemeinen ist.
+Um zu verstehen, was ein Tensor dritten Ranges ist, müssen wir zuerst verstehen, was ein Tensor im Allgemeinen ist.
 
 \begin{defbox}{Tensor}
   Ein Tensor $\ten{T}$ ist eine Verallgemeinerung von Skalaren, Vektoren und Matrizen auf
@@ -1485,7 +1154,7 @@ In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
 
 
 \section{Convolutional-Schichten und Filter}
-Zürst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
+Zuerst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
 Gebrauch von sogenannten Filtern. Diese werden in diesem Abschnitt behandelt.
 
 \subsection{Filter in der Bildverarbeitung}
@@ -1555,7 +1224,7 @@ prozessierte Bild.
 
 
 \subsection{Filter in CNNs}
-Aus didaktischen Gründen betrachten wir nun zürst
+Aus didaktischen Gründen betrachten wir nun zuerst
 nur 2D-Filter, welche sich für graustufige Bilder
 $\mat{B} \in \set{R}^{h \times w}$ eignen. Somit ist der hierfür geeignete
 Filter einfach eine 2D-Matrix, bezeichnet mit $\mat{F} \in \set{R}^{f \times
@@ -1587,7 +1256,7 @@ stellt dabei einen Hyperparameter dar.
 \subsection{Filteroperation intutitiv}\label{sec:filteroperation_intuitiv}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verständlich zu machen, wird es erneut für ein
-graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erlaütert. Später werden auch noch farbige
+graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erläutert. Später werden auch noch farbige
 Bilder erklärt.
 \para{}
 Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf einen Bildtensor
@@ -1651,7 +1320,7 @@ verschobenen Filters kommt.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{conv.pdf}
-  \caption{Schema, wie ein Filter über ein Bild laüft}
+  \caption{Schema, wie ein Filter über ein Bild läuft}
 \end{figure}
 \fi
 
@@ -1673,7 +1342,7 @@ eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.
 \footnote{
   Streng genommen wird in CNNs nicht eine diskrete Faltung durchgeführt, sondern
   eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
-  Kreuzkorrelation die Faltungsmatrix nicht zürst horizontal, wie auch vertikal
+  Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
   gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Jedoch verwendet man
   begrifflich das Wort Faltung für beide Operationen. Im Verlauf dieser Arbeit
   wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
@@ -2255,7 +1924,7 @@ neues Datenformat
 Visualisierung von hochdimensionaler Daten in $\set{R}^2$ und $\set{R}^3$
 
 
-Im übernachsten Kapitel werden wir eine Anwendung noch genaür Betrachten die
+Im übernachsten Kapitel werden wir eine Anwendung noch genäur Betrachten die
 des Denoisers.
 
 \section{Convolutional-Autoencoder}
@@ -2425,7 +2094,7 @@ Konzepte behandeln.
 
 \subsubsection{Graph}
 TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
-(engl.: computation) durch einen gerichteten Graphen beschreibt. Zürst stellt
+(engl.: computation) durch einen gerichteten Graphen beschreibt. Zuerst stellt
 man diesen Graph auf und fügt ihn zusammen und erst nach der Definition führt man
 ihn aus.
 Es handelt es sich dabei um einen \keyword{Computation Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
@@ -2714,115 +2383,10 @@ TF ist gerade deshalb sehr attraktiv für ML, da es sehr performant (schnell
 ausführbar) ist und dadurch die Trainingszeit für die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
 \para{}
-In diesem Abschnitt werden wir grob die zugrundeliegende Implementation von
-TensorFlow betrachten - also den Master - und dabei herausfinden weshalb TF so performant ist.
-Ausserdem werden wir herausfinden, wie TF ableiten kann.
+Falls der Leser am Verstäntniss dieser Entscheide interessiert ist und an der
+eigentlichen Implemention von TF (dem Master) kann er im Anhang (\ref{sec:anhang_tf}) dazu
+Informationen finden.
 
-
-\subsubsection{Devices}
-Die Kernstücke des Masters sind die verschiedenen \keyword{Devices}, auf
-welchen die Berechnungen ausgeführt werden. Ein Device ist jedliche Art von
-Computerprozessor, auf welchem die Graphen ausführt werden können.
-Zu diesen Prozessoren gehören die CPU (Hauptprozessor) und die GPU (Grafikprozessor).
-\footnote{
-  Die normale TensorFlow Version ist nicht in der Lage die GPU zu verwenden. Um
-  sie verfügbar zu machen, muss man die GPU Version installieren. Wir werden im folgenden
-  von der GPU-Version ausgehen, da sie erhebliche Performance Vorteile gewährt.
-}
-\para{}
-
-Der Master analysiert die verfügbaren Devices und bewertete sie, bezüglich
-ihren Fähigkeiten. Anhand dieser Bewertung entscheidet der Master dann, auf
-welchem Device die Berechnugen ausgefürt werden.
-\footnote{
-  Es ist möglich die Graphen auf mehreren Devices gleichzeitig auszuführen und
-  so noch schneller die Modelle zu trainieren. Dies ist jedoch erst für sehr
-  aufwendige Projekte nötig und erfordert ein fortgeschritteneres Versteantniss.
-}
-Insofern GPUs zur Verfügung stehen, wählt TF grundsätzlich immer diese, da
-sie Tensoroperationen deutlich schneller als CPUs verarbeiten können.
-
-\subsubsection{Performance und Hardwarebeschleunigung}
-Nun möchten wir die Gründe für die beachtliche Performance von TF erschliessen.
-Der erste wichtiger Faktor dabei ist, dass der Master hauptsächlich in C++
-geschrieben ist. C++ ist eine Programmiersprache die sehr nahe am Maschinen-Code
-(engl.: low-level) ist. Somit ist der Code sehr hardwarenah und kann so
-schneller ausgeführt werden. Der Nachteil besteht dafür darin, dass die Programmiersprache
-ziemlich verbos ist. Das bedeutet man braucht viel Code um eine relativ einfach Idee
-auszudrücken. Deshalb wurde der Client von TF in Python geschrieben, was
-Abhilfe verschafft und so ein relativ einfaches und unverboses Entwickeln ermöglicht.
-\para{}
-Der andere wichtige Aspekt für die Performance ist wohl die sogennante
-\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
-gebrauch macht. \\
-Hardwarebeschleunigung bezeichnet eine Sammlung an Methoden,
-bei welchen man spezialisierte Hardware verwendet um rechenintensive Aufgaben
-schneller auszuführen. Die Architektur einer CPU ist zwar so ausgelegt, dass
-sie beliebige Aufgaben ausführen kann, jedoch meistens nicht besonders
-effizient. Deshalb wurden einerseits neue externe Hardwarebausteine, wie die
-GPU, welche sich für Grafikberechnungen besonders eignet, entwickelt.
-Andererseits wurde auch die interne Architektur der CPU so angepasst, dass sie
-auch spezielisierte Aufgaben besser meistert.
-\para{}
-Der Grossteil der Hardwarebeschleunigung wird durch die
-\keyword{Parallelisierung} von Operationen erreicht. Dabei spaltet man eine
-rechenintensive Aufgabe in viele Teilaufgaben auf, welche gleichzeitig in
-gleicher Weise ausgeführt werden. Voraussetzung dafür ist, dass die
-Teilaufgaben unabhängig voneinander bearbeitet werden können. \\
-Ein typisches Beispiel für die Paralleliserbarkeit von Operationen ist die
-Matrixmultiplikation. Möchte man eine Matrix $\mat{A} \in \set{R}^{n \times m}$ mit
-einer zweiten Matrix $\mat{B} \in \set{R}^{m \times p}$ multiplizieren, muss man
-praktisch $m$-mal die gleichen Schritte ausführen: Man berechnet jeweils das
-Skalarprodukt zwischen der $i$-ten Zeile von $\mat{A}$ und der $i$-ten Spalte
-von $\mat{B}$. Alle diese Skalarprodukte haben keinen Einfluss aufeindander und
-können so unabhänigig mit der gleichen Prozedur berchnet werden.
-\para{}
-Allgemein eignen sich Tensoroperatiön für Parallelisierung und damit zur Hardwarebeschleunigung.
-Nun ist auch ersichtlich, weshalb TensorFlow als Hauptdatentyp Tensoren
-verwendet; damit es gebrauch von der Hardwarebeschleunigung machen kann. wir fast alle Gleichungen des Maschinellen
-
-\paragraph{CPU-Beschleunigung}
-Die Hardwarebeschleunigung der CPU ist für TensorFlow nur von geringfügiger
-Relevanz, da TF sich vorallem für GPU-Hardwarebeschleunigung eignet
-und dafür optimiert ist. Ausserdem ist es praktisch unmöglich die gleiche
-Performance von TF mit einer CPU zu erreichen, welche mit einer GPU möglich ist.
-\para{}
-Hauptsächlich parallelisiert TensorFlow mithilfe von der \keyword{SIMD}. SIMD
-ist ein Prinzip zur Paralleliserung einer Insturktion für mehrere
-Dateneinheiten und steht deshalb für ``Single Instruction, Multiple Data''.
-SIMD umfasst einerseits die spezifische CPU-Architektur und den dazugehörigen
-Befehlssatz, um die Operatiön zu parallelisieren.
-Es gibt verschiedene
-
-SSE4.1, SSE4.2, AVX, AVX2, FMA
-
-\paragraph{GPU-Beschleunigung durch cuDNN und CUDA}
-cuDNN ist die NVIDIA CUDA Deep Neural Network library. Sie ist eine
-GPU-beschleunigte Bibliothek für deep neural networks. Sie stellt
-implementation für standard routines wie Vorwärts- und Rückwärtspropagierung bereit.
-
-\subparagraph{CUDA}
-\subparagraph{cuDNN}
-
-
-\subsubsection{Automatische Gradientenberechnung}
-Als wir die Rückwärtsprogagierung hergeleitet haben, haben wir mithilfe von
-Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
-bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
-TF auch datenstromorient.
-
-
-% Many optimization algorithms including common ml training algorithms like SGD
-% compute the gradient of a cost function with respect to a set of inputs.
-% Therefor TF has a built-in support for automatic gradient computation.
-% It extends the TF Graph using following procedure:
-% If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
-% $I$ it first finds the path in the computation graph from $I$ to $C$. It then
-% backtracks from $C$ to $I$ and for each operation on the backward path it adds a
-% node to the graph composing the partial gradients using the chain rule. The
-% newely added node computes the gradient function for the corresponding operation
-% in the forward path.
-% Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
 
 
 \subsection{Tensorboard}
@@ -3613,6 +3177,10 @@ minimale Vorteile von einer grösseren Anzahl davon.
 
 
 \subsection{Diskussion des Modells}
+2 bis drei Seiten.
+
+\subsubsection{Vergleich mit anderen Methoden zur Rauschentfernung}
+
 Echt gutes Modell.
 \subsubsection{Maximale Leistung}
 Wie hoch kann man den Noise-Factor stellen?
