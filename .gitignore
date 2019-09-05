@@ -11,3 +11,7 @@
 *.lot
 *.run.xml
 *.bbl
+logs
+_*
+auto
+*.el
