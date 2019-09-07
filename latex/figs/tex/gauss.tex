@@ -25,7 +25,7 @@
     xlabel={$x$},
     ylabel={$\phi(x)$},
     axis on top,
-    samples=50]
+    samples=500]
     \addplot[pattern=north west lines,pattern color=blue!25,domain=-3.5:3.5] {gauss(0,1)} \closedcycle;
     \addplot[domain=-3.5:3.5,red,thick] {gauss(0,1)};
     \node[fill=red,circle,minimum size=0.15cm,inner sep=0] (wp1) at (-1,{gausseval(0,1,-1)}) {};

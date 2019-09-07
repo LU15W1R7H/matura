@@ -2,6 +2,7 @@
 \addcontentsline{toc}{chapter}{Schlusswort}
 
 \section*{Ausblick}
+Eigentliches Potenzial von TensorFlow und Keras aufzeigen
 \subsection*{Variational Autoencoder}
 \subsection*{Generative Adversial Networks}
 \subsection*{Recurrent Neural Networks}
@@ -28,9 +29,9 @@ end{minted}
 \chapter{Gradientenverfahren}\label{sec:anhang_gd}
 Das Gradientenverfahrens ist ein numerisches Verfahren, um Funkionen $f(x_1,
 x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion)
-zu minimiert.
-Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$, dessen
-Komponenten den Input von $f(\vec{p}_0)$ darstellen, gewählt wird.
+zu minimieren.
+Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$ gewählt wird, dessen
+Komponenten den Input von $f(\vec{p}_0)$ darstellen.
 Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
 Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimun ist.
 \para{}
@@ -38,7 +39,8 @@ Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{
 bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der stärksten Funktionswertabnahme zeigt.
 
-Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür man wiederum partielle Ableitungen braucht.
+Hierzu wird man den sogennanten \keyword{Gradient} $\vecf{\nabla}$ verwendet,
+für den wiederum partielle Ableitungen benötigt werden.
 \para{}
 \begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
   Partielle Ableitungen sind eine Erweiterung der ``normalen'' Ableitungen auf
@@ -51,8 +53,9 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
   \begin{equation*}
     \partderiv{f}{x_i}(\vec{a}) \coloneqq \lim_{h \to 0} \frac{f(a_1,\ldots,a_i + h,\ldots,a_n)-f(a_1,\ldots,a_i,\ldots,a_n)}{h}
   \end{equation*}
-  Geometrisch ist dies die Steigung der Tangente an die Funktion $f$ im Punkt
-  $\vec{a}$. Die Tangente liegt in der Richtung der Achse des Parametern $x_i$, nach dem man ableitet.
+  Geometrisch ist dies die Steigung der Tangente an die Kurve der Funktion $f$ im Punkt
+  $\vec{a}$. Die Tangente liegt in der Richtung der Achse des Parameters $x_i$,
+  nach welchem abgeleitet wurde.
 \end{defbox}
 \\
 \begin{defbox}{Gradient}
@@ -72,7 +75,7 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
   \end{equation*}
 
   Geometrisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in
-  einem Punkt $\vec{p}$ dann der Vektor, welcher in die Richtung des steilsten
+  einem Punkt $\vec{p}$ der Vektor, welcher in die Richtung des steilsten
   Anstiegs von $f$ zeigt. Sein Betrag gibt die Stärke des Anstiegs an.
   \para{}
   \begin{center}
@@ -82,9 +85,9 @@ Hierzu braucht man den sogennanten \keyword{Gradient} $\vecf{\nabla}$, wofür ma
 \end{defbox}
 \para{}
 Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
-$\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Also sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ zeigen.
-Also kann jetzt das iterative Annähern an das lokale Minimum folgendermassen beschrieben
-werden.
+$\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Demnach sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ weisen.
+Jetzt kann das iterative Annähern an das lokale Minimum folgendermassen beschrieben
+werden:
 \\
 \begin{equation}\label{eq:gradientdescent}
   \vec{p}_{t+1} = \vec{p}_t - \alpha \cdot \vecf{\nabla} \mathit{f}(\vec{p}_t)
@@ -103,7 +106,7 @@ Schrittgrösse beim Abstieg bestimmt.
 \fi%
 
 Während des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
-beliebigen \textit{lokalen} Minimum, abhängig davon wie der Startpunkt
+beliebigen \textit{lokalen} Minimum, abhängig davon, wie der Startpunkt
 $\vec{p}_0$ gewählt wurde.
 
 \chapter{Herleitung der Rückwärtsprogagierung für KNNs}\label{sec:anhang_bp}
@@ -486,61 +489,67 @@ import matplotlib.pyplot as plt
 
 import tensorflow as tf
 
+# MNIST-Datensatz laden
 (x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
-x_train = x_train.astype('float32') / 255.
-x_test = np.reshape(x_test, (len(x_test),28,28,1))
-x_test = x_test.astype('float32') / 255.
-x_train = np.reshape(x_train, (len(x_train),28,28,1))
 
+# Daten formatieren
+x_train = x_train.astype('float32') / 255.0
+x_test = np.reshape(x_test, (len(x_test), 28, 28, 1))
+x_test = x_test.astype('float32') / 255.0
+x_train = np.reshape(x_train, (len(x_train), 28, 28, 1))
+
+# verrauschte Bilder (Input) generieren
 noise_factor = 0.5
 x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
 x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
-x_train_noisy = np.clip(x_train_noisy, 0., 1.)
-x_test_noisy = np.clip(x_test_noisy, 0., 1.)
+x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
+x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 
-
-input_data = tf.keras.Input(shape=(28,28,1))
-
-econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
-emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=None,padding='same')(econv0)
-econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
-emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=None,padding='same')(econv1)
-encoded =  emaxpool1 # bottleneck (shape=(7,7,32))
-dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
-dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
-dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
-dupsample1 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv1)
-dconv2 = tf.keras.layers.Conv2D(filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
+# Modell definieren
+input_data = tf.keras.Input(shape=(28, 28, 1))
+econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(input_data)
+emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv0)
+econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(emaxpool0)
+emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv1)
+encoded =  emaxpool1
+dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(encoded)
+dupsample0 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv0)
+dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(dupsample0)
+dupsample1 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv1)
+dconv2 = tf.keras.layers.Conv2D(filters=1, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='sigmoid', kernel_initializer='glorot_normal')(dupsample1)
 decoded = dconv2
 
+# Modell kompilieren
 autoencoder = tf.keras.Model(input_data, decoded)
-autoencoder.compile(optimizer='adadelta',loss='binary_crossentropy')
+autoencoder.compile(optimizer='sgd', loss='mean_squared_error')
 
 print(autoencoder.summary())
 
-
-autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,validation_data=(x_test_noisy,x_test),callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/denoiser',histogram_freq=0,write_graph=False)])
-
-decoded_imgs = autoencoder.predict(x_test)
-
+# Modell trainieren und als Modelldatei speichern
+autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True, validation_data=(x_test_noisy, x_test), callbacks=[tf.keras.callbacks.TensorBoard(log_dir='/tmp/denoiser', histogram_freq=0, write_graph=False)])
 autoencoder.save('denoiser.model')
 
-n = 10
-plt.figure(figsize=(20,4))
-for i in range(n):
-    # original
-    ax = plt.subplot(2, n, i+1)
-    plt.imshow(x_test_noisy[i].reshape(28,28))
-    plt.gray()
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
+# Vorhersagen zum Testdatensatz erstellen
+decoded_imgs = autoencoder.predict(x_test)
 
-    # reconstruction
-    ax = plt.subplot(2,n,i+1+n)
-    plt.imshow(decoded_imgs[i].reshape(28,28))
+# Matplotlib Abbildung anzeigen
+n = 10 # jeweils 10 Bilder
+plt.figure()
+for i in range(n):
+    # verrauschte Bilder
+    ax = plt.subplot(3, n, 1+i)
+    plt.imshow(x_test_noisy[i].reshape(28, 28))
     plt.gray()
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
+
+    # entrauschte Bilder
+    ax = plt.subplot(3, n, 1+n+i)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
+
+    # Original-Bilder
+    ax = plt.subplot(3, n, 1+2*n+i)
+    plt.imshow(x_test[i].reshape(28, 28))
+    plt.gray()
 plt.show()
 \end{minted}
 

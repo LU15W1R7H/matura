@@ -1,49 +1,59 @@
 \chapter{Maschinelles Lernen}
 
-Der Themenbereich des \keyword{Maschinellen Lernens} beschäftigt sich mit Algorithmen und mathematischen Modellen, welche von selber lernen, Probleme zu lösen.
-Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu lösen
-hat, stattdessen wird das Modell trainiert, optimiert sich von selbst und findet selber
-einen Weg, das Problem zu lösen.
-Die Grundidee dabei ist, dass man Daten erfasst, generiert oder misst, welche
-analysiert werden sollen. Innerhalb dieser Daten existieren gewisse
-Gesetzmässigkeiten und Muster. Diese Muster sollen vom Modell
-erkannt werden und verallgemeinert werden. Nach dem erfolgreichen Lernen,
-kann das Modell Vorhersagen für neuen Daten machen.
+Im ersten Kapitel sollen die Grundlagen für ein fundiertes Verständnis
+von Maschinellem Lernen gelegt werden. Neben den verschieden Arten sollen
+essentielle Begriffe und das Modellkonzept dargelegt werden. Darüber hinaus werden
+die Funktionsweise des Trainings sowie daraus entstehende Phänomene erläutert.
+Auf dieser Basis erfolgt in Kapitel zwei die Darlegung eines konkreten Modells.
 \para{}
-Man unterscheidet zwischen zwei Arten von Maschinellem Lernen.
+\keyword{Maschinellen Lernens} beschäftigt sich mit Algorithmen und
+mathematischen Modellen, welche die Fähigkeit entwickeln, Probleme selbständig
+zu lösen.
+Hierbei wird nicht explizit einprogrammiert, wie das Modell das Problem zu lösen
+hat, stattdessen wird das Modell trainiert, optimiert sich von selbst und findet selbst
+einen Weg, die Aufgabenstellung zu lösen.
+Die Grundidee dabei ist, dass Daten erfasst, generiert oder gemessen werden,
+welche anschliessend analysiert werden sollen.
+Innerhalb dieser Daten existieren gewisse
+Gesetzmässigkeiten und Muster. Diese Muster sollen vom Modell
+erkannt und verallgemeinert werden. Nach dem erfolgreichen Lernprozess,
+kann das Modell Vorhersagen für neue Daten machen.
+\para{}
+Üblicherweise werden zwei Arten von Maschinellem Lernen unterschieden:
 \begin{itemize}
 \item{
     \keyword{Überwachtes Lernen} (engl.:\ supervised learning) ist ein
     Lernverfahren, bei welchem die Daten aus zwei Teilen bestehen, aus Inputs und
     Outputs. Man bezeichnet dabei die Outputs als Labels. Die Aufgabe des Modells
-    ist es eine \keyword{Korrelation} zwischen den Inputs und den Labels zu
+    ist es, eine \keyword{Korrelation} zwischen den Inputs und den Labels zu
     erlernen und so ihre Beziehung zueinander zu verstehen.
-    Anhand der Informationen, welche in den Inputs enthalten
-    sind, sind dann die Labels vorherzusagen. Man gleicht dann die
-    vorhergesagten Labels des Modells mit den wahren Labels ab (man
-    ``überwacht'' sie) und bewertet so die Fähigkeiten des Modells..
+    Anhand der Informationen, welche die Inputs enthalten,
+    können die Labels vorhergesagt werden. Die vorhergesagten Labels des Modells
+    werden mit den wahren Labels abgeglichen. Mit dieser Überwachung werden die
+    Fähigkeiten des Modells bewertet.
     \para{}
-    Voraussetzung dafür ist, dass die Daten eben ``gelabelt'' sein müssen.
-    Man muss schon im Vorhinein Daten haben, bei welchen man die gewünschten
-    Labels hat. Natürlich muss auch die erwähnte Korrelation bestehen. Falls
-    kein Zusammenhang zwischen den Inputs und den Outputs besteht, kann das
-    Modell auch keine Vorhersagen machen und so auch nichts erlernen.
+    Voraussetzung dafür ist, dass die Daten ``gelabelt'' sein müssen.
+    Daher müssen bereits vorgägig Daten vorhanden sein, bei welchen die gewünschten
+    Labels aufweisen. Zudem muss auch die erwähnte Korrelation bestehen. Falls
+    kein Zusammenhang zwischen den Inputs und den Outputs existiert, kann das
+    Modell auch keine Vorhersagen machen und damit auch nichts erlernen.
   }
 \item{
     \keyword{Unüberwachtes Lernen} (engl.:\ unsupervised learning) ist ein anderes
-    Lernverfahren, bei welchem eben diese Labels nicht vorhanden sind. Dem
+    Lernverfahren, bei welchem diese Labels nicht vorhanden sind. Dem
     Modell stehen nur die Inputdaten zur Verfügung. Diese werden ebenfalls analysiert
-    und das Modell soll Muster heraus extrahieren, welche sich von sonstigem
-    zufälligen Rauschen unterscheiden.
+    und das Modell soll Muster heraus extrahieren, welche sich von einem
+    zufälligen Datenrauschen unterscheiden.
   }
 \end{itemize}
 
-Der Grossteil der Modelle des Maschinellen Lernens benutzen überwachtes
-Lernen, da es auch deutlich mehr Anwendungsmöglichkeiten besitzt. Es gibt nur wenige Arten von
-unüberwachtem Lernen, dazu gehören: Hauptkomponentenanalysen und Generative
-Adversial Networks. Aus diesem Grund, werden wir im folgenden uns grundsätzlich
-mit überwachtem Lernen beschäftigen.
+Der Grossteil der Modelle des Maschinellen Lernens zählt zum Überwachten
+Lernen, da es deutlich mehr Anwendungsmöglichkeiten bietet. Grundsätzlich steht
+daher das Überwachte Lernen im Vordergrund der Arbeit. Allerdings gehört der
+später erläuterte Autoencoder strenggenommen (aufgrund einer irreführender Zuordnung) zum Unüberwachten Lernen, auch wenn
+es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion \ref{sec:autoencoder}).
 \para{}
+GUTE QUELLE (Pionier)
 \cite{wiki:supervised_learning}
 \cite{wiki:unsupervised_learning}
 
@@ -51,39 +61,40 @@ mit überwachtem Lernen beschäftigen.
 
 \subsection{Daten}
 
-Um ein Modell zu trainieren, braucht man Daten. Diese Daten bestehen immer aus
+Um ein Modell zu trainieren, werden Daten benötigt. Diese Daten bestehen immer aus
 \keyword{Inputs} und \keyword{Outputs}. Man unterscheidet hierbei zwischen zwei Arten
 von Outputs. Die \keyword{Labels} sind die erwarteten Outputs, welche die
-gewünschten Zielwerte sind. Die \keyword{Vorhersagen} sind die Outputs, welche
-das Modell produziert und hoffentlich möglichst genau mit den Labels
+gewünschten Zielwerte sind. Die \keyword{Vorhersagen} sind die Outputs, die vom
+Modell produziert werden und welche hoffentlich möglichst genau mit den Labels
 übereinstimmen.
 \para{}
-Diese Daten für das Training kommen in der Form eines \keyword{Trainingsdatensatzes} $\set{X}$.
-Dabei handelt es sich um eine Menge von \keyword{Samples},
+Diese Daten für das Training kommen in der Form eines
+\keyword{Trainingsdatensatzes} $\set{X}$ dar.
+Es handelt sich um eine Menge von \keyword{Samples},
 welche jeweils aus Inputs und Labels bestehen.
 Die Inputs werden in einem Vektor
 \[ \vec{x} = \trans{\begin{pmatrix} x_1 & x_2 & \cdots & x_m \end{pmatrix}} \]
 und die Labels in einem Vektor
 \[ \vec{\hat{y}} = \trans{\begin{pmatrix} \hat{y}_1 & \hat{y_2} & \cdots & \hat{y}_n \end{pmatrix}} \]
-zusammengefasst.Somit ist ein Trainingssample nichts anderes als ein Paar
-$(\vec{x}_i,\vec{\hat{y}}_i)$ eines Inputsvektor $\vec{x}$ und eines Labelvektor
+zusammengefasst. Somit ist ein Trainingssample ein Paar
+$(\vec{x}_i,\vec{\hat{y}}_i)$ bestehend aus einem Inputvektor $\vec{x}$ und eines Labelvektor
 $\vec{\hat{y}}$.
 Die Vorhersagen werden ebenfalls in einem Vektor
 \[\vec{y} = \trans{\begin{pmatrix} y_1 \quad y_2 \quad \cdots \quad y_n \end{pmatrix}} \]
 zusammengefasst.
 \para{}
 Die Inputs beinhalten sogenannte \keyword{Features} (deutsch: Merkmale). Sie
-zeichnen die Inputs aus und umfassen ihren ganzen Informationsgehalt.
+zeichnen die Inputs aus und umfassen ihren gesamten Informationsgehalt.
 Der Algorithmus soll
 anhand dieser Features seine Vorhersagen machen.
-Diese Vorhersagen werden dann mit den Labels abgeglichen und so bewertet.
-Anhand der Bewertungen wird dann eine Optimierung des Modells vorgenommen.
-Unter korrekten Bedingungen (kein Overfitting) findet kein Auswendig lernen der Trainingsdaten statt,
+Diese Vorhersagen werden dann mit den Labels abgeglichen und bewertet.
+Anhand der Bewertungen wird eine Optimierung des Modells vorgenommen.
+Unter korrekten Bedingungen (kein Overfitting (siehe \ref{sec:overfitting})) findet kein Auswendig lernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmässigkeiten.
 \para{}
 Um eine endgültige Bewertung des Modells durchzuführen, wird ein Testdatensatz
-$\set{T}$, welcher nicht Teil des Trainingsdatensatz ist, genutzt, um Vorhersagen zu machen.
-Dies garantiert, dass kein Auswendig lernen möglich ist.
+$\set{T}$ genutzt, um Vorhersagen zu generieren. Dieser ist nicht Teil des Trainingsdatensatz.
+Dies garantiert, dass kein Auswendiglernen möglich ist.
 \para{}
 BEISPIEL
 
@@ -91,15 +102,15 @@ BEISPIEL
 \subsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
 \to \set{R}^n$, Hypothesenfunktion genannt, welche die Inputs auf die Outputs abbildet $\vec{y}=\mathit{h}(\vec{x})$.
-Man kann diese Funktion gewissermassen als die Hypothese, welche das Modell bezüglich der Beziehung zwischen
-den Inputs und den Labels aufgestellt hat, betrachten.
-Diese Modelle können verwendet werden um vor allem entweder
+Man kann diese Funktion als die Hypothese auffassen, welche das Modell bezüglich der Beziehung zwischen
+den Inputs und den Labels aufgestellt hat.
+Diese Modelle können verwendet werden, um entweder
 Klassifizierungsprobleme oder Regressionsprobleme zu lösen. Falls es sich um
-letzteres handelt, spricht man von einem Regressionsmodell. Ein solches
-Regressionsproblem werden wir in dieser Arbeit lösen.
+Letzteres handelt, spricht man von einem Regressionsmodell. Ein solches
+Regressionsproblem soll im Rahmen dieser Arbeit gelöst werden.
 \para{}
-Das Verhalten eines Modells wird bestimmt durch seine \keyword{Modellparameter}
-$\param_1, \param_2,\ldots,\param_k$. Sie bestimmen, wie die Hypothese des Modells lautet.
+Das Verhalten eines Modells bestimmt sich durch seine \keyword{Modellparameter}
+$\param_1, \param_2,\ldots,\param_k$. Sie determinieren, wie die Hypothese des Modells lautet.
 Das Ziel ist es, die Modellparameter so einzustellen, dass die Vorhersagen
 $\vec{y}$ des Modells besser mit den Labels $\vec{\hat{y}}$ der Trainingsdaten übereinstimmen.
 Dies wird iterativ gemacht, indem immer wieder leichte Anpassungen an den
@@ -107,17 +118,17 @@ Parametern vorgenommen werden, bis das Modell die gewünschten Resultate liefert
 \para{}
 Neben den gelernten Parametern, gibt es auch noch sogenannte \keyword{Hyperparameter}.
 Diese können nicht erlernt werden, sondern müssen manuell vor dem Training gewählt werden und können den Lernvorgang erheblich beeinflussen.
-Dies bedeutet, dass man ausprobieren muss, welche Werte für die Hyperparameter
+Dies bedeutet, dass man ausprobieren muss, welche Werte der Hyperparameter
 die besten Resultate liefern.
 \para{}
-Das wohl einfachste Regressionsmodell ist eine Regressionsgerade. Diese ist
+Das wohl einfachste Beispiel eines Regressionsmodell ist eine Regressionsgerade. Diese ist
 angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\param_1x +
 \param_0$ zwischen den Features und den Labels besteht.
-Nun müssten nur noch $\param_0$ und $\param_1$ bestimmt werden.
+Danach müssten nur noch $\param_0$ und $\param_1$ bestimmt werden.
 BEISPIELMODELL AUTO
 \para{}
 Für Maschinelles Lernen haben sich gewisse Modelle besonders gut etabliert,
-darunter wären: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
+dazu zählen: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \\
 \begin{figure}[h!]
@@ -129,16 +140,18 @@ Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 
 \section{Training}
 \subsection{Verlust- und Kostenfunktionen}
-Einsicht ist der erste Schritt zur Besserung. Das gilt auch beim Machine Learning, deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
+Einsicht ist der erste Schritt zur Besserung. Diese Maxime gilt auch für das
+Machine Learning.
+Deshalb muss beim Training zuerst die Genauigkeit des Modells bewertet werden.
 Dies wird mithilfe von sogenannten Kostenfunktionen bzw. Verlustfunktionen erreicht.
 \para{}
 Eine \keyword{Verlustfunktion} $L(y,\hat{y})$ soll ein Mass für die
 Abweichung der Vorhersage $y$ von dem Label $\hat{y}$ sein.
-Aus ihr bildet man die \keyword{Kostenfunktion} $C(\vec{y},\vec{\hat{y}})$, indem man die
-Verluste der einzelnen Outputs aufsummiert. Somit erhält man die Kosten
+Aus ihr bildet man die \keyword{Kostenfunktion} $C(\vec{y},\vec{\hat{y}})$, indem die
+Verluste der einzelnen Outputs aufsummiert werden. Somit erhält man die Kosten
 einer gesamten Vorhersage mit $m$ Outputs (siehe Gl. (\ref{eq:errorfunc})). Bei
-gewissen Kostenfunktionen gibt es keine Verlustfunktion, da sie nicht auf die
-einzelnen Outputpaare aufgebrochen werden kann. \\
+gewissen Kostenfunktionen gibt es keine Verlustfunktion, da diese nicht auf die
+einzelnen Outputpaare aufgeteilt werden kann. \\
 Der Fehler $\bar{C}(\set{X})$ des gesamten Trainingsdatensatzes $\set{X}$, der
 Grösse $p$, ergibt sich aus dem arithmetischen Mittel der einzelnen Kosten der
 Vorhersagen (siehe Gl. (\ref{eq:meanerrorfunc})).
@@ -154,11 +167,11 @@ Vorhersagen (siehe Gl. (\ref{eq:meanerrorfunc})).
   \end{equation}
 \end{minipage}
 \para{}
-Eine eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
+Eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
 \item{$C$ ist minimal, wenn $\vec{y} = \vec{\hat{y}}$}
 \item{$C$ wächst mit $|\vec{y} - \vec{\hat{y}}|$}
-\item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklärt in Sektion (\ref{ref:partielle_ableitungen}))}
+\item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklärt in Anhang (\ref{ref:partielle_ableitungen}))}
 \end{itemize}
 \para{}
 
@@ -170,7 +183,7 @@ Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''.
 aller quadrierten Differenzen zwischen den Vorhersagen und Labels.
 Zusätzlich halbiert man noch das arithmetische Mittel, damit bei der Ableitung der Faktor
 $2$ wegfällt. Sie hat keine entsprechene Verlustfunktion, da man so das
-arithemtische Mittel nicht schreiben kann.
+arithemtische Mittel nicht ausgedrückt werden kann.
 \\
 Die Kostenfunktion kann mithilfe einer Summe berechnen werden, oder in
 diesem Fall mithilfe einer Vektorsubtraktion Vorhersagen $\vec{y}$ von den Labels $\vec{\hat{y}}$.
@@ -188,31 +201,32 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 
 
 \subsection{Stochastisches Gradientenverfahren}\label{sec:gradientenverfahren}
-Um ein Modell nun zu trainieren, ist zu verstehen, dass es sich um ein Optimierungsproblem handelt.
-Das Modell ist am besten, also macht die besten Vorraussagen, wenn die
+Beim Training eines Modells handelt es sich um ein Optimierungsproblem.
+Das Modell macht die besten Vorraussagen, wenn die
 Funktionswerte der Kostenfunktion am kleinsten sind.
-Deshalb muss diese Kostenfunktion $C$ minimiert werden.
+Deshalb muss die gewählte Kostenfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
 werden, sondern als Funktion der Modellparameter
 $C(\param_1, \param_2, \ldots, \param_k)$. Denn diese Werte sollten angepasst
 werden, um das Modell zu verbessern.
 \para{}
 Für diese Optimierung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
-Das Gradientenverfahren ist eine gängige Methode um Funktionen $f: \set{R}^n \to
+Das Gradientenverfahren ist eine gängige Methode, um Funktionen $f: \set{R}^n \to
 \set{R}$ zu minimieren
-\footnote{Im Gymnasium wird beigebracht die lokalen Extrema (inklusive lokalen Minimas) zu
-  bestimmen, indem die erste Ableitung $f'$ gebildet wird und gleich null gesetzt
-  wird.Dies ist hier nicht möglich, da die Funktion
-  $C'(\param_1,\param_2,\ldots,\param_n)$ deutlich zu komplex ist, um die
-  Nullstellen analytisch zu bestimmen. Deshalb wird das Gradientenverfahren
+\footnote{Üblicherweise wird auf Gymnasialstufe vermittelt, dass die lokalen
+  Extrema (inklusive lokalen Minimas) einer Funktion $f$ bestimmt werden
+  bestimmen, indem die erste Ableitung $f'$ gebildet und gleich null gesetzt
+  wird. Dies ist hier jedoch nicht möglich, da die Funktion
+  $C'(\param_1,\param_2,\ldots,\param_n)$ zu komplex ist, um die
+  Nullstellen analytisch zu bestimmen. Deshalb wird hier das numerische Gradientenverfahren
   verwendet.
 }.
-Falls dem Leser das Prinzip nicht vertraut ist, ist auf Anhang
-(\ref{sec:anhang_gd}) zu verweisen, in
+Falls dem Leser das Prinzip nicht vertraut ist, wird auf Anhang
+(\ref{sec:anhang_gd}) verwiesen, in
 welchem die Funktionsweise des Gradientenverfahrens erklärt wird.
 \para{}
 Das Gradientenverfahren zur Minimierung verläuft iterativ nach folgender
-Gleichung ab:
+Gleichung:
 \begin{equation}\label{eq:gd_ml}
   \vec{\param}_{t+1} = \vec{\param}_t - \eta \cdot \vecf{\nabla} \mathit{C}(\vec{\param}_t)
 \end{equation}
@@ -222,13 +236,14 @@ Wie die initialen Modellparameter $\vec{\param}_{t=0}$ zu wählen sind, wird in 
 Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gd_ml}) stellt
 einen Hyperparameter dar. Sie ist der positive Proportionalitätsfaktor, welcher die Schrittgrösse des
 Gradientenabstiegs bestimmt.
-Sie muss je nach zu minimierender Funktion anders gewählt werden.
-Dabei hilft nur Ausprobieren. Falls $\eta$ nicht gut gewählt wurde, gibt es Probleme beim Training:
+Je nach zu minimierender Funktion muss sie anders gewählt werden.
+Dies geschieht durch Ausprobieren. Falls $\eta$ nicht gut gewählt wurde, ergeben
+sich Probleme beim Training:
 \begin{itemize}
-\item{Falls $\eta$ zu klein ist, verläuft das Trainings unnötig langsam und braucht sehr lange.
+\item{Falls $\eta$ zu klein ist, verläuft das Trainings unnötig langsam.
     Ausserdem kann es passieren, dass die Optimierung bei einem hohen lokalen Minimum stecken bleibt.}
 
-\item{Falls $\eta$ zu gross ist, kann es passiert, dass man über das lokale
+\item{Falls $\eta$ zu gross ist, kann es passieren, dass man über das lokale
     Minimum hinaus schiesst und somit nur darum herum springt.}
 \end{itemize}
 
@@ -248,28 +263,28 @@ Verfahren des Gradientenabstiegs verwendet: das \keyword{Stochastische
 Das Problem des herkömmlichen Gradientenverfahrens besteht darin, dass der
 Gradient für den \textit{gesamten} Trainingsdatensatz berechnet werden muss.
 Dies ist zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
-Bei grossen Datensätzen würde es eine Ewigkeit dauern, bis das Modell nur annahernd gute Vorhersagen machen würde.
-Somit steht die Genauigkeit in keinem Verhältniss zur effizienz dieser Methode.
+Bei grossen Datensätzen würde es sehr lange dauern, bis das Modell nur annähernd gute Vorhersagen machen könnte.
+Somit steht die Genauigkeit in keinem Verhältniss zur Effizienz dieser Methode.
 \para{}
 Bei SGD wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingssamples approximiert.
 Dazu wird der Trainingsdatensatz in sogennante \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
 Als Konsequenz finden deutlich mehr Iterationen in einer einzigen
 Durchkämmung der Trainingsdaten statt. Eine solche vollständige Durchkämmung der Trainingsdaten
 bezeichnet man als eine \keyword{Epoche}.
-Oft wird mehrere Epochen lang trainiert, bis das Modell genügend gute Resultate
+Oft wird mehrere Epochen lang trainiert bis das Modell genügend gute Resultate
 liefert. Jedoch sollte auch nicht zu oft mit den gleichen Daten trainiert
-werden, da es sonst zu Overfitting kommt.
-Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genügend gut.
+werden, da es sonst zu Overfitting (siehe Sektion \ref{sec:overfitting}) kommen kann.
+Der Gradienten eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genügend gut.
 Sowohl die Mini-Batch Grösse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \para{}
-Die partiellen Ableitungen der gesamten Trainingsdaten wird mit dem
+Die partiellen Ableitungen der gesamten Trainingsdaten werden mit dem
 arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Grösse $q$ approximiert.
 \\
 \begin{equation}\label{eq:minibatch_deriv}
   \partderiv{\bar{C}}{\param_k} \approx \frac{1}{q}\sum_{i=1}^{q} \partderiv{C_i}{\param_k}
 \end{equation}
 \\
-Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (\ref{eq:gd_ml}) folgendermassen durchgeführt.
+Eine Iteration des Stochastischen Gradientenverfahrens wird analog zu Gleichung (\ref{eq:gd_ml}) folgendermassen durchgeführt.
 \\
 \begin{equation}\label{eq:sgd}
   \param_{k,t+1} = \param_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \partderiv{C_i}{\param_{k,t}}
@@ -280,13 +295,14 @@ Eine Iteration des Stochastischen Gradientenverfahren wird analog zu Gleichung (
 \section{Trainingsphänomene}
 
 \subsection{Konvergenz und Divergenz}
-Beim Training eines Modells, kann es entweder zu \keyword{Konvergenz} oder \keyword{Divergenz} kommen.
+Beim Training eines Modells kann es entweder zu \keyword{Konvergenz} oder \keyword{Divergenz} kommen.
 Falls die Vorhersagen im Verlaufe des Trainings immer besser mit den Labels
-übereinstimmen, bzw. die Kostenfunktion immer kleiner wird, sagt man, dass das
-Modell konvergiert. Also findet das Gradientenverfahren erfolgreich ein lokales Minimum.
+übereinstimmen, bzw. die Kostenfunktion immer kleiner wird, gilt das Modell als konvergierend.
+Also findet das Gradientenverfahren erfolgreich ein lokales Minimum.
 \para{}
-Es passiert aber auch oft, dass ein Modell nicht konvergiert oder vielleicht
-sogar divergiert; die Kosten werden also grösser im Verlaufe des Training.
+Jedoch kommt auch vor, dass ein Modell nicht konvergiert oder vielleicht
+sogar divergiert. Bei Divergenz werden die Kosten im Verlaufe des Training immer
+grösser.
 Dies kann verschiedene Gründe haben. Einige davon können sein:
 \begin{itemize}
 \item{zu wenig Trainingsdaten}
@@ -296,47 +312,45 @@ Dies kann verschiedene Gründe haben. Einige davon können sein:
 \end{itemize}
 
 
-\subsection{Underfitting und Overfitting}
+\subsection{Underfitting und Overfitting}\label{sec:overfitting}
 Falls ein Modell konvergiert, heisst das noch nicht, dass es die
 Gesetzmässigkeiten innerhalb der Trainingsdaten richtig erlernt hat.
-Es kann dabei zu zwei Problemen kommen: Overfitting und Underfitting.
+Im Wesentlichen kann es zu zwei Problemen: Overfitting oder Underfitting.
 \para{}
-\keyword{Overfitting} bezeichnet das Problem, dass ein Modell Vorhersagen
-erzeugt, welche zu stark an die Trainingssamples angepasst sind.
-Meistens liegt das daran, dass das Modell zu viele Modellparameter besitzt oder
-der Trainingsdatensatz zu wenige Samples besitzt.
-Somit übersteigt die Komplexität des Modells gewissermassen die des Problems.
+\keyword{Overfitting} bezeichnet das Phänomen, dass ein Modell zwar Vorhersagen
+erzeugt, welche jedoch zu stark an die gegeben Trainingssamples angepasst sind.
+Dies liegt zumeist daran, dass das Modell zu viele Parameter besitzt oder
+aber der Trainingsdatensatz zu wenige Samples dafür beinhaltet.
+Somit übersteigt die Komplexität des Modells gewissermassen jede der Aufgabenstellung.
 \para{}
-Um das Problem zu verdeutlichen betrachten wir ein lineares Regressionmodell.
+Um das Phänomen zu verdeutlichen, wird ein lineares Regressionmodell betrachtet.
 Dieses besitzt eine Hypothesenfunktion $h = a_0 + a_1 x + a_2 x^2 + \ldots + a_n
-x^n$, welcche einfach ein Polynom $n$-ter Ordnung ist. Falls der
+x^n$, welche ein Polynom $n$-ter Ordnung ist. Falls der
 Trainingsdatensatz nun aus $n$ oder weniger Samples besteht, kann das Modell die
 Regressionkurve der Hypothesenfunktion exakt durch jeden Datenpunkt legen.
-Dies entspricht dem Verhalten, dass ein Modell mit $n$ Modellparametern, welches
-mit $n$ Samples trainiert wird, exakt jedes Samples auswendig lernt, anstatt die
-Gesetzmässigkeiten zu erlernen.
-Beim Auswendiglernen
-wiegt das Modell dem Datenrauschen, welches durch die natürliche Varianz
-innerhalb der Trainingsdaten entsteht, zu viel Gewicht zu. Somit nutzt es
-eigentlich unrelevante Modellparameter dazu dieses Rauschen zu erlernen. \\
+Dies entspricht dem Verhalten eines Modells mit $n$ Modellparametern, welches
+mit $n$ Samples trainiert wird, und dabei exakt jedes Samples auswendig lernt anstatt
+dessen Gesetzmässigkeiten zu erkennen. \\
+Beim Auswendiglernen misst das Modell dem Datenrauschen zu viel Bedeutung zu, welches durch die natürliche Varianz
+innerhalb der Trainingsdaten entsteht. Somit nutzt es
+irrelevante Modellparameter, um das Rauschen zu kopieren. \\
 Dadurch kann das Modell zwar sehr gute Vorhersagen zum Trainingsdatensatz
-$\set{X}$ machen, jedoch würde es sehr schlechte Vorhersagen für einen
-zusätzlichen Testdatensatz $\set{T}$ liefern.
+$\set{X}$ machen, jedoch würde es schlechte Vorhersagen für einen
+anderen Testdatensatz $\set{T}$ liefern, welchen es nicht auswendig lernen konnte.
 \para{}
-Somit können wir Overfitting folgendermassen definieren. Eine
-Hypothesenfunktion overfittet dann, wenn eine alternative Hypothesenfunktion
+Somit kann Overfitting folgendermassen definiert werden: Eine
+Hypothesenfunktion $h$ overfittet dann, wenn eine alternative Hypothesenfunktion
 $h'$ exisitert, für welche die Kosten bezüglich dem Trainingsdatensatz
 grösser sind $\bar{C}_{h'}(\set{X}) > \bar{C}_h(\set{X})$, jedoch die Kosten
 für Testdatensatz kleiner sind $\bar{C}_{h'}(\set{T}) < \bar{C}_h(\set{T})$.
 \para{}
-Das Gegenteil von Overfitting ist \keyword{Underfitting}. Dabei handelt es sich um das Problem, dass eine
+Das Gegenteil von Overfitting ist \keyword{Underfitting}. Dabei handelt es sich um das Phänomen, dass eine
 Hypothesenfunktion $h$ zu
-wenige Modelparameter $\param_k$ besitzt, um die Komplexität eines Problems zu bewältigen.
+wenige Modellparameter $\param_k$ besitzt, um die Komplexität der Aufgabenstellung zu bewältigen.
 Die Parameter reichen nicht aus, damit das Modell die Korrelation zwischen
-Inputs und Labels erlernen kann, beziehungsweise durch die Hyptothesenfunktion
-die gewünschte Abbildung durchzuführen.
+Inputs und Labels begreifen kann.
 \para{}
-Bezogen auf das lineare Regressionmodell, bedeutet dies, dass der Grad $n$ des
+Bezogen auf das lineare Regressionmodell, bedeutet dies, dass der Grad $n$ der
 polynomen Hypothesenfunktion $h$ zu gering ist, um sich an die Datenpunkte der
 Sampels anzuschmiegen.
 

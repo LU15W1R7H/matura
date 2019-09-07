@@ -20,18 +20,12 @@ x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
 x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 
 # Modell definieren
-
-# Encoder
 input_data = tf.keras.Input(shape=(28, 28, 1))
 econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(input_data)
 emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv0)
 econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(emaxpool0)
 emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv1)
-
-# Flaschenhals der Form (7, 7, 32)
 encoded =  emaxpool1
-
-# Decoder
 dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(encoded)
 dupsample0 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv0)
 dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')(dupsample0)
