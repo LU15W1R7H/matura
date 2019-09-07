@@ -813,7 +813,7 @@ Bei solchen Netzwerken ist es nicht unüblich,
 dass diese sehr viele Neuronen und Verbindungen (über 100'000) besitzen.
 Um hierbei nicht den Überblick zu verlieren und um nicht in den Indizes zu
 ertrinken, macht man Gebrauch von \keyword{Linearer Algebra}. Man verwendet
-Matrizen und Vektoren um die vielen Variabeln zusammenzufassen.
+Matrizen und Vektoren um die vielen Variablen zusammenzufassen.
 Ausserdem besteht ein weiterer Vorteil darin, dass Computer mithilfe von Vektor-
 und Matrixoperationen die Berechnungen paralellisieren können und in kürzerer
 Zeit und mit weniger Ressourcen viele Berechnungen gleichzeitig ausführen können.
@@ -922,7 +922,7 @@ Minimum, was grosse Kostenfunktionswerte und schlechte Vorhersagen verursacht.
 Es ist nicht möglich im Vorhinein zu wissen, welche Initialwerte gute Resultate
 liefern. Man muss ausprobieren, deshalb initialisert man gängierweise die
 Hyperparameter mit Zufallswerten. Dafür nimmt man aber nicht irgendwelche
-Zufallsvariabeln sondern man benutzt die Gauss'sche Normalverteilung
+Zufallsvariablen sondern man benutzt die Gauss'sche Normalverteilung
 $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion.
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
@@ -1585,7 +1585,7 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
       \vdots & \ddots & \vdots \\
       w_{i\,|\,f,1,1}^l & \cdots & w_{i\,|\,f,f,1}^l
     \end{pmatrix}
-    & \stackrel{\mathclap{\normalfont\mbox{$\vv{\gamma}$}}}{\cdots} &
+    & \cdots &
     \begin{pmatrix}
       w_{i\,|\,1,1,c^l}^l & \cdots & w_{i\,|\,1,f,c^l}^l \\
       \vdots & \ddots & \vdots \\
@@ -2147,16 +2147,16 @@ Der \keycode{tf.Constant} Tensor ist ein Input-Knoten in den Graphen.
 Er hat immer einen konstanten Wert als Output. Dieser wird beim Erstellen
 angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-<Varname> = tf.constant(<Wert>)
+  <Varname> = tf.constant(<Wert>)
 \end{minted}
 \para{}
 Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
 Formen erstellt. Als Argument, gibt man die Elemente des Tensors, worüber auch
 die Form ersichtlich an.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-skalar = tf.constant(1.0)
-vector2 = tf.constant([1.0, 2.0])
-matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+  skalar = tf.constant(1.0)
+  vector2 = tf.constant([1.0, 2.0])
+  matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
 \end{minted}
 \[\text{skalar}=1 \quad \text{vector2}=\begin{pmatrix}1&2\end{pmatrix} \quad
   \text{matrix2x2}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
@@ -2170,7 +2170,7 @@ Platzhalter für die Inputs, welcher beim Start der Graphausführnug eingespeist
 werden. Man muss einzig seine Dimensionen und seinen Datentyp (z.B. tf.float32) bei der Erstellung angeben.
 \para{}
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-<Varname> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
+  <Varname> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
 \end{minted}
 Für den Datentyp wählt man eigentlich immer
 \mintinline{python}{dtype=tf.float32}. Somit kann man mit Gleitkommazahlen rechnen.
@@ -2191,8 +2191,8 @@ Trainingsdurchlauf angepasst werden.
 \para{}
 Folgender Python-Code kreirt eine tf.Varaible mit einem Anfangswert und ändert ihren Wert danach.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-<Varname> = tf.Variable(<Initialwert>, name=<optionaler Name>)
-<Varname>.assign(<neuer Wert>)
+  <Varname> = tf.Variable(<Initialwert>, name=<optionaler Name>)
+  <Varname>.assign(<neuer Wert>)
 \end{minted}
 Bei der neuen Wertebesetzung kann auch der alte Wert des Tensors referenziert
 werden, um den Wert zum Beispiel zu erhöhen:
@@ -2212,7 +2212,7 @@ ausführt. Im folgenden Code wird das Resulat im neuen Tensor
 \mintinline{python}{c} gespeichert.
 ``MatMul'' bezeichnet).
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-c = tf.matmul(a, b)
+  c = tf.matmul(a, b)
 \end{minted}
 \para{}
 Mit diesem Konzept können wir nun endlich den eigentlichen Graph definieren.
@@ -2222,13 +2222,13 @@ dann weiter verrechnen, bis man den gewünschten Grapen hat.
 \para{}
 Hier ein Beispiel eines solchen Graphs.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-# Inputknoten
-a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
-b = tf.constant([[1.0, 1.0], [0.0, 1.0]])
-# Operationen
-c = tf.matmul(a, b)
-d = tf.placeholder(dtype=tf.float32, shape(2,2))
-e = tf.add(c, e)
+  # Inputknoten
+  a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+  b = tf.constant([[1.0, 1.0], [0.0, 1.0]])
+  # Operationen
+  c = tf.matmul(a, b)
+  d = tf.placeholder(dtype=tf.float32, shape(2,2))
+  e = tf.add(c, e)
 \end{minted}
 
 \begin{figure}
@@ -2244,13 +2244,13 @@ Sie ist die Schnittstelle zwischen Frontend und Backend und ermöglicht es einen
 zu erstellen und ihn auszuführen.
 Um die Session zu erstellen verwendet man die Funktion \keycode{tf.Session()}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-sess = tf.Session()
+  sess = tf.Session()
 \end{minted}
 Es ist Best-Practise eine Session, wie eine Datei über das
 \keycode{with}-Statment zu öffen und zu schliessen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-with tf.Session() as sess:
-# Code
+  with tf.Session() as sess:
+  # Code
 \end{minted}
 \para{}
 Um den Graphen nun zu berechnen, muss man lediglich die Session ausführen, das
@@ -2260,28 +2260,28 @@ berchnen möchte. Dessen Wert ist der Rückgabewert der Funktion.
 Andererseits erwartet die Funktion noch einen Python-Dictionary, den sogennanten
 \keycode{feed\_dict}, welcher die \code{tf.placeholder} mit ihren Werten befüllt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-result = sess.run(<Knotenpunkt>, feed_dict=<Placeholder-Dictionary>)
+  result = sess.run(<Knotenpunkt>, feed_dict=<Placeholder-Dictionary>)
 \end{minted}
 Es folgt nun ein Codebeispiel, welches die Forwärtspropagierung eines
 Sigmoide Neurons mit drei Inputs implementiert. Es wird es mit den Inputs $x = \trans{\begin{pmatrix}1&2&3\end{pmatrix}}$ ausgeführt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import tensorflow as tf
+  import tensorflow as tf
 
-# Inputs
-x = tf.placeholder(dtype=tf.float32, shape=(3))
+  # Inputs
+  x = tf.placeholder(dtype=tf.float32, shape=(3))
 
-# Modellparameter
-w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
-b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
+  # Modellparameter
+  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
+  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
 
-# Forwärtspropagierung
-z = tf.add(tf.tensordot(x, w, 1), b)
-a = tf.sigmoid(z)
-y = a
+  # Forwärtspropagierung
+  z = tf.add(tf.tensordot(x, w, 1), b)
+  a = tf.sigmoid(z)
+  y = a
 
-with tf.Session() as sess:
-res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-print(res)
+  with tf.Session() as sess:
+  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
+  print(res)
 \end{minted}
 
 \subsubsection{Optimizer}
@@ -2302,13 +2302,13 @@ Verschiedne aus \keycode{tf.losses} zur Verfügung. Als Argument nimmt die
 Kostenfunktion die Label-Tensoren \code{labels} und die Vorhersagen-Tensoren \code{predictions}.
 Beispielsweise könnte man den Mittleren Quadratischen Fehler wählen:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-cost = tf.losses.mean_squared_error(labels=y_hat, predictions=y)
+  cost = tf.losses.mean_squared_error(labels=y_hat, predictions=y)
 \end{minted}
 Nun erstellt man den Optimizer. Dabei stehen wieder mehrere zur Auswahl. Der
 \keycode{tf.train.GraidentDescentOptimizer} ist eine Implementation des
 Gradientenverfahren. Er nimmt als Arugment die Lernrate $\eta$.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=<>)
+  optimizer = tf.train.GradientDescentOptimizer(learning_rate=<>)
 \end{minted}
 Nun kann man den Optimizer damit beauftragen die Kostenfunktion \code{loss} zu
 minimieren. Ausserdem muss man dem Optimizer eine List von \code{tf.Variable}s
@@ -2316,65 +2316,65 @@ geben, welche die zu optimierenden Modellparameter sind.
 Man erhält so man eine Optimierungs-Operation, welche man dann
 ausführen kann.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-opt_op = opt.minimize(cost, var_list=<Hyperparameter-Liste>)
-opt_op.run()
+  opt_op = opt.minimize(cost, var_list=<Hyperparameter-Liste>)
+  opt_op.run()
 \end{minted}
 \para{}
 Nun folgt ein kleines Beispielmodell, welches trainiert wird.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import tensorflow as tf
+  import tensorflow as tf
 
-# Inputs
-x = tf.placeholder(dtype=tf.float32, shape=(3))
+  # Inputs
+  x = tf.placeholder(dtype=tf.float32, shape=(3))
 
-# Modellparameter
-w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
-b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
+  # Modellparameter
+  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
+  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
 
-# Forwärtspropagierung
-z = tf.add(tf.tensordot(x, w, 1), b)
-a = tf.sigmoid(z)
-y = a
+  # Forwärtspropagierung
+  z = tf.add(tf.tensordot(x, w, 1), b)
+  a = tf.sigmoid(z)
+  y = a
 
-cost = tf.losses.mean_squared_error(labels=y_trü, predictions=y_pred)
-
-
-with tf.Session() as sess:
-print(sess.run(cost)) # cost is just another node
-optimizer = tf.train.GradientDescentOptimizer(0.01)
-train = optimizer.minimize()
-res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-print(res)
-
-# Daten
-x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
-y_trü = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)
-
-# Modell
-linear_model = tf.layers.Dense(units=1)
-y_pred = linear_model(x)
-
-# Evalutaion
-sess = tf.Session()
-init = tf.global_variables_initializer()
-sess.run(init)
-
-print(sess.run(y_pred))
-
-# Loss
-loss = tf.losses.mean_squared_error(labels=y_trü, predictions=y_pred)
-
-print(sess.run(loss))
+  cost = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
 
 
-# Training
-optimizer = tf.train.GradientDescentOptimizer(0.01)
-train = optimizer.minimize(loss)
+  with tf.Session() as sess:
+  print(sess.run(cost)) # cost is just another node
+  optimizer = tf.train.GradientDescentOptimizer(0.01)
+  train = optimizer.minimize()
+  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
+  print(res)
+
+  # Daten
+  x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
+  y_true = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)
+
+  # Modell
+  linear_model = tf.layers.Dense(units=1)
+  y_pred = linear_model(x)
+
+  # Evalutaion
+  sess = tf.Session()
+  init = tf.global_variables_initializer()
+  sess.run(init)
+
+  print(sess.run(y_pred))
+
+  # Loss
+  loss = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
+
+  print(sess.run(loss))
 
 
-for i in range(100):
-_, loss_valü = sess.run((train, loss))
-print(loss_valü)
+  # Training
+  optimizer = tf.train.GradientDescentOptimizer(0.01)
+  train = optimizer.minimize(loss)
+
+
+  for i in range(100):
+  _, loss_valü = sess.run((train, loss))
+  print(loss_valü)
 
 \end{minted}
 
@@ -2451,7 +2451,7 @@ Deshalb ist ein tiefgehendes Verstätniss von TF überflüssig.
 
 \subsection{Funktionsweise}
 Keras baut auf TensorFlow auf. Es verwendet die verschiedenene Konzepte von TF,
-wie Variabeln, Operationen und Graphen und abstrahiert sie.
+wie Variablen, Operationen und Graphen und abstrahiert sie.
 Dadurch bietet Keras eine einfacheres Vorgehen dem Benutzer an.
 \para{}
 Die gängigste Vorgehensweise besteht darin, ein sogennantes
@@ -2461,10 +2461,10 @@ Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
 verfügung, welche einfach aneinander gereiht werden können und so einen Graph bilden.
 \para{}
 Es gibt verschiedene Arten ein Modell zu definieren. Entweder definiert man eine
-\code{tf.keras.Seqüntial} Variabel, welcher dann mit der Methode \code{add()}
+\code{tf.keras.Sequential} Variable, welcher dann mit der Methode \code{add()}
 neue Schichten hinzugefügt werden.
-Oder man speichert die verschiedenene Schichten in Variabeln und gibt dann die
-Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariabel an.
+Oder man speichert die verschiedenene Schichten in Variablen und gibt dann die
+Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariable an.
 
 \subsection{Schichten}
 Bei der Initalizsierung der Modellparameter, benutzt Keras standardmässig
@@ -2485,7 +2485,7 @@ Die Input-Schicht ist ziemlich selbsterklärend. Sie ist einfach die
 Platzhalter-Schicht, welche alle Features enthält.
 Man definiert sie folgendermassen:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-tf.keras.Input(shape=(<Form>)
+  tf.keras.Input(shape=(<Form>)
 \end{minted}
 
 \paragraph{Dense-Schicht}
@@ -2493,15 +2493,15 @@ Wir beginnen mit dem Fully-Connected-Schicht. Diese wird in Keras als
 \code{Dense} bezeichnet. Der Name kommt davon, dass sie dicht mit jedem Neuron
 der vorherigen Schicht verbunden ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-tf.keras.layers.Dense(<Anzahl Neuronen>,
-activation=<Aktivierungsfunktion>)(<vorherige Schicht>, kernel_initalizer='glorot_normal')
+  tf.keras.layers.Dense(<Anzahl Neuronen>,
+  activation=<Aktivierungsfunktion>)(<vorherige Schicht>, kernel_initalizer='glorot_normal')
 \end{minted}
 
 \paragraph{Conv2D-Schicht}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-tf.keras.layers.Conv2D(filters=<#Filters>, kernel_size=<Filtergrösse>,
-strides=<>, padding=<>, activation=<>, )
+  tf.keras.layers.Conv2D(filters=<#Filters>, kernel_size=<Filtergrösse>,
+  strides=<>, padding=<>, activation=<>, )
 \end{minted}
 Für alle Schichten eines CNNs gilt folgendes Datenformat:
 Input muss folgende Form haben $(samples, channels, rows, cols)$. Output hat
@@ -2510,25 +2510,25 @@ analoge Form $(samples, filters, new\_rows, new\_cols)$
 \paragraph{MaxPool2D-Schicht}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-tf.keras.layers.MaxPool2D(pool_size=<Feldgrösse>, strides=<>, padding=<>)
+  tf.keras.layers.MaxPool2D(pool_size=<Feldgrösse>, strides=<>, padding=<>)
 \end{minted}
 
 
 \paragraph{UpSampling2D-Schicht}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-tf.keras.layers.UpSampling2D(size=<>, interpolation=<>)
+  tf.keras.layers.UpSampling2D(size=<>, interpolation=<>)
 \end{minted}
 
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-model = tf.keras.Seqüntial()
-# Adds a densely-connected layer with 64 units to the model:
-model.add(layers.Dense(64, activation='relu'))
-# Add another:
-model.add(layers.Dense(64, activation='relu'))
-# Add a softmax layer with 10 output units:
-model.add(layers.Dense(10, activation='softmax'))
+  model = tf.keras.Sequential()
+  # Adds a densely-connected layer with 64 units to the model:
+  model.add(layers.Dense(64, activation='relu'))
+  # Add another:
+  model.add(layers.Dense(64, activation='relu'))
+  # Add a softmax layer with 10 output units:
+  model.add(layers.Dense(10, activation='softmax'))
 \end{minted}
 
 
@@ -2539,9 +2539,9 @@ Dies macht man mit der Methode \code{tf.keras.Model.compile} diese erwartet als
 Arugmente, den Optimzier und eine Kostenfunktion. Man kann optional noch gewisse
 Metriken angeben, welche wahrend des Trainings erfasst werden sollen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-model.compile(optimizer=tf.train.AdamOptimizer(0.001),
-loss='categorical_crossentropy',
-metrics=['accuracy'])
+  model.compile(optimizer=tf.train.AdamOptimizer(0.001),
+  loss='categorical_crossentropy',
+  metrics=['accuracy'])
 \end{minted}
 Die Optimizer sind die gleichen wie die in TensorFlow-Core. Sie befinden sich
 alle in tf.train. Die Kostenfunktionen sind auch die gleichen wie in TF-Core.
@@ -2549,7 +2549,7 @@ Zum beispeil tf.loss.mean\_squared\_error.
 \para{}
 Hier ein Beispiel:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-model.compile(optimizer='sgd', loss='mean_squared_error')
+  model.compile(optimizer='sgd', loss='mean_squared_error')
 \end{minted}
 Das Kompilieren bildet dann aus den gegeben Schichten den eigentlichen
 Computational Graph.
@@ -2572,31 +2572,31 @@ einfach ein Array mit Inputs. Als Rückgabewert hat sie die Vorhersagen zu den
 gegeben Inputs.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-result = model.predict(data, batch size=32)
+  result = model.predict(data, batch size=32)
 \end{minted}
 
 \subsection{Keras Beispielmodell}
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
+  inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
 
-# A layer instance is callable on a tensor, and returns a tensor.
-x = layers.Dense(64, activation='relu')(inputs)
-x = layers.Dense(64, activation='relu')(x)
+  # A layer instance is callable on a tensor, and returns a tensor.
+  x = layers.Dense(64, activation='relu')(inputs)
+  x = layers.Dense(64, activation='relu')(x)
 
-predictions = layers.Dense(10, activation='softmax')(x)
+  predictions = layers.Dense(10, activation='softmax')(x)
 
-Instantiate the model given inputs and outputs.
+  Instantiate the model given inputs and outputs.
 
-model = tf.keras.Model(inputs=inputs, outputs=predictions)
+  model = tf.keras.Model(inputs=inputs, outputs=predictions)
 
-# The compile step specifies the training configuration.
-model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
-loss='categorical_crossentropy',
-metrics=['accuracy'])
+  # The compile step specifies the training configuration.
+  model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
+  loss='categorical_crossentropy',
+  metrics=['accuracy'])
 
-# Trains for 5 epochs
-model.fit(data, labels, batch_size=32, epochs=5)
+  # Trains for 5 epochs
+  model.fit(data, labels, batch_size=32, epochs=5)
 \end{minted}
 
 
@@ -2607,7 +2607,7 @@ In diesem Kapitel soll nun das bisherige Wissen zusammengeführt werden, indem
 unter Anwendung von TensorFlow und Keras ein konkretes
 Anwendungsbeispiel programmiert wird.
 
- Dabei wird darauf eingegangen, welche Schritte die
+Dabei wird darauf eingegangen, welche Schritte die
 Entwicklung eines solchen Modells umfasst und wie dabei am besten vorgegangen
 wird.
 
@@ -2664,7 +2664,7 @@ installiert sein muss.
 Folgender Befehl muss in der Kommandozeile ausgeführt werden, um die
 Installation vorzunehmen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-sudo pacman -S python
+  sudo pacman -S python
 \end{minted}
 
 \paragraph{TensorFlow}
@@ -2675,7 +2675,7 @@ Capability'' von mehr als 3.5 besitzt, kann er von der
 GPU-Hardwarebeschleunigung Gebrauch machen.
 Somit ist die CUDA-Version von TF mihtilfe des folgenden Kommandos zu installieren:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-sudo pacman -S python-tensorflow-cuda
+  sudo pacman -S python-tensorflow-cuda
 \end{minted}
 Pacman installiert nun automatisch zuerst alle Programmabhängigkeiten, wie
 CUDA, cuDNN und das TensorFlow-Backend, bevor das eigentliche
@@ -2685,7 +2685,7 @@ Falls keine geeignete Grafikkarte vorliegt, ist es ebenso möglich die normale
 TF-Version ohne Unterstützung für die GPU zu verwenden.
 Dies kann durch nachstehendes Kommando vorgenommen werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-sudo pacman -S python-tensorflow
+  sudo pacman -S python-tensorflow
 \end{minted}
 \para{}
 Dabei muss Keras nicht explizit installiert werden, da es in TensorFlow implementiert ist.
@@ -2702,8 +2702,8 @@ nicht in der Standardbibliothek von Python enthalten sind:
 
 Man installiert beide mit folgenden Kommandos.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
-sudo pacman -S python-numpy
-sudo pacman -S python-matplotlib
+  sudo pacman -S python-numpy
+  sudo pacman -S python-matplotlib
 \end{minted}
 
 \section{Entwicklung}
@@ -2720,21 +2720,20 @@ enthalten ist.
 Nun können die Versionnummern der verschiedenen Programmbibliotheken
 in die Konsole geschrieben werden, um zu überprüfen, ob alles richtig konfiguriert ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import numpy as np # NumPy wird impotiert
-import matplotlib as mpl # Matplotlib wird impotiert
+  import numpy as np # NumPy wird impotiert
+  import matplotlib as mpl # Matplotlib wird impotiert
+  import tensorflow as tf # TensorFlow wird impotiert
 
-import tensorflow as tf # TensorFlow wird impotiert
-
-print(np.__version__) # Schreibt die NumPy-Version nach stdout.
-print(mpl.__version__) # Schreibt die Matplotlib-Version nach stdout.
-print(tf.__version__) # Schreibt die TensorFlow-Version nach stdout.
+  print(np.__version__) # Schreibt die NumPy-Version nach stdout.
+  print(mpl.__version__) # Schreibt die Matplotlib-Version nach stdout.
+  print(tf.__version__) # Schreibt die TensorFlow-Version nach stdout.
 \end{minted}
 Falls der Output folgenden Charakter hat (die Versionsnummern müssen nicht
 die gleichen sein) und keine Fehlermeldungen erfolgen, sollte alles funktionieren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-1.17.
-3.1.1
-1.14.0
+  1.17.0
+  3.1.1
+  1.14.0
 \end{minted}
 \para{}
 
@@ -2747,9 +2746,9 @@ In den folgenden Auschnitten wird der Code laufend weiter ausgebaut.
 Auf diese Weise zeigt sich, was er bewirkt.
 Das eigentliche Programm beginnt mit folgenden Importstatements.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-import numpy as np
-import matplotlib.pyplot as plt
-import tensorflow as tf
+  import numpy as np
+  import matplotlib.pyplot as plt
+  import tensorflow as tf
 \end{minted}
 
 \subsubsection{Laden des MNIST-Datensatzes}
@@ -2760,12 +2759,12 @@ und sie als NumPy-Arrays zur Verfügung stellt.
 Die Funktion gibt die verschiedenen Komponenten der Daten in folgendem Format zurück \code{(x\_train, y\_train),
   (x\_test, y\_test)}.
 Da nur Interesse an den Features \code{x} besteht, werden die überflüssigen
-Labels \code{y} mithilfe der Wegwerf-Variabel \code{\_} verworfen.
+Labels \code{y} mithilfe der Wegwerf-Variable \code{\_} verworfen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-(x_train, _), (x_test, _) = tf.keras.datasets.mnists.load_data()
+  (x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
 \end{minted}
-Nun sind die Features fürs Training in der Variabel \code{x\_train} und die
-Features des Trainingsdatensatzes in der Variabel \code{x\_test} gespeichert.
+Nun sind die Features fürs Training in der Variable \code{x\_train} und die
+Features des Trainingsdatensatzes in der Variable \code{x\_test} gespeichert.
 
 \subsubsection{Formatieren der Daten}
 In einem nächsten Schritt müssen die Daten transformiert werden, damit sie die
@@ -2778,8 +2777,8 @@ Intervall $[0, 255]$ und sind vom Typ Integer.
 Das Modell kann am besten mit Kommazahlen, welche im Intervall $[0,1]$ liegen,
 umgehen. Um diese Anpassung vorzunehmen, kann folgender Code angefügt werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-x_train = x_train.astype('float32') / 255.0 # Normalisierung
-x_test = x_test.astype('float32') / 255.0 # Normalisierung
+  x_train = x_train.astype('float32') / 255.0 # Normalisierung
+  x_test = x_test.astype('float32') / 255.0 # Normalisierung
 \end{minted}
 Desweiteren werden im Modell ConvLayers verwendet. Diese in Keras
 implementierten ConvLayers erwarten Inputs in der Form $(m, w, h, c)$, wobei
@@ -2788,8 +2787,8 @@ Anzahl der Farbkomponenten. Die Bildbreite $w$ und -höhe $h$ von 28 Pixeln wird
 die Anzahl Farbkomponeten $c=1$. Die Anzahl Bilder $m$ lässt sich aus der Länge
 des Arrays entnehmen \code{len(x\_train)}. Mithilfe vom NumPy lässt sich das Array wie folgt umformen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-x_train = np.reshape(x_train, (len(x_train), 28, 28, 1)) # neue Form: (60'000, 28, 28, 1)
-x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neue Form: (10'000, 28, 28, 1)
+  x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neue Form: (60'000, 28, 28, 1)
+  x_train = np.reshape(x_train, (len(x_train), 28, 28, 1)) # neue Form: (10'000, 28, 28, 1)
 \end{minted}
 Die Daten besitzen nun die richtige Form für das Modell.
 
@@ -2815,17 +2814,17 @@ $[0,1]$ zurecht gestutzt werden. Auch hierfür kann eine NumPy-Funktion
 Trainingsdatensatz, als auch mit dem Testdatensatz vollzogen. \\
 Somit lautet der Code:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-noise_factor = 0.5
+  noise_factor = 0.5
 
-# für x_train
-noise_matrices = np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
-noise_matrices *= noise_factor
-x_train_noisy = x_train + noise_matrices
-x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
+  # für x_train
+  noise_matrices = np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)
+  noise_matrices *= noise_factor
+  x_train_noisy = x_train + noise_matrices
+  x_train_noisy = np.clip(x_train_noisy, 0.0, 1.0)
 
-# für x_test in Kurzfassung
-x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
-x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
+  # für x_test in Kurzfassung
+  x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape)
+  x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
 \para{}
 Mithilfe der Matplotlib ein Blick auf die verrauschten Bilder im Vergleich zu
@@ -2839,28 +2838,27 @@ Bevor die Bilder angezeigt werden können, müssen sie in die richtige Form für
 die Matplotlib gebracht werden. Sie sollen die Form $(28 \times 28)$ aufweisen.
 Ausserdem ist der Plot als schwarz-weiss Grafik zu spezifizieren.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-n = 10 # jeweils 10 Bilder
-plt.figure()
-for i in range(n):
-# verrauschte Bilder
-ax = plt.subplot(2,n,i+1+n)
-img_clean = x_test[i].reshape(28, 28)
-plt.gray()
-plt.imshow(img_clean)
+  n = 10 # jeweils 10 Bilder
+  plt.figure()
+  for i in range(n):
+    # Originalbilder
+    ax = plt.subplot(2, n, 1+i)
+    img_clean = x_test[i].reshape(28, 28)
+    plt.imshow(img_clean)
+    plt.gray()
 
-# Original Bilder
-ax = plt.subplot(2, n, i+1)
-img_noisy = x_test_noisy[i].reshape(28, 28)
-plt.gray()
-plt.imshow(img_noisy)
-
-plt.show()
+    # verrauschte Bilder
+    ax = plt.subplot(2, n, 1+n+i)
+    img_noisy = x_test_noisy[i].reshape(28, 28)
+    plt.imshow(img_noisy)
+    plt.gray()
+  plt.show()
 \end{minted}
 
 Das Ergebniss ist in Abbildung (\ref{fig:noisy_clean_mnist}) sichtbar.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{noised_clipped.png}
+  \includegraphics[width=0.9\textwidth]{noised.png}
   \caption{Verrauschte Bilder neben den Orignalbildern}
   \label{fig:noisy_clean_mnist}
 \end{figure}
@@ -2878,7 +2876,7 @@ Zu einem späteren Zeitpunkt werden die passenden Hyperparameter durch iterative
 Das Modell beginnt mit der Inputschicht $l=0$, welche ein Tensor ist, der
 die Inputwerte enthält. Die Schicht hat logischerweise die gleiche Form, wie ein MNIST-Bild.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-input_data = tf.keras.Input(shape=(28,28,1))
+  input_data = tf.keras.Input(shape=(28, 28, 1))
 \end{minted}
 \para{}
 Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht
@@ -2887,18 +2885,23 @@ Für alle Schichten werden vorerst unbegründeten Hyperparameter gewählt.
 Für die Convolutional-Schichten wird
 eine Filtergrösse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
 ein Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
-\varphi^{\text{ReLU}}$ verwendet. \\
+\varphi^{\text{ReLU}}$ verwendet.
+Da Keras standardmässig die Initialisierung der Modellparameter mit einer
+Uniformen Verteilung vornimmt, muss der \code{kernel\_initalizer} explizit auf
+\code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initalisation gleich
+wie in Sektion \ref{sec:parameter_initalisieren} statt. \\
 Der Code für die Defition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3),
-strides=(1,1),padding='same', activation='relu')(input_data)
+  conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3),
+  strides=(1, 1), padding='same', activation='relu',
+  kernel_initializer='glorot_normal')
 \end{minted}
 Für die Pooling-Schichten wird analog eine Feldgrösse $f = 2$, ein
 Stride $s = 2$ und Same-Padding gewählt. Dies hat zur Wirkung, dass jedes $(2
 \times 2)$-Feld zu einem einzigen Element zusammengefasst wird. \\
 Der Code für eine dieser Pooling-Schichten lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-pool_layer = tf.keras.layers.MaxPooling2D(pool_size=(2,2),strides=(2,2),padding='same')(econv0)
+  pool_layer = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')
 \end{minted}
 Für den Decoder werden die gleichen Convolutional-Schichten wie für den Encoder
 verwendet. Anstelle von Pooling-Schichten verwendet er UpSampling-Schichten,
@@ -2908,40 +2911,40 @@ ein einziger Pixel auf ein $2 \times 2$-Felder hochskaliert.
 Als Interpolationsmethode wird der Nächste-Nachbar-Algorithmus verwendet.
 Die beschriebene UpSampling-Schicht wird folgendermassen definiert:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-dupsample0 = tf.keras.layers.UpSampling2D(size=(2,2), interpolation='nearest')(dconv0)
+  upsampling_layer = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')
 \end{minted}
 Nun folgt die Deklarierung aller Schichten und deren Verknüpfung. \\
 Das Modell weist einen Flaschenhals auf, welcher zwei Convolutional-Schichten
 tief ist. Das bedeutet, dass der Encoder aus zwei
 Convoutional-Layer-Pooling-Player-Paaren besteht. Danach folgt der einschichtige
 Flaschenhals. Im Anschluss liegt der Decoder, der zwei
-Convolutional-Layer-Upsampling-Layer-Paaren umfasst. \\
+Convolutional-Layer-Upsampling-Layer-Paaren umfasst.
+Um die jeweils neue Schicht zur vorherigen Schicht zu verbinden, gibt man die
+Vorherige in Klammern am Ende des Statements an. \\
 Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-# Encoder
-econv0 = tf.keras.layers.Conv2D(
-filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(input_data)
-emaxpool0 = tf.keras.layers.MaxPooling2D(
-pool_size=(2,2),strides=None,padding='same')(econv0)
-econv1 = tf.keras.layers.Conv2D(
-filters=32, kernel_size=(3,3), strides=(1,1),padding='same',activation='relu')(emaxpool0)
-emaxpool1 = tf.keras.layers.MaxPooling2D(
-pool_size=(2,2), strides=None,padding='same')(econv1)
+  # Encoder
+  input_data = tf.keras.Input(shape=(28, 28, 1))
+  econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
+    activation='relu', kernel_initializer='glorot_normal')(input_data)
+  emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv0)
+  econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
+    activation='relu', kernel_initializer='glorot_normal')(emaxpool0)
+  emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv1)
 
-encoded =  emaxpool1 # Flaschenhals der Form (7,7,32)
+  # Flaschenhals der Form (7, 7, 32)
+  encoded =  emaxpool1
 
-# Decoder
-dconv0 = tf.keras.layers.Conv2D(
-filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(encoded)
-dupsample0 = tf.keras.layers.UpSampling2D(
-size=(2,2), interpolation='nearest')(dconv0)
-dconv1 = tf.keras.layers.Conv2D(
-filters=32, kernel_size=(3,3), strides=(1,1), padding='same', activation='relu')(dupsample0)
-dupsample1 = tf.keras.layers.UpSampling2D(
-size=(2,2), interpolation='nearest')(dconv1)
-dconv2 = tf.keras.layers.Conv2D(
-filters=1,kernel_size=(3,3), strides=(1,1), padding='same', activation='sigmoid')(dupsample1)
-decoded = dconv2
+  # Decoder
+  dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
+    activation='relu', kernel_initializer='glorot_normal')(encoded)
+  dupsample0 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv0)
+  dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
+    activation='relu', kernel_initializer='glorot_normal')(dupsample0)
+  dupsample1 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv1)
+  dconv2 = tf.keras.layers.Conv2D(filters=1, kernel_size=(3, 3), strides=(1, 1), padding='same',
+    activation='sigmoid', kernel_initializer='glorot_normal')(dupsample1)
+  decoded = dconv2
 \end{minted}
 Auffallend im Code ist, dass der Decoder nicht etwa zwei Convolutional-Layers
 besitzt, sondern sogar drei. Die letzte Schicht wird benötigt, damit
@@ -2959,41 +2962,41 @@ Optimierungsverfahren und die Kostenfunktion gewählt werden. Für die Optimieru
 wird das Stochastische-Gradientenverfahren SGD verwendet.
 Als Kostenfunktion wird der Mittlere-Quadratische-Fehler $C_{\text{MSE}}$ gewählt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-autoencoder = tf.keras.Model(input_data, decoded)
-autoencoder.compile(optimizer='sgd',loss='mean_squared_error') # SGD und MSE
+  autoencoder = tf.keras.Model(input_data, decoded)
+  autoencoder.compile(optimizer='sgd', loss='mean_squared_error') # SGD und MSE
 \end{minted}
 Mithilfe von \code{tf.keras.Model.summary} kann man eine Zusammenfassung des
 Modells in Textform erhalten. So können Informationen bezüglich der Form der
 verschiedenen Schichten abgerufen werden, um zu überprüfen, ob alles stimmig ist.
 Nachfolgende Summary gilt für unser Modell:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #
-=================================================================
-input_1 (InputLayer)         [(None, 28, 28, 1)]       0
-_________________________________________________________________
-conv2d (Conv2D)              (None, 28, 28, 32)        320
-_________________________________________________________________
-max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 14, 14, 32)        9248
-_________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 7, 7, 32)          0
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 7, 7, 32)          9248
-_________________________________________________________________
-up_sampling2d (UpSampling2D) (None, 14, 14, 32)        0
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 14, 14, 32)        9248
-_________________________________________________________________
-up_sampling2d_1 (UpSampling2 (None, 28, 28, 32)        0
-_________________________________________________________________
-conv2d_4 (Conv2D)            (None, 28, 28, 1)         289
-=================================================================
-Total params: 28,353
-Trainable params: 28,353
-Non-trainable params: 0
-_________________________________________________________________
+  _________________________________________________________________
+  Layer (type)                 Output Shape              Param #
+  =================================================================
+  input_1 (InputLayer)         [(None, 28, 28, 1)]       0
+  _________________________________________________________________
+  conv2d (Conv2D)              (None, 28, 28, 32)        320
+  _________________________________________________________________
+  max_pooling2d (MaxPooling2D) (None, 14, 14, 32)        0
+  _________________________________________________________________
+  conv2d_1 (Conv2D)            (None, 14, 14, 32)        9248
+  _________________________________________________________________
+  max_pooling2d_1 (MaxPooling2 (None, 7, 7, 32)          0
+  _________________________________________________________________
+  conv2d_2 (Conv2D)            (None, 7, 7, 32)          9248
+  _________________________________________________________________
+  up_sampling2d (UpSampling2D) (None, 14, 14, 32)        0
+  _________________________________________________________________
+  conv2d_3 (Conv2D)            (None, 14, 14, 32)        9248
+  _________________________________________________________________
+  up_sampling2d_1 (UpSampling2 (None, 28, 28, 32)        0
+  _________________________________________________________________
+  conv2d_4 (Conv2D)            (None, 28, 28, 1)         289
+  =================================================================
+  Total params: 28,353
+  Trainable params: 28,353
+  Non-trainable params: 0
+  _________________________________________________________________
 \end{minted}
 Es zeigt sich, dass das Modell gesamthaft circa 28'000 Parameter umfasst,
 welche zu trainieren sind.
@@ -3010,8 +3013,8 @@ Wichtig ist auch, dass die Trainingssampels vor dem Training druchmischt werden,
 innerhalb der Anordnung der Samples erlernt werden. Als letzen Argument wird noch
 der Testdatensatz angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-autoencoder.fit(
-x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=Trü,validation_data=(x_test_noisy,x_test))
+  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,
+    validation_data=(x_test_noisy, x_test))
 \end{minted}
 Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet und auch die
 CUDA-Version von TF installiert ist, erfolgt das Training mithilfe von GPU-Hardwarebeschleunigung.
@@ -3021,10 +3024,10 @@ Kommandozeile. Diese Infos weisen nachstehenden Charakter auf und geben Auskunft
 Werte der Kostenfunktion. Die Kosten für den Trainingsdatensatz werden mit
 \code{loss} bezeichnet und die für den Testdatensatz mit \code{val\_loss}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
-Epoch 99/100
-60000/60000 [==============================] - 3s 57us/sample - loss: 0.1102 - val_loss: 0.1089
+  Epoch 3/100
+  60000/60000 [==============================] - 4s 60us/sample - loss: 0.0911 - val_loss: 0.0772
 \end{minted}
-Das Modell hat nach dem Training einen \code{val\_los} von $0.1089$,
+Das Kostenfunktion hat nach dem Training einene Wert \code{val\_los} von $0.0180$,
 bezüglich dem Testdatensatz.
 \para{}
 Jetzt, da das Modell trainiert wurde, ist es sinnvoll es auf dem Computer als
@@ -3032,11 +3035,11 @@ Modelldatei abzuspeichern.
 So muss das es nicht jedesmal wieder neu trainieren werden, sondern kann über
 die Modelldatei eingelesen werden. Für dieses Einlesen, wird folgender Code benötigt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-autoencoder.save('denoiser.model')
+  autoencoder.save('denoiser.model')
 \end{minted}
 Um das Modell wieder einzulesen verwendet man folgenden Code:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-autoencoder = tf.keras.models.load_model('denoiser.model')
+  autoencoder = tf.keras.models.load_model('denoiser.model')
 \end{minted}
 Mit der Summary-Funktion kann man überprüfen, ob das richtige Modell geladen wurde.
 
@@ -3049,38 +3052,37 @@ unbenutzten Daten vom Modell nicht auswenig gelernt werden konnten.
 Mit der Funktion \code{tf.keras.model.predict}
 erhält man alle Vorhersagen des Autoencoders zum gesamten Testdatensatz.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-denoised_imgs = autoencoder.predict(x_test)
+  denoised_imgs = autoencoder.predict(x_test)
 \end{minted}
 Mithilfe von der Matplotlib können die entrauschten Bilder mit den
 ursprünglichen MNIST-Bilder direkt verglichen werden.
 So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse tatsächlich sind.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-n = 10 # jeweils 10 Bilder
-plt.figure()
-for i in range(n):
-# verrauschte Bilder
-ax = plt.subplot(3, n, i+1)
-plt.imshow(x_test_noisy[i].reshape(28,28))
-plt.gray()
+  n = 10 # jeweils 10 Bilder
+  plt.figure()
+  for i in range(n):
+    # verrauschte Bilder
+    ax = plt.subplot(3, n, 1+i)
+    plt.imshow(x_test_noisy[i].reshape(28, 28))
+    plt.gray()
 
-# entrauschte Bilder
-ax = plt.subplot(3, n, i+1+n)
-plt.imshow(decoded_imgs[i].reshape(28,28))
-plt.gray()
+    # entrauschte Bilder
+    ax = plt.subplot(3, n, 1+n+i)
+    plt.imshow(decoded_imgs[i].reshape(28, 28))
+    plt.gray()
 
-# Original-Bilder
-ax = plt.subplot(3, n, i+1+2*n)
-plt.imshow(x_test[i].reshape(28,28))
-plt.gray()
-
-plt.show()
+    # Original-Bilder
+    ax = plt.subplot(3, n, 1+2*n+i)
+    plt.imshow(x_test[i].reshape(28, 28))
+    plt.gray()
+  plt.show()
 \end{minted}
 In der ersten Zeile der Grafik sind die verrauschten Bilder dargestellt.
 Darunter folgen die Rekonstuktionen als Ergebniss des Modells und ganz unten
 sind die Original-Bilder zu sehen.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{denoised_clipped.png}
+  \includegraphics[width=0.9\textwidth]{denoised.png}
   \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
 \end{figure}
 Wirkliche Unterschiede zwischen der zweiten und der dritten Zeile sind kaum zu erkennen.
@@ -3097,7 +3099,7 @@ zu identifizieren.
 \para{}
 Zuerst werden einige Arrays definiert, welche die zu testenden Hyperparameter beinhalten.
 Ein Hyperparameter ist die Anzahl Epochen. Diesen werden wir aber nicht testen,
-da es offensichtlich ist, dass mit einer längeren Trainingszeit auch die
+da es offensichtlich ist, dass mit einer längeren Trainingszeit sich auch die
 Resultate verbessern.
 Alle Modelle werden für 20 Epochen traniert.
 \para{}
@@ -3108,47 +3110,68 @@ damit die Resultate besser werden. \\
 Als zu testende Anzahl von Filtern werden definiert: 16, 32, 64, 128, 256.
 Für die Aktivierungsfunktionen werden Sigmoid und ReLU ausprobiert und gelangen
 für das ganze Modell zur Anwendung.
-Jedoch wird die letzte Schicht immer die
+Jedoch wird für die letzte Schicht immer die
 Sigmoid-Aktivierungsfunktion verwendet, damit die Outputs im Intervall $[0,1]$
 liegen.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-EPOCHS = 20
+  EPOCHS = 20
 
-POSSIBLE_BATCH_SIZES = [ 16, 32, 64, 128, 256]
-POSSIBLE_NUMS_FILTER = [ 16, 32, 64, 128, 256]
-POSSIBLE_ACITVATIONFUNCTIONS = [ 'sigmoid', 'relu' ]
+  BATCH_SIZES = [ 16, 32, 64, 128, 256 ]
+  FILTER_NUMS = [ 16, 32, 64, 128, 256 ]
+  ACTIVATIONFUNCTIONS = [ 'sigmoid', 'relu' ]
 \end{minted}
 Nun werden wir den gesamten Code zum Bauen des Graphens, zur Kompilierung und
 zum Training des Modells in verschachtele For-Loops stecken, welche alle
 Kombinationen an Hyperparameter ausprobiert.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-for activation_function in POSSIBLE_ACITVATIONFUNCTIONS:
-for batch_size in POSSIBLE_BATCH_SIZES:
-for num_filters in POSSIBLE_NUMS_FILTER:
-# ganzer Modell-Code
+  for activation_function in ACTIVATIONFUNCTIONS:
+    for batch_size in BATCH_SIZES:
+      for num_filters in FILTER_NUMS:
+        # ganzer Modell-Code
 \end{minted}
+Nun muss der Code zur Definition des Modells insofern modiziert werden, dass
+die Variabeln \code{activation\_function}, \code{batch\_size} und
+\code{num\_filters} an den entsprechenden Stellen anstatt der Konstanten benutzt werden.
 
-\subsubsection{TensorBoard Konfiguration}
+\subsubsection{TensorBoard konfigurieren}
 Um den Lernprozess und die Leistungen des Modells zu analysieren,
 wird nun nun TensorBoard konfiguriert.
-Um TensorBoard einzurichten, ist zuerst eine entsprechende
-Variable zu definieren. Hierbei ist anzugeben, wo die TensorBoard-Daten
-gespeichert werden sollen. Um Verwechslungen bei den Hyperparametereinstellungen
-zu vermeiden, sind die Dateien aussagekräftig zu benennen. \\
-Auch sind gewisse Optionen für die Trainings-Datenerfassung zu spezifizieren.
-Diese müssen bei der Komilierung des Modells unter \code{metrics} angegeben
-werden. Wichtig ist die Präzision des Modells. Die entsprechende Option wird \code{accuracy} genannt.
+Dafür müssen die Methoden \code{compile} und \code{fit} angepasst werden.
+Zuerst müssen wir in der \code{compile} Methode die zu erfassenden Metriken
+angeben. Von Interesse ist die \code{'accuracy'}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-autoencoder.compile(optimizer='sgd',loss=loss, metrics=['accuracy'])
-NAME = '{}-{}-batch-{}-filters-{}-denoiser'.format(loss, activation_function, batch_size, num_filters)
-tensorboard =
-tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
-autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=Trü,validation_data=(x_test_noisy,x_test),callbacks=[tensorboard])
+  autoencoder.compile(optimizer='sgd', loss='mean_squared_error', metrics=['accuracy'])
+\end{minted}
+Nun muss eine TensorFlow-Variable definiert werden. Hierbei ist anzugeben, wo
+die erfassten Daten gespeichert werden sollen. Dabei ist es sinnvoll den Dateien
+der einzelnen Modelle aussagekräftige Namen zu geben. Deshalb benennen wir die
+Dateien in folgendem Format: ``denoiser-(Aktivierungsfunktion)-(Mini-Batch
+Grösse)-batches-(Anzahl Filter)-filters''.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  NAME = 'denoiser-{}-{}-batches-{}-filters'.format(activation_function, batch_size, num_filters)
+  tensorboard = tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
+\end{minted}
+Zu letzt muss noch die TensorBoard-Variable als \code{callback} in der
+\code{fit}-Methode spezifiziert werden.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
+  autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,
+    validation_data=(x_test_noisy,x_test), callbacks=[tensorboard])
 \end{minted}
 
-\subsubsection{Die optimalen Hyperparameter}
+\subsubsection{TensorBoard-Analyse}
+Um nun die besten Hyperparameter mithilfe von TensorBoard herauszufinden, muss
+zuerst der TensorBoard-Webserver gestartet werden. Dafür navigiert man zuerst
+mit der Kommandozeile in das Verzeichniss, welches die Logdateien enthält.
+Dort kann dann der Webserver mithilfe folgendem Kommando gestartet werden.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
+tensorboard --logdir .
+\end{minted}
+Nun kann mit einem WebBrowser zur angegebenen Webadresse navigieren. Meistens
+ist diese: \code{http://localhost:6006/}.
+Der Graph
+
 Die TensorBoard-Analyse hat ergeben, dass folgende Modelle mit den angegeben
 Hyperparameter am besten eignen:
 \para{}
@@ -3180,15 +3203,26 @@ minimale Vorteile von einer grösseren Anzahl davon.
 \subsection{Diskussion des Modells}
 2 bis drei Seiten.
 
-\subsubsection{Vergleich mit anderen Methoden zur Rauschentfernung}
 
+Auf Modell selber bezogen:
 Echt gutes Modell.
 \subsubsection{Maximale Leistung}
 Wie hoch kann man den Noise-Factor stellen?
 
 \subsubsection{Mögliche Verbesserungen}
-Kreuzentropie-Kostenfunktion
-andere Topologien ausprobieren
+Es gibt konkrete Verbesserungsmöglichkeiten, welche nicht umgesetzt wurden bei
+der Entwicklung des Denoisers. Es wäre vermutlich möglich gewesen bessere
+Resulate zu erziehlen, wenn verschiedene Topologien durchprobiert werden wären.
+Denn die Anzahl Zwischenschichten stellt auch einen Hyperparameter dar. Jedoch
+hätte dies das Training noch länger gemacht. \\
+Eine Modifikation, welche wahrscheinlich das Modell deutlich verbessert hätte,
+wäre eine alternative Kostenfunktion gewesen: die Kreuzentropy-Kostenfunktion.
+Diese lässt die Neuronen eines Netzes weniger schnell saturieren und erzeugt so
+bessere Resultate.
+\para{}
+Es ist darauf hinzuweisen, dass das hier konstruierte Modell bei weitem nicht
+das eigentliche Potenzial von TensorFlow und Keras ausschöpft.
+
 
 %%% Local Variables:
 %%% TeX-command-extra-options: "--shell-escape"
