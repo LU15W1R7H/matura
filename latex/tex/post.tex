@@ -100,7 +100,7 @@ Schrittgrösse beim Abstieg bestimmt.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{gd.pdf}
-  \caption{Visualisierung des Gradientenabstiegs: ein Ball rollt das
+  \caption{Visualisierung des Gradientenabstiegs: Ein Ball rollt das
     Gradientenfeld hinab in das lokale Minimum.}
 \end{figure}
 \fi%
@@ -110,31 +110,31 @@ beliebigen \textit{lokalen} Minimum, abhängig davon, wie der Startpunkt
 $\vec{p}_0$ gewählt wurde.
 
 \chapter{Herleitung der Rückwärtsprogagierung für KNNs}\label{sec:anhang_bp}
-Da ein KNN, wie der Name es schon sagt, vernetzt ist, können die partiellen
-Ableitungen einer Schicht bezüglich seiner Nachbarsschichten berechnet werden.
+Da ein KNN, wie der Name schon andeutet, vernetzt ist, können die partiellen
+Ableitungen einer Schicht anhand seiner Nachbarsschichten berechnet werden.
 Dies ist auch der namensgebende Grundgedanke der Rückwärtsprogagierung: Man
-beginnt in der letzten Schicht die partiellen Ableitungen zu bestimmen und
-berechnet dann im Rückwärtsgang Schicht für Schicht die vorherigen
+beginnt damit die partiellen Ableitung der letzten Schicht zu bestimmen und
+berechnet dann retrograd Schicht für Schicht die vorherigen
 partiellen Ableitungen, bis zur Inputsschicht. \\
-Dies macht man mithilfe der Kettenregel der Ableitungen.
-Es ist sinnvoll für das Aufstellen dieser Gleichungen das Netzwerk als
-\keyword{Computation Graph} zu betrachten.
+Dies geschieht unter Anwendung der Kettenregel der Ableitungen.
+Es ist sinnvoll, für das Aufstellen dieser Gleichungen das Netzwerk als
+\keyword{Computational Graph} zu betrachten.
 \para{}
 \begin{infobox}{Computational Graph}
-  Ein Computation Graph ist eine Darstellung einer Verkettung von Funktionen als Netzwerk von Operationen.
-  Die Knoten im Graph stellen Variabeln dar und die Pfade, welche die Knoten
-  verbinden, sind die Funktionen, welche die Variabeln aufeinander abbilden. Die
-  Funktion wird auf die Variable angewandet, von der der Pfad ausgeht. Der Knoten
+  Ein Computational Graph ist die Darstellung einer Verkettung von Funktionen als Netzwerk von Operationen.
+  Die Knoten im Graph stellen Variablen dar und die Pfade, welche die Knoten
+  verbinden, sind die Funktionen, welche die Variablen aufeinander abbilden. Die
+  Funktion wird auf die Variable angewendet, von der der Pfad ausgeht. Der Knoten,
   in welchem der Pfad endet, nimmt dann den Funktionswert an. Falls
-  mehrere Pfade in einem Knoten enden, werden die einzelnen Werte der Pfade
-  zusammenaddiert, um die Variable zu bilden. \\
-  KETTENREGEL NOCHMALS ERWÄHNEN ODER
-  IN ABBILDUNG (LEIBNIZ-SCHREIBWEISE!)
+  mehrere Pfade in einem einzigen Knoten enden, werden die einzelnen Werte der Pfade
+  zusammenaddiert, um die Variable zu bilden. In diesem Graphen sind die
+  Abhängigkeiten der Variablen voneinander gut ersichtlich. Auf dieser Basis können mithilfe
+  der Kettenregel die Ableitungen unkompliziert bestimmt werden.
 \end{infobox}
 \para{}
 \begin{examplebox}{Beispiel: Computational Graph}
-  Untenstehend ist ein Beispiel eines Computation
-  Graphs zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
+  Untenstehend ist ein Beispiel eines Computational
+  Graph zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
   \para{}
   \begin{center}
     \includegraphics[width=0.8\textwidth]{compgraph.pdf}
@@ -142,17 +142,18 @@ Es ist sinnvoll für das Aufstellen dieser Gleichungen das Netzwerk als
   \end{center}
 \end{examplebox}
 \para{}
-Der erste Schritt der Rückwärtsprogagierung besteht darin, dass man die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
+\pagebreak
+Der erste Schritt der Rückwärtsprogagierung besteht darin, dass die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
 der Kostenfunktion $C$ bezüglich den gewichteten Summen $z_j^l$ aller Schichten
-berechnet. Daraus lässt sich dann später sehr einfach die partiellen Ableitungen
-bezüglich den Gewichten $\ds\partderiv{C}{w_{j,k}^l}$ und bezüglich den Neigung
-$\ds\partderiv{C}{b_j^l}$ berechnen.
+berechnet werden müssen. Daraus lassen sich dann später die partiellen Ableitungen
+bezüglich den Gewichten $\ds\partderiv{C}{w_{j,k}^l}$ und bezüglich den Neigungen
+$\ds\partderiv{C}{b_j^l}$ ermitteln.
 \para{}
-Zur Übersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^L$ für
+Zur Übersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^l$ für
 jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezüglich der
-gewichteten Summe dieses Neurons ist (siehe Gl. (\ref{eq:BP0}). Ebenfalls definiert man analog einen Fehlervektor
+gewichteten Summe dieses Neurons darstellt (siehe Gl. (\ref{eq:BP0}). Ebenfalls definiert man analog einen Fehlervektor
 $\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
-zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es diesen für jedes Neuron jeder Schicht zu
+zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es, diesen Wert für jedes Neuron jeder Schicht zu
 berechnen.
 \\
 \begin{gather}
@@ -160,41 +161,42 @@ berechnen.
   \tag{BP0a}\label{eq:BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
 \end{gather}
 \\
-Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewandt wird, beginnt
-man auch dort mit der Berechnung des Fehlers $\vec{\delta}^L$.
-Wir stellen nun einen Computation Graph auf, um die partiellen Ableitungen zu bilden.
+Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewendet wird, beginnt
+dort auch die Berechnung des Fehlers $\vec{\delta}^L$.
+Nun wird ein Computational Graph aufgestellt, um die partiellen Ableitungen zu bestimmen.
 \para{}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{del_l.pdf}
-  \caption{Computation Graph zur Berechnung von $\vec{\delta}^L$}
+  \caption{Computational Graph zur Berechnung von $\vec{\delta}^L$}
   \label{fig:cg_L}
 \end{figure}
 \para{}
-Wir können dem Computation Graph aus Abbildung (\ref{fig:cg_L}) entnehmen, dass die Kosten $C$ eine Funktion
-in Abhängigkeit von den letzten Aktivierungen $a_j^L$ ist, welche wiederum in
-Abhängigkeit von der jeweiligen gewichteten Summe $z_j^L$ berechnet werden.
-Somit können wir mithilfe der Kettenregel die Beziehung (\ref{eq:BPh1}) aufstellen.
+Aus dem Computational Graph der Abbildung (\ref{fig:cg_L}) kann entnommen werden, dass die Kosten $C$ eine Funktion
+in Abhängigkeit von den letzten Aktivierungen $a_j^L$ ist. Diese ist wiederum
+eine Funktion in Abhängigkeit von der jeweiligen gewichteten Summe $z_j^L$.
+Somit kann mithilfe der Kettenregel die Beziehung (\ref{eq:BPh1})
+aufstellt werden.
 \\
 \begin{equation}\label{eq:BPh1}
   \delta_j^L = \partderiv{C}{z_j^L} = \partderiv{C}{a_j^L} \cdot \partderiv{a_j^L}{z_j^L}
 \end{equation}
 \\
 Da $a_j^L$ durch die Anwendung der Aktivierungsfunktion $\varphi$ auf $z_j^L$
-gebildet wird, ist $\ds\partderiv{a_j^L}{z_j^L}$ einfach die Ableitung der Aktivierungsfunktion
-$\varphi'(z_j^L)$. Somit erhalten wir die erste (\ref{eq:BP1}) von vier
-wichtigen Gleichungen für die Rückwärtsprogagierung.
+gebildet wird, ist $\ds\partderiv{a_j^L}{z_j^L}$ die Ableitung der Aktivierungsfunktion
+$\varphi'(z_j^L)$. Auf diese Weise lässt sich die erste (\ref{eq:BP1}) von vier
+wichtigen Gleichungen für die Rückwärtsprogagierung herleiten.
 \\
 \begin{equation}\tag{BP1}\label{eq:BP1}
   \delta_j^L = \partderiv{C}{a_j^L} \cdot \varphi'(z_j^L)
 \end{equation}
 \\
-Nun möchten wir diese Ausdrücke wieder in Matrixschreibweise realisieren,
-welche die ganze Schicht $L$ zusammenfasst. Dazu
-muss eine neue Operation eingeführt werden: das Hadamard-Produkt.
+Um diese Ausdrücke wieder in Matrixschreibweise zu realisieren,
+welche die ganze Schicht $L$ zusammenfasst, muss eine
+neue Operation eingeführt werden: das Hadamard-Produkt.
 
 \begin{defbox}{Hadamard-Produkt}
-  Das Hadamard-Produkt (auch elementweises Produkt) ist ein spezielles Produkt zweier gleichgrossen Matrizen
+  Das Hadamard-Produkt (auch elementweises Produkt) ist eine spezielle Multiplikation zweier gleichgrosser Matrizen
   $\mat{A} \in \set{R}^{m \times n}$ und $\mat{B} \in \set{R}^{m \times n}$.
   Die resultierende Matrix ergibt sich aus der elementweisen Multiplikation der Ausgangsmatrizen.
 
@@ -225,7 +227,8 @@ muss eine neue Operation eingeführt werden: das Hadamard-Produkt.
 \para{}
 
 Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
-könne wir den Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0}) berechnen.
+kann der Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0})
+berechnen werden.
 
 \begin{equation}\label{eq:BPh0}
   \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'[\vec{z}^L]
@@ -233,27 +236,28 @@ könne wir den Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0}) b
 
 Dabei ist der erste Operand des Hadamard-Produkts nichts anderes als
 der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezüglich dem Aktivierungsvektor
-$\vec{a}^L$ der letzten Schicht. Dieser Gradient kann einfach berechnet werden, indem man die
-vektorisierte Ableitungsfunktion für die gewählte Kostenfunktion bildet. Würde man die
-Mittlere quadratischen Abweichung $C = \frac{1}{2|L|}(\vec{\hat{y}} - \vec{a}^L)^2$ als Kostenfunktion wählen, hätten wir
+$\vec{a}^L$ der letzten Schicht. Dieser Gradient kann ermittelt werden, indem die
+vektorisierte Ableitungsfunktion für die gewählte Kostenfunktion gebildet wird. Würde die
+Mittlere quadratischen Abweichung $C = \frac{1}{2|L|}(\vec{\hat{y}} -
+\vec{a}^L)^2$ als Kostenfunktion gewählt werden, ergibbt sich
 $\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}}) \cdot \frac{1}{|L|}$.
 \para{}
-Daraus folgt die kompakte matrix-version (\ref{eq:BP1a}) der Gleichung
+Daraus folgt die kompakte Matrix-Version (\ref{eq:BP1a}) der Gleichung
 (\ref{eq:BP1}), welche den Fehlervektor für die letzte Schicht berechnet.
 \\
 \begin{equation}\tag{BP1a}\label{eq:BP1a}
   \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
 \end{equation}
 \\
-Nun müssen wir eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
+Nun soll eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
 der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetzigen Schicht
-erarbeiten. Dafür stellen wir zuallererst wieder einen Computation Graph auf
+erarbeiten werden. Zu diesem Zweck ist wiederum ein Computational Graph aufzustellen
 (siehe Abb. (\ref{fig:cg_L-1})).
 \para{}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{del_l-1.pdf}
-  \caption{Computation Graph zur Berechnung von $\delta_j^{l-1}$}
+  \caption{Computational Graph zur Berechnung von $\delta_j^{l-1}$}
   \label{fig:cg_L-1}
 \end{figure}
 \para{}
@@ -263,30 +267,31 @@ Es gilt erneut die Gleichung (\ref{eq:BPh1}) für die Berechnung des Fehlers $\d
   \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
 \end{equation}
 \\
-Zürst einmal ist der erste Faktor wieder die Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
-Desweiteren beeinflusst beim Übergang der Schicht ($l-1$) zur Schicht $l$ eine Aktivierungen
+Der erste Faktor entspricht der Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
+Beim Übergang einer Schicht ($l-1$) zur Schicht $l$ beinflusst eine Aktivierung
 $a_j^{l-1}$ alle gewichteten Summen $z_k^l$. Mit der Kettenregel folgt daher,
 dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
-$\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^l}{a_j^{l-1}}$ sein muss. Wir
-erhalten Gleichung (\ref{eq:BPh2}).
+$\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^l}{a_j^{l-1}}$ sein muss.
+Daraus ergibt sich Gleichung (\ref{eq:BPh2}).
 \\
 \begin{equation}\label{eq:BPh2}
   \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \partderiv{C}{z_k^l} \cdot \partderiv{z_k^l}{a_j^{l-1}} \right)
 \end{equation}
 \\
-Um die gewichtete Summe $z_k^l$ zu bilden, multipliziert man einfach die
-Aktivierung $a_j^{l-1}$ der vorherigen Schicht mit den entsprechenden Gewichten $w_{k,j}^{l-1}$.
-Dadurch ist diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade das
+Um die gewichtete Summe $z_k^l$ zu bilden, wird
+Aktivierung $a_j^{l-1}$ der vorherigen Schicht mit den entsprechenden Gewichten
+$w_{k,j}^{l-1}$ multipliziert.
+Dadurch entspricht diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade dem
 Gewicht selbst. Desweiteren ist $\ds\partderiv{C}{z_k^l}$ per Definition der
-Fehler $\delta_k^l$. Mit dieser Erkenntnis erhalten wir die zweite essentielle
-Gleichung (\ref{eq:BP2}) für die Rückwärtsprogagierung.
+Fehler $\delta_k^l$. Mit dieser Erkenntnis lässt sich die zweite essentielle
+Gleichung (\ref{eq:BP2}) für die Rückwärtsprogagierung aufstellen.
 \\
 \begin{equation}\tag{BP2}\label{eq:BP2}
   \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \delta_k^l \cdot w_{k,j}^{l-1} \right)
 \end{equation}
 \\
-Auch diese Gleichung hätten wir gerne in der Matrixschreibweise. Wir beginnen
-mit der Erweiterung auf alle gewichteten Summen.
+Auch diese Gleichung soll in der Matrixschreibweise dargestellt werden. Zu
+diesem Zweck wird der Erweiterungen auf alle gewichteten Summen begonnen:
 \\
 \begin{equation*}
   \vec{\delta}^{l-1} = \vecf{\varphi}'[\vec{z}^{l-1}] \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|}^{l-1} \cdot \delta_k^l \end{pmatrix}}
@@ -295,7 +300,7 @@ mit der Erweiterung auf alle gewichteten Summen.
 Der zweite Operant des Hadamard-Produkts ist hierbei gerade das Produkt der
 Matrixmultiplikation zwischen
 der transponierten Gewichtsmatrix $\trans{(\mat{W}^{l-1})}$ der Schicht ($l-1$)
-und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$ (ersichtlich in folgender Gleichung).
+und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$.
 
 \begin{gather*}
   \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|} \cdot \delta_k^l \end{pmatrix}} =
@@ -314,17 +319,17 @@ und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$ (ersichtlich in folgender 
     \end{pmatrix}}
   \vec{\delta}^l = \trans{(\mat{W}^{l-1})} \vec{\delta}^l
 \end{gather*}
-
-Nun haben wir unsere rekursive Fehlerdefinition in Matrixschreibweise und somit
-die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2}).
+\para{}
+Damit wurde die die rekursive Fehlerdefinition in Matrixschreibweise
+abbgebildet. Und wir erhalten die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2}).
 \\
 \begin{equation}\tag{BP2a}\label{eq:BP2a}
   \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
 \end{equation}
 \\
-In einem letzten Schritt müssen wir jetzt noch Formeln herleiten, mit welchen
-man anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
-der Neigungen berechnen kann.
+In einem letzten Schritt sind nun noch die noch Formeln herzuleiten, mit welchen
+anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
+der Neigungen berechnen werden können.
 \para{}
 Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
 Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel (\ref{eq:BPh3}).
@@ -333,18 +338,17 @@ Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel (\ref{eq:BPh3}).
   \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{b_k^l}
 \end{equation}
 \\
-Der erste Term ist hierbei per Definition unser Fehler $\delta_j^{l+1}$ und der
-zweite Term lässt sich zu 1 evaluieren, da die Summe $z_k^{l+1}$ nur aus
+Der erste Term ist hierbei per Definition der Fehler $\delta_j^{l+1}$ und der
+zweite Term lässt sich auf 1 kürzen, da die Summe $z_k^{l+1}$ nur aus
 $b_k^l$ besteht und aus Summanden, welche für die partielle Ableitung als konstant gelten.
-Somit ist die Ableitung der Neigung gerade unser Fehler und wir erhalten die
-dritte (\ref{eq:BP3}) von vier essentielen Gleichungen.
+Somit entspricht die Ableitung der Neigung gerade dem Fehler, womit die
+dritte (\ref{eq:BP3}) von vier essentiellen Gleichungen ermittelt wurde.
 \\
 \begin{equation}\tag{BP3}\label{eq:BP3}
   \partderiv{C}{b_j^l} = \delta_j^{l+1}
 \end{equation}
 \\
-Somit ist der Kostengradient bezüglich der Neigung gerade der Fehlervektor
-(siehe Gl. (\ref{eq:BP3a})).
+Somit entspricht der Kostengradient bezüglich der Neigung dem Fehlervektor.
 \\
 \begin{equation}\tag{BP3a}\label{eq:BP3a}
   \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
@@ -352,21 +356,21 @@ Somit ist der Kostengradient bezüglich der Neigung gerade der Fehlervektor
 \\
 Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
 gewichteten Summe $z_j^{l+1}$. Dadurch gilt für die partiellen Ableitungen der
-Kosten nach dem Gewicht Gleichung (\ref{eq:BPh4}).
+Kosten nach dem Gewicht die Gleichung (\ref{eq:BPh4}).
 \\
 \begin{equation}\label{eq:BPh4}
   \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
 \end{equation}
 \\
-Dabei lässt sich der erste Teil wieder zum Fehler $\delta_j^{l+1}$ evaluieren.
+Dabei lässt sich der erste Teil der Gleichung entspricht wieder dem Fehler $\delta_j^{l+1}$.
 Die zweite partielle Ableitung ist gerade die Aktivierung $a_k^l$, da sich die
 gewichtete Summe aus der Multiplikation des Gewichtes mit der Aktivierung ergibt.
-Somit erhalten wir die letzte der vier essentiellen Gleichungen (\ref{eq:BP4}).
+Auf diese Weise ensteht die letzte der vier essentiellen Gleichungen (\ref{eq:BP4}).
 \begin{equation}\tag{BP4}\label{eq:BP4}
   \partderiv{C}{w_{j,k}^l} = \delta_j^{l+1} \cdot a_k^l
 \end{equation}
 \\
-Die Matrix-version davon ist Gleichung (\ref{eq:BP4a}).
+Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
 \begin{equation}\tag{BP4a}\label{eq:BP4a}
   \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
 \end{equation}
@@ -464,7 +468,7 @@ implementation für standard routines wie Vorwärts- und Rückwärtspropagierung
 
 \subsubsection*{Automatische Gradientenberechnung}
 Als wir die Rückwärtsprogagierung hergeleitet haben, haben wir mithilfe von
-Computation Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
+Computational Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
 bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
 TF auch datenstromorient.
 
@@ -474,7 +478,7 @@ TF auch datenstromorient.
 % Therefor TF has a built-in support for automatic gradient computation.
 % It extends the TF Graph using following procedure:
 % If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
-% $I$ it first finds the path in the computation graph from $I$ to $C$. It then
+% $I$ it first finds the path in the computational graph from $I$ to $C$. It then
 % backtracks from $C$ to $I$ and for each operation on the backward path it adds a
 % node to the graph composing the partial gradients using the chain rule. The
 % newely added node computes the gradient function for the corresponding operation

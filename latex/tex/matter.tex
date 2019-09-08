@@ -210,7 +210,7 @@ werden, sondern als Funktion der Modellparameter
 $C(\param_1, \param_2, \ldots, \param_k)$. Denn diese Werte sollten angepasst
 werden, um das Modell zu verbessern.
 \para{}
-Für diese Optimierung wird das sogennante \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
+Für diese Optimierung wird das sogenannte \keyword{Gradientenverfahren} (engl.: Gradient descent) verwendet.
 Das Gradientenverfahren ist eine gängige Methode, um Funktionen $f: \set{R}^n \to
 \set{R}$ zu minimieren
 \footnote{Üblicherweise wird auf Gymnasialstufe vermittelt, dass die lokalen
@@ -233,7 +233,7 @@ Gleichung:
 Wie die initialen Modellparameter $\vec{\param}_{t=0}$ zu wählen sind, wird in Sektion
 (\ref{sec:parameter_initalisieren}) erläutert.
 \para{}
-Die sogennante \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gd_ml}) stellt
+Die sogenannte \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gd_ml}) stellt
 einen Hyperparameter dar. Sie ist der positive Proportionalitätsfaktor, welcher die Schrittgrösse des
 Gradientenabstiegs bestimmt.
 Je nach zu minimierender Funktion muss sie anders gewählt werden.
@@ -267,7 +267,7 @@ Bei grossen Datensätzen würde es sehr lange dauern, bis das Modell nur annähe
 Somit steht die Genauigkeit in keinem Verhältniss zur Effizienz dieser Methode.
 \para{}
 Bei SGD wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradienten einiger Trainingssamples approximiert.
-Dazu wird der Trainingsdatensatz in sogennante \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
+Dazu wird der Trainingsdatensatz in sogenannte \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
 Als Konsequenz finden deutlich mehr Iterationen in einer einzigen
 Durchkämmung der Trainingsdaten statt. Eine solche vollständige Durchkämmung der Trainingsdaten
 bezeichnet man als eine \keyword{Epoche}.
@@ -365,18 +365,22 @@ Sampels anzuschmiegen.
 % ------------------------------------------------------------
 
 \chapter{Deep Learning und Künstliche Neuronale Netze}
-Nun betrachten wir ein spezifisches Modell, welches die wohl besten Resultate
-für die meisten Problemstellungen des Maschinellen Lernens (Bilderkennung,
-Spracherkennung, etc.) liefert. Es handelt sich um das \keyword{Künstliche Neuronale Netz} (eng.: Neural Network) kurz KNN.
-Der Bereich des Maschinellen Lernens, welcher sich mit Neuronalen Netzen
-beschäftigt, bezeichnet man als \keyword{Deep Learning}.
+Nach dem im ersten Kapitel die Basis für ein fundiertes Verständnis von
+Maschinellem Lernen gelegt worden ist, soll es nun im zweiten Kapitel darum
+gehen, ein spezifisches Modell, namentlich Künstliche Neuronale Netze, zu erläutern.
 \para{}
-Künstliche Neuronale Netze sind zum Teil biologisch von Nervensystemen vieler
+Die wohl besten Resultate für die meisten Problemstellungen des Maschinellen Lernens (Bilderkennung,
+Spracherkennung, etc.) werden durch \keyword{Künstliche Neuronale Netze} (KNN) (engl.: Neural Network) geliefert.
+Man bezeichnet diesen Bereich des Maschinellen Lernens auch als \keyword{Deep
+  Learning}\footnote{WEITERFÜHRENDE QUELLEN BÜCHER}.
+\para{}
+Künstliche Neuronale Netze sind vor allem biologisch durch Nervensystemen von
 Lebewesen inspiriert.
-Sie sind aber lediglich eine Abstraktion ihrer Informationverarbeitung und versuchen nicht eine möglichst genäu biologische Abbildung darzustellen.
-Es gibt nicht nur eine Art von Neuronalem Netz, sondern es exisitieren die
+Sie sind aber lediglich eine Abstraktion dieser Informationverarbeitung und
+versuchen nicht eine möglichst genaue biologische Abbildung zu kopieren.
+Es gibt nicht nur eine Art von Neuronalem Netz, sondern es existieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewählt werden
-müssen. Diese Arbeit wird vorallem von zwei solchen Architekturen gebrauch machen:
+müssen. Diese Arbeit wird vor allem von zwei solcher Architekturen Gebrauch machen:
 Convolutional Neural Networks und sogenannte Autoencodern.
 
 \para{}
@@ -386,8 +390,8 @@ Convolutional Neural Networks und sogenannte Autoencodern.
 Um den Aufbau und die Funktion eines Künstlichen Neuronalen Netzes besser zu
 verstehen, wird im folgenden ein Vorgänger des KNN erklärt: das \keyword{Perzeptron}.
 \para{}
-Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. Dieses
-besteht aus einem einzigen Künstlichen Neuron. Dieses Künstliche Neuron
+Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt (QUELLE). Dieses
+besteht aus einem einzigen Künstlichen Neuron. Dieses künstliche Neuron
 hat mehrere binäre Inputs und einen einzigen binären Output. Binär
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
 kann. Des weiteren besitzt es mehrere sogenannte \keyword{Gewichte} $w_1, \ldots,
@@ -403,16 +407,15 @@ Inputvektor $\vec{x}$. \\
 \end{equation*} \\
 Zusätzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bilden sie die Modellparameter.
-Das Perzeptron verhält sich so, dass falls die gewichtete Summe $\tilde{z}$ grösser als der
-Schwellenwert $\tilde{b}$ ist, das Neuron feürt, d.h.\ der Output 1 beträgt.
+Das Perzeptron verhält sich so, dass, falls die gewichtete Summe $\tilde{z}$ grösser als der
+Schwellenwert $\tilde{b}$ ist, das Neuron feuert, d.h.\ der Output 1 beträgt.
 Andernfalls ist er 0 (siehe erster Teil der Hypothesenfunktion $h$ in Gleichung (\ref{eq:perzeptron_1})).
-Es ist gängig die Ungleichung der Bedingung in die Nullstellenform zu bringen
+Es ist gängig, die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \keyword{Neigung} (engl.: bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
-Die Neigung gibt an wie stark das Neuron dazu neigt zu feürn. Eine grosse
-Neigung lässt ein Neuron auch dann noch feürn, wenn nur wenige Inputs
-eingeschaltet sind. SCHLECHT \\
+Die Neigung gibt an, wie stark das Neuron dazu neigt zu feuern.\\
+
 \begin{equation}\label{eq:perzeptron_1}
   h(\vec{x}) =
   \begin{cases}
@@ -447,29 +450,31 @@ eingeschaltet sind. SCHLECHT \\
 \end{figure}
 \para{}
 Für das Trainieren des Perzeptrons existieren spezielle Verfahren, welche hier
-aber nicht relevant sind. Das Gradientenverfahren kann nämlich nicht verwendet
-werden. Der Grund dafür sollte später in Sektion (\ref{sec:künstlicheNeuronen}) einleuchtend werden.
-
+aber nicht weiter beleuchtet werden sollen. Dies aus dem Grund, weil das
+Gradientenverfahren hier nicht verwendet werden kann.
+Der Grund dafür soll später in Sektion (\ref{sec:künstlicheNeuronen}) erläutert werden.
+\para{}
 \cite{wiki:perzeptron}
 \cite{Nielsen}
 
 \subsection{Lernpotenzial eines Perzeptrons}
-Nun stellt sich die Frage, was ein Perzeptron erlernen kann und wofür es genutzt werden kann.
+Nun stellt sich die Frage, was ein Perzeptron eigentlich erlernen kann und wofür
+es nutzbar ist.
 Das Perzeptron ist lediglich ein \keyword{linearer Klassifikator} der Form
-$y = w_1x_1 + \cdots + w_m x_m$. Es ist also ein Klassifizierungsmodell, kein Regressionsmodell.
+$y = w_1x_1 + \cdots + w_m x_m$. Es ist also ein Klassifizierungsmodell und kein Regressionsmodell.
 Es kann die Features in zwei Klassen 0 oder 1 einordnen, wobei der Output der
-Hypothesenfunktion, diese Klassifizierung angibt.
-Überschreitet $y$ den Schwellenwert, werden die Features der Klasse 1 zugeordnet, sonst
+Hypothesenfunktion diese Klassifizierung angibt.
+Überschreitet $y$ den Schwellenwert $\tilde{b}$, werden die Features der Klasse 1 zugeordnet, sonst
 der Klasse 0.
 Jedoch müssen diese Klassen linear separierbar sein.
 \para{}
 Lineare Separierbarkeit bedeutet, dass alle Featurevektoren $\vec{x}_1,\ldots,\vec{x}_p \in \set{R}^m$
 innerhalb ihres Vektorraums $\set{R}^m$ durch eine Hyperebene in ihre Klassen aufteilbar sein müssen.
-Falls das Perzeptron zwei Inputs hat, bedeutet dies, dass die Ortsvektoren
-einfach durch eine Gerade voneinander trennenbar sein müssen (siehe Abb.
+Falls das Perzeptron zwei Inputs besitzt, bedeutet dies, dass die Ortsvektoren
+durch eine Gerade voneinander trennenbar sein müssen (siehe Abb.
 (\ref{fig:linearer_Klassifikator})). \\
-Falls die Features nicht linear separierbar sind, bedeutet dies, dass das
-Perzeptron die Klassifizierung nicht erlernen kann.
+Falls die Features nicht linear separierbar sind,
+kann das Perzeptron die Klassifizierung nicht erlernen.
 BEISPIEL
 \\
 \begin{figure}[h!]
@@ -480,22 +485,22 @@ BEISPIEL
 \cite{wiki:perzeptron}
 \cite{wiki:linear_separability}
 
-\section{Erweiterung der Künstlichen Neuronen}\label{sec:künstlicheNeuronen}
+\section{Erweiterung der künstlichen Neuronen}\label{sec:künstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklärt, nur in der Lage, lineare Klassifikationen
-durchzuführen. Um nun auch kompliziertere Probleme zu lösen, muss das Prinzip
-ausgebaut werden. Ausserdem brauchen wir ein Künstliches Neuron, welches sich
+durchzuführen. Um nun auch Regressionsprobleme zu lösen, muss das Konzept
+ausgebaut werden. Ausserdem brauchen wir ein Künstliches Neuron benötigt, welches sich
 besonders gut als Baustein für KNNs eignet.
 
 
 \subsection{Künstliche Neuronen im Allgemeinen}
 Künstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
-haben und einen einzigen Output. Zu jedem Input $x_i$ ist ein Gewicht
+und nur einen einzigen Output besitzen. Zu jedem Input $x_i$ ist ein Gewicht
 $w_{i}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
-Die Neigung $b$ wird ebenfalls draufaddiert, um $z$ zu erhalten. Nun muss
+Die Neigung $b$ wird ebenfalls dazu addiert, um $z$ zu erhalten. Nun muss
 die sogenannte \keyword{Aktivierung} $a$ gebildet werden. Sie ist der Output des Neurons.
 Die Aktivierung $a = \varphi(z)$ ist das Resultat der
 \keyword{Aktivierungsfunktion} $\varphi: \set{R} \to \set{R}$ angewendet
-auf $z$. Die verschiedenen Künstlichen Neuronen unterscheiden
+auf $z$. Die verschiedenen künstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
 \\
 \begin{figure}[h!]
@@ -508,9 +513,9 @@ sich fast nur in ihrer Aktivierungsfunktion.
 \cite{Nielsen}
 \cite{wiki:kuenstliches_neuron}
 
-\subsection{Perzeptronen als Künstliche Neuronen}
-Zuerst noch einmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
-Ein wesentlicher Unterschied des Perzeptron gegenüber sonstigen Künstlichen
+\subsection{Perzeptronen als künstliche Neuronen}
+Nun nochmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
+Ein wesentlicher Unterschied des Perzeptrons gegenüber sonstigen künstlichen
 Neuronen, besteht darin, dass seine Inputs und Outputs nur binäre Werte
 annehmen können. Um dieses Verhalten des Perzeptrons zu erhalten,
 muss eine Stufenfunktion als Aktivierungfunktion verwendet werden: die Heaviside-Funktion $\Theta$.
@@ -557,22 +562,22 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
 
 
 \subsection{ReLU Neuronen}\label{sec:ReLU}
-Der nächste Schritt nach einer Stufenfunktion als Aktivierungsfunktion, waren
-lineare Aktivierungsfunktionen. Für diese können die Inputs nun belibige reelle
+Der nächste Schritt nach einer Stufenfunktion als Aktivierungsfunktion, sind
+lineare Aktivierungsfunktionen. Für diese können die Inputs nun beliebige reelle
 Zahlen sein.
-Jedoch sind solche lineare Neuronen in einem KNN von keinem Nutzen.
-Das hat den Grund, dass eine Verkettung von linearen Neuronen,
+Jedoch sind solche lineare Neuronen in einem KNN von keinerlei Nutzen.
+Dies ist dadurch begründet, dass eine Verkettung von linearen Neuronen
 immer auf eine einzige lineare Funktion reduziert werden kann. Somit hat
 die Verkettung keinen Mehrwert.
 \para{}
-Stattdessen verwendet man sogennante ReLU Neuornen. Sie benutzen die
-\keyword{Rectified Linear Unit} (\keyword{ReLU}) Aktivierungsfunktion.
-Diese ist
-eine nur teilweise lineare Aktiverungsfunktion. Die Werte grösser als 0 werden
-auf sich selber linear abbgebildet und die Werte kleiner als 0 werden auf 0
+Stattdessen verwendet man sogenannte ReLU Neuronen. Sie benutzen die
+\keyword{Rectified Linear Unit} (\keyword{ReLU}) als Aktivierungsfunktion.
+Diese ist eine
+nur teilweise lineare Aktiverungsfunktion. Die Werte grösser als 0 werden
+auf sich selbst linear abbgebildet und die Werte kleiner als 0 werden auf 0
 abbgebildet (siehe Abb. (\ref{fig:relu})).
-Eine sehr wichtige Eigenschaft von ihr ist, dass sie - im Gegensatz zu den vorhin
-genannten Aktivierungsfunktionen - fast überall differenzierbar%
+Eine sehr wichtige Eigenschaft der ReLU-Funktion ist, dass sie - im Gegensatz zu den vorhin
+Heaviside-Funktion $\Theta$ - fast überall differenzierbar%
 \footnote{%
   Eigentlich ist die ReLU-Funktion in $x=0$ wegen des Knicks nicht
   differenzierbar. Für die Gradientenberechnung definiert man jedoch einfach
@@ -580,17 +585,17 @@ genannten Aktivierungsfunktionen - fast überall differenzierbar%
   korrekt, löst aber das Problem.
 }%
 und strikt monoton
-steigend ist. Erst für diese Aktivierungsfunktion, kann das Gradientenverfahren
-angewendet werden und somit das KNN trainiert werden.
+steigend ist. Erst für diese Aktivierungsfunktion kann das Gradientenverfahren
+angewendet und somit das KNN trainiert werden.
 \para{}
-Da sie nur teilweise linear ist, gehört sie genaugenommen den
-Nicht-linearen-Aktiverungsfunktionen an. Diese Nicht-Linearität erlaubt es dem
-Neuronen deutlich komplexere Systeme zu modellieren und so deutlich komplexere
-Probleme zu lösen. Wir werden in Sektion (\ref{sec:UAT}) sogar erfahren, dass
-eine Kompostion von nicht-linearen Neurön jede beliebige Funktion approximieren kann.
+Da die ReLU-Funktion nur teilweise linear ist, gehört sie genaugenommen den
+nicht-linearen Aktiverungsfunktionen an. Diese Nicht-Linearität erlaubt es dem
+Neuron, deutlich komplexere Systeme zu modellieren bzw. deutlich komplexere
+Probleme zu lösen. In Sektion (\ref{sec:UAT}) wird dargelegt, dass
+eine Kompostion von nicht-linearen Neuronen jede beliebige Funktion approximieren kann.
 \para{}
-Wir werden diese Art von Neuron vorerst zur Seite legen und erst wieder in
-Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung betrachten.
+Das ReLU-Neuron werden wir an dieser Stelle zur Seite legen und erst wieder in
+Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung wieder betrachten.
 \para{}
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
@@ -634,18 +639,20 @@ Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung betrachten.
 \cite{Nielsen}
 
 \subsection{Sigmoid Neuronen}
-Ein weiteres nicht-lineares Neuron, sind sogennante Sigmoid-Neuronen.
+Ein weiteres nicht-lineares Neuron sind sogenannte Sigmoid-Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
 \para{}
-Auch sie kann aufgrund ihrer Nicht-linearität zur Approximation jeder Funktion
-in einem KNN verwendet werden. Sie ist die Aktivierungsfunktion, welche am
-meisten in KNNs eigesetzt wird. Da sie wirklich sehr stark von Lineartiät
-abweicht und so am schnellsten komplexe Sachverhalte modellieren kann.
+Auch sie können in einem KNN aufgrund ihrer Nicht-Linearität zur Approximation jeder Funktion
+verwendet werden. Die Sigmoidfunktion gilt als meist verwendete
+Aktivierungsfunktion in KNNs. Dies ist damit begründet, dass sie sehr stark von
+der Linearität abweicht und auf diese Weise am schnellsten komplexe Sachverhalte
+modellieren kann. (QUELLE)
 \para{}
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
 zwei Asymptoten, eine $\ds\lim_{x \to -\infty} \sigma(x)=0$
 und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
-(\ref{fig:sigmoid})). Desweiteren zeichnet sie sich durch ihre simple Ableitung aus.
+(\ref{fig:sigmoid})). Desweiteren zeichnet sie sich durch eine vergleichsweise
+einfache Ableitung aus.
 \\
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
@@ -681,30 +688,29 @@ und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
 \cite{wiki:sigmoidfunktion}
 
 
-\section{Topologie der Künstlichen Neuronalen Netzen}
-Nun sollten diese Sigmoiden Neuronen als Bausteine verwendet werden, um ein Künstliches
-Neuronales Netz zu bilden. Dazu werden sie miteinander verbunden und bilden so ein Netz,
+\section{Topologie der Künstlichen Neuronalen Netze}
+Nun sollen die Sigmoiden-Neuronen als Bausteine für Künstliche
+Neuronale Netze Verwendung finden. Dazu werden sie miteinander verbunden und bilden so ein Netz,
 ähnlich wie ein Nervensystem.
 \para{}
-Diese Neuronen sind in verschieden Schichten (engl.: Layers)
-arangiert. Die erste ist die \keyword{Inputschicht}. Sie beinhaltet die
+Diese Neuronen sind in verschiedenen Schichten (engl.: Layers)
+arrangiert. Die erste ist die \keyword{Inputschicht}. Sie beinhaltet die
 Inputneuronen. Diese sind eigentlich keine richtigen
-Neuronen sondern eher Platzhalter für ihr jeweiliges Feature $x_i$. Als letztes kommt die
+Neuronen, sondern eher Platzhalter für ihr jeweiliges Feature $x_i$. Als letztes kommt die
 \keyword{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
 besitzen. Dazwischen liegen die \keyword{Zwischenschichten} (engl.: hiddenlayers). Von ihnen kann es
-beliebig viele geben und in ihnen beliebig viele Neuronen.
+beliebig viele geben, und in ihnen können beliebig viele Neuronen liegen.
 Falls viele Zwischenschichten verwendet werden, bezeichnet man das Netzwerk als
-``deep''. Daher rürt auch der Name des Deep Learnings.
-Der Aufbau eines KNN bezeichnet man als \keyword{Topologie} des Netzes. Die
-Topologie umfasst viele Hyperparameter. Darunter sind zum Beispiel die Anzahl Zwischenschichten, wie auch
-die Anzahl Neuronen pro Schicht.
+``deep''. Daher rührt auch der Begriff des Deep Learnings.
+Den Aufbau eines KNN bezeichnet man als \keyword{Topologie} des Netzes. Die
+Topologie umfasst viele Hyperparameter. Darunter sind zum Beispiel die Anzahl
+der Zwischenschichten, wie auch
+die Anzahl der Neuronen pro Schicht.
 \para{}
 Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der nächsten Schicht über
 Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zu den Inputs des
 Perzeptrons. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
-Verbindung zu allen Neuronen der nächsten Schicht und dient als deren Input.
-Die söben beschriebe Art von KNN nennt man \keyword{Feedforward-Netz}, da alle Werte
-ausschliesslich nach vorne propagiert werden.
+Verbindungen zu allen Neuronen der nächsten Schicht und dienen als deren Input.
 \para{}
 In Abbildung (\ref{fig:nn_layers}) ist ein Beispiel eines Neuronalen Netzes
 abgebildet. In diesem Fall besitzt es sowohl 4 Inputs, als auch 4 Outputs. Es hat
@@ -723,30 +729,31 @@ und die zweite besitzt 4 Neuronen. \\
 
 \section{Lernverhalten}
 Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell für jede
-weiter Schicht eine höheres Abstraktionsniveau erreicht. Würde man zum
+weitere Schicht eine höheres Abstraktionsniveau erreicht. Würde man zum
 Beispiel ein Netzwerk zur Gesichtserkennung trainieren, könnte man sich den
 Erkennungsprozess folgendermassen vorstellen: Die erste Zwischenschicht erkennt
 Kanten und Konturen. Die zweite vereint diese Merkmale zu Ecken und primitiven
-geometrischen Formen. Die dritte Schicht sollte dann schon komplexere
-geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase, ähneln. Die letzten Schichten soll dann alle diese
-Merkmale zusammensetzen und so ein Gesicht erkennen.
-WEITERFÜHREN
+geometrischen Formen. Die dritte Schichte sollte dann schon komplexere
+geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase,
+ähneln.
+Die letzten Schichten soll dann alle diese
+Merkmale zusammensetzen und so ein Gesicht als Ganzes erkennen.
 
 \section{Vorwärtspropagierung}
-Jetzt, da der Aufbau eines KNNs erklärt wurde, sollte nun die mathematische Funktionsweise
-des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte, wird
-Vorwärtspropagierung genannt. Dieses Verfahren gibt dieser Art von KNN auch den
-Namen Feed-Forward-Neural-Network. Für das Verstäntnis müssen einige Konventionen zur
-Bezeichnung der Teile eines KNNs getroffen werden. Es sollten vorallem noch
+Jetzt, da der Aufbau eines KNNs erläutert wurde, soll nun die mathematische Funktionsweise
+des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte wird
+\keyword{Vorwärtspropagierung} genannt. Dieses Verfahren gibt dieser Art von KNN auch den
+Namen: Feedforward Neural Network. Für das Verständnis müssen einige Konventionen zur
+Bezeichnung der Teile eines KNNs getroffen werden. Es sollten vor allem noch
 Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum
-Verstäntnis der Nomenklatur studiert werden.
+Verständnis der Nomenklatur studiert werden.
 \begin{itemize}
 \item{$l$ ist der Index einer Schicht. Die Indexierung beginnt bei 0.}
 \item{$L$ ist der letzte Schichtindex und somit auch die gesamte Anzahl an
     Schichten (ohne die Inputschicht).}
 \item{$|l|$ ist die Anzahl Neuronen in der $l$-ten Schicht.
     \footnote{
-      Diese Schreibweise hat nichts mit dem Betrag zu tun, sondern wird einfach
+      Diese Schreibweise hat nichts mit dem Betrag zu tun, sondern wird
       gewählt, da sie sehr platzsparend ist.
     }
   }
@@ -774,7 +781,7 @@ Verstäntnis der Nomenklatur studiert werden.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{knn2.pdf}
-  \caption{zum Verstäntniss der Nomenklatur}
+  \caption{zum Verständnis der Nomenklatur}
   \label{fig:nomenklatur1}
 \end{figure}
 \para{}
@@ -790,7 +797,7 @@ Verstäntnis der Nomenklatur studiert werden.
     \draw[->] (n12) -- node[above,pos=0.75,sloped]{$w^1_{1,2}$} (n21);
     \draw[->] (n12) -- node[above,sloped]{$w^1_{2,2}$} (n22);
   \end{tikzpicture}
-  \caption{zum Verstäntnis der Gewichtebeschriftungen}
+  \caption{zum Verständnis der Gewichtebeschriftungen}
   \label{fig:nomenklatur2}
 \end{figure}
 \para{}
@@ -798,16 +805,17 @@ Die Vorwärtspropagierung beginnt bei den Inputneuronen, welche jeweils
 einen Inputwert in sich tragen. Diese Werte werden, um für eine kohärente Nomenklatur zu sorgen,
 analog zu den Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
 $j$ der Index des Neurons ist. \\
-Nun müssen die restlichen Aktivierungen der Neuronen bis und mit den Ouputneuronen berechnet werden. Dies geschieht rekursiv, anhand der
+Nun müssen die restlichen Aktivierungen der Neuronen bis und mit den Ouputneuronen berechnet werden. Dies geschieht rekursiv anhand der
 Aktivierungen der voherigen Schicht und zwar folgendermassen (ersichtlich in
 Gleichung (\ref{eq:gewichtete_summe_normal})).
 \para{}
 Zuerst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetztigen Schicht
 $l$. Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l}$ mit den
-assozierten Gewichten $w_{j,k}^l$ gebildet. ZU KOMPLIZIERT RELEVANT?: Hierbei ist das Gewicht jenes, welches das
-$k$-te Neuron der $l$-ten Schicht mit dem $j$-ten Neuron der ($l+1$)-ten Schicht verbindet.
+assozierten Gewichten $w_{j,k}^l$ gebildet. Hierbei ist das Gewicht jenes, welches das
+$k$-te Neuron der $l$-ten Schicht mit dem $j$-ten Neuron der ($l+1$)-ten Schicht
+verbindet (siehe Abb. (\ref{fig:nomenklatur2})).
 Zusätzlich gehört zu der gewichteten Summe auch die jeweilige Neigung $b_j^l$, welche
-dazuaddiert wird. Diese gewichtete Summe wird mit $z_j^{l+1}$ bezeichnet.
+dazu addiert wird. Diese gewichtete Summe wird mit $z_j^{l+1}$ bezeichnet.
 \\
 \begin{equation}\tag{FP1}\label{eq:gewichtete_summe_normal}
   z_j^{l+1} = \sum_{k=1}^{|l|} w_{j,k}^l a_k^l + b_j^l
@@ -820,34 +828,34 @@ Das ist dann die Aktivierung $a_j^{l+1}$ des $j$-ten Neurons in der ($l+1$)-ten 
   a_j^{l+1} = \varphi\left(\sum_{k=1}^{|l|} w_{j,k}^l a_k^{l} + b_j^l \right) = \varphi \left( z_j^{l+1} \right)
 \end{equation}
 \par\bigskip
-Für Deep Learning braucht man vorallem sogenannte Deep Neural Networks. Diese
+Für Deep Learning braucht man vor allem sogenannte Deep Neural Networks. Diese
 zeichnen sich dadurch aus, dass sie sehr viele Zwischenschichten besitzen.
-Deshalb bezeichnet man sie auch als ``deep''.
+Deshalb bezeichnet man sie als ``deep''.
 Bei solchen Netzwerken ist es nicht unüblich,
-dass diese sehr viele Neuronen und Verbindungen (über 100'000) besitzen.
-Um hierbei nicht den Überblick zu verlieren und um nicht in den Indizes zu
-ertrinken, macht man Gebrauch von \keyword{Linearer Algebra}. Man verwendet
-Matrizen und Vektoren um die vielen Variablen zusammenzufassen.
+dass sie sehr viele Neuronen und Verbindungen (über 100'000) besitzen.
+Um hier nicht den Überblick zu verlieren bzw. damit nicht zu viele Indizes notwendig
+sind, macht man Gebrauch von \keyword{Linearer Algebra}. Man verwendet
+Matrizen und Vektoren, um die vielen Variablen zusammenzufassen.
 Ausserdem besteht ein weiterer Vorteil darin, dass Computer mithilfe von Vektor-
-und Matrixoperationen die Berechnungen paralellisieren können und in kürzerer
+und Matrixoperationen die Berechnungen parallelisieren können und in kürzerer
 Zeit und mit weniger Ressourcen viele Berechnungen gleichzeitig ausführen können.
 Dies beschleunigt das Training der Modelle um
-ein Vielfaches. Dies wird später in Sektion
-(\ref{sec:tensorflow}) noch weiter thematisiert.
+ein Vielfaches. Später in Sektion (\ref{sec:tensorflow}) wird dies nochmals thematisiert.
 \para{}
-Die Inputs $\vec{x}$, Vorhersagen $\vec{y}$ und Labels $\vec{\hat{y}}$ haben wir schon von Anfang an als Vektoren geschrieben.
+Die Inputs $\vec{x}$, Vorhersagen $\vec{y}$ und Labels $\vec{\hat{y}}$ wurden
+bereits zu Beginn als Vektoren geschrieben.
 Nun sollen noch die Modellparameter und die restlichen Komponenten eines KNNs als Vektoren und Matrizen zusammengefasst werden.
 Sowohl alle gewichteten Summen $z_j^l$, wie auch alle Aktivierungen $a_j^l$
 einer Schicht $l$, werden in Vektoren $\vec{z}^l \in \set{R}^{|l|}$ und
 $\vec{a}^l \in \set{R}^{|l|}$ zusammengefasst.
-Auch alle Neigung $b_j^l$ für eine Schicht ($l+1$) bilden einen Vektor
+Auch alle Neigungen $b_j^l$ für eine Schicht ($l+1$) bilden einen Vektor
 $\vec{b}^l \in \set{R}^{|l+1|}$.
 \para{}
 Zu guter letzt, wird noch eine \keyword{Gewichtsmatrix} $\mat{W}^l \in
 \set{R}^{|l+1| \times |l|}$
-definiert. Sie enthält alle Gewichte welche die $l$-te
+definiert. Sie enthält alle Gewichte, welche die $l$-te
 Schicht \textit{zu} der ($l+1$)-ten Schicht verbindet.
-Das heisst der Eintrag in der $j$-ten Zeile und in
+Das heisst, der Eintrag in der $j$-ten Zeile und in
 der $k$-ten Spalte ist $w_{j,k}^l$ und verbindet so das Neuron $n_k^{l}$ zu
 dem Neuron $n_j^{l+1}$.
 \\
@@ -866,25 +874,25 @@ dem Neuron $n_j^{l+1}$.
   \end{pmatrix}
 \end{equation*}
 \\
-Mit diesen Definitionen kann nun fast Gleichung (\ref{eq:gewichtete_summe_normal}) in
-Matrixform geschrieben werden, denn die Matrixmultiplikation von $\mat{W}^l$ mit
-$\vec{a}^{l}$ ergibt einen Vektor $\vec{\tilde{z}}^{l+1}$, welcher alle gewichteten
+Mit diesen Definitionen kann Gleichung (\ref{eq:gewichtete_summe_normal}) in
+Matrixform geschrieben werden. Dies, weil die Matrixmultiplikation von $\mat{W}^l$ mit
+$\vec{a}^{l}$ einen Vektor $\vec{\tilde{z}}^{l+1}$ ergibt, welcher alle gewichteten
 Summen $\tilde{z}_j^{l+1}$ ohne die jeweilige Neigung enthält.
 \\
 \begin{equation*}
   \mat{W}^l \vec{a}^{l} = \trans{\begin{pmatrix}\ds \sum_{j=1}^{|l|} w_{1,j}^l a_j^l &\ds \sum_{j=1}^{|l|} w_{2,j}^l a_j^l & \cdots &\ds \sum_{j=1}^{|l|} w_{|l+1|,j} a_j^l \end{pmatrix}} = \vec{\tilde{z}}^{l+1}
 \end{equation*}
 \\
-Nun müssen wir noch den Neigungsvektor $\vec{b}^l$ draufaddieren und wir
-erhalten Gleichung (\ref{eq:gewichtete_summe_matrix}), mithilfe der wir den
-Vektor der gewichteten Summen $\vec{z}^{l+1}$ bilden können.
+Nun muss noch der Neigungsvektor $\vec{b}^l$ dazu addiert werden, damit die
+Gleichung (\ref{eq:gewichtete_summe_matrix}) ensteht, mit welcher der
+Vektor der gewichteten Summen $\vec{z}^{l+1}$ gebildet werden kann.
 \\
 \begin{equation}\tag{FP1a}\label{eq:gewichtete_summe_matrix}
   \vec{z}^{l+1} = \mathbf{W}^{l} \vec{a}^{l} + \vec{b}^{l}
 \end{equation}
 \\
-Der letzte Schritt besteht noch darin die Aktivierungsfunktion auf $\vec{z}^{l+1}$
-anzuwenden um den Aktivierungsvektor $\vec{a}^{l+1}$ zu bilden.
+Im letzten Schritt wird die Aktivierungsfunktion auf $\vec{z}^{l+1}$
+angewendet, um den Aktivierungsvektor $\vec{a}^{l+1}$ zu bilden.
 Hierfür muss aber noch ein neues mathematisches
 Konzept eingeführt werden: die Vektorisierung einer Funktion.
 \para{}
@@ -892,7 +900,7 @@ Konzept eingeführt werden: die Vektorisierung einer Funktion.
 \begin{defbox}{Vektorisierung einer Funktion}
   Die Vektorisierung einer skalaren Funktion $f$, geschrieben als
   $\vecf{f}[\vec{v}]$ hat als Argument einen Vektor $\vec{v}$, auf dessen
-  Komponenten jeweils \textit{einzeln} die Funktion $f$ angewandt wird. Dieser neue
+  Komponenten jeweils \textit{einzeln} die Funktion $f$ angewendet wird. Dieser neue
   Vektor ist der Rückgabewert der Funktion. Er besitzt die gleichen Dimensionen
   wie der Argumentvektor.
   \\
@@ -905,9 +913,9 @@ Konzept eingeführt werden: die Vektorisierung einer Funktion.
     \end{pmatrix}
   \end{equation*}
 \end{defbox}
-
-Nun kann ganz einfach die vektorisierte Aktivierungsfunktion $\vecf{\varphi}$ auf
-$\vec{z}^{l+1}$ angewandt werden.
+\para{}
+Nun kann die vektorisierte Aktivierungsfunktion $\vecf{\varphi}$ auf
+$\vec{z}^{l+1}$ angewendet werden.
 
 \begin{equation}\tag{FP2a}\label{eq:aktivierung_matrix}
   \vec{a}^{l+1} = \vecf{\varphi} \left[\mat{W}^{l} \vec{a}^{l} + \vec{b}^{l} \right] = \vecf{\varphi} \left[ \vec{z}^{l+1} \right]
@@ -917,27 +925,25 @@ $\vec{z}^{l+1}$ angewandt werden.
 \cite{Nielsen}
 
 \subsection{Initialisierung der Modellparameter}\label{sec:parameter_initalisieren}
-Ein Schritt der getan werden muss, bevor das Training beginnt, ist das
+Ein weiterer Schritt, der vollzogen werden muss, bevor das Training beginnen kann, ist das
 Initialisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
-Dies ist ein sehr essentieller Schritt, denn diese Startwerte entscheiden
-erheblich über die Leistungsfähigkeit des Modells.
+Dies ist ein sehr essentieller Schritt, da diese Initialwerte die
+Leistungsfähigkeit des Modells erheblich beinflussen.
 \para{}
 Wie in Sektion (\ref{sec:gradientenverfahren}) gezeigt, muss am Anfang des
-Gradientenverfahrens ein Startpunkt $\vec{p}_0$ innerhalb des Gradientenfeldes
+Gradientenverfahrens ein Startpunkt $\vec{\param}_{t=0} = \trans{\begin{pmatrix}
+    \param_1 & \cdots & \param_k \end{pmatrix}}$ innerhalb des Gradientenfeldes
 $\vecf{\nabla}C$ gewählt werden, von welchem aus der Gradientenabstieg beginnt.
-Da wir das Gradientenverfahren zur Optimierung der Modellparameter verwenden,
-ist unser Startpunkt der Vektor aller Hyperparameter
-$\vec{\param} = \trans{\begin{pmatrix} \param_1 & \cdots & \param_k \end{pmatrix}}$.
 Dieser Startpunkt entscheidet darüber, in welches lokale Minimum konvergiert
 wird und bestimmt somit auch die bestmögliche Exaktheit der Vorhersagen. Falls
-schlechte Initialwerte gewählt werden, konvergiert der Punkt in ein hohes lokales
+schlechte Initialwerte gewählt wurden, konvergiert der Punkt in ein hohes lokales
 Minimum, was grosse Kostenfunktionswerte und schlechte Vorhersagen verursacht.
 \para{}
 Es ist nicht möglich im Vorhinein zu wissen, welche Initialwerte gute Resultate
-liefern. Man muss ausprobieren, deshalb initialisert man gängierweise die
-Hyperparameter mit Zufallswerten. Dafür nimmt man aber nicht irgendwelche
-Zufallsvariablen sondern man benutzt die Gauss'sche Normalverteilung
-$\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion.
+liefern. Es müssen verschiedene Werte ausprobiert werden. Dafür initialisert man gängierweise die
+Hyperparameter mit Zufallswerten. Zu diesem Zweck werden nicht irgendwelche
+Zufallsvariablen verwendet, sondern es gelangt die Gauss'sche Normalverteilung
+$\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion zur Anwendung.
 \[\ds \phi(x\ |\ \mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \text{exp} \left\{-\frac{{(x-\mu)}^2}{2\sigma^2}\right\} \]
 \para{}
 \begin{figure}[h!]
@@ -946,25 +952,27 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion.
   \caption{Graph der Dichtefunktion $\phi(x\ |\ \mu=0,\sigma^2=1)$ mit ihren
     wichtigsten Eigenschaften}%
 \end{figure}
-In den Anfängen des Maschinellen Lernens verwendet man einfach die normierte
-Normalverteilung. Jedoch hatte dies zur Konsequenz, dass mit jeder Schicht die
-Outputs eine stetig grösser werdende Standardabweichung $\sigma$ aufweisten.
-Dadurch saturierten gewisse Neuronen eher.
+In den Anfängen des Maschinellen Lernens wurde häufig die normierte
+Normalverteilung verwendet. Jedoch hatte dies zur Konsequenz, dass mit jeder Schicht die
+Outputs eine stetig grösser werdende Standardabweichung $\sigma$ aufwiesen.
+In der Konsequenz verlansamte sich der Lernprozess ohne nahe genug am lokalen
+Minimum zu sein. Dies wird auch als Saturierung der Neuronen bezeichnet (FUSSNOTE?).
 \para{}
-Als Konsequenz wurde eine neue Technik entwickelt: die Glorot-Initalisierung
-(auch Xavier-Initalisierung gennant). Man verwendet erneut eine Normalverteilung
-mit Erwartungswert $\mu = 0$. Die Standardabweichung $\sigma$ skaliert man nun, angepasst
-an die Grösse einer Schicht.
-Für eine Schicht $l$ berechnet man den Durchschnitt zwischen der Anzahl Inputs
-und der Anzahl Neuronen einer Schicht $r = \frac{|l-1| + |l|}{2}$. Der Kehrwert
-davon ist nun die Varianz.
-Somit initalisiert man die Gewichte folgendermassen.
+In der Konsequenz wurde eine neue Technik entwickelt: die Glorot-Initalisierung
+(auch Xavier-Initalisierung genannt). Dabei gelangt erneut eine Normalverteilung
+mit Erwartungswert $\mu = 0$ zur Anwendung. Die Standardabweichung $\sigma$ wird
+anhand der Grösse einer Schicht skaliert.
+Für eine Schicht $l$ wird der Durchschnitt zwischen der Anzahl Inputs
+und der Anzahl Neuronen einer Schicht berechnet $r = \frac{|l-1| + |l|}{2}$. Der Kehrwert
+davon ist die Varianz der Normalverteilung.
+Die Gewichte werden folgendermassen initialisert:
 \begin{equation}
   w_{t=0}^l \sim \mathcal{N}\left(\mu = 0, \sigma^2 = \frac{2}{|l-1| + |l|}\right)
 \end{equation}
-Durch dieses Verfahren bleibt die Varianz der Outputneuronen gleich der Varianz
-Für die Neigungen $b$ verwendet man teilweise das selbe Verfahren. Zum Teil aber
-initalisiert man die Neigungen auch einfach mit 0. Keras macht dies zum Beispiel.
+Durch dieses Verfahren bleibt die Varianz innerhalb einer Schicht erhalten.
+Teilweise wird diese Verfahren auch für die Neigungen $b$ angewendet. Eine
+andere Möglichkeit besteht in der Initalisierung der Neigungen mit 0, wie Keras
+das etwa auch macht.
 \begin{equation}
   b_{t=0}^l = 0
 \end{equation}
@@ -975,48 +983,48 @@ initalisiert man die Neigungen auch einfach mit 0. Keras macht dies zum Beispiel
 \cite{book:hands-on}
 
 \section{Rückwärtspropagierung}\label{sec:backpropagation}
-Ein KNN wird wie die meisten Modelle mithilfe des Stochastischen
+Ein KNN wird üblicherweise, wie die meisten Modelle, mithilfe des Stochastischen
 Gradientenverfahrens trainiert.
-Die wahre Herausforderung besteht dabei darin, die partiellen Ableitungen der
+Die wahre Herausforderung besteht darin, die partiellen Ableitungen der
 Kostenfunktion bezüglich der Modellparameter zu berechnen.
 Anders gesagt müssen alle Terme
-$\ds\partderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ds\partderiv{C}{b_k^l}$
-berechnet werden.
-Das Verfahren zum bestimmen dieser Ausdrücke ist so spezifisch und aufwendig,
-dass das SGD für KNNs einen eigenen Namen besitzt: die
-\keyword{Rückwärtspropagierung} (engl.: backpropagation) (auch
+$\ds\partderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ds\partderiv{C}{b_k^l}$,
+bestimmt werden.
+Das Verfahren zur Ermittlung dieser Ausdrücke ist so spezifisch und aufwendig,
+dass das SGD für KNNs einen eigenen Namen besitzt: die sogennante
+\keyword{Rückwärtspropagierung} (engl.: backpropagation, auch
 Fehlerrückführung). \\
-Es ist nicht essentiel für das Verstäntnis von ML, die Rückwärtspropagierung zu
-verstehen, jedoch kann so nachvollzogen werden, wie SGD in Praxis funktioniert.
+Für das Verständnis von ML ist es nicht essentiell, die Rückwärtspropagierung zu
+verstehen. Jedoch kann so nachvollzogen werden, wie SGD in der Praxis funktioniert.
 \para{}
 Grob umrissen besteht der Grundgedanke darin, die Werte der Kostenfunktion
 rückwärts durch das Modell zu schicken und dabei die partiellen Ableitungen
-mithilfe der Kettenregel zu bestimmen. Dadurch hat das Verfahren auch seinen Namen.
+mithilfe der Kettenregel zu bestimmen. Daher hat das Verfahren auch seinen Namen.
 \para{}
-Für eine Ausführliche Herleitung der Ausdrücke ist auf Anhang
-(\ref{sec:anhang_bp}) zu verweisen, in welchem auf das Konzepte eines
+Für eine ausführliche Herleitung ist auf Anhang
+(\ref{sec:anhang_bp}) zu verweisen, in welchem auf das Konzept eines
 Computational Graphs eingegangen wird.
 
 \section{Universal Approximation Theorem}\label{sec:UAT}
 Es stellt sich nun die Frage, was ein Neuronales Netz alles erlernen kann.
 Diese Frage kann mithilfe des \keyword{Universal Approximation Theorem} (UAT)
-beantwortet werden. Dieser Satz ist ein mathematischer Beweis dafür, dass ein KNN
-grundsätzlich in der Lage ist jede kontinuierliche Funktion beliebig gut zu
+beantwortet werden. Es handelt sich um einen mathematischer Beweis dafür, dass ein KNN
+grundsätzlich in der Lage, ist jede kontinuierliche Funktion beliebig exakt zu
 approximieren.
 \para{}
 Etwas genauer ausgedrückt, besagt der UAT, dass ein KNN mit einer einzigen
-Zwischenschicht, welche eine endliche Anzahl Neuron besitzt, jede kontinuierliche
-Funktion approximieren kann. Voraussetzung dafür ist, dass es sich bei den
-Neuronen um Nicht-lineare-Neuronen handelt.
-Da die meisten Klassen von Problemen sich einfach als eine Funktion formulieren
+Zwischenschicht, welche eine endliche Anzahl Neuron besitzt, sich jeder kontinuierlichen
+Funktion annähern kann. Voraussetzung dafür ist, dass es sich bei den
+Neuronen um nicht-lineare Neuronen handelt.
+Da sich die meisten Klassen von Problemen als eine Funktion formulieren
 lassen, bedeutet dies, dass ein KNN theoretisch jedes Problem lösen kann!
-Beim UAT handelt es sich nur um eine theoretische
-Ausage über das Lernpotenzial eines KNNs. Jedoch macht er keinerlei Aussage
-darüber, ob ein KNN wirklich erfolgreich darin ist eine jeweilige Funktion zu erlernen.
-Beispielsweise könnte ein Hinderniss Overfitting darstellen.
+Beim UAT handelt es sich aber nur um eine theoretische
+Aussage über das Lernpotenzial eines KNNs. Jedoch trifft das Theorem keinerlei Aussage
+darüber, ob ein KNN wirklich erfolgreich darin ist, die jeweilige Funktion zu erlernen.
+Ein mögliches Hindernis könnte in Overfitting bestehen.
 \para{}
-Der eigentliche Beweis ist mathematisch ziemlich anspruchsvoll. Deshalb wird
-dieser hier nicht behandelt.
+Da der eigentliche Beweis mathematisch ziemlich anspruchsvoll ist, wird er im
+Rahmen dieser Arbeit nicht weiter behandelt.
 \para{}
 \cite{Nielsen}
 \cite{wiki:uat}
@@ -1028,7 +1036,7 @@ dieser hier nicht behandelt.
 Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
 Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
 Spracherkennung.
-Vorallem aber für hochauflösende Bilder sind die KNNs, die wir söben
+Vorallem aber für hochauflösende Bilder sind die KNNs, die wir soeben
 kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
 Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
 Um diesen Umstand zu erklären, wird nun ein kleines Beispielmodell erläutert:
@@ -1187,10 +1195,10 @@ $\ten{B}$, welche
 über alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
 $\tilde{\ten{B}}$ liefert.
 Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
-den sogennanten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
+den sogenannten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
 (\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlänge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
-Element, der sogennante \keyword{Zentralelement} (engl.: Center element), bezeichnet mit $(\ten{F})_C$,
+Element, der sogenannte \keyword{Zentralelement} (engl.: Center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
@@ -1939,7 +1947,7 @@ neues Datenformat
 Visualisierung von hochdimensionaler Daten in $\set{R}^2$ und $\set{R}^3$
 
 
-Im übernachsten Kapitel werden wir eine Anwendung noch genäur Betrachten die
+Im übernachsten Kapitel werden wir eine Anwendung noch genauer Betrachten die
 des Denoisers.
 
 \section{Convolutional-Autoencoder}
@@ -2055,7 +2063,7 @@ genau zu sein betrachten wir Tensorflow-Core Version r1.14.
   veröffentlich wurde, es zu verwenden.}
 Wir werden TF nur sehr grob betrachten, da wir später nicht direkt damit
 arbeiten werden, sondern mit der High-Level-API Keras. Trotzdem ist er hilfreich
-ein grobes Verstäntniss über TF zu besitzen.
+ein grobes Verständniss über TF zu besitzen.
 \para{}
 Die wichtige Resource um TensorFlow zu lernen ist wohl die offizielle TensorFlow
 Website. Dort findet man auch die Dokumentation.
@@ -2072,7 +2080,7 @@ Fontend aufgeteilt. Das Frontend von Tensorflow bezeichnet man als
 \para{}
 \begin{infobox}{Fontend und Backend}
   Das \keyword{Frontend} ist der Teil eines Programmes, mit welchem der Benutzer
-  interagiert. Es stellt eine Schnittstelle zu dem sogennanten Backend eines
+  interagiert. Es stellt eine Schnittstelle zu dem sogenannten Backend eines
   Programmes dar. Es exponiert so gewisse Funktionalitäten des Programmes dem
   Benuzter gegenüber, ohne dass er dabei etwas von der zugrundeliegenden Logik mitbekommt.
   \para{}
@@ -2123,7 +2131,7 @@ Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
 \para{}
 Man muss einen Graph nicht explizit definieren (kann es aber, falls man mehrere
 Graphen braucht), da beim defnieren der Operationen sie implizit dem
-sogennanten \keyword{Default Graph} hinzugefügt werden.
+sogenannten \keyword{Default Graph} hinzugefügt werden.
 
 \subsubsection{Tensoren}
 Die zentrale Dateneinheit in TensorFlow sind Tensoren, wie wir sie bereits in
@@ -2147,7 +2155,7 @@ besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird er verworfen.
 Man sagt die Tensoren sind ``immutable'', da die Werte nicht erhalten bleiben
 und so nicht modifiziert werden können.
 \para{}
-Die söben beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb
+Die soeben beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb
 des Graphen. Sie müssen nicht explizit definiert werden, da sie automatisch
 eingefügt werden, wenn der Graph durch seine Operationen definiert wird.
 \para{}
@@ -2178,7 +2186,7 @@ die Form ersichtlich an.
 \paragraph{tf.placeholder}
 Um den Graphen für Maschinelles Lernen zu verwenden, braucht man eine
 Möglichkeit ihn mit Inputs für die Modelle zu befüttern. Um dies möglichst
-komfortabel zu machen, gibt es den sogennanten
+komfortabel zu machen, gibt es den sogenannten
 \keycode{tf.Placeholder} Tensor. Wie der Name es schon sagt, ist er ein
 Platzhalter für die Inputs, welcher beim Start der Graphausführnug eingespeist
 werden. Man muss einzig seine Dimensionen und seinen Datentyp (z.B. tf.float32) bei der Erstellung angeben.
@@ -2252,7 +2260,7 @@ Hier ein Beispiel eines solchen Graphs.
 
 
 \subsubsection{Session}
-Der Client kommuniziert mit dem Master über eine sogennante
+Der Client kommuniziert mit dem Master über eine sogenannte
 \keycode{tf.Session}.
 Sie ist die Schnittstelle zwischen Frontend und Backend und ermöglicht es einen tf.Graph
 zu erstellen und ihn auszuführen.
@@ -2271,7 +2279,7 @@ Um den Graphen nun zu berechnen, muss man lediglich die Session ausführen, das
 geschieht über die Methode \keycode{tf.Session.run()}.
 Diese Funktion erwartet als Argument einerseits den Knotenpunkt, welchen man
 berchnen möchte. Dessen Wert ist der Rückgabewert der Funktion.
-Andererseits erwartet die Funktion noch einen Python-Dictionary, den sogennanten
+Andererseits erwartet die Funktion noch einen Python-Dictionary, den sogenannten
 \keycode{feed\_dict}, welcher die \code{tf.placeholder} mit ihren Werten befüllt.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   result = sess.run(<Knotenpunkt>, feed_dict=<Placeholder-Dictionary>)
@@ -2398,7 +2406,7 @@ TF ist gerade deshalb sehr attraktiv für ML, da es sehr performant (schnell
 ausführbar) ist und dadurch die Trainingszeit für die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
 \para{}
-Falls der Leser am Verstäntniss dieser Entscheide interessiert ist und an der
+Falls der Leser am Verständniss dieser Entscheide interessiert ist und an der
 eigentlichen Implemention von TF (dem Master) kann er im Anhang (\ref{sec:anhang_tf}) dazu
 Informationen finden.
 
@@ -2468,7 +2476,7 @@ Keras baut auf TensorFlow auf. Es verwendet die verschiedenene Konzepte von TF,
 wie Variablen, Operationen und Graphen und abstrahiert sie.
 Dadurch bietet Keras eine einfacheres Vorgehen dem Benutzer an.
 \para{}
-Die gängigste Vorgehensweise besteht darin, ein sogennantes
+Die gängigste Vorgehensweise besteht darin, ein sogenanntes
 \keyword{Sequential-Modell} zu bauen.
 Dies ist ein Modell, welches einfach ein linearer Stapel von verschiedenen
 Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
@@ -3184,10 +3192,18 @@ tensorboard --logdir .
 \end{minted}
 Nun kann mit einem WebBrowser zur angegebenen Webadresse navigieren. Meistens
 ist diese: \code{http://localhost:6006/}.
-Der Graph
+Der Graph, welcher die Kosten bezüglich dem Testdatensatz aufzeichnet ist von
+Interesse. Dieser sieht folgendermassen aus:
+\para{}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{tb_results.png}
+  \caption{Kosten bezüglich dem Testdatensatz}
+\end{figure}
+\para{}
+Dank dem interaktivem Interface, kann dem Graphen entnommen werden, das folgende
+Modelle mit den angegebenen Hyperparametern, die besten Resultate liefern:
 
-Die TensorBoard-Analyse hat ergeben, dass folgende Modelle mit den angegeben
-Hyperparameter am besten eignen:
 \para{}
 \begin{table}[h!]
   \centering
@@ -3195,27 +3211,32 @@ Hyperparameter am besten eignen:
     \hline
     Rang & Aktivierungsfunktion & Minibatch-Grösse & Anzahl Filter & Kosten \\
     \hline
-    1 & ReLU & 16 & 265 & 0.01502 \\
-    2 & ReLU & 16 & 128 & 0.0153 \\
-    3 & ReLU & 16 & 64 & 0.01598 \\
-    4 & ReLU & 16 & 32 & 0.01694 \\
+    1 & ReLU & 16 & 265 & 0.015 \\
+    2 & ReLU & 16 & 128 & 0.01521 \\
+    3 & ReLU & 16 & 64 & 0.01588 \\
+    4 & ReLU & 16 & 32 & 0.0167 \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+    50 & Sigmoid & 256 & 16 & 0.09438 \\
     \hline
   \end{tabular}
   \caption{Rangliste der besten Modelle mit ihren Hyperparametern}
 \end{table}
 \para{}
-Diese Ergebnisse stimmen ziemlich gut mit den Erwartungen überein. Wie bereits
-in der Theorie behauptet, liefern die ReLU-Aktivierungsfunktion bessere Ergebnisse
-in CNNs als die Sigmoid-Aktivierungsfunktion. \\
-Auch das die kleinste Minibatch-Grösse die besten Resultate liefert ist
-naheliegend. Durch die kleine Grösse sind die Fehler bei der Approximation des
-wahren Gradienten kleiner als bei grossen Batches. \\
-Die Anzahl Filter haben den geringsten Einfluss, jedoch gibt es trotzdem
-minimale Vorteile von einer grösseren Anzahl davon.
 
 
 \subsection{Diskussion des Modells}
 2 bis drei Seiten.
+
+
+Diese Ergebnisse stimmen ziemlich gut mit den Erwartungen überein. Wie bereits
+in der Theorie behauptet, liefern die ReLU-Aktivierungsfunktion bessere Ergebnisse
+in CNNs als die Sigmoid-Aktivierungsfunktion. Deshalb finden sich auf den ersten
+Plätzen nur Modelle mit der ReLU-Aktivierungsfunktion. \\
+Auch, dass die kleinste Minibatch-Grösse die besten Resultate liefert ist
+naheliegend. Durch die kleine Grösse sind die Fehler bei der Approximation des
+wahren Gradienten kleiner als bei grossen Batches. \\
+Die Anzahl Filter haben den geringsten Einfluss, jedoch gibt es trotzdem
+minimale Vorteile von einer grösseren Anzahl davon.
 
 
 Auf Modell selber bezogen:

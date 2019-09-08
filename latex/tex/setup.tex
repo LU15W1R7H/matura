@@ -58,9 +58,9 @@ citestyle=authortitle
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{2pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
 \rhead{Luis Wirth}
-\lhead{\thechapter}
-\chead{Maturarbeit}
+\lhead{\chaptername\ \thechapter\ --\ \leftmark}
 \cfoot{\thepage}
 
 % footnote at bottom
