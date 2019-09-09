@@ -64,6 +64,24 @@
   \end{tikzpicture}
 }
 
+\NewEnviron{graybox}[1]
+{
+  \colorlet{color1}{gray!50!black}
+  \colorlet{color2}{gray}
+
+  \tikzstyle{thebox} = [draw=color1, fill=color2, very thick, rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+  \tikzstyle{thetitle} = [fill=color1, text=white,right, inner xsep=1em, outer sep=0pt, text height=2ex, text depth=.5ex]
+  \begin{tikzpicture}
+    \node [thebox] (box) {%
+      \begin{minipage}{0.6\textwidth - 4em}
+        \BODY
+      \end{minipage}
+    };
+    \node [thetitle] (title) at ([shift={(-1em,0pt)}]box.north west) {#1};
+    \fill[color1!50!black] (title.north east) -- +(-1em,1em) -- +(-1em,0) -- cycle;
+    \fill[color1!50!black] (title.south west) -- +(1em,-1em) -- +(1em,0) -- cycle;
+  \end{tikzpicture}
+}
 
 \NewEnviron{defbox}[1]
 {

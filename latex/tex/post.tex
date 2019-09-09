@@ -375,8 +375,36 @@ Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
   \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
 \end{equation}
 
-ALLES ZUSAMMENFASSEN
+\begin{graybox}{Zusammenfassung Rückwärtsprogagierung}
+  \begin{enumerate}
+    \setcounter{enumi}{-1}
+  \item{Vorwärtspropagierung durchführen und dabei alle Zwischenwerte beibehalten.}
+    \item{Berechnung des Fehlers $\vec{\delta}^L$ der letzten Schicht, anhand
+        der Formel:
+      \begin{equation}\tag{BP1a}
+        \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
+      \end{equation}
+      }
+      \item{Rekursive Berechnung des Fehlers $\vec{\delta}^{l-1}$ der jeweils
+          vorherigen Schicht, anhand der Formel:
+          \begin{equation}\tag{BP2a}
+            \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
+          \end{equation}
+        }
+      \item{Berechnung des Kostengradienten bezüglich der Neigungen, anhand der Formel:
+          \begin{equation}\tag{BP3a}
+            \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
+          \end{equation}
+        }
+      \item{Berechnung des Kostengradienten bezüglich den Gewichten anhand der Formel:
+          \begin{equation}\tag{BP4a}
+            \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
+          \end{equation}
+        }
+  \end{enumerate}
+\end{graybox}
 
+\para{}
 \cite{Nielsen}
 
 \chapter{Ausfuehrungen zu TensorFlow}\label{sec:anhang_tf}

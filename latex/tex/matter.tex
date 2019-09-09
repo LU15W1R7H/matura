@@ -367,7 +367,10 @@ Sampels anzuschmiegen.
 \chapter{Deep Learning und Künstliche Neuronale Netze}
 Nach dem im ersten Kapitel die Basis für ein fundiertes Verständnis von
 Maschinellem Lernen gelegt worden ist, soll es nun im zweiten Kapitel darum
-gehen, ein spezifisches Modell, namentlich Künstliche Neuronale Netze, zu erläutern.
+gehen, ein spezifisches Modell, namentlich Künstliche Neuronale Netze, zu
+erläutern. Darauf aufbauend wird in Kapitel drei die spezifische Architektur
+eines Künstlichen Neuronalen Netzes, namentlich das Convolutional Neural Network,
+dargelegt.
 \para{}
 Die wohl besten Resultate für die meisten Problemstellungen des Maschinellen Lernens (Bilderkennung,
 Spracherkennung, etc.) werden durch \keyword{Künstliche Neuronale Netze} (KNN) (engl.: Neural Network) geliefert.
@@ -1032,41 +1035,46 @@ Rahmen dieser Arbeit nicht weiter behandelt.
 
 \pagebreak
 \chapter{Convolutional Neural Networks}\label{sec:CNN}
-
-Viele Anwendungen von Machine Learning sind verbunden mit Bild- oder
-Audioverarbeitung, wie z.B Bildklassifizierung, Gesichtserkennung oder
+Nachdem in Kapitel zwei das Wesen von Künstlichen Neuronalen Netzen
+charakterisiert wurde, soll es nun in Kapitel drei darum gehen, eine spezfische
+Architektur einen KNNs, welche sich besonders gut für Bilderverarbeitung eignet,
+zu erklären. Es handelt sich um das Convolutional Neural Network.
+\para{}
+Viele Anwendungen von Machine Learning sind mit einer Bild- oder
+Audioverarbeitung verbunden, wie z.B Bildklassifizierung, Gesichts- oder
 Spracherkennung.
-Vorallem aber für hochauflösende Bilder sind die KNNs, die wir soeben
-kennengelernt haben, nicht geeignet. Sie sind zum Teil gar nicht in der
-Lage eine Korrelation zwischen den Inputs und Outputs zu erlernen.
-Um diesen Umstand zu erklären, wird nun ein kleines Beispielmodell erläutert:
+Vor allem für hochauflösende Bilder sind die KNNs, wie wir sie soeben
+kennengelernt haben, jedoch nicht geeignet. Sie sind zum Teil gar nicht in der
+Lage, eine Korrelation zwischen den Inputs und Outputs zu erlernen.
+Um diesen Umstand zu erklären, wird ein kleines Beispielmodell erläutert:
 \para{}
 \label{sec:CNN_parameter_problem}
-Es soll ein KNN designed werden, welches eine Photographie klassifizieren
-soll, ob darauf ein Hund sichtbar ist oder nicht. Wir nehmen für dieses
-Gedankenexperiment bereits ein relativ niedrig aufgelöstes Bild mit $256 \times 256$
-Pixel, dies entspricht weniger als $0.07$ Megapixel (ein iPhone XS hat eine Kamera mit
-12 Megapixel). Um die verschiedenen Farben zu codieren besitzt jeder Pixel drei Komponten: R, G
-und B. Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
-Komponenten. Jede Komponente ist ein Feature welches das KNN zu verrechnen hat. Somit bestünde
+Es soll ein KNN entworfen werden, welches eine Photographie danach klassifizieren
+soll, ob ein Hund darauf sichtbar ist oder nicht. Für dieses
+Gedankenexperiment wird ein relativ niedrig aufgelöstes Bild mit $256 \times 256$
+Pixel gewählt (dies entspricht weniger als $0.07$ Megapixel, im Verlgeich dazu, hat ein iPhone XS hat eine Kamera mit
+12 Megapixel). Um die verschiedenen Farben zu codieren, besitzt jeder Pixel drei
+Farbkomponenten: R (rot), G (grün)
+und B (blau). Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
+Komponenten. Jede Komponente ist ein Feature, welches das KNN zu verarbeiten hat. So bestünde
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
-nun mit seiner Nachbarsschicht, welche gleiche Dimensionen besitzt, zu verbinden, braucht
-es $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich so
-viele Gewichte! Für ein Netwerk ohne eine einzige Zwischenschichten gäbe es
+nun mit seiner Nachbarsschicht zu verbinden, welche die gleichen Grösse besitzt, werden
+$196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich
+viele Gewichte benötigt! Für ein Netwerk ohne eine einzige Zwischenschichten gäbe es
 also über 38 Milliarden Modellparameter zu erlernen! Dass dies nicht realistisch ist,
-sollte auf der Hand liegen.
+liegt wohl auf der Hand.
 \para{}
-Nicht nur die Anzahl Modellparameter sind ein Problem für KNNs in der
-Bildverarbeitung, sondern es bestehen noch weiter Probleme.
-Trotzdem sollte nun klar sein, dass eine andere Modellarchitektur nötig ist, um Machine
-Learning auf Bilder anzuwenden. Für genau solche Anwendungen wurde eine modifizierte
+Nicht nur die Anzahl der Modellparameter sind ein Problem für KNNs in der
+Bildverarbeitung, sondern es existieren noch weiter Probleme.
+Ohne auf diese Einzugehen sollte nun klar sein, dass eine andere Modellarchitektur notwendig ist, um Machine
+Learning auf Bilder anwenden zu können. Für derartige Anwendungen wurde eine modifizierte
 Version eines KNNs entwickelt: das \keyword{Convolutional Neural Network} (CNN).
-Im Allgemeinen sind CNNs immer dann geeignet, wenn es Daten zu verarbeiten gibt, welche eine
-rasterartige Form haben, wie eben z.B Bilder.
+Im Allgemeinen sind CNNs immer dann geeignet, wenn es Daten zu verarbeiten gilt, welche eine
+rasterartige Form aufweisen, wie z.B Bilder.
 Diese Art von Netzwerk macht Gebrauch von Konzepten aus der klassischen
-Bildverarbeitung, wie sie mit beispielsweise Photoshop gemacht werden kann.
-Wie beim Perzeptron und bei den klassischen KNNs auch, ist die Architektur
-biologisch inspiriert.
+Bildverarbeitung, wie sie beispielsweise mit Photoshop gemacht wird.
+Wie beim Perzeptron und bei den klassischen KNNs wurde auch hier die Architektur
+von der Biologie inspiriert.
 Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklären.
 \para{}
 \cite{Goodfellow-et-al-2016}
@@ -1075,21 +1083,21 @@ Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklären.
 
 
 \section{Bilder als Tensoren}\label{sec:tensor}
-CNNs operieren an Bildern. Diese Bilder stellen den Input für die Modelle dar.
-Um mit diesen Bildern rechnen zu können, ist es sinnvoll, sie als sogenannte
+CNNs verarbeiten Bildern. Diese Bilder stellen den Input für die Modelle dar.
+Um mit diesen Bildern erfassen zu können, ist es sinnvoll, sie als sogenannte
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
-Pixeln zu betrachten. \\
-Um zu verstehen, was ein Tensor dritten Ranges ist, müssen wir zuerst verstehen, was ein Tensor im Allgemeinen ist.
+Pixeln zu betrachten. Um zu verstehen, was ein Tensor dritten Ranges ist, müssen
+soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint ist.
 
 \begin{defbox}{Tensor}
   Ein Tensor $\ten{T}$ ist eine Verallgemeinerung von Skalaren, Vektoren und Matrizen auf
   $n$ Dimensionen. Es handelt sich wie bei Matrizen um
-  eine Zahlenanordnung. Dabei wird die Anzahl Dimensionen, innerhalb welchen die
-  Zahlen liegen als Rang oder Stufe $n$ des Tensors bezeichnet. Vorstellen kann man sich einen Tensor
+  eine Zahlenanordnung. Dabei wird die Anzahl Dimensionen, innerhalb welcher die
+  Zahlen liegen, als Rang oder Stufe $n$ des Tensors bezeichnet. Vorstellen kann man sich einen Tensor
   als ein Hyperrechteck mit $n$ Dimensionen, innerhalb dessen die Zahlen in
   einem Raster angeordnet sind. Diese Zahlen sind die Elemente des Tensors.
-  Ein Tensor nullten Ranges ist ein Skalar, einer erster Stufe ein Vektor und
-  einer mit Rang 2 ist eine normale Matrix.
+  Ein Tensor nullten Ranges ist ein Skalar, eine Tensor ersten Stufe ist ein
+  Vektor und ein Tensor mit Rang 2 ist eine normale 2D-Matrix.
   \begin{gather*}
     1 \in \set{R} \text{ (Skalar)} \quad \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
     \in \set{R}^3 \text{ (Vektor)} \quad
@@ -1102,8 +1110,8 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, müssen wir zuerst verstehen
 
 \begin{defbox}{Tensor 3. Ranges}
   Ein Tensor $\ten{T} \in \set{R}^{h \times w \times d}$ mit Rang 3 ist eine 3-dimensionale Zahlenanordnung. Man kann sich
-  diesen Tensor einfach als eine 3D-Matrix vorstellen; ein Volumen innerhalb
-  dessen Zahlen in einem Raster angeordet sind.
+  diesen Tensor als eine 3D-Matrix vorstellen; ein Volumen, innerhalb
+  dessen die Elemente in einem Raster angeordet sind.
   Analog zum Volumen bezeichnet man die Form des Tensors mit Höhe, Breite und
   Tiefe. \\
   Ein Tensor von der Form $\set{R}^{3 \times 3 \times 3}$ könnte folgendermassen
@@ -1113,11 +1121,11 @@ Um zu verstehen, was ein Tensor dritten Ranges ist, müssen wir zuerst verstehen
 
 \end{defbox}
 \para{}
-Ein Bild kann somit einfach als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
-  \times w \times c}$, der Form $(\text{Bildhöhe} \times \text{Bildbreite}
-\times \text{Anzahl Farbkomponenten})$ betrachtet werden.
-Elemente der Matrix nehmen dann einfach die Werte der Pixelkomponenten an.
-Ein schwarzweiss Bild hat nur eine Komponente, welche die Helligkeit angibt.
+Ein Bild kann somit als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
+  \times w \times c}$ betrachtet werden, in der Form $(\text{Bildhöhe} \times \text{Bildbreite}
+\times \text{Anzahl Farbkomponenten})$.
+Die Elemente der Matrix nehmen dann die Werte der Pixelkomponenten an.
+Ein schwarz-weisses Bild hat nur eine Komponente, welche die Helligkeit angibt.
 Somit wäre es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$ (siehe
 Abb. (\ref{fig:bildmatrix})).
 \para{}
@@ -1133,33 +1141,35 @@ Abb. (\ref{fig:bildmatrix})).
 \cite{wiki:tensor}
 
 \section{Topologie von CNNs}
-Ein CNN besteht, wie auch ein KNN, aus Schichten. Jede dieser Schichten erhält
-als Input ein Bild und hat auch wieder eines als Output. \\
-Ein wichtiger Unterschied eines CNNs ist, dass es aus unterschiedlichen Typen von
-Schichten besteht. Man unterscheiden zwischen vier Arten von Schichten:
+Ein CNN besteht, wie ein KNN auch, aus mehreren Schichten. Jede dieser Schichten erhält
+als Input ein Bild und hat auch wieder eines als Output.
+Ein wichtiger Unterschied des CNNs ist, dass es aus unterschiedlichen Typen von
+Schichten besteht. Grundsätzlich lassen sich vier Arten von Schichten unterscheiden:
 \begin{itemize}
-\item{\keyword{Fully-connected-Schichten},}
-\item{\keyword{Convolutional-Schichten},}
-\item{\keyword{Pooling-Schichten}, und}
-\item{\keyword{Upsampling-Schichten}.}
+\item{\keyword{Fully-connected-Schichten}}
+\item{\keyword{Convolutional-Schichten}}
+\item{\keyword{Pooling-Schichten}}
+\item{\keyword{Upsampling-Schichten}}
 \end{itemize}
-Die Fully-Connected-Schicht ist altbekannt und ist einfach die klassische Schicht
-eines KNNs, bestehend aus Neuronen. Aus diese werden wir nicht weiter eingehen,
-da wir sie schon im vorherigen Kapitel kennengelernt haben. \\
+Die Fully-Connected-Schicht ist bereits bekannt und verköpert die klassische Schicht
+eines KNNs, bestehend aus Neuronen. Auf diese werden wir daher nicht weiter eingehen,
+da sie bereits im vorherigen Kapitel erläutert wurde.
+\para{}
 Die Convolutional-Schicht ist eine neuartige Schicht, welche es im KNN nicht
 gibt. Sie ist die Schicht, welche für das Training relevant ist,
 da sie die Modellparameter beinhaltet. Sie extrahiert die relevanten Features
-aus den Inputbildern und lernt so die Bilder zu verstehen. \\
-Die Pooling-Schicht, wie auch die Upsampling-Schicht, beinhaltet keine
+aus den Inputbildern und lernt so die Bilder zu verstehen.
+\para{}
+Die Pooling-Schichten, wie auch die Upsampling-Schichten, beinhalten keine
 Modellparameter und sind deshalb für das Training nicht direkt relevant.
-Diese Schichten werden lediglich gebraucht, um die verarbeiteten Bilder neu zu
-skalieren. Dies ist sinnvoll, da durch die Extraktion gewisser Features, die
-restlichen Features wegfallen. Somit muss weniger Information pro Bild gehalten
+Diese Schichten werden lediglich benötigt, um die verarbeiteten Bilder neu zu
+skalieren. Dies ist sinnvoll, da durch die Extraktion gewisser Features die
+restlichen Features wegfallen. Somit muss weniger Information pro Bild gespeichert
 werden und die Bilder sollten schrumpfen, um Overfitting vorzubeugen. Die Pooling-
-Schichten reduzieren die Bilder und die Upsampling-Schichten erweitern die
-Bilder um mehr Pixel. Dies wird in Sektion (\ref{sec:autoencoder}) für die Autoencoder
+Schichten reduzieren die Bilder und die Upsampling-Schichten erweitern sie.
+Dies wird in Sektion (\ref{sec:autoencoder}) für die Entwicklung von Autoencoder
 hilfreich werden. \\
-Grundsätzlich folgt auf eine Convolutional-Schicht immer entweder eine Pooling-
+Grundsätzlich folgt auf eine Convolutional-Schicht entweder eine Pooling-
 oder eine Upsampling-Schicht. Somit bilden sie gewissermassen eine Einheit.
 \para{}
 In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
@@ -1176,13 +1186,13 @@ In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
 
 
 \section{Convolutional-Schichten und Filter}
-Zuerst betrachten wir die Convolutional Schicht. Diese Schicht macht ausgiebig
-Gebrauch von sogenannten Filtern. Diese werden in diesem Abschnitt behandelt.
+Zuerst wir nun die Convolutional Schicht betrachtet. Diese Schicht macht ausgiebig
+Gebrauch von sogenannten Filtern. Diese werden in diesem Abschnitt ausführlich behandelt.
 
 \subsection{Filter in der Bildverarbeitung}
 \keyword{Filter} (auch Kerne) sind in der Bildverarbeitung sehr verbreitet. Jeder kennt sie entweder
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
-Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall um die Features eines Bildes zu
+Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall, um die Features eines Bildes zu
 erlernen.
 \begin{figure}[h!]
 
@@ -1190,31 +1200,30 @@ erlernen.
 \end{figure}
 
 \para{}
-Ein Filter ist einfach eine Region, deutlich kleiner als das verarbeitete Bild
-$\ten{B}$, welche
-über alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
-$\tilde{\ten{B}}$ liefert.
-Mathematisch gesehen handelt es sich bei einem Filter einfach um einen Tensor,
-den sogenannten \keyword{Filtertensor} $\ten{F}$ oder Faltungstensor (siehe Abb.
+Ein Filter ist eine Region, die deutlich kleiner ist als das verarbeitete Bild
+$\ten{B}$, welche über alle Pixel wandert, diese manipuliert und so wieder ein neues Bild
+$\tilde{\ten{B}}$ erzeugt.
+Mathematisch gesehen handelt es sich bei einem solchen Filter um einen Tensor,
+den sogenannten \keyword{Filtertensor} $\ten{F}$ oder auch Faltungstensor (siehe Abb.
 (\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlänge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
-Element, der sogenannte \keyword{Zentralelement} (engl.: Center element), bezeichnet mit $(\ten{F})_C$,
+Element, das sogenannte \keyword{Zentralelement} (engl.: center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.3\textwidth]{filter.pdf}
-  \caption{eine 2D-Filtermatrix}
+  \caption{eine 2D-Filtermatrix mit rotem Zentralelement}
   \label{fig:filtermatrix}
 \end{figure}
 \para{}
-Das Verhalten des Filters wird durch seine Matrixeinträge bestimmt.
-Die Elemente können also so gewählt werden, dass wenn der Filter auf ein Bild
-angewandt wird, er bestimmte Features aus dem Bild hervorhebt. Solche Features
-könnten zum Beispiel Ränder oder Kanten sein, welche betont werden.
+Das Verhalten des Filters wird durch seine Tensoreinträge bestimmt.
+Die Elemente können so gewählt werden, dass bei Anwendung des Filters auf
+ein Bild, dieser bestimmte Features hervorhebt. Solche Features
+könnten zum Beispiel Ränder oder Kanten sein, welche akzentuiert werden.
 \para{}
 Ein gutes Beispiel ist der Sobel-Filter. Er ist ein typischer 2D-Kantendetektions-Filter mit einer
-Grösse von $f = 3$. Wir betrachten nun den Sobelfilter $\mat{G}_x$, welcher
+Grösse von $f = 3$. Jetzt soll der Sobelfilter $\mat{G}_x$ betrachtet werden, welcher
 horizontale Kanten akzentuiert. Die Einträge dieses Filters lauten wie folgt:
 \begin{equation*}
   \mat{G}_x =
@@ -1225,14 +1234,13 @@ horizontale Kanten akzentuiert. Die Einträge dieses Filters lauten wie folgt:
   \end{pmatrix}
 \end{equation*}
 
-Angewandt auf ein schwarz-weisses Bild, erhält man ein neues Bild, bei welchem alle erkannten
-Kanten weiss eingefärbt sind und die restlichen Bereiche schwarz sind.
+Angewendet auf ein schwarz-weisses Bild, wird ein neues Bild erzeugt, bei welchem alle erkannten
+Kanten weiss eingefärbt werden und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
 In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
-Beispielbild angewandt. Links ist das Ursprungsbild und rechts ist das
-prozessierte Bild.
-
+Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
+generierte Bild zu sehen.
 
 \begin{figure}[h!]
 
@@ -1247,22 +1255,23 @@ prozessierte Bild.
 
 
 \subsection{Filter in CNNs}
-Aus didaktischen Gründen betrachten wir nun zuerst
-nur 2D-Filter, welche sich für graustufige Bilder
-$\mat{B} \in \set{R}^{h \times w}$ eignen. Somit ist der hierfür geeignete
-Filter einfach eine 2D-Matrix, bezeichnet mit $\mat{F} \in \set{R}^{f \times
-  f}$. Man bedenke bei jeder Filtermatrix einfach immer, dass es sich
-eigentlich im allgemeinen Fall um einen 3D-Tensor handelt.
+Aus didaktischen Gründen betrachten wird nun zunächst
+nur ein 2D-Filter betrachtet, welcher sich für graustufige Bilder
+$\mat{B} \in \set{R}^{h \times w}$ eignet. Somit ist der hierfür ausgewählte
+Filter eine 2D-Matrix, bezeichnet mit $\mat{F} \in \set{R}^{f \times
+  f}$. Man bedenke, dass es sich eigentlich bei jeder Filtermatrix
+um einen 3D-Tensor handelt.
 \para{}
-Wie wir vorhin erfahren haben, können Filter genutzt werden um gewisse
+Wie bereits dargelegt, können Filter genutzt werden, um gewisse
 Features eines Bildes hervorzuheben und andere Features zu ignorieren. Dabei
 bestimmen die Filtereinträge, welche Features extrahiert werden. Somit besteht
 die Aufgabe darin, die richtigen Filtereinträge zu bestimmen, damit die
-gewünschten Features erkannt werden und auf die gewünschten Outputs abgebildet
-werden. Naheliegend sollte jetzt der Gedanke sein, die Filtereintreage als die
+gewünschten Features erkannt werden und auf den gewünschten Output abgebildet
+werden. Naheliegend sollte jetzt der Gedanke sein, die Filtereinträge als die
 Modellparameter eines CNNs zu definieren.
-Mithilfe des Gradietenverfahrens sollten erneut diese Parameter
-erlernt werden. \\
+Mithilfe von SGD soll erneut diese Parameter
+erlernt werden.
+\para{}
 Da die Filter die gleiche Funktion haben, wie die Gewichte in einem KNN,
 bezeichnet man die Filter in einem CNN mit $\mat{W}$. Die Grösse des Filters
 stellt dabei einen Hyperparameter dar.
@@ -1278,31 +1287,32 @@ stellt dabei einen Hyperparameter dar.
 
 \subsection{Filteroperation intutitiv}\label{sec:filteroperation_intuitiv}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
-Filteroperation leichter verständlich zu machen, wird es erneut für ein
-graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erläutert. Später werden auch noch farbige
-Bilder erklärt.
+Filteroperation leichter verständlich zu machen, soll es erneut für ein
+graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erläutert werden. Zu einem
+später Zeitpunkt wird auch die Anwendung auf farbige
+Bilder erklärt (siehe Sektion (\ref{sec:filteroperation_mathematisch})).
 \para{}
-Bei einer Filteroperation, wendet man einen Filter $\ten{W}$ auf einen Bildtensor
+Bei einer Filteroperation wendet man einen Filter $\ten{W}$ auf einen Bildtensor
 $\ten{B}$ an und erhält so ein neues Bild $\tilde{\ten{B}}$. Man schreibt dafür:
 $\tilde{\ten{B}} = \ten{W} * \ten{B}$.
 \para{}
-Um nun diese Operation zu erklären, verwenden wir als Beispiel eine
-2D-Filtermatrix $\mat{W} \in \set{R}^{3 \times 3}$, bei welcher
+Um nun diese Operation zu erklären, wird als Beispiel eine
+2D-Filtermatrix $\mat{W} \in \set{R}^{3 \times 3}$ verwendet, bei welcher
 $f = 3$ gewählt wurde.
-Wie bereits oben erwähnt, wandert der Filter über das Bild. Dabei befindet
-sich der Filter immer über einer Region des Bilder, welche gleich gross ist,
-wie der Filter selber (in diesem Fall ($3 \times 3$)), sodass den Filtermatrixeinträgen immer eindeutig
-Bildmatrixeinträge entsprechen. Diese Region des Bildes bezeichnet man als das
-\keyword{rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
-Das Rezeptive Feld, bezeichnet mit $\hat{\mat{B}} \in \set{R}^{3 \times 3}$ ist also einfach eine
+Wie bereits oben erwähnt wandert der Filter über das Bild. Dabei befindet
+sich der Filter immer über einer Region des Bildes, welche gleich gross ist
+wie der Filter selbst (in diesem Fall ($3 \times 3$)). Auf diese entsprechen den Filtermatrixeinträgen immer eindeutig
+Bildmatrixeinträge. Diese Region des Bildes bezeichnet man als das
+\keyword{Rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
+Das Rezeptive Feld, bezeichnet mit $\hat{\mat{B}} \in \set{R}^{3 \times 3}$, ist also eine
 Untermatrix der Obermatrix $\mat{B}$.
 \para{}
-Jedem Element des Filters entspricht ein Element des rezeptiven Feldes. Dem
-Zentralelement $(\mat{W})_c$ entspricht dabei gerade dem sogenannten Qüllenpixel
-(engl.: source pixel) $(\ten{B})_s$ des Bildes. Ihn verwenden wir für eine
-Namenskonvention für das rezeptive Feld. Wir bezeichnen das rezeptive Feld mit
-$\hat{\mat{B}}^{(y,x)}$, wobei die hochgestellten Indizes $(y,x)$ die Position
-des Qüllenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angibt.
+Jedem Element des Filters entspricht ein Element des Rezeptiven Feldes. Dem
+Zentralelement $(\mat{W})_c$ ist dabei gerade dem sogenannten Quellenpixel
+(engl.: source pixel) $(\ten{B})_s$ des Bildes zugeordnet. Ihn verwenden wir für eine
+Namenskonvention für das Rezeptive Feld. Das Rezeptive Feld wird mit
+$\hat{\mat{B}}^{(y,x)}$ bezeichnet, wobei die hochgestellten Indizes $(y,x)$ die Position
+des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angibt.
 
 \begin{figure}[h!]
 
@@ -1313,16 +1323,18 @@ des Qüllenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angibt.
 
 \para{}
 Der Filter beginnt nun oben links über das Bild zu wandern. Somit
-hat der Filter zu beginn das rezeptive Feld $\hat{\mat{B}}^{(2,2)}$, denn der
+hat der Filter zu anfangs das Rezeptive Feld $\hat{\mat{B}}^{(2,2)}$, denn der
 Filter darf nicht über die Ränder des Bildes hinausragen.
-Nun werden die Elemente der Filters mit den Elementen des rezeptiven Feldes
-verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird einfach das
-Hadamard-Produkt (das elementweise Produkt) des beiden Matrizen miteinander
-gebildet. Nun erhalten wir eine neue Matrix $\mat{W} \odot
+Nun werden die Elemente des Filters mit den Elementen des Rezeptiven Feldes
+verrechnet, welche die gleichen Dimensionen besitzen. Dabei wird das
+Hadamard-Produkt (das elementweise Produkt) der beiden Matrizen miteinander
+gebildet. Daraus resultiert eine neue Matrix $\mat{W} \odot
 \hat{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
-Nun werden noch alle Elemente der neuen Matrix $\mat{P}$
-aufsummiert. Diese Zahl ist dann der Grauwert des ersten Pixels $(\tilde{\mat{B}})_{1,1}$ des bearbeiteten
-Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine Gewichtung der Nachbarspixel dar, welche
+Anschliessend werden alle Elemente der neuen Matrix $\mat{P}$
+aufsummiert. Dieser Wert ist dann der Grauwert des ersten Pixels
+$(\tilde{\mat{B}})_{1,1}$ des neu enstandenen
+Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine
+Gewichtung der Nachbarspixel des Ursprungsbild dar, welche
 bestimmt, wie die neuen Pixel aussehen.
 \\
 \begin{equation}\label{eq:filter1}
@@ -1330,50 +1342,48 @@ bestimmt, wie die neuen Pixel aussehen.
 \end{equation}
 \\
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
-Prozedur angewandt, um den zweiten Pixel zu berechnen. Dies
-wird durchgezogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
-Danach wird der Filter wieder nach ganz links verschoben und er bewegt sich ein
-Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
-Dabei werden die Elemente des ursprünglichen Bildes durchaus mehrmals
-verrechnet, da es zu einer Überlappung des vorherigen Filters und des
-verschobenen Filters kommt.
+Prozedur angewendet, um den zweiten Pixel zu berechnen. Dies
+wird so lange vollzogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
+Danach wird der Filter wieder ganz nach links verschoben und er bewegt sich ein
+Element nach unten. Das geschieht bis das ganze Bild verrechnet wurde.
+Dabei werden die Elemente des ursprünglichen Bildes durchaus mehrfach
+verrechnet, da es zu einer Überlappung der vorherigen Position des Filters und
+der verschobenen Position kommt.
 \para{}
-
-\ifcp
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{conv.pdf}
   \caption{Schema, wie ein Filter über ein Bild läuft}
 \end{figure}
-\fi
-
+\para{}
 Es ist zu bemerken, dass das neue Bild $\tilde{\mat{B}} \in \set{R}^{(h-2) \times (w-2)}$ nicht mehr die gleichen Masse
-hat, wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
-Lage des Filters jeweils nur ein Pixel des neuen Bildes berechnet wird. Man kann
-sich vorstellen, dass an der Position des Qüllenpixel jeweils ein neuer
-Pixel entsteht. Dabei muss der Filter immer eine vollständige Region als
-rezeptives Feld haben. Dadurch kommt das Zentralelement nie auf die Ränder des
-Bildes zu liegen. Somit fallen diese weg.
+aufweist wie das Ursprungsbild $\mat{B} \in \set{R}^{h \times w}$. Das liegt daran, dass pro
+Lage des Filters jeweils nur ein Pixel des neuen Bildes entsteht. Man kann
+sich vorstellen, dass an der Position des Quellenpixels jeweils ein neuer
+Pixel generiert wird. Jedoch muss der Filter immer eine vollständige Region als
+Rezeptives Feld besitzen. Dadurch kommt das Zentralelement nie auf die Ränder des
+Bildes zu liegen, wodurch sie entfallen.
 \para{}
 \cite{deeplearning.ai:cnn}
 \cite{wiki:convolution}
 
-\subsection{Filteroperationen als diskrete Faltungen}
-Eigentlich handelt es sich bei einer Anwendung eines Filters auf ein Bild um
+\subsection{Filteroperationen als diskrete Faltungen}\label{sec:filteroperation_mathematisch}
+Eigentlich handelt es sich bei der Anwendung eines Filters auf ein Bild um
 eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.:
 \keyword{convolution}).
 \footnote{
   Streng genommen wird in CNNs nicht eine diskrete Faltung durchgeführt, sondern
-  eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied dabei ist, dass bei einer
-  Kreuzkorrelation die Faltungsmatrix nicht zuerst horizontal, wie auch vertikal
-  gespiegelt wird, im Gegensatz zu der eigentlichen Faltung. Jedoch verwendet man
-  begrifflich das Wort Faltung für beide Operationen. Im Verlauf dieser Arbeit
+  eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied besteht darin, dass bei einer
+  Kreuzkorrelation die Faltungsmatrix nicht horizontal und vertikal
+  gespiegelt wird. Dies im Gegensatz zu der eigentlichen Faltung, bei welcher
+  diese Spiegelung statt findet. Jedoch wird
+  begrifflich das Wort Faltung für beide Operationen verwendet. Im Verlauf dieser Arbeit
   wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
 }
 Daher rührt auch der Name des Convolutional Neural Networks.
-Wir werden die Faltung als mathematische Operation nicht im vollen Umfang
-betrachten, da sie relativ kompliziert ist. Wir werden uns lediglich auf die
-Bedeutung der Faltung für Filter beschränken.
+Da die Faltung als mathematische Operation relativ kompliziert ist, wird sie im
+Rahmen dieser Arbeit nicht in vollem Umfang betrachtet.
+Ihre Bedeutung soll auf die Faltung von Filtern beschränkt werden.
 \para{}
 \begin{defbox}{Diskrete Faltung}
   Definintion Faltung
@@ -1382,11 +1392,11 @@ Bedeutung der Faltung für Filter beschränken.
   \end{equation}
 \end{defbox}
 \para{}
-Mithilfe der Faltungsoperation können wir die Schritte welche in Sektion
-(\ref{sec:filteroperation_intuitiv}) erklärt wurden zusammenfassen.
-Bei der Filteroperation handelt es sich lediglich um eine diskrete Faltung des
-Filtertensors $\ten{W}$ über den Bildtensor $\ten{B}$. Somit können wir
-folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bildes zu berechnen.
+Mithilfe der Faltungsoperation können die Schritte aus Sektion
+(\ref{sec:filteroperation_intuitiv}) zusammengefasst werden.
+Bei der Filteroperation handelt es sich nämlich um eine diskrete Faltung des
+Filtertensors $\ten{W}$ über den Bildtensor $\ten{B}$. Somit kann
+folgende Formel verwenden werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
   (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{v,u}(\mat{B})_{y+v-1,x+u-1}
@@ -1431,15 +1441,16 @@ folgende Formel verwenden, um einen Pixel $\tilde{\mat{B}}(x,y)$ des neuen Bilde
   \end{equation*}
 \end{examplebox}
 \para{}
-Für farbige Bilder ist das Vorgehen praktisch das Selbe. Es werden nun
-lediglich 3D-Tensoren anstatt 2D-Tensoren verwendet. Wir betrachten den
+Für farbige Bilder ist das Vorgehen ähnlich. Es werden nun
+Tensoren dritten Ranges anstatt von Tensoren zweiten Ranges verwendet.
+Betrachten wird der
 allgemeinen Bildtensor $\ten{B}_{h \times w \times c}$, wobei $c$ die Anzahl
 Farbkomponenten (engl.: channels) ist.
 Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Grösse
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\ten{B}$.
-Dadurch muss der Filter nicht entlang der Tiefe des Bildes wandern, da er
-gerade gleich tief ist wie das Bild. Das hat zur Folge, dass das verarbeitete
-Bild $\tilde{\mat{B}}$ immer eine 2D-Matrix ist.
+Dadurch muss der Filter nicht entlang der Tiefe des Bildes wandern, weil er
+die gleiche Tiefe aufweist. Das hat zur Folge, dass das verarbeitete
+Bild $\tilde{\mat{B}}$ immer eine Matrix ist.
 Die allgemeine Filtergleichung lautet:
 \\
 \begin{equation}\tag{FO}
@@ -1453,13 +1464,14 @@ Die allgemeine Filtergleichung lautet:
 
 \subsection{Mehrere Filter}
 Eine Filteroperation ist nicht auf einen einzigen Filter beschränkt. Es können
-mehrere Filter auf das gleiche Ausgangsbild angewandt werden und zusammen ein
+mehrere Filter auf das gleiche Ausgangsbild angewendet werden und zusammen ein
 Endbild erzeugen.
 \para{}
-Die Anzahl Filter bezeichnen wir mit $c$.
-Nun macht man pro Filter $\ten{W}_i$ eine Faltung über das Ursprungsbild $\ten{W}$, wobei
-jede Faltung einen neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert, wobei $i$ der Index des
-Filters ist. All diese gefalteten Bilder $\tilde{\mat{B}}_i$ sind zweidimensionale Matrizen, unabhängig davon, wieviele
+Die Anzahl Filter werden mit $c$ bezeichnet.
+Nun wird pro Filter $\ten{W}_i$ eine Faltung über das Ursprungsbild $\ten{W}$ gemacht, wobei
+jede Faltung eine neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert.
+Dabei ist $i$ der Index des Filters. All diese gefalteten Bilder
+$\tilde{\mat{B}}_i$ sind zwei-dimensionale Matrizen, unabhängig davon, wieviele
 Komponenten das Ursprungsbild hatte. Aus diesem Grund können die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
 $\tilde{\ten{B}}$ bilden.
@@ -1469,9 +1481,9 @@ Hierfür müssen alle Filter $\ten{W}_i$ gleich gross sein.
 
 \end{figure}
 Die Tiefe des neuen Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter $c$.
-Wir haben bereits früher immer die Tiefe des Bildes (bzw. die Anzahl
-Farbkomponenten) mit $c$ bezeichnet. Somit ist $c$ sowohl die Anzahl Filter
-einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
+Schon vorher wurde die Tiefe des Bildes (bzw. die Anzahl
+Farbkomponenten) mit $c$ bezeichnet. Somit steht $c$ sowohl die Anzahl Filter
+einer Schicht, wie auch für die Tiefe des verarbeiteten Bildes.
 
 \para{}
 \cite{Goodfellow-et-al-2016}
@@ -1479,11 +1491,11 @@ einer Schicht, wie auch die Tiefe des verarbeiteten Bildes.
 
 \subsection{Padding}
 Wie bereits erwähnt schrumpfen die Bilder (an den Rändern), wenn man einen Filter auf sie anwendet.
-Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelements nur ein Pixel
-des neuen Bildes entsteht und das Zentralelement nunmal nicht auf allen
-Ursprungspixeln zu liegen kommt. Die Ränder fallen so weg. Diese Grösse des
-Wegfalls hängt von der Filtergrösse $f$ ab. Hierbei gilt folgende Formel für die
-neue Grösse $n_1$ des Bildes, anhand der alten Grösse $n_0$. $n$ bezeichnet
+Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelements jeweils nur ein Pixel
+des neuen Bildes entsteht. Das Zentralelement kommt jedoch nicht nicht auf allen
+Ursprungspixeln zu liegen. Auf diese Weise fallen die Ränder weg. Der Umfang des
+Wegfalls hängt von der Filtergrösse $f$ ab. Folgende Formel gilt für die
+neue Grösse $n_1$ des Bildes, berechnet anhand der alten Grösse $n_0$. $n$ bezeichnet
 eine der zwei Seitenlängen.
 \begin{equation}
   n_1 = n_0 - f + 1
@@ -1491,22 +1503,24 @@ eine der zwei Seitenlängen.
 
 Das Problem hierbei ist, dass nach einigen Faltungen das Bild extrem geschrumpft
 ist und im Grenzfall kleiner als der Filter wird. Das darf natürlich nicht
-passieren. Ausserdem kommt es dabei zu einem relativen Informationverlust an den Ränder, da es im
-Innern des Bildes zu viel Überlappungen der Filterlagen kommt und es bei den
-Rändern nur seltener zur Überlappung kommt.
+passieren. Zusätzlich kommt es zu einem relativen Informationverlust an den
+Rändern, im Vergleich zum Rest des Bildes. Dies rührt daher,
+das es im Innern des Bildes zu mehr Überlappungen der Filterlagen kommt und dies
+bei den Rändern seltener auftritt.
 \para{}
-Diese Probleme werden mit sogenanntem \keyword{Padding} behoben. Padding ist ein
-Schritt, welcher vor der eigentlichen Faltung stattfindet. Dabei werden einfach
+Diese unerwünschte Phänomen lässt sich mit sogenanntem \keyword{Padding} beheben. Padding ist ein
+Vorgang, welcher vor der eigentlichen Faltung stattfindet. Dabei werden
 zusätzliche Ränder (Zeilen und Spalten) an das Ursprungsbild angebracht. Der
-Tensor wird der Länge und der Breite nach (nicht der Tiefe entlang!) an den Enden erweitert. Die neuen Elemente werden dabei auf den Wert
-$0$ gesetzt.
+Tensor wird der Länge und der Breite und nicht der Tiefe entlang an den
+Enden erweitert. Die neuen Elemente werden dabei auf den Wert $0$ gesetzt.
 
 \begin{figure}[h!]
-
-  \caption{Padding}
+  \centering
+  \includegraphics[width=0.2\textwidth]{padding.pdf}
+  \caption{Padding $p=1$ in blau}
 \end{figure}
 
-Das Padding $p$ ist eine Zahl, welche angibt wieviele Elemente an allen Rändern
+Das Padding $p$ ist eine Zahl, welche angibt, wieviele Elemente an allen Rändern
 hinzugefügt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefügt wird.
 Begrifflich unterscheidet man zwischen zwei Arten von Padding:
@@ -1516,10 +1530,10 @@ Begrifflich unterscheidet man zwischen zwei Arten von Padding:
     die Grösse des Bildes nach der Faltung unverändert bleibt.}
 \end{itemize}
 \para{}
-Um Same-Padding durchzuführen, muss man $p$ so wählen, dass es den Wegfall durch
-den Filter gerade kompensiert. Da durch das Padding das Bild der Länge und
-Breite nach jeweils um zwei $p$ länger wird, erhält man den Ausdruck $n_1 =
-n_0 - f + 1 + 2p$. Wenn man diese Formel jetzt nach $p$ auflöst,
+Um Same-Padding durchzuführen, muss $p$ so gewählen werden, dass es den Wegfall durch
+die Filteroperation gerade kompensiert. Da das Bilder durch das Padding der Länge und
+Breite nach jeweils um zwei $p$ verlängert wird, erhält man den Ausdruck $n_1 =
+n_0 - f + 1 + 2p$. Wenn diese Formel nach $p$ auflöst,
 erhält man folgende Formel für das Wählen des Same-Paddings $p$.
 \\
 \begin{equation}
@@ -1529,14 +1543,22 @@ erhält man folgende Formel für das Wählen des Same-Paddings $p$.
 \cite{deeplearning.ai:cnn}
 
 \subsection{Stride}
-Bis jetzt haben wir bei den Filterfaltungen, den Filter pro Anwendung immer nur
-um einen Pixel verschoben. Das muss aber nicht so sein. Man kann den Filter
-auch mit einer anderen Schrittgrösse verschieben. Diese Eigenschaft bezeichnet
+Bis jetzt wurde bei den Filterfaltungen der Filter pro Verschiebung immer nur
+um einen Pixel bewegt. Dies ist nicht zwingend. Grundsätzlich können Filter auch
+mit anderen Schrittgrössen verschoben werden.
+Diese Schrittgröss bezeichnet
 man als \keyword{Stride} $s$. Falls $s = 2$ gewählt wird, bedeutet das, dass der
-Filter sich pro Matrixmultiplikation um zwei Elemente bewegt. Somit wurde eine
-Position übersprungen. Zur Folge hat dies, dass das neue Bild
-deutlich kleiner geworden ist, denn das Zentralelement überspringt somit auch
+Filter sich pro Hadamard-Produkt um zwei Elemente verschiebt. Somit wurde eine
+Position übersprungen. Dies hat zur Folge, dass das neue Bild
+deutlich kleiner wird, denn das Zentralelement überspringt somit auch
 diese Felder und bildet so deutlich weniger Pixel.
+\para{}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.2\textwidth]{stride.pdf}
+  \caption{Abbildung zum Stride: jetztige Position in blau, nächste Position mit
+    $s=1$ in rot, nächste Position mit $s=2$ in grün}
+\end{figure}
 \para{}
 Folgende Formel beschreibt die Dimensionen des neuen Bildes unter
 Berücksichtigung der Filtergrösse $f$, dem Padding $p$ und dem Stride $s$.
@@ -1549,53 +1571,54 @@ Berücksichtigung der Filtergrösse $f$, dem Padding $p$ und dem Stride $s$.
 
 \subsection{Vorzüge von Filtern}
 Es stellt sich nun die Frage, weshalb sich Filter für Maschinelles
-Lernen mit Bildern eignen.
+Lernen mit Bildern besonders eignen.
 Wie bereits erwähnt besteht die Aufgabe von Filtern darin, bestimmte Features
-eines Bildes hervorzuheben und die Restlichen auszublenden. Genau die gleiche
+eines Bildes hervorzuheben und die restlichen auszublenden. Die gleiche
 Aufgabe erfüllen die Neuronen in einem KNN. Auch sie sollen Features der
 Inputdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
 Weshalb verwendet man also nicht einfach KNNs? (abgesehen
-von dem Problem mit der Überzahl an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem})
+von dem Problem mit der grossen Menge an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem})
 \para{}
 Man muss erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
-Bildfeatures bzw. Pixel sind nur im Kontext von ihren Nachbarn relevant. Denn
+Bildfeatures bzw. Pixel sind nur im Kontext ihrer Nachbarn relevant. Denn
 ein Pixel ist erst dann eine Kante oder eine Ecke, wenn er zwei verschiedene
-Farbregionen voneinander trennt. Oder ein Gegenstand wird erst durch eine ganzen Haufen
-von Pixeln und deren relative Position züinander ausgezeichnet.
+Farbregionen voneinander trennt. Oder ein Gegenstand wird erst durch eine ganze Anzahl
+von Pixeln und deren relative Position zueinander charakterisiert.
 Man bezeichnet diesen Umstand als \keyword{lokalisierte Features}.
 \para{}
 Desweiteren sind Bildausschnitte nicht immer gleich
-orientiert. Wenn man ein Gesicht auf einem Bild erkennen möchte, sollte es aber
-keine Rolle spielen, wo auf dem Bild es sich befindet, welche Grösse es
-hat und was für eine Lage es hat. Um diese Eigenschaften irrelevant für das
-Modell zu machen, muss dieses gewisse \keyword{Invarianzen} erfüllen.
+ausgerichtet. Wenn man ein Gesicht auf einem Bild erkennen möchte, sollte es aber
+keine Rolle spielen, wo es sich auf dem Bild befindet, welche Grösse es
+hat und welche Ausrichtung es aufweist. Um diese Eigenschaften irrelevant für das
+Modell zu machen, muss es gewisse \keyword{Invarianzen} erfüllen.
 \para{}
-Die Eigenschaft, welche CNNs geeignet macht für lokalisierte Features und
-solche Invarianzen, bezeichnet man als \keyword{Parameter-Sharing}.
+Die Eigenschaft, welche CNNs für lokalisierte Features und
+Invarianzen geeignet macht, bezeichnet man als \keyword{Parameter-Sharing}.
 Es bezeichnet den Umstand, dass auf
 mehrere oder alle Features die gleichen Modellparameter wirken. Bei CNNs wird
 dies durch die Bewegung des Filters bzw. seiner Einträge über (fast) alle
 Pixel bewerkstelligt. Somit ist
 es egal, wo und wie sich die lokalisierten Features befinden. Dies führt dann eben zu
 den gewünschten Invarianzen: Translations-, Rotations- und
-Helligkeitsinvarianz. \\
+Helligkeitsinvarianz.
+\para{}
 Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
 beliebige Dimensionen besitzen können, da die Filter ihre Bewegung lediglich an
 die Grösse des Bildes anpassen müssen.
-
+\para{}
 \cite{deeplearning.ai:cnn}
 
 \subsection{Convolutional-Schicht}
-Nun möchten wir alles zusammentragen, was wir über Filter gelernt
-haben, um nun die Convolutional-Schicht zu definieren.
+Nun soll all das zusammengefasst werden, was soeben über Filter geschrieben
+wurde, um die Convolutional-Schicht zu definieren.
 \para{}
-Beginnen tut eine Convolutional-Schicht $l$ mit seinem Input, also den
-Aktivierungen $\ten{A}^{l-1} \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherige Schicht ($l-1$) produziert hat,
-oder falls es die erste Schicht ist, erhält sie den Input $\ten{X}$ des Netzes,
-welchen man auch mit $\ten{A}^0$ bezeichnet. \\
+Die Convolutional-Schicht $l$ beginnt mit ihrem Input, also den
+Aktivierungen $\ten{A}^{l-1} \in \set{R}^{h^l \times w^l \times c^l}$, welche die vorherige Schicht ($l-1$) produziert hat.
+Falls es sich um die erste Schicht handelt, erhält sie den Input $\ten{X}$ des Netzes.
+\para{}
 Die Schicht besitzt $c^l$ Varianten an Filtern $\ten{W}^l_i \in
 \set{R}^{f^l \times f^l \times c^{l-1}}$. Diese Filter haben alle die gleichen
-Eigenschaften, bezüglich: der Grösse $f^l$, der Tiefe $c^{l-1}$, dem Padding
+Eigenschaften bezüglich: der Grösse $f^l$, der Tiefe $c^{l-1}$, dem Padding
 $p^l$ und dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
 $w^l_{i\,|\,\alpha,\beta,\gamma}$.
 \\
@@ -1616,44 +1639,41 @@ $w^l_{i\,|\,\alpha,\beta,\gamma}$.
   \end{bmatrix}
 \end{equation*}
 \\
-Nun faltet man jeden Filter $\ten{W}_i^l$ einzeln über das Bilder
-$\ten{A}^l$ und erhält so mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$.
+Nun wird jeder Filter $\ten{W}_i^l$ einzeln über das Bild
+$\ten{A}^l$ gefaltet, wodurch mehrere neue 2D-Bilder $\tilde{\mat{A}}_i^l$ entstehen.
 \\
 \begin{equation}
   \tilde{\mat{A}}_i^l = \ten{W}_i^l * \ten{A}^l
 \end{equation}
 \\
-Die Faltung berechnet man nach folgender Gleichung:
+Die Faltung berechnet sich aus folgender Gleichung:
 \\
 \begin{equation}\tag{FO}
   (\tilde{\mat{A}}_i)_{y,x}^l = (\ten{W}_i^l * \ten{A}^l)_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} \sum_{w=1}^c (\ten{W}^l_i)_{v,u,w} (\ten{A}^l)_{x+v-1,y+u-1,w}
 \end{equation}
 \\
-Jede dieser Matrizen ist ein Qürschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
+Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
 Tiefe des neuen 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
-Hierbei ist die Tiefe $c^l$ gerade die Anzahl Filter $c^l$ und die Höhe
-$h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils nach der folgenden Formel
-berechnet anhand der Höhe $h^l$ und der Breite $w^l$ des Ausgangsbildes.
+Hierbei ist die Tiefe $c^l$ gerade die Anzahl der Filter $c^l$. Die Höhe
+$h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils gemäss nachstender Formel berechnet,
+anhand der Höhe $h^l$ und der Breite $w^l$ des Ausgangsbildes:
 \\
 \begin{equation}
   n^{l+1} = \frac{n^l + 2p^l - f^l}{s^l} + 1
 \end{equation}
 \\
-Da die Faltungsoperation eine lineare Operation ist, braucht man wieder eine
-nicht-lineare Aktivierungsfunktion um das Modell zu befähigen nicht-lineare Probleme zu
-lösen.
-Deshalb wendet man in einem letzten Schritt die vektorisierte Aktivierungsfunktion
-$\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ an und erhält so die
-neue Aktiverung der nächsten Schicht $\ten{A}^{l+1}$. Empirisch hat man
-festgestellt, dass es für CNNs eine bessere Aktivierungsfunktion als die
-Sigmoidfunktion gibt. Die ReLU-Aktivierungsfunktion $\vecf{\varphi}^{ReLU}$ aus Sektion (\ref{sec:ReLU})
-erziehlt bessere Resultate als die Sigmoidfunktion. Deshalb verwendet man
-eigentlich nur diese in CNNs.
+Da die Faltungsoperation linear ist, wird wiederum eine
+nicht-lineare Aktivierungsfunktion benötigt, um das Modell zu befähigen, nicht-lineare Probleme zu
+lösen zu können.
+Deshalb wird in einem letzten Schritt die vektorisierte Aktivierungsfunktion
+$\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ angewendet. So ergibt sich die
+neue Aktiverung $\ten{A}^{l+1}$ der nächsten Schicht. Empirisch lässt sich nachweisen,
+dass sich für CNNs die ReLU-Aktivierungsfunktion aus Sektion (\ref{sec:ReLU}) besser eignet als die
+Sigmoidfunktion (QUELLE). Deshalb wird in der Regel die ReLU-Funktion für CNNs verwendet.
 \begin{equation}
   \ten{A}^{l+1} = \vecf{\varphi}[\tilde{\ten{A}}^l]
 \end{equation}
-
-
+\para{}
 \cite{wiki:cnn}
 \cite{deeplearning.ai:cnn}
 \cite{Goodfellow-et-al-2016}
@@ -1663,27 +1683,28 @@ eigentlich nur diese in CNNs.
 Beim Anwenden einer Convolutional Schicht gehen Informationen verloren, da nur
 die relevanten Features hervorgehoben werden und der Rest verworfen wird. Jedoch
 schrumpft das Bild entweder gar nicht (bei Same-Padding) oder es schrumpft nur
-sehr leicht (bei Valid-Padding). Dies ist ein Problem, da die Information in
-deutlich weniger Pixeln bzw. Tensorelementen codiert werden könnte. Deshalb
-haben wir einen unötigen Ressourcenverbrauch und eine erhöhte Gefahr für
-Overfitting. Um diesem Problem entgegenzuwirken, gibt es einerseits sogenannte
+vergleichsweise leicht (bei Valid-Padding). Dies ist ein Problem, da die Information in
+deutlich weniger Pixeln bzw. Tensorelementen codiert werden könnte. In der Konsequenz
+zeigt sich ein unötig hoher Ressourcenverbrauch und eine erhöhte Gefahr für
+Overfitting (siehe Sektion (\ref{sec:overfitting})). Um diesem Effekt
+entgegenzuwirken, gibt es einerseits sogenannte
 \keyword{Pooling-Schichten} und als Gegenstück dazu
 \keyword{Upsampling-Schichten}. Ersteres wird verwendet, um die Dimensionalität
 der Bilder zu vermindern, und letzteres, um die Dimensionalität der Bilder zu
-erweitern. Somit ermöglichen diese Schichten eine kontrollierte Art (im Gegensatz zum
-Padding) die Dimensionalität einzustellen.
+erweitern. Somit ermöglichen diese Schichten eine kontrollierte Art, (im Gegensatz zum
+Padding) die Dimensionalität willentlich zu bestimmen.
 
 \subsection{Pooling-Schicht}
 Die Pooling-Schicht verringert die Dimensionalität durch das Zusammenfassen eines Feldes
-von Tensorelementen zu einem einzigen Tensorelement der nächsten Schicht.
-Dabei geht das Feld nur entlang der Länge und Breite des Bildes und
-nicht entlang der Tiefe. Dies bedeutet, das Pooling wird auf jeden Channel
-einzeln angewandt, dadurch ändert sich die Tiefe des Bildes nicht.
+von Tensorelementen zu einem einzigen Tensorelement.
+Dabei wandert das Feld nur entlang der Länge und Breite des Bildes und
+nicht etwa entlang der Tiefe. Dies bedeutet, dass das Pooling auf jede Farbkomponente
+einzeln angewendet wird, wodurch sich die Tiefe des Bildes nicht ändert.
 \para{}
-Für die Beschreibung einer Pooling-Schicht wird viel Begrifflichkeit der
-Convolutional-Schicht und der Filter übernommen.
-Die Grösse des Elementfeldes, welches zusammengefasst wird, bezeichent man analog zur
-Filtergrösse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling wieder, wie
+Für die Beschreibung einer Pooling-Schicht finden die gleichen Begriffe
+Anwendung, wie bei der Convolutional-Schicht und den Filtern.
+Die Grösse des Elementfeldes, welches zusammengefasst wird, bezeichnet man analog zur
+Filtergrösse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling, wie
 gross die Schrittgrösse beim Verschieben des Feldes ist. Meistens wählt man den
 Stride $s^l$ gerade gleich der Feldgrösse $f^l$, damit alle Pixel
 zusammengefasst werden. Kleiner als $f^l$ kann $s^l$ nicht gewählt werden.
@@ -1691,14 +1712,15 @@ zusammengefasst werden. Kleiner als $f^l$ kann $s^l$ nicht gewählt werden.
 Man unterscheidet zwischen zwei Arten von Pooling:
 \begin{itemize}
 \item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
-    man das arithmetische Mittel der Elemente bildet.}
+    das arithmetische Mittel der Elemente gebildet wird.}
 \item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
     Element mit dem höchsten Wert beibehalten wird und die anderen verworfen werden.}
 \end{itemize}
-In Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
+In der Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
 Resultate erzielt.
+\para{}
 \begin{examplebox}{MaxPooling Beispiel}
-  Wir wählen eine MaxPooling-Schicht mit $f^l = 2$ und $s^l = 2$.
+  Es sei eine MaxPooling-Schicht gewählt mit $f^l = 2$ und $s^l = 2$.
   Diese fasst also jedes $(2 \times 2)$-Feld zu einem Element zusammen. Da aus
   vier Elementen jeweils eines wird, entspricht dies einer Informationsreduktion
   von 75\%.
@@ -1717,13 +1739,12 @@ Resultate erzielt.
     \end{pmatrix}
   \end{equation*}
 \end{examplebox}
-
 \para{}
 Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
 Hyperparameter, wie die Feldgrösse $f^l$ und den Stride $s^l$.
 \para{}
-Um zu berechnen, was die neuen Dimensionen nach dem Pooling sind, gelten die
+Um zu berechnen, was die neuen Dimensionen der Bildes nach dem Pooling sind, gelten die
 gleichen Formeln wie für die Filteroperationen:
 \\
 \begin{equation}
@@ -1737,83 +1758,84 @@ gleichen Formeln wie für die Filteroperationen:
 
 \subsection{Upsampling-Schicht}
 Die Upsampling-Schicht bildet das Gegenstück zur Pooling-Schicht, da sie die
-Dimensionalität der Bilder erhöht. Auf den ersten Blick erscheint unklar,
-weshalb man die Dimensionalität erhöhen wollen könnte, da die eigentliche
+Dimensionalität des Bildes erhöht. Auf den ersten Blick erscheint unklar,
+weshalb man die Dimensionalität erhöhen will, da die eigentliche
 Motivation dieser Schichten in der Verhinderung von Overfitting besteht. Jedoch
-sollte in Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schichten
-notwendig sind.
+sollte mit dem Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schichten
+einen Nutzen haben können.
 \para{}
-Man verwendet auch hier wieder den Begriff der Feldgrösse $f^l$. Diesemal
-beschreibt dieser Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
+Man verwendet auch hier wieder den Begriff der Feldgrösse $f^l$. Dieses Mal
+beschreibt der Wert, wie stark das Bild hochskaliert wird. Beim Upsampling
 wird ein Element zu einem $(f^l \times f^l)$-Feld hochgerechnet und erweitert so die
 Dimensionalität.
 \para{}
 Es stellt sich natürlich die Frage, was für Werte das neue Feld erhält.
-Dafür muss man eine Interpolationsart wählen.
+Dafür ist eine Interpolationsart zu wählen.
 Zwei Arten sind besonders verbreitet:
 \begin{itemize}
 \item{\keyword{Bilineare Interpolation}}
 \item{\keyword{Nächste-Nachbar-Interpolation} (engl.: nearest-neighbor-interpolation)}
 \end{itemize}
-Wir werden hier nur die Nächste-Nachbar-Interpolation betrachten. Sie ist
-ziemlich trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
-Elements an. Der Wert wird also einfach vermehrt.
-
-
+Hier soll nur die Nächste-Nachbar-Interpolation betrachten werden. Sie ist
+vergleichsweise trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
+Elements an. Der Wert auf diese Weise also vermehrt.
+\para{}
 \cite{deeplearning.ai:cnn}
 \cite{Goodfellow-et-al-2016}
 
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
-Nun möchten wir uns vorerst von der Architektur des Convolutional Neural
-Networks abwenden, um den Autoencoder zu betrachten. Wir werden uns erneut
-mit der Funktionsweise und der Nützlichkeit dieser Architekur
-auseinandersetzen. Danach werden wir den Autoencoder mit dem Convolutional
-Neural Network fusionieren und so einen Convolutional-Autoencoder erhalten. Zu
-guter letzt betrachten wir dann noch eine Anwendung eines solchen
-Convolutional-Autoencoder, nämlich einen Denoiser.
+In Kapitel drei wurde die Architektur eines Convolutional Neural Networks dargelegt.
+Nun soll eine weitere Architekur erörtert werden, welche das letzte Bindeglied zur
+praktischen Programmierung eines Convolutional-Denoising-Autoencoder verköpert.
+Dieses ist notwendig, um die theoretische Funktionsweise eines Autoencoders zu verstehen.
+Zielsetzung ist, den Autoencoder mit dem Convolutional
+Neural Network zu fusionieren, um auf diese Weise einen einen
+Convolutional-Autoencoder zu erhalten. Zu
+guter letzt soll dann noch eine Anwendung eines solchen
+Convolutional-Autoencoder betrachtet werden, in der Form eines Denoiser.
 \para{}
 \bigskip
-Ein \keyword{Autoencoder} ist eine weitere Architektur eines KNNs. Diese Architektur
-beschreibt das Netzwerk jedoch nicht bezüglich der Schichtenarten, sondern beschreibt es
-auf der Ebene der Netzform. \\
-Die Aufgabe eines Autoencoders besteht darin eine neue Repräsentation einer Datenmenge
-zu erlernen. Diese neuartige Repräsentation soll mit weniger Daten möglichst die gleiche
+Ein \keyword{Autoencoder} ist eine Architektur, welche ein KNN nicht
+nicht bezüglich der Schichtenarten, sondern auf der Ebene der Netzform beschreibt.
+Die Aufgabe eines Autoencoders besteht darin, eine neue Repräsentation einer Datenmenge
+zu erlernen. Diese neuartige Darstellung soll mit weniger Daten möglichst die gleiche
 Information codieren. Somit entwickelt das Modell eine \keyword{effiziente
   Daten-Codierung} für einen Datensatz. Dadurch kann er zur
-\keyword{Dimensionalitätsreduktion} verwendet werden. \\
-Neben dieser neuen Repräsentation erlernt das Netzwerk noch, wie es
+\keyword{Dimensionalitätsreduktion} verwendet werden.
+Neben dieser neuen Repräsentation erlernt das Netzwerk darüberhinaus, wie es
 aus dieser Codierung wieder die Ursprungsdaten reproduzieren kann.
 \para{}
-Autoencoder gehören nicht dem klassischen überwachtem Lernen an. Strenggenommen gehören
-sie dem unüberwachtem Lernen an, da in den Trainingsdaten keine Labels
+Autoencoder gehören nicht dem klassischen überwachtem Lernen an. Strenggenommen
+zählen sie zum unüberwachtem Lernen, da in den Trainingsdaten keine Labels
 enthalten sein müssen. Jedoch ist diese Begrifflichkeit etwas irreführend,
-weil nur deshalb keine Labels benötigt werden, da die Labels gleich den Features sind!
-Somit wird das Netzwerk trotzdem darauf trainiert gewisse gewünschte Outputs
+weil nur deshalb keine Labels benötigt werden, da sie den Features entsprechen!
+Somit wird das Netzwerk trotzdem darauf trainiert, gewisse gewünschte Outputs
 zu liefern.
-
+\para{}
 \cite{book:autoencoder}
 
 \section{Topologie}
-Ein Autoencoder besteht wie das klassische KNN auch aus Neuronen.
+Ein Autoencoder besteht wie das klassische KNN aus Neuronen.
 Wie bereits erwähnt sind die ``Labels'' eines Autoencoders gleich
-den Features. Somit versucht ein Autoencoder einfach die Werte der Inputneuronen
+den Features. Somit versucht ein Autoencoder, die Werte der Inputneuronen
 möglichst exakt in die Outputneuronen zu kopieren.
-Diese Operation wäre an sich ziemlich bedeutungslos und nutzlos, da mit den
-Daten nichts passiert. Das Netzwerk würde einfach erlernen eine
+Diese Operation wäre an sich ziemlich bedeutungslos, da mit den
+Daten nichts passiert. Das Netzwerk würde lediglich erlernen, eine
 Identitätsfunktion zu imitieren.
 Aus diesem Grund muss man gewisse Einschränkungen einführen. Diese bringen das Netzwerk dazu,
-interessante Methoden zu entwickeln um die Features \textit{approximativ} zu rekonstruieren.
+interessante Methoden zu entwickeln, um die Features \textit{approximativ} zu rekonstruieren.
 \para{}
 Die angesprochene Einschränkung besteht darin, dass dem Autoencoder nicht
-beliebig viel Kapatzität für die Codierung der Features gegeben wird.
-Es stehen dem Netzwerk nur wenige Zahlenwerte zur Verfügung um die Features
-in der neuen Repräsentation zwischenzuspeichern, bevor sie wieder in die ursprünliche Form gebracht werden.
-Diese Kapazitätseinschräkung wird durch die Topologie des Autoencoders bezweckt.
+beliebig viel Kapatzität für die Codierung der Features gewährt wird.
+Es stehen dem Netzwerk nur wenige Zahlenwerte zur Verfügung, um die Features
+in der neuen Repräsentation zwischenzuspeichern, bevor sie wieder in die
+ursprüngliche Form zurück transformiert werden.
+Die Kapazitätseinschräkung wird durch die Topologie des Autoencoders bezweckt.
 \para{}
 \bigskip
-Der einfachste Autoencoder, besteht aus drei Schichten, welche sich wie folgt
-eingliedern lassen:
+Der einfachste Autoencoder besteht aus drei Schichten, welche sich wie folgt
+gliedern lassen:
 \begin{itemize}
 \item{eine Inputschicht mit $d$ Neuronen}
 \item{eine Zwischenschicht mit $p$ Neuonen, bezeichnet als \keyword{Flaschenhals}}
@@ -1829,21 +1851,22 @@ Flaschenhals der Grösse $p = 2$.
   \label{fig:basic_autoencoder}
 \end{figure}
 \para{}
-Die Inputschicht enthält die Features $\vec{x} \in \set{R}^d$. Die Outputschicht dagegen
-enthält die \keyword{Rekonstruktionen} der Features, welche wir mit $\vec{\hat{x}} \in \set{R}^d$
-bezeichnen. Als logische Konseqünz müssen die beiden Schichten die gleiche
+Die Inputschicht enthält die Features $\vec{x} \in \set{R}^d$. Dagegen enthält die Outputschicht
+die \keyword{Rekonstruktionen} der Features, welche wir mit $\vec{\hat{x}} \in \set{R}^d$
+bezeichnen. Als logische Konsequenz müssen die beiden Schichten die gleiche
 Anzahl $d$ an Neuronen besitzen.
-Die Flaschenhalsschicht hingegen besitzt nur $p$ Neuronen, wobei $p \ll d$.
-Somit ist die sie deutlich kleiner als die anderen beiden Schichten und bildet
-so die Kapazitätseinschränkung.
+Die Flaschenhalsschicht hingegen besitzt nur $p$ Neuronen, wobei $p \ll d$ ist.
+Somit ist sie deutlich kleiner als die anderen beiden Schichten und bildet
+damit die \keyword{Kapazitätsbeschränkung}.
 \para{}
-Wir haben nun einen Autoencoder nur mit einer Zwischenschicht betrachtet.
-Gängier ist es jedoch das Netz aus mehreren Zwischenschichten zu bauen. Dabei
+Damit wurde ein Autoencoder mit nur einer Zwischenschicht betrachtet.
+Gängiger ist jedoch das Netz aus mehreren Zwischenschichten zu konstruieren. Dabei
 werden die Schichten zum Flaschenhals hin immer schmaler und die Schichten nach
-dem Flaschenhals wieder immer dicker. In Abbildung (\ref{fig:big_autoencoder})
-ist dies gut ersichtlich. Wir werden nun aber weiterhin mit dem Autoencoder,
-welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
-
+dem Flaschenhals wieder dicker. In Abbildung (\ref{fig:big_autoencoder})
+ist dies gut ersichtlich.
+Aus Vereinfachungsgründen soll dennoch die Funktionsweise eines Autoencoder mit
+nur einer Zwischenschichten hergeleitet werden.
+\para{}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{ae2.pdf}
@@ -1853,88 +1876,86 @@ welcher nur eine Zwischtenschicht besitzt, die Funktionsweise herleiten.
 
 \section{Funktionsweise}
 Ein Autoencoder möchte die Features $\vec{x}$ von der Inputschicht in die
-Outputschicht kopieren. Jedoch zwingt der Flaschenhals den Autoencoder dazu eine
-neue Repräsenation der Features zu erlernen. Dies hat den Grund, dass die
+Outputschicht kopieren. Jedoch zwingt der Flaschenhals den Autoencoder dazu, eine
+neue Repräsenation der Features zu erlernen. Dies aus dem Grund, weil die
 Features in ihrer jetzigen Form keinen Platz im Flaschenhals finden, da $p \ll d$.
-Somit muss das Modell die Informationen, welche in den Features stecken
-nur auf einige wenige Eigenschaften komprimieren. Es muss gewissermassen einen
-Code entwickeln. Diese neue Repräsentation nennt man das \keyword{Encoding}. \\
-In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wieder
-versuchen die ursprünlichen Features zu rekonstruieren. Diese Rekonstuktion
+Daher muss das Modell die Informationen der Features,
+auf nur einige wenige relevante Eigenschaften komprimieren.
+Das Modell muss gewissermassen einen Code entwickeln.
+Diese neue Repräsentation nennt man das \keyword{Encoding}. \\
+In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wiederum
+versuchen, die ursprünlichen Features zu rekonstruieren. Diese Rekonstuktion
 bezeichnet man als das \keyword{Decoding}.
 
 \paragraph{Encoder und Decoder}
-Man kann einen Autoencoder gewissermassen als zwei Teilmodelle betrachten. Das
-einte Modell erzeugt das Encoding und das andere das Decoding. Wir spalten
-dafür die Hypothesenfunktion $h$ in ein Funktionenpaar $(\phi,\psi)$ auf.
+Daher kann man einen Autoencoder in zwei Teilmodelle untergliedern. Das
+eine Modell erzeugt das Encoding und das andere das Decoding. Dafür wird
+die Hypothesenfunktion $h$ in ein Funktionenpaar $(\phi,\psi)$ aufgespaltet.
 \begin{itemize}
 \item{$\phi: \fspace{X} \to \fspace{E}$ Encoder-Funktion}
 \item{$\psi: \fspace{E} \to \fspace{X}$ Decoder-Funktion}
 \end{itemize}
-Die erste Teilfunktion $\phi$ ist dafür zuständig das Encoding zu erzeugen. Sie
-bildet den Inputraum $\fspace{X} \subseteq \set{R}^d$, welcher die Features $\vec{x}$ enthält, auf
-den Encodingraum $\fspace{E} \subseteq \set{R}^p$, welcher die neuen
-Repräsenation $\vec{x^*}$ enthält, ab. \\
+Die erste Teilfunktion $\phi$ ist für das Encoding zuständig. Sie
+bildet den Inputraum $\fspace{X} \subseteq \set{R}^d$ auf
+den Encodingraum $\fspace{E} \subseteq \set{R}^p$ ab, welcher die neue
+Repräsentation $\vec{x^*}$ enthält. Der Inputraum $\fspace{X}$ enthält
+sämtliche Features $\vec{x}$.
+\para{}
 Das Gegenstück ist die Teilfunktion $\psi$. Sie bildet den Encodingraum
 $\fspace{E}$ zurück auf den Inputraum $\fspace{X}$ ab.
 \para{}
 Der Output des Autoencoders $\vec{\hat{x}}$ wird somit durch die aufeinander
-folgende Anwendung der Teilfunktion auf die Features $\vec{x}$ gebildet:
+folgende Anwendung der Teilfunktionen auf die Features $\vec{x}$ gebildet:
 \begin{equation}
   \vec{\hat{x}} = \psi(\phi(\vec{x})) = (\psi \circ \phi)(\vec{x})
 \end{equation}
 
-Wenn wir dieses Modell trainieren, minimieren wir die Kostenfunktion. Als
-Beispiel können wir den Mittleren-quadratischen-Fehler $C_{MSE}$ nehmen.
-Verwenden wir ihn als Kostenfunktion, minimieren wir folgenden Ausdruck:
+Durch das trainieren dieses Modells, wird die Kostenfunktion minimiert. Als
+Beispiel kann der Mittlere-quadratischen-Fehler $C_{MSE}$ dienen.
+Wird er als Kostenfunktion verwendet, so wird folgender Ausdruck minimiert:
 \begin{equation}
   \min_{\phi,\psi} {\|\vec{x} - \vec{\hat{x}}\|}^2 = \min_{\phi,\psi} {\|\vec{x} - (\psi \circ \phi)(\vec{x})\|}^2
 \end{equation}
-Anderst ausgedrückt versuchen wir Funktion $\phi$ und $\psi$ zu finden, welche
-die Differenz der ursprünglichen Features $\vec{x}$ und den Rekonstruktionen
+Anderst ausgedrückt wird versucht Funktionen $\phi$ und $\psi$ zu finden, welche
+die Differenz zwisceh den ursprünglichen Features $\vec{x}$ und den Rekonstruktionen
 $\vec{\hat{x}}$ minimieren. Dabei muss der Autoencoder
-Dimensionalitätsreduktion betreiben. Er entwickelt einen Code um die Features
+eine Dimensionalitätsreduktion betreiben. Er entwickelt einen Code, um die Features
 in der Flaschenhalsschicht komprimiert zu repräsentieren. Durch die
 Kapazitätseinschräkung $p \ll d$ muss $\fspace{E}$ eine niedrig-dimensionale
-Codierung der Features darstellen. Dem Modell ist es nicht möglich die Inputs
+Codierung der Features darstellen. Dem Modell ist es nicht möglich, die Inputs
 identisch wiederherzustellen, da bei der Abbildung $\phi$ Informationen verloren
-gegangen sind. Dadurch sollte der Code im Optimalen Fall nur noch die Merkmale
-der Features umfassen, welche für die grösste Information codieren.
+gegangen sind. Dadurch sollte der Code im optimalen Fall nur noch die Merkmale
+der Features umfassen, welche für die umfangreichste Information codieren.
 Dieser Code kann extrahiert werden, um eine Repräsentation der Features zu
-erhalten, welche nicht mehr mehrere Hundert Merkmale umfasst sonder nur noch ein
-paar wenige. Jedliche natürliche Schwankungen in den Werten der Features gehen
-verloren, da sie nicht im COde enthalten sind. Sie können nicht verallgemeinert werden.
+erhalten, welche nicht mehr mehrere hundert Merkmale umfasst, sondern nur noch einige
+wenige. Jegliche natürliche Schwankung in den Werten der Features geht
+verloren, da sie nicht im Code enthalten ist, weil sie nicht verallgmeinert
+werden kann.
 
 \paragraph{Der Code}
-Bei der Suche dieser Funktionen muss der Autoencoder einen gewissen ``Code''
-entwickeln, um die Features neu zu repräsentieren. Dies da der Falschenhals
-nicht den nötigen Kapazität bietet, um die Features in der ursprünlichen Form
-zu halten. Somit muss der Autoencoder Dimensionalitätsreduktion betreiben, um
-die Features komprimiert darzustellen.
-\para{}
-Durch diese Komprimierung ist es dem Modell unmöglich die Rekonstruktionen
-perfekt zu machen. Sie sind immer approximativ, da bei der Komprimierung
+Bei der Suche dieser Funktionen muss der Autoencoder einen reduzierten Code
+entwickeln, um die Features neu zu repräsentieren.
+Durch diese Komprimierung ist es dem Modell unmöglich, die Rekonstruktion
+perfekt zu vollziehen. Sie ist immer approximativ, da bei der Komprimierung
 Informationen verloren gegangen sind. Am effektivsten wird die Kostenfunktion
 minimiert, wenn das Modell einen Code entwickelt, welcher die Features mit dem
 höchsten Informationsgehalt abstrahiert. Die Features, welche unwichtig sind
-oder nur durch züfalliges Rauschen der Daten entsteht können verworfen werden,
-da sie nicht verallgemeinert werden können.
+oder nur durch zufälliges Rauschen der Daten enstanden sind, können daher verworfen werden.
 \para{}
-Es ist wichtig zu erkennen, das der Code welcher der Autoencoder entwickelt
-\keyword{datenspezifisch} ist. Das heisst er kann nicht wie z.B ein
+Es ist wichtig zu erkennen das der Code, welcher der Autoencoder entwickelt,
+\keyword{datenspezifisch} ist. Das heisst, er kann nicht wie z.B ein
 Bildkompressionalgorithmus auf beliebige Daten angewendet werden. Stattdessen
-ist er nur sinnvoll für die Kompression von Daten, mit welchen er trainiert
-wurde. Der Autoencoder erlernt die Eigenschaften eines Datensatz zu abstrahieren
-und neu darzustellen.
+ist er nur sinnvoll für die Kompression von Daten zu verwenden, mit welchen er trainiert
+wurde.
 BEISPIEL EINER ABSTRAKTION (a la Menschliches Gesicht beschreiben).
 
 \section{Anwendungen}
-Die Eigenschaft, welche einen Autoencoder sich für die verschiedensten
-Anwendungen geeignet macht, ist die Dimensionalitätsreduktion. \\
+Die Eigenschaft, welche einen Autoencoder für die verschiedensten
+Anwendungen geeignet macht, ist die Dimensionalitätsreduktion.
 Wir werden nun einige Anwendungen grob betrachten.
 
 \subsection{Kompression}
-Es handlet sich um Verlustbehaftete Kompression.
+Es handlet sich um eine verlustbehaftete Kompression.
 Dimensionalitätsreduktion. Falls lineare Neuronen, ähnlich zur Hauptkomponentenanalyse
 $\frac{p}{d}$ des ursprünglichen Speicherbedarfs. Diese Komprimierung ist dabei Datenspezifisch.
 
@@ -1951,22 +1972,22 @@ Im übernachsten Kapitel werden wir eine Anwendung noch genauer Betrachten die
 des Denoisers.
 
 \section{Convolutional-Autoencoder}
-Ein Convolutional-Autoencoder ist wie der Name es schon sagt, ein Autoencoder,
-welcher anstatt die normalen Fully-connected-Schichten eines KNNs die Schichten eines CNN verwendet. \\
-Er ist interessant, weil er zur Kompession von Bildern verwendet werden kann.
-Wie bereits erwähnt ist auch hier die Kompression datenspezifisch.
+Ein Convolutional-Autoencoder ist, wie es der Name schon sagt, ein Autoencoder,
+welcher anstatt der normalen Fully-Connected-Schichten eines KNNs, die Schichten eines CNN verwendet.
+Dieser ist interessant, weil er zur Kompession von Bildern verwendet werden kann.
+Wie bereits erwähnt, ist auch hier die Kompression datenspezifisch.
 Beispielsweise könnte man einen Convolutional-Autoencoder mit einem Datensatz
 von menschlichen Gesichtern trainieren. Dieser würde dann einen
-datenspezifischen Code für diese Gesichter entwickeln. Mann kann sich
+datenspezifischen Code für diese Gesichter entwickeln. Man kann sich
 vorstellen, dass das Modell nicht mehr die Farbwerte der Features im Encoding
 speichert, sondern stattdessen diese Features abstrahiert. Somit könnten
 Eigenschaften, wie die Augenfarbe, Breite der Nase, Mundposition und vieles mehr
 im Flaschenhals gespeichert werden. Diese Informationen brauchen offenkundig
-weniger Kapazität als alle Pixelwerte.
+weniger Kapazität als die gesamten Pixelwerte.
 \para{}
-Des weiteren sind Convolutional-Autoencoder interessant, da sie uns auf eine
-weitere Anwendung eines Autoencoders bringen: den Denoising-Autoencoder.
-Diesen betrachten wir im nächsten Abschnitt.
+Des weiteren sind Convolutional-Autoencoder von Interesse, da sie zur weiteren
+Anwendung eines Autoencoder leiten: den Denoising-Autoencoder.
+Dieser soll im nächsten Abschnitt betrachtet werden.
 
 \begin{figure}[h!]
   \centering
@@ -1978,38 +1999,37 @@ Diesen betrachten wir im nächsten Abschnitt.
 \cite{yt:autoencoder_faces}
 
 \section{Denoising-Autoencoder}
-Ein Denoising-Autoencoder oder einfach Denoiser ist ein leicht abgeänderter
-Autoencoder. Er wird verwendet um ein Rauschen aus Bildern zu entfernen.
+Ein Denoising-Autoencoder oder einfach Denoiser verkörpert einen leicht abgeänderterten
+Autoencoder. Er wird vorallem verwendet, um ein Rauschen aus Bildern zu entfernen.
 \para{}
-Er unterscheidet sich insofern von dem klassischen Autoencodern, dass er
-richtige Labels hat und nicht einfach die Features kopiert. Sein Input stellen
-die verrauschten Bilder dar und die Labels sind die unverrauschten Bilder. Somit
-wird er darauf trainiert das Rauschen zu entfernen. \\
-Man mag sich nun die Frage stellen, weshalb man hierfür einene Autoencoder und
-kein normales CNN verwendet. Empirisch hat sich einfach gezeigt, dass sich
-Denoiser dafür besser eignen. Das hat nachvollziehbare Gründe. Bei der
-Entwicklung des Code für Encoding-Repräsentation, kann das Rauschen nicht
-codiert werden, da es völlig zufällig ist. Es existieren keine Muster oder
+Im UNterschied zu klassischen Autoencodern benötigt er einen Datensatz mit
+wahren Labels, da er nicht die Features kopiert.
+Seinen Input besteht aus den verrauschten Bilder und die Labels beinhalten die
+unverrauschten Bilder. Somit wird er darauf trainiert, das Rauschen zu entfernen.
+Man mag sich nun die Frage stellen, weshalb hierfür ein Autoencoder und
+kein normales CNN verwendet wird. Empirisch hat sich gezeigt, dass sich
+Denoiser besser für das Entrauschen von Bilder geeignet sind (QUELLE).
+Das hat nachvollziehbare Gründe. Bei der
+Entwicklung des Codes für Encoding-Repräsentation, kann das Rauschen nicht
+codiert werden, da es völlig zufällig auftritt. Es existieren keine Muster oder
 Gesetzmässigkeiten, welche anderst codiert werden könnten. Somit muss der
-Autoencoder diese Rausch-Features verwerfen. Somit hat er leichteres Spiel
-gegenüber sonstigen CNNs.
-
+Autoencoder diese Rausch-Features verwerfen. Gegenüber sonstigen CNNS hat er ein leichteres Spiel.
+\para{}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{cae.pdf}
   \caption{Visualisierung eines Convolutional-Denoising-Autoencoder}
 \end{figure}
 
-
-Corrupted Input
 \subsection{Generierung der verrauschten Bilder}
-Um den Autoencoder zu trainieren, muss man die verrauschten Daten generieren.
-Dies macht man indem man auf die Features ein additives Gauss'sches Rauschen anwendet.
-Man verwendet dafür einfach eine Gauss'sche Normalverteilung
+Um den Autoencoder zu trainieren, müssen verrauschte Daten generieren werden.
+Dies geschieht, indem auf die Features ein additives Gauss'sches Rauschen
+anwendet wird.
+Dafür verwendet man üblicherweise eine Gauss'sche Normalverteilung
 $\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
-$\sigma^2 = 1$. Man entnimmt dieser dann einfach jeweils einen Zufallswert und
-addiert ihn zu jedem Feature. Somit erhält man einen Datensatz, welcher aus
-verrauschten Daten besteht.
+$\sigma^2 = 1$. Dieser wird jeweils ein Zufallswert entnommen und addiert ihn zu
+jedem Feature hinzu.
+Auf diese Weise lässt sich ein verrauschter Datensatz entwickeln.
 \begin{gather*}
   r \sim \mathcal{N}(\mu = 0, \sigma^2 = 1) \\
   \tilde{x} = x + r
@@ -2032,7 +2052,7 @@ nächsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
 \keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes \keyword{Framework} für
 \keyword{datenstromorientierte Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek für numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
-liegt. Die Vorteile von TF bestehen vorallem darin, dass die praktische
+liegt. Die Vorteile von TF bestehen vor allem darin, dass die praktische
 Anwendung des Frameworks sehr
 einfach ist und fast keine mathematische Vorkenntnisse voraussetzt. Somit kann
 man sehr einfach ein ML-Modell definieren, trainieren und verwenden. Ausserdem
@@ -2718,7 +2738,7 @@ Für das Python-Programm werden zwei Packages benötigt, welche
 nicht in der Standardbibliothek von Python enthalten sind:
 \begin{itemize}
 \item{NumPy: Ein Package, welches verschiedene mathematische Konzepte
-    implementiert; vorallem Vektor- und Matrix-Arithmetik}
+    implementiert; vor allem Vektor- und Matrix-Arithmetik}
 \item{Matplotlib: Ein Package zum Erstellen von Plots und Grafiken}
 \end{itemize}
 
