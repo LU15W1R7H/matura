@@ -1,0 +1,21 @@
+\begin{tikzpicture}[]
+
+  \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,rectangle,inner sep=0, minimum size=1.5cm, anchor=center},column sep=0.4pt,row sep=0.4pt]
+  \tikzstyle{zentral} = [fill=red!70!pagecolor]
+
+  \matrix[netstyle] (mat)
+  {
+    $(\mat{F})_{1,1}$ & $(\mat{F})_{1,2}$ & $(\mat{F})_{1,3}$\\
+    $(\mat{F})_{2,1}$ & |[zentral]|$(\mat{F})_{C}$ & $(\mat{F})_{2,3}$\\
+    $(\mat{F})_{3,1}$ & $(\mat{F})_{3,2}$ & $(\mat{F})_{3,3}$\\
+  };
+
+  \draw[<->, thick,transform canvas={xshift=-3mm}] (mat-3-1.south west) -- (mat-1-1.north west) node [midway,sloped,above] {$f$};
+  \draw[<->, thick,transform canvas={yshift=-3mm}] (mat-3-1.south west) -- (mat-3-3.south east) node [midway,sloped,below] {$f$};
+
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

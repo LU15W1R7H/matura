@@ -1,0 +1,78 @@
+\makeatletter
+\tikzoption{canvas is plane}[]{\@setOxy#1}
+\def\@setOxy O(#1,#2,#3)x(#4,#5,#6)y(#7,#8,#9)%
+{\def\tikz@plane@origin{\pgfpointxyz{#1}{#2}{#3}}%
+  \def\tikz@plane@x{\pgfpointxyz{#4}{#5}{#6}}%
+  \def\tikz@plane@y{\pgfpointxyz{#7}{#8}{#9}}%
+  \tikz@canvas@is@plane
+}
+\makeatother
+
+\begin{tikzpicture}[rotate around x = 0,rotate around y=-15, scale=0.7]
+  \coordinate (A) at (0,0,9);
+  \coordinate (B) at (9,0,9);
+  \coordinate (C) at (9,0,0);
+  \coordinate (D) at (9,9,0);
+  \coordinate (E) at (9,9,9);
+  \coordinate (F) at (0,9,9);
+  \coordinate (G) at (0,9,0);
+  \coordinate (H) at (9,9,0);
+  \coordinate (I) at (0,0,0);
+
+  % shading
+  \shade[right color=gray!10, left color=black!50] (A) -- (B) -- (E) -- (F) -- cycle;
+  \shade[left color=gray!10, right color=black!50] (B) -- (C) -- (D) -- (E) -- cycle;
+  \shade[left color=gray!10, right color=black!50] (E) -- (F) -- (G) -- (H) -- cycle;
+
+
+  % zentralelement
+  \draw [dashed, red] (3,6,3) -- ++(3,0,0) -- ++(0,0,3) -- ++(-3,0,0) -- ++(0,0,-3); % top
+  \draw [dashed,red] (3,3,3) -- ++(3,0,0) -- ++(0,0,3) -- ++(-3,0,0) -- ++(0,0,-3); % bottom
+  \draw [dashed, red] (3,3,3) -- (3,6,3) (3,3,6) -- (3,6,6) (6,3,3) -- (6,6,3) (6,3,6) -- (6,6,6); % connecting
+  % \node [red] at (4.5, 4.5, 4.5) {\LARGE $(\ten{F})_C$};
+
+  % borders
+  \draw[dashed] (A) -- (I) edge (G) -- (C);
+  \draw[thick] (A) -- (B) -- (C) -- (H) -- (G) -- (F) edge (A) -- (E) edge (B) -- (H);
+
+
+  % front
+  \begin{scope}[canvas is plane={O(0,0,9)x(1,0,9)y(0,1,9)},transform shape]
+    \foreach \x/\xt in {1.5/1,4.5/2,7.5/3} {
+      \foreach \y/\yt in {1.5/3,4.5/2,7.5/1} {
+        \coordinate (pos) at (\x,\y);
+        \node [] at (pos) {\LARGE $(\ten{F})_{\yt,\xt,1}$};
+      }
+    }
+    \draw[black,step=3] (0,0) grid (9,9);
+  \end{scope}
+
+  % right
+  \begin{scope}[canvas is plane={O(9,0,9)x(9,0,8)y(9,1,9)},transform shape]
+    \foreach \x/\xt in {1.5/1,4.5/2,7.5/3} {
+      \foreach \y/\yt in {1.5/3,4.5/2,7.5/1} {
+        \coordinate (pos) at (\x,\y);
+        \node [] at (pos){\LARGE $(\ten{F})_{\yt,3,\xt}$};
+      }
+    }
+    \draw[black,step=3] (0,0) grid (9,9);
+  \end{scope}
+
+  % top
+  \begin{scope}[canvas is plane={O(0,9,9)x(1,9,9)y(0,9,8)},transform shape]
+    \foreach \x/\xt in {1.5/1,4.5/2,7.5/3} {
+      \foreach \y/\yt in {1.5/1,4.5/2,7.5/3} {
+        \coordinate (pos) at (\x,\y);
+        \node [] at (pos) {\LARGE $(\ten{F})_{1,\xt,\yt}$};
+      }
+    }
+    \draw[black,step=3] (0,0) grid (9,9);
+  \end{scope}
+
+
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:

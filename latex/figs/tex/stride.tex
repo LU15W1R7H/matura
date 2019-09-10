@@ -1,0 +1,20 @@
+\begin{tikzpicture}[]
+  \foreach \ii [count = \xi] in {-3,-2,...,3}{
+    \foreach \jj  [count = \yi] in {-3,-2,...,3}{
+      \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj)+1)}
+      \node[draw=black!30!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-\ii-\jj) at (\xi,\yi) {\LARGE \num};
+    }
+  }
+
+  \path[draw=black,thick] (n--3-3.north west) -- (n-3-3.north east) -- (n-3--3.south east) -- (n--3--3.south west) -- cycle;
+  \path[draw=blue,line width=3pt] (n--3-3.north west) -- (n--1-3.north east) -- (n--1-1.south east) -- (n--3-1.south west) -- cycle;
+  \path[draw=red,line width=3pt,dashed,transform canvas={yshift=-3pt}] (n--2-3.north west) -- (n-0-3.north east) -- (n-0-1.south east) -- (n--2-1.south west) -- cycle;
+  \path[draw=green!50!black,line width=3pt,dashed,transform canvas={yshift=-6pt}] (n--1-3.north west) -- (n-1-3.north east) -- (n-1-1.south east) -- (n--1-1.south west) -- cycle;
+  % \path[red]
+  % ,fill=blue!30!pagecolor
+
+\end{tikzpicture}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:
