@@ -3,13 +3,13 @@
   \begin{scope}[canvas is xz plane at y=0,transform shape]
     \foreach \ii [count = \xi] in {-3,-2,...,3}{
       \foreach \jj  [count = \yi] in {-3,-2,...,3}{
-        \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj))}
-        \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
+        \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj)+1)}
+        \node[draw=black!30!pagecolor,fill=black!5!pagecolor,text=textcolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num};
       }
     }
     \foreach \ii [count = \xi] in {-3,-2,-1}{
       \foreach \jj [count = \yi] in {-3,-2,-1}{
-        \pgfmathsetmacro{\num}{int(abs(min(\ii,\jj))}
+        \pgfmathsetmacro{\num}{int(abs(\ii)+abs(\jj)+1)}
         \node[draw=blue!20!pagecolor,fill=blue!10!pagecolor,minimum size=1cm] (n-1-\xi-\yi) at (\xi,-\yi) {\LARGE \num}; % rename nodes
       }
     }
@@ -34,7 +34,7 @@
   \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
     \foreach \ii [count = \xi] in {1,2,3,...,7}{
       \foreach \jj  [count = \yi]in {1,2,3,...,7}{
-        \node[draw=blue!20!pagecolor,fill=blue!2!pagecolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
+        \node[draw=black!30!pagecolor,fill=black!5!pagecolor,text=textcolor,minimum size=1cm] (n-3-\xi-\yi) at (\xi,-\yi) {};
       }
     }
 
@@ -62,7 +62,7 @@
 
   \begin{scope}[canvas is xz plane at y=0,transform shape]
     \node[yshift=1.2cm,black] (rf-tag) at (n-1-4-1.north) {\LARGE ursprüngliches Bild $\mat{B}$};
-    \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 2};
+    \node[draw=red,minimum size=1cm] (marked1) at (2,-2) {\LARGE 5};
     \node[yshift=0.5cm,blue] (rf-tag) at (n-1-2-1.north) {\large Rezeptives Feld $\hat{\mat{B}}^{(2,2)}$};
     \node[xshift=-0.5cm,red,rotate=90] (rf-tag) at (n-1-1-2.west) {\large Quellenpixel $(\mat{B})_S$};
   \end{scope}
@@ -75,8 +75,17 @@
 
   \begin{scope}[canvas is xz plane at y=-11.2,transform shape]
     \node[yshift=0.5cm,black] (rf-tag) at (n-3-4-2.north) {\LARGE neues Bild $\tilde{\mat{B}}$};
-    \node[draw=red,fill=blue!10!white,text=textcolor,minimum size=1cm] (marked3) at (2,-2) {\LARGE -3};
+    \node[draw=red,fill=blue!10!white,text=textcolor,minimum size=1cm] (marked3) at (2,-2) {\LARGE -6};
   \end{scope}
+
+  \node[] at (9,-5,0) {%
+    $\begin{aligned}
+      &\hat{\mat{B}}^{(2,2)} \odot \mat{F} =\\
+      &(7 \cdot -1) + (6 \cdot 0) + (5 \cdot 1) +\\
+      &(6 \cdot -1) + (5 \cdot 0) + (4 \cdot 1) +\\
+      &(5 \cdot -1) + (4 \cdot 0) + (3 \cdot 1) \\
+      &=-6
+    \end{aligned}$};
 
 \end{tikzpicture}
 %%% Local Variables:

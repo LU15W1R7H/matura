@@ -1194,9 +1194,12 @@ Gebrauch von sogenannten Filtern. Diese werden in diesem Abschnitt ausführlich 
 von Photoshop, von Instagram oder sonstigen Bildbearbeitungsprogrammen.
 Auch CNNs machen Gebrauch von solchen Filtern, in diesem Fall, um die Features eines Bildes zu
 erlernen.
-\begin{figure}[h!]
 
-  \caption{der Instagramfilter: Blablabla}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{eagle-color.jpg}
+  \includegraphics[width=0.4\textwidth]{eagle-amaro.jpg}
+  \caption{der Instagramfilter ``Amaro'' auf ein Beispielbild angewandt \cite{res:eagle_image}}
 \end{figure}
 
 \para{}
@@ -1205,16 +1208,25 @@ $\ten{B}$, welche über alle Pixel wandert, diese manipuliert und so wieder ein 
 $\tilde{\ten{B}}$ erzeugt.
 Mathematisch gesehen handelt es sich bei einem solchen Filter um einen Tensor,
 den sogenannten \keyword{Filtertensor} $\ten{F}$ oder auch Faltungstensor (siehe Abb.
-(\ref{fig:filtermatrix})). Solche Filter sind immer quadratisch, wobei ihre
+(\ref{fig:filter2d}) und Abb. (\ref{fig:filter3d})). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlänge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
 Element, das sogenannte \keyword{Zentralelement} (engl.: center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.3\textwidth]{filter.pdf}
-  \caption{eine 2D-Filtermatrix mit rotem Zentralelement}
-  \label{fig:filtermatrix}
+  \begin{minipage}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{filter2d.pdf}
+    \captionof{figure}{eine 2D-Filtermatrix mit rotem Zentralelement}
+    \label{fig:filter2d}
+  \end{minipage}\hspace{1cm}%
+  \begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{filter3d.pdf}
+    \captionof{figure}{ein 3D-Filtertensor mit rotem Zentralelement}
+    \label{fig:filter3d}
+  \end{minipage}
 \end{figure}
 \para{}
 Das Verhalten des Filters wird durch seine Tensoreinträge bestimmt.
@@ -1240,11 +1252,17 @@ Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
 In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
 Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
-generierte Bild zu sehen.
+generierte Bild zu sehen
+\footnote{
+  Dieses Bild wurde mithilfe von GIMP (GNU Image Manipulation Program) erzeugt. Dieses
+  Programm bietet die Möglichkeit eine Filtermatrix auf ein Bild anzuwenden.
+}.
 
 \begin{figure}[h!]
-
-  \caption{Sobel-Filter angewandt auf Beispielsbild}
+  \centering
+  \includegraphics[width=0.4\textwidth]{eagle-gray.jpg}
+  \includegraphics[width=0.4\textwidth]{eagle-gray-filtered.jpg}
+  \caption{Sobel-Filter angewandt auf Beispielsbild \cite{res:eagle_image}}
   \label{fig:sobel_filter}
 \end{figure}
 
@@ -1352,7 +1370,7 @@ der verschobenen Position kommt.
 \para{}
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{conv.pdf}
+  \includegraphics[width=0.7\textwidth]{conv.pdf}
   \caption{Schema, wie ein Filter über ein Bild läuft}
 \end{figure}
 \para{}
@@ -1846,7 +1864,7 @@ ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
 Flaschenhals der Grösse $p = 2$.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.5\textwidth]{ae1.pdf}
+  \includegraphics[height=0.4\textwidth]{ae1.pdf}
   \caption{Schichten eines kurzen Autoencoders}
   \label{fig:basic_autoencoder}
 \end{figure}
