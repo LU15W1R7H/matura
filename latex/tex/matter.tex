@@ -214,10 +214,10 @@ Für diese Optimierung wird das sogenannte \keyword{Gradientenverfahren} (engl.:
 Das Gradientenverfahren ist eine gängige Methode, um Funktionen $f: \set{R}^n \to
 \set{R}$ zu minimieren
 \footnote{Üblicherweise wird auf Gymnasialstufe vermittelt, dass die lokalen
-  Extrema (inklusive lokalen Minimas) einer Funktion $f$ bestimmt werden
-  bestimmen, indem die erste Ableitung $f'$ gebildet und gleich null gesetzt
+  Extrema einer Funktion $f$ bestimmt werden
+  können, indem die erste Ableitung $f'$ gebildet und gleich null gesetzt
   wird. Dies ist hier jedoch nicht möglich, da die Funktion
-  $C'(\param_1,\param_2,\ldots,\param_n)$ zu komplex ist, um die
+  $C'(\param_1,\param_2,\ldots,\param_n)$ zu kompliziert ist, um die
   Nullstellen analytisch zu bestimmen. Deshalb wird hier das numerische Gradientenverfahren
   verwendet.
 }.
@@ -1234,11 +1234,10 @@ Die Elemente können so gewählt werden, dass bei Anwendung des Filters auf
 ein Bild, dieser bestimmte Features hervorhebt. Solche Features
 könnten zum Beispiel Ränder oder Kanten sein, welche akzentuiert werden.
 \para{}
-Ein gutes Beispiel ist der Sobel-Filter. Er ist ein typischer 2D-Kantendetektions-Filter mit einer
-Grösse von $f = 3$. Jetzt soll der Sobelfilter $\mat{G}_x$ betrachtet werden, welcher
-horizontale Kanten akzentuiert. Die Einträge dieses Filters lauten wie folgt:
+Nun wird ein beispielshafter Kantendetektionfilter betrachtet. Er besitzt die
+Filtergrösse $f=3$ und seine Einträge lauten folgenermassen:
 \begin{equation*}
-  \mat{G}_x =
+  \mat{F}_K =
   \begin{pmatrix}
     -1 & 0 & +1 \\
     -2 & 0 & +2 \\
@@ -1250,7 +1249,7 @@ Angewendet auf ein schwarz-weisses Bild, wird ein neues Bild erzeugt, bei welche
 Kanten weiss eingefärbt werden und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
-In Abbildung (\ref{fig:sobel_filter}) wurde der horizontale Sobelfilter auf ein
+In Abbildung (\ref{fig:sobel_filter}) wurde der erwähnte Kantendetektionfilter auf ein
 Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
 generierte Bild zu sehen
 \footnote{
