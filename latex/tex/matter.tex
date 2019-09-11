@@ -1355,7 +1355,7 @@ Gewichtung der Nachbarspixel des Ursprungsbild dar, welche
 bestimmt, wie die neuen Pixel aussehen.
 \\
 \begin{equation}\label{eq:filter1}
-  (\tilde{\mat{B}})_{1,1} = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
+  (\tilde{\mat{B}})_{1,1} = \Sigma(\mat{P}) = \sum_{y=1}^3 \sum_{x=1}^3 (\mat{P})_{y,x}
 \end{equation}
 \\
 Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
@@ -2034,7 +2034,7 @@ Autoencoder diese Rausch-Features verwerfen. Gegenüber sonstigen CNNS hat er ei
 \para{}
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{cae.pdf}
+  \includegraphics[width=0.8\textwidth]{cdae.pdf}
   \caption{Visualisierung eines Convolutional-Denoising-Autoencoder}
 \end{figure}
 
