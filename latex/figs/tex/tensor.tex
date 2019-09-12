@@ -15,23 +15,44 @@
   }
   ]
 
-  \matrix (C) [mymatrix=green] at (6mm,5mm)
+
+  \matrix (C) [mymatrix=blue] at (6mm,5mm)
   {0 & 1 & 0 \\ -1 & 0 & 0\\ 0 & 0 & 0\\};
-  \arrayfilling{C}{green}
+  \arrayfilling{C}{blue}
 
-  \matrix (B) [mymatrix=red] at (3mm,2.5mm)
+  \matrix (B) [mymatrix=green!70!black] at (3mm,2.5mm)
   {0 & 0 & -1 \\ 0 & 0 & 0\\ 1 & 0 & 0\\};
-  \arrayfilling{B}{red}
+  \arrayfilling{B}{green!70!black}
 
-  \matrix (A) [mymatrix=purple] at (0,0)
+  \matrix (A) [mymatrix=black] at (0,0)
   {0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & -1 & 0\\};
-  \arrayfilling{A}{purple}
+  \arrayfilling{A}{black}
 
   \foreach \i in {auxnw, auxne, auxse, auxsw}
   \draw[brown, ultra thin] (A\i)--(C\i);
 
-  \node[left=3mm of B.west] {$\ten{T} =$};
-  \node[right=5mm of B.east] {$\in \set{R}^{3 \times 3 \times 3}$};
+  \node[anchor=left] (B.west)[xshift=-0.2cm,yshift=0.5cm] {
+    $\ten{T} = \begin{bmatrix}
+      \begin{pmatrix}
+        0 & 0 & 0 \\
+        0 & 0 & 1 \\
+        0 & -1 & 0 \\
+      \end{pmatrix}
+      &
+      \begin{pmatrix}
+        0 & 0 & -1 \\
+        0 & 0 & 0 \\
+        1 & 0 & 0 \\
+      \end{pmatrix}
+      &
+      \begin{pmatrix}
+        0 & 1 & 0 \\
+        -1 & 0 & 0 \\
+        0 & 0 & 0 \\
+      \end{pmatrix}
+    \end{bmatrix}$ =
+  };
+  \node[] at (B.east)[xshift=1.5cm,yshift=-0.1cm] {$\in \set{R}^{3 \times 3 \times 3}$};
 \end{tikzpicture}
 
 %%% Local Variables:

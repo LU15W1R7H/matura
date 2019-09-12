@@ -478,10 +478,11 @@ durch eine Gerade voneinander trennenbar sein müssen (siehe Abb.
 (\ref{fig:linearer_Klassifikator})). \\
 Falls die Features nicht linear separierbar sind,
 kann das Perzeptron die Klassifizierung nicht erlernen.
-BEISPIEL
 \\
 \begin{figure}[h!]
-  \caption{erfolgreiche lineare Separierung (links) und das Versagen bei XOR (rechts)}
+  \centering
+  \includegraphics[width=0.3\textwidth]{sep.pdf}
+  \caption{zwei-dimensionale lineare Separierung}
   \label{fig:linearer_Klassifikator}
 \end{figure}
 \para{}
@@ -507,8 +508,16 @@ auf $z$. Die verschiedenen künstlichen Neuronen unterscheiden
 sich fast nur in ihrer Aktivierungsfunktion.
 \\
 \begin{figure}[h!]
-
-  \caption{ein künstliches Neuron und seine Bestandteile}
+  \centering
+  \begin{tikzpicture}[>=latex]
+    \path (3,0) node [circle,draw](neuron){$\varphi(\vec{w} \cdot \vec{x} + b)$};
+    \path[red] (0,1) node(x1){$x_1$} (0,0) node(x2){$\vdots$} (0,-1) node(x3){$x_3$};
+    \path[black!40!green] (5,0) node(y1){$a$};
+    \draw[->] (x1) -- node[above,sloped]{$w_1$} (neuron);
+    \draw[->] (x3) -- node[above,sloped]{$w_m$} (neuron);
+    \draw[->] (neuron) -- (y1);
+  \end{tikzpicture}
+  \caption{ein künstliches Neuron}
 \end{figure}
 \\
 
@@ -1113,11 +1122,11 @@ soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint is
   diesen Tensor als eine 3D-Matrix vorstellen; ein Volumen, innerhalb
   dessen die Elemente in einem Raster angeordet sind.
   Analog zum Volumen bezeichnet man die Form des Tensors mit Höhe, Breite und
-  Tiefe. \\
-  Ein Tensor von der Form $\set{R}^{3 \times 3 \times 3}$ könnte folgendermassen
-  aussehen:
+  Tiefe.
   \para{}
-  \includegraphics[width=0.3\textwidth]{tensor.pdf}
+  Die Schreibweisen-Konvention für Tensoren 3. Ordnung soll an folgendem
+  Beispieltensor der Form $\set{R}^{3 \times 3 \times 3}$ illustriert werden. \\
+  \includegraphics[width=0.8\textwidth]{tensor.pdf}
 
 \end{defbox}
 \para{}
@@ -1129,14 +1138,6 @@ Ein schwarz-weisses Bild hat nur eine Komponente, welche die Helligkeit angibt.
 Somit wäre es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$ (siehe
 Abb. (\ref{fig:bildmatrix})).
 \para{}
-\begin{figure}[h!]
-  \begin{tikzpicture}
-
-  \end{tikzpicture}
-  \caption{Beispiel einer Bildmatrix}
-  \label{fig:bildmatrix}
-\end{figure}
-
 \cite{deeplearning.ai:cnn}
 \cite{wiki:tensor}
 
@@ -2038,6 +2039,7 @@ Autoencoder diese Rausch-Features verwerfen. Gegenüber sonstigen CNNS hat er ei
   \caption{Visualisierung eines Convolutional-Denoising-Autoencoder}
 \end{figure}
 
+
 \subsection{Generierung der verrauschten Bilder}
 Um den Autoencoder zu trainieren, müssen verrauschte Daten generieren werden.
 Dies geschieht, indem auf die Features ein additives Gauss'sches Rauschen
@@ -2146,7 +2148,8 @@ direkte Interaktion mit dem Master hat, bekommt er davon nichts mit.
 
 \subsection{Verwendung --- der Client}
 Nun möchten wir betrachten wie man TensorFlow zu verwenden hat, damit wir
-später ein ML-Modell damit basteln können. Dafür werden gewisse
+nachvollziehen können wie Keras funktioniert.
+Dafür werden gewisse
 Python-Kenntnisse vorausgesetzt. Wir betrachten nun also
 den Client von TF. Man verwendet verschiedene Konzepte um
 programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese

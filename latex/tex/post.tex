@@ -27,7 +27,7 @@ PyTorch
 end{minted}
 
 \chapter{Gradientenverfahren}\label{sec:anhang_gd}
-Das Gradientenverfahrens ist ein numerisches Verfahren, um Funkionen $f(x_1,
+Das Gradientenverfahren ist ein numerisches Verfahren, um Funkionen $f(x_1,
 x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion)
 zu minimieren.
 Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$ gewählt wird, dessen
@@ -401,11 +401,13 @@ Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
             \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
           \end{equation}
         }
+      \item{Gewichte und Neigung mit SGD aktualisieren}
   \end{enumerate}
 \end{graybox}
 
 \para{}
 \cite{Nielsen}
+\cite{rojas}
 
 \chapter{Ausfuehrungen zu TensorFlow}\label{sec:anhang_tf}
 \section*{Devices}

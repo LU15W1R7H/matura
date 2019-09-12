@@ -1,0 +1,116 @@
+\makeatletter
+\tikzoption{canvas is plane}[]{\@setOxy#1}
+\def\@setOxy O(#1,#2,#3)x(#4,#5,#6)y(#7,#8,#9)%
+{\def\tikz@plane@origin{\pgfpointxyz{#1}{#2}{#3}}%
+  \def\tikz@plane@x{\pgfpointxyz{#4}{#5}{#6}}%
+  \def\tikz@plane@y{\pgfpointxyz{#7}{#8}{#9}}%
+  \tikz@canvas@is@plane
+}
+\makeatother
+
+\begin{tikzpicture}[line join=round]
+  \coordinate (offset) at (0,0,0);
+
+  % #1 is size
+  % #2 is depth
+  % #3 is x-offset
+  \newcommand{\colorlayer}[4]{
+    \def\s{#1/2}
+    \def\d{#2}
+    \def\o{#3}
+
+    \coordinate (offset) at ($(offset)+(\o+\d,0,0)$);
+
+    \coordinate (A) at ($(offset)+(-\d, -\s, \s)$);
+    \coordinate (B) at ($(offset)+(0, -\s, \s)$);
+    \coordinate (C) at ($(offset)+(0, \s, \s)$);
+    \coordinate (D) at ($(offset)+(-\d,\s,\s)$);
+
+    \coordinate (E) at ($(offset)+(-\d,-\s,-\s)$);
+    \coordinate (F) at ($(offset)+(0, -\s,-\s)$);
+    \coordinate (G) at ($(offset)+(0,\s, -\s)$);
+    \coordinate (H) at ($(offset)+(-\d,\s,-\s)$);
+
+    \path[draw=black,thick, fill=#4] (E) -- (F) -- (G) -- (H) -- cycle; % back
+    \path[draw=black,thick, fill=#4] (E) -- (F) -- (B) -- (A) -- cycle; % bottom
+    \path[draw=black,thick, fill=#4] (E) -- (A) -- (D) -- (H) -- cycle; % left
+    \path[draw=black,thick, fill=#4] (B) -- (F) -- (G) -- (C) -- cycle; % right
+    \path[draw=black,thick, fill=#4] (A) -- (B) -- (C) -- (D) -- cycle; % front
+    \path[draw=black,thick, fill=#4] (D) -- (C) -- (G) -- (H) -- cycle; % top
+  }
+
+
+  \newcommand{\imglayer}[5]{
+    \def\s{#1/2}
+    \def\d{#2}
+    \def\o{#3}
+
+    \coordinate (offset) at ($(offset)+(\o+\d,0,0)$);
+
+    \coordinate (A) at ($(offset)+(-\d, -\s, \s)$);
+    \coordinate (B) at ($(offset)+(0, -\s, \s)$);
+    \coordinate (C) at ($(offset)+(0, \s, \s)$);
+    \coordinate (D) at ($(offset)+(-\d,\s,\s)$);
+
+    \coordinate (E) at ($(offset)+(-\d,-\s,-\s)$);
+    \coordinate (F) at ($(offset)+(0, -\s,-\s)$);
+    \coordinate (G) at ($(offset)+(0,\s, -\s)$);
+    \coordinate (H) at ($(offset)+(-\d,\s,-\s)$);
+
+    \path[draw=black,thick, fill=#4] (E) -- (F) -- (G) -- (H) -- cycle; % back
+    \path[draw=black,thick, fill=#4] (E) -- (F) -- (B) -- (A) -- cycle; % bottom
+    \path[draw=black,thick, fill=#4] (E) -- (A) -- (D) -- (H) -- cycle; % left
+    \path[draw=black,thick, fill=#4] (B) -- (F) -- (G) -- (C) -- cycle; % right
+    \path[draw=black,thick, fill=#4] (A) -- (B) -- (C) -- (D) -- cycle; % front
+    \path[draw=black,thick, fill=#4] (D) -- (C) -- (G) -- (H) -- cycle; % top
+
+    \begin{scope}[canvas is yz plane at x=0,rotate=-90,transform shape]
+      \node[] (input image) at ($(offset)+(0,0,0)$) {\includegraphics[height=#1cm]{#5}};
+    \end{scope}
+  }
+
+  \colorlet{inp}{red!70!white}
+  \colorlet{conv}{blue!70!white}
+  \colorlet{pool}{yellow}
+  \colorlet{upsample}{orange}
+  \colorlet{out}{green!70!white}
+
+  % input
+  \colorlayer{3.0}{0.1}{0.1}{red}
+  \colorlayer{3.0}{0.1}{0.1}{blue}
+  \colorlayer{3.0}{0.1}{0.1}{green}
+
+  % encoder
+  \colorlayer{3.0}{0.1}{1.5}{conv}
+  \colorlayer{3.0}{0.1}{0.1}{pool}
+  \colorlayer{2.5}{0.2}{0.5}{conv}
+  \colorlayer{2.5}{0.2}{0.1}{pool}
+  \colorlayer{2.0}{0.4}{0.5}{conv}
+  \colorlayer{2.0}{0.4}{0.1}{pool}
+  \colorlayer{1.5}{0.8}{0.5}{conv}
+  \colorlayer{1.5}{0.8}{0.1}{pool}
+  \colorlayer{1.0}{1.5}{0.5}{conv}
+  \colorlayer{1.0}{1.5}{0.1}{pool}
+
+  % decoder
+  \colorlayer{1.0}{1.5}{1}{conv}
+  \colorlayer{1.0}{1.5}{0.1}{upsample}
+  \colorlayer{1.5}{0.8}{0.5}{conv}
+  \colorlayer{1.5}{0.8}{0.1}{upsample}
+  \colorlayer{2.0}{0.4}{0.5}{conv}
+  \colorlayer{2.0}{0.4}{0.1}{upsample}
+  \colorlayer{2.5}{0.2}{0.5}{conv}
+  \colorlayer{2.5}{0.2}{0.1}{upsample}
+  \colorlayer{3.0}{0.1}{0.5}{conv}
+  \colorlayer{3.0}{0.1}{0.1}{upsample}
+
+  % output
+  \imglayer{3.0}{0.1}{1.5}{out}{clean_num.png}
+
+\end{tikzpicture}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../figs"
+%%% End:
