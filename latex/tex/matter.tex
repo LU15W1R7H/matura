@@ -751,7 +751,7 @@ geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase,
 Die letzten Schichten soll dann alle diese
 Merkmale zusammensetzen und so ein Gesicht als Ganzes erkennen.
 
-\section{Vorwärtspropagierung}
+\section{Vorwärtspropagierung}\label{sec:forward}
 Jetzt, da der Aufbau eines KNNs erläutert wurde, soll nun die mathematische Funktionsweise
 des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte wird
 \keyword{Vorwärtspropagierung} genannt. Dieses Verfahren gibt dieser Art von KNN auch den
@@ -2058,51 +2058,55 @@ Auf diese Weise lässt sich ein verrauschter Datensatz entwickeln.
 % ------------------------------------
 
 \chapter{Frameworks für Maschinelles Lernen}
-In diesem Kapitel werden wir zwei Frameworks betrachten, welche eine
-Implementation der ML-Algorithemen realisiert haben. Wir werden sie in ihrer
-groben Funktionsweise untersuchen. Diese Tools werden wir im
-nächsten Kapitel benutzten um dann ein konkretes Modell zu programmieren.
+In den Kapiteln eins bis vier wurde die theoretische Funktionsweise von
+Maschinellem Lernen zusammen mit dem konkreten Modell eines KNN und deren
+konkreten Architekturen des CNN und des Autoencoder dargelegt.
+Nun findet ein Übergang zur praktischen Programmierung eines
+Convolutional-Autoencoders statt. Es wird die grobe Funktionsweise von den
+Frameworks TensorFlow und Keras erörtert, welche dann
+für die eigentliche Entwicklung in Kapitel sechs Anwendung finden.
+Diese Frameworks habe eine Implementation für ML-Algorithmen realisiert.
+\para{}
+\bigskip
 
 \section{TensorFlow}\label{sec:tensorflow}
-\begin{wrapfigure}{l}{3cm}
-  \includegraphics[width=3cm]{tf_logo.png}
+\begin{wrapfigure}{l}{2.5cm}
+  \includegraphics[width=2.5cm]{tf_logo.png}
   \caption{TF-Logo}
 \end{wrapfigure}
-\keyword{TensorFlow}, kurz TF, ist ein von Google entwickeltes \keyword{Framework} für
+\keyword{TensorFlow} (TF) ist ein von Google entwickeltes \keyword{Framework} für
 \keyword{datenstromorientierte Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek für numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
-liegt. Die Vorteile von TF bestehen vor allem darin, dass die praktische
-Anwendung des Frameworks sehr
-einfach ist und fast keine mathematische Vorkenntnisse voraussetzt. Somit kann
-man sehr einfach ein ML-Modell definieren, trainieren und verwenden. Ausserdem
-besitzt TF sehr performante Implementierungen, welche Algorithmen, wie die
-Vorwärtspropagierung und die Rückwärtspropagierung, sehr schnell ausführen
-lässt. Somit geht das Training von ML-Modellen deutlich schneller als bei
-selbstgeschriebenen Implementationen.
+liegt. TF zeichnet sich hauptsächlich durch seine einfache Anwendung aus, welche
+es erlaubt ohne viele mathematische Vorkenntnisse ein ML-Modell zu definieren,
+zu trainieren und zu verwenden. Desweiteren sind die performanten
+Implementierungen bemerkenswert, welche es ermöglichen ein Modell sehr schnell
+zu trainieren und auszuführen. Somit ist TF gegenüber selbstgeschriebenen
+Implementationen zu bevorzugen.
 TF ist gratis und ein Open-Source-Projekt. Es kann auf Github gefunden werden
-(siehe QR-Code). \\
+(siehe QR-Code).
+\para{}
 \qrcode[height=2cm]{https://github.com/tensorflow/tensorflow}
 \para{}
-In der Industrie ist TensorFlow sehr weit verbreitet. Es wird von den
-verschiedensten Unternehmen für ihre ML-Anwendungen gebraucht; darunter waren:
-Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele mehr.
+In der Industrie ist TensorFlow gut etabliert und weit verbreitet. Es wird von
+vielen Grossunternehmen des Internets für ihre Produkte verwenden. Einige dieser
+Firmen sind: Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele mehr.
 \para{}
 Grundsätzlich wurde TF für Maschinelles Lernen entwickelt. Speziell eignet es
-sich für Deep Learning mit künstlichen neuronalen Netzen. Es ist ein
-Interface, welches das definieren von Modellen erlaubt, welche dann mit den
-eingebauten ML-Algorithmen trainiert werden können. \\
-Trotz dieser eigentlichen Grundidee von TF, sollten die Abstraktionen eigentlich
-für beliebige Anwendugen, welche mit numerischen Berechnungen zu tun haben,
-sich eignen.
+sich für Deep Learning. Es bietet die nötigen Werkzeuge, um ein Modell zu
+definieren und mit en eingebauten Algorithmen zu trainieren.
+Trotz dieser eigentlichen Grundidee von TF, sollten sich die Abstraktionen eigentlich
+für beliebige Anwendungen eignen, welche Gebrauch von numerischen Berechnungen machen.
 \para{}
-Im folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Um
-genau zu sein betrachten wir Tensorflow-Core Version r1.14.
-\footnote{Momentan befindet sich TF 2.0 in der Beta. Es ist eine grosse
-  Überarbeitung des Frameworks. Es ist zu empfehlen, sobald TF 2.0 offiziel
-  veröffentlich wurde, es zu verwenden.}
-Wir werden TF nur sehr grob betrachten, da wir später nicht direkt damit
-arbeiten werden, sondern mit der High-Level-API Keras. Trotzdem ist er hilfreich
-ein grobes Verständniss über TF zu besitzen.
+Im Folgenden werden die grobe Funktionsweise von Tensorflow untersuchen. Um
+genau zu sein betrachten wir Tensorflow-Core Version r1.14%
+\footnote{Momentan befindet sich TF 2.0 in der Beta Version. Es handelt sich
+  dabei um eine grosse Überarbeitung des Frameworks. Es ist zu empfehlen, sobald TF 2.0 offiziel
+  veröffentlich wurde, es zu verwenden.}.
+Die Betrachtung von TF wird nicht sehr tiefgreifend sein, da bei der
+Programmierung in Kapitel sechs auf die High-Level-API Keras zurückgegriffen
+wird. Somit wird nicht direkt mit TF gearbeitet, trotzdem ist es hilfreich ein
+grobes Verständniss über TF zu besitzen, um die Funktionsweise zu verstehen.
 \para{}
 Die wichtige Resource um TensorFlow zu lernen ist wohl die offizielle TensorFlow
 Website. Dort findet man auch die Dokumentation.
@@ -2111,86 +2115,94 @@ Website. Dort findet man auch die Dokumentation.
 
 \para{}
 \cite{book:tensorflow}
+\cite{net:tf_docs}
 
 \subsection{Client und Master}
-Wie die meisten grossen Programmbibliotheken ist Tensorflow in Backend und
-Fontend aufgeteilt. Das Frontend von Tensorflow bezeichnet man als
+Wie die meisten grossen Frameworks ist TensorFlow in Backend und
+Fontend aufgeteilt. Das Frontend von TensorFlow bezeichnet man als
 \keyword{Client} und das Backend als \keyword{Master}.
 \para{}
 \begin{infobox}{Fontend und Backend}
-  Das \keyword{Frontend} ist der Teil eines Programmes, mit welchem der Benutzer
+  Das \keyword{Frontend} ist der Teil eines Programms, mit welchem der Benutzer
   interagiert. Es stellt eine Schnittstelle zu dem sogenannten Backend eines
-  Programmes dar. Es exponiert so gewisse Funktionalitäten des Programmes dem
-  Benuzter gegenüber, ohne dass er dabei etwas von der zugrundeliegenden Logik mitbekommt.
+  Programms dar. Es offenbart so gewisse Funktionalitäten des Programmes dem
+  Benuzter gegenüber, ohne dass er dabei etwas von der zugrundeliegenden Logik wahrnimmt.
   \para{}
   Das \keyword{Backend} ist das Gegenstück zum Frontend. Es implementiert
-  jedigliche Programmlogik, welche das gewünschte Verhalten der Applikation
+  jegliche Programmlogik, welche das gewünschte Verhalten der Applikation
   hervorruft. Der Benutzer hat keinen direkten Zugriff auf diesen Teil des
-  Programmes und bekommt somit nichts von dessen Existenz mit.
+  Programmes und bekommt somit nichts direkt von dessen Existenz mit.
 \end{infobox}
 \para{}
-Der Client - also das Frontend - von TF ist in \keyword{Python} geschrieben.
+Der Client --- also das Frontend --- von TF ist in \keyword{Python} geschrieben%
 \footnote{
-  Tensorflow besitzte mehrere Frontends, welche in den verschiedensten
+  TF besitzte mehrere Frontends, welche in den verschiedensten
   Programmiersprachen geschrieben sind. Wir werden jedoch nur das
   Python-Frontend betrachten, da es am besten von TF unterstützt ist.
-}
+}.
 Python ist allgemein als eine sehr einsteigerfreundliche Programmiersprache bekannt. Sie
 ermöglicht es dem Benutzer mit wenigen Zeilen Code und ziemlich intuitiv
-TensorFlow zu verwenden. Wenn wir also mit TensorFlow programmieren, werden wir
-mit Python-Code arbeiten.
+TensorFlow zu verwenden. Somit werden wir die Entwicklung eines Modells in
+Python vornehmen.
 \para{}
-Der Master - also das Backend - von TF ist dagegen in \keyword{C++} (und CUDA)
+Der Master --- also das Backend --- von TF ist dagegen in \keyword{C++} (und CUDA)
 geschrieben. Dies hat den Grund, dass C++ im Gegensatz zu Python sehr performant
-ist. Also ist die Zeit zum Auführen eines Programmes sehr kurz. Dafür ist der
-Programmcode deutlich anspruchsvoller und verboser. Da der Benutzer jedoch keine
-direkte Interaktion mit dem Master hat, bekommt er davon nichts mit.
+ist. Dies bedeutet, dass die Ausführungszeit eines Programms sehr kurz ist. In
+der Konsequenz jedoch ist der deutlich anspruchsvoller und ausführlicher (engl.:
+verbose).
+Da der Benutzer jedoch keine direkte Interaktion mit dem Master hat, muss er
+sich nicht mit C++ befassen.
 
 \subsection{Verwendung --- der Client}
-Nun möchten wir betrachten wie man TensorFlow zu verwenden hat, damit wir
-nachvollziehen können wie Keras funktioniert.
-Dafür werden gewisse
-Python-Kenntnisse vorausgesetzt. Wir betrachten nun also
-den Client von TF. Man verwendet verschiedene Konzepte um
-programmatisch mit TF zu arbeiten. Im folgenden Abschnitt werden wir diese
-Konzepte behandeln.
+Nun wird erörtert, wie TensorFlow verwendet werden kann, um ein Modell zu
+definieren und zu trainieren. Es wird als der Client betrachtet. Mithilfe diesem Wissen kann nachvollzogen werden,
+wie Keras als Schnittstelle, es dem Benutzer erleichtert ein Modell zu erstellen.
+Dieser Abschnitt und die folgenden setzen gewisse Python-Kenntnisse voraus.
+\para{}
+TensorFlow bitet verschiedene Konzepte, um programmatisch zu arbeiten.
+Im folgenden Abschnitt werden wir diese Konzepte behandeln.
 
 \subsubsection{Graph}
-TensorFlow ist datenstromorientiert. Das bedeutet, dass man eine Berechnung
-(engl.: computation) durch einen gerichteten Graphen beschreibt. Zuerst stellt
-man diesen Graph auf und fügt ihn zusammen und erst nach der Definition führt man
-ihn aus.
-Es handelt es sich dabei um einen \keyword{Computation Graph}, wie wir ihn schon in Sektion (\ref{sec:backpropagation}) kennengelernt
-haben. In TensorFlow bezeichnet man diesen Graphen als einen \keycode{tf.Graph}.
+TensorFlow ist datenstromorientiert. Das bedeutet, dass eine Berechnung
+durch einen gerichteten Graphen beschrieben wird. Zuerst wird solch ein Graph
+aufgestellt und fügt ihm Knoten hinzu. Erst nach der Definition wird er dann ausgeführt.
+Es handelt es sich dabei um einen \keyword{Computation Graph}, welcher schon in
+Anhang (\ref{sec:anhang_bp}) erwähnt wurde.
+In TensorFlow wird dieser als als einen \keycode{Graph} bezeichnet.
 \para{}
+Dieser Graph führt eine Datenstrom-Berechnung aus.
 Er besteht aus einer Menge an Knoten, welche miteinander über Pfade
-verbunden sind. Die Knoten halten Werte in sich, welche über die Pfade,
-verrechnet werden und in den nächsten Knoten eingespeist werden. Die Pfade sind also die Operationen, welche auf die Werte
-angewandt werden. So führt der Graph eine Datenstrom-Berechnung aus.
-Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
+verbunden sind. Die Knoten beinhalten Zahlenwerte, welche über die Pfade
+verrechnet und so auf den nächsten Knoten abbgebildet werden.
+Die Pfade sind also die Operationen, welche auf die Werte
+angewandt werden. Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
 \para{}
-Man muss einen Graph nicht explizit definieren (kann es aber, falls man mehrere
-Graphen braucht), da beim defnieren der Operationen sie implizit dem
-sogenannten \keyword{Default Graph} hinzugefügt werden.
+Man muss einen Graph nicht explizit definieren, da beim Definieren der
+Operationen, sie implizit dem sogenannten Default Graph hinzugefügt
+werden.
 
-\subsubsection{Tensoren}
-Die zentrale Dateneinheit in TensorFlow sind Tensoren, wie wir sie bereits in
-Sektion (\ref{sec:tensor}) kennengelernt haben.
-Auch die Knoten des Graphs reprasentieren Tensoren, welche aber keine feste Wert
-enthalten, da sie erst beim Ausführen des Graphens, mit Werten befüllt werden.
-Nach der Ausführung der Graphs, kann man die Zahlenwerte auslesen.
+\begin{figure}[h!]
+  \caption{Visualisierung eines \code{Graph}}
+\end{figure}
+
+\subsubsection{Tensoren und Knoten}
+Die zentrale Dateneinheit in TensorFlow sind Tensoren, welche bereits in
+Sektion (\ref{sec:tensor}) präsentiert wurden.
+Auch die Knoten des Graphen repräsentieren Tensoren. Die meisten jedoch
+enthalten keine festen Zahlenwerte, sondern werden erst bei der
+der Ausführung des Graphen befüllt. Danach können die Werte ausgelesen werden.
 \para{}
-Man verwenet in TF deshalb Tensoren, weil so die Daten beliebige Dimensionalitäten
-und Formen annehmen können. Es können sowohl Listen von Zahlen (Vektoren),
-wie auch Bilder (Tensoren dritter Ordnung) verrechnet werden. \\
-Nun sollte auch klar sein, weshalb wir bei der Herleitung der Gleichungen, auch
-immer eine Matrixschreibweise erarbeitet haben.
+Die Tensoren erlauben es den Daten innerhalb des Graphen belibige
+Dimensionaltäten und Formen anzunehmen. Es können sowohl Listen von Zahlen
+(Vektoren), wie auch Bilder (Tensoren dritter Stufe) verrechnet werden.
+Aus diesem Grund war es auch sinnvoll in Sektion (\ref{sec:forward}) und im
+Anhang (\ref{sec:anhang_bp}) die Gleichungen in Matrixform herzuleiten.
 \para{}
-In Tensorflow bezeichnet man einen Tensor mit \keycode{tf.Tensor}.
-Er ist definiert durch seine Form (Stufe inbegriefen) und den Datentyp seiner
+In Tensorflow bezeichnet man einen Tensor mit \keycode{Tensor}.
+Er ist definiert durch seine Form (z.B. (2,2,2)) und den Datentyp seiner
 Elemente (z.B. tf.float32).
 \para{}
-Jeder tf.Tensor ist mit einer einzigen Graph-Ausführung assoziert. Sie
+Fast alle Tensoren ist mit einer einzigen Graph-Ausführung assoziert. Sie
 besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird er verworfen.
 Man sagt die Tensoren sind ``immutable'', da die Werte nicht erhalten bleiben
 und so nicht modifiziert werden können.
@@ -2199,17 +2211,17 @@ Die soeben beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb
 des Graphen. Sie müssen nicht explizit definiert werden, da sie automatisch
 eingefügt werden, wenn der Graph durch seine Operationen definiert wird.
 \para{}
+Neben dieser Art von Knoten, gibt es auch noch Inputknoten.
+Es gibt verschiedene von ihnen und jeder stellt eine Art von Input in den
+Graphen dar. Daher müssen sie explizit definiert werden.
+Die verschiedene Inputknoten werden wir nun betrachten.
 
-Neben dieser Art von Knoten, gibt es noch verschiedene Inputknoten.
-stellen den Input in den Graphen dar und müssen explizit definiert werden. Von ihnen gibt es verschiedene Arten,
-welche wir nun betrachten werden.
-
-\paragraph{tf.constant}
-Der \keycode{tf.Constant} Tensor ist ein Input-Knoten in den Graphen.
-Er hat immer einen konstanten Wert als Output. Dieser wird beim Erstellen
-angegeben.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  <Varname> = tf.constant(<Wert>)
+\paragraph{constant}
+Der \keycode{constant}-Tensor ist ein Input-Knoten in den Graphen.
+Er hat immer einen konstanten Wert, welcher beim Erstellen
+angegeben wird. Seine Definition hat folgenden Charakter:
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
+  <Variable> = tf.constant(<Elemente>)
 \end{minted}
 \para{}
 Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
@@ -2220,40 +2232,41 @@ die Form ersichtlich an.
   vector2 = tf.constant([1.0, 2.0])
   matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
 \end{minted}
-\[\text{skalar}=1 \quad \text{vector2}=\begin{pmatrix}1&2\end{pmatrix} \quad
-  \text{matrix2x2}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
+\[\text{\code{skalar}}=1 \quad \text{\code{vector2}}=\begin{pmatrix}1&2\end{pmatrix} \quad
+  \text{\code{matrix2x2}}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
 
-\paragraph{tf.placeholder}
-Um den Graphen für Maschinelles Lernen zu verwenden, braucht man eine
-Möglichkeit ihn mit Inputs für die Modelle zu befüttern. Um dies möglichst
-komfortabel zu machen, gibt es den sogenannten
-\keycode{tf.Placeholder} Tensor. Wie der Name es schon sagt, ist er ein
-Platzhalter für die Inputs, welcher beim Start der Graphausführnug eingespeist
-werden. Man muss einzig seine Dimensionen und seinen Datentyp (z.B. tf.float32) bei der Erstellung angeben.
+\paragraph{placeholder}
+Um den Graphen für Maschinelles Lernen zu verwenden, muss er mit Modellinputs
+befüllt werden können.
+Dafür eignet sich der \keycode{placeholder}-Tensor. Wie es der Name schon sagt,
+ist er ein Platzhalter für die Inputs, welche beim Start der Graphausführung
+eingespeist werden. Bei der Erstellung muss einzig seine Form und sein Datentyp
+angegeben werden.
 \para{}
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  <Varname> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
+  <Variable> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
 \end{minted}
 Für den Datentyp wählt man eigentlich immer
-\mintinline{python}{dtype=tf.float32}. Somit kann man mit Gleitkommazahlen rechnen.
+\mintinline{python}{dtype=tf.float32}, da sich Gleitkommazahlen am besten für ML eignen.
 Die Form gibt man einfach als $n$-Tupel von Integern an, welche die Anzahl
 Komponenten in der jeweiligen Dimension angeben. Somit bedeutet die Form
 \mintinline{python}{shape=(4,2,3)} einen Tensor im Tensorraum $\set{R}^{4 \times
   2 \times 3}$.
 
-\paragraph{tf.variable}
-Ein weiteres Kriterium um Maschinelles Lernen mit dem tf.Graph durchzuführen,
-ist dass man Modellparameter einführen kann. Dafür ist der
-\keycode{tf.Variable} Tensor geeignet. Er ist im Gegensatz zu den anderen
+\paragraph{variable}
+Eine weitere Vorausetzung um Maschinelles Lernen mit dem Graphen durchzuführen
+ist, dass Modellparameter eingeführt werden können. Dafür ist der
+\keycode{variable}-Tensor geeignet. Er ist im Gegensatz zu den anderen
 Tensoren ``mutable''. Das bedeutet, dass seine Werte unabhängig von einer
-einzigen Graphenausführung existieren und erhalten bleiben. Seine Elementen
-können modifiziert werden. Somit sind sie geeignet, für Modellparameter.
-Die Werte bleiben grundsätzlich jede Ausführung erhalten und können beim
-Trainingsdurchlauf angepasst werden.
+einzigen Graphausführung existieren und erhalten bleiben. Seine Elementen
+können können von Ausführung zu Ausführung modifiziert werden. Somit sind sie
+geeignet um Modellparameter einzuführen.
+Die Modifizierung der Werte findet generell nur im Trainingsdurchlauf statt.
 \para{}
-Folgender Python-Code kreirt eine tf.Varaible mit einem Anfangswert und ändert ihren Wert danach.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  <Varname> = tf.Variable(<Initialwert>, name=<optionaler Name>)
+Eine Variable definiert man folgendermassen, mit einem Initalwert.
+Folgender Python-Code kreirt eine tf.Variable mit einem Anfangswert und ändert ihren Wert danach.
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
+  <Varname> = tf.Variable(<Initialwert>)
   <Varname>.assign(<neuer Wert>)
 \end{minted}
 Bei der neuen Wertebesetzung kann auch der alte Wert des Tensors referenziert
