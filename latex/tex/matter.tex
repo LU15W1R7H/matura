@@ -51,7 +51,7 @@ Der Grossteil der Modelle des Maschinellen Lernens zählt zum Überwachten
 Lernen, da es deutlich mehr Anwendungsmöglichkeiten bietet. Grundsätzlich steht
 daher das Überwachte Lernen im Vordergrund der Arbeit. Allerdings gehört der
 später erläuterte Autoencoder strenggenommen (aufgrund einer irreführender Zuordnung) zum Unüberwachten Lernen, auch wenn
-es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion \ref{sec:autoencoder}).
+es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion~\ref{sec:autoencoder}).
 \para{}
 GUTE QUELLE (Pionier)
 \cite{wiki:supervised_learning}
@@ -324,7 +324,7 @@ aber der Trainingsdatensatz zu wenige Samples dafür beinhaltet.
 Somit übersteigt die Komplexität des Modells gewissermassen jede der Aufgabenstellung.
 \para{}
 Um das Phänomen zu verdeutlichen, wird ein lineares Regressionmodell betrachtet.
-Dieses besitzt eine Hypothesenfunktion $h = a_0 + a_1 x + a_2 x^2 + \ldots + a_n
+Dieses besitzt eine Hypothesenfunktion $h = a_0 + a_1 x + a_2 x^2 + \cdots + a_n
 x^n$, welche ein Polynom $n$-ter Ordnung ist. Falls der
 Trainingsdatensatz nun aus $n$ oder weniger Samples besteht, kann das Modell die
 Regressionkurve der Hypothesenfunktion exakt durch jeden Datenpunkt legen.
@@ -414,7 +414,7 @@ Das Perzeptron verhält sich so, dass, falls die gewichtete Summe $\tilde{z}$ gr
 Schwellenwert $\tilde{b}$ ist, das Neuron feuert, d.h.\ der Output 1 beträgt.
 Andernfalls ist er 0 (siehe erster Teil der Hypothesenfunktion $h$ in Gleichung (\ref{eq:perzeptron_1})).
 Es ist gängig, die Ungleichung der Bedingung in die Nullstellenform zu bringen
-und $\tilde{b}$ durch die \keyword{Neigung} (engl.: bias)
+und $\tilde{b}$ durch die \keyword{Neigung} (engl.:\ bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
 > 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
 Die Neigung gibt an, wie stark das Neuron dazu neigt zu feuern.\\
@@ -1141,7 +1141,7 @@ Abb. (\ref{fig:bildmatrix})).
 \cite{deeplearning.ai:cnn}
 \cite{wiki:tensor}
 
-\section{Topologie von CNNs}
+\section{Topologie der Convolutional Neural Networks}
 Ein CNN besteht, wie ein KNN auch, aus mehreren Schichten. Jede dieser Schichten erhält
 als Input ein Bild und hat auch wieder eines als Output.
 Ein wichtiger Unterschied des CNNs ist, dass es aus unterschiedlichen Typen von
@@ -2059,8 +2059,8 @@ Auf diese Weise lässt sich ein verrauschter Datensatz entwickeln.
 
 \chapter{Frameworks für Maschinelles Lernen}
 In den Kapiteln eins bis vier wurde die theoretische Funktionsweise von
-Maschinellem Lernen zusammen mit dem konkreten Modell eines KNN und deren
-konkreten Architekturen des CNN und des Autoencoder dargelegt.
+Maschinellem Lernen dargelegt zusammen mit dem konkreten Modell eines KNN und deren
+konkreten Architekturen des CNN und des Autoencoder.
 Nun findet ein Übergang zur praktischen Programmierung eines
 Convolutional-Autoencoders statt. Es wird die grobe Funktionsweise von den
 Frameworks TensorFlow und Keras erörtert, welche dann
@@ -2077,8 +2077,8 @@ Diese Frameworks habe eine Implementation für ML-Algorithmen realisiert.
 \keyword{TensorFlow} (TF) ist ein von Google entwickeltes \keyword{Framework} für
 \keyword{datenstromorientierte Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek für numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
-liegt. TF zeichnet sich hauptsächlich durch seine einfache Anwendung aus, welche
-es erlaubt ohne viele mathematische Vorkenntnisse ein ML-Modell zu definieren,
+liegt. TF zeichnet sich hauptsächlich durch seine einfache Bedienung aus, welche
+es dem Benutzer erlaubt ohne grossartige mathematische Vorkenntnisse ein ML-Modell zu definieren,
 zu trainieren und zu verwenden. Desweiteren sind die performanten
 Implementierungen bemerkenswert, welche es ermöglichen ein Modell sehr schnell
 zu trainieren und auszuführen. Somit ist TF gegenüber selbstgeschriebenen
@@ -2094,7 +2094,7 @@ Firmen sind: Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele m
 \para{}
 Grundsätzlich wurde TF für Maschinelles Lernen entwickelt. Speziell eignet es
 sich für Deep Learning. Es bietet die nötigen Werkzeuge, um ein Modell zu
-definieren und mit en eingebauten Algorithmen zu trainieren.
+definieren und um es mit den eingebauten Algorithmen zu trainieren.
 Trotz dieser eigentlichen Grundidee von TF, sollten sich die Abstraktionen eigentlich
 für beliebige Anwendungen eignen, welche Gebrauch von numerischen Berechnungen machen.
 \para{}
@@ -2105,7 +2105,7 @@ genau zu sein betrachten wir Tensorflow-Core Version r1.14%
   veröffentlich wurde, es zu verwenden.}.
 Die Betrachtung von TF wird nicht sehr tiefgreifend sein, da bei der
 Programmierung in Kapitel sechs auf die High-Level-API Keras zurückgegriffen
-wird. Somit wird nicht direkt mit TF gearbeitet, trotzdem ist es hilfreich ein
+wird. Somit wird nur teilweise direkt mit TF gearbeitet. Trotzdem ist es hilfreich ein
 grobes Verständniss über TF zu besitzen, um die Funktionsweise zu verstehen.
 \para{}
 Die wichtige Resource um TensorFlow zu lernen ist wohl die offizielle TensorFlow
@@ -2117,10 +2117,9 @@ Website. Dort findet man auch die Dokumentation.
 \cite{book:tensorflow}
 \cite{net:tf_docs}
 
-\subsection{Client und Master}
+\subsection{Frontend und Backend}
 Wie die meisten grossen Frameworks ist TensorFlow in Backend und
-Fontend aufgeteilt. Das Frontend von TensorFlow bezeichnet man als
-\keyword{Client} und das Backend als \keyword{Master}.
+Fontend aufgeteilt.
 \para{}
 \begin{infobox}{Fontend und Backend}
   Das \keyword{Frontend} ist der Teil eines Programms, mit welchem der Benutzer
@@ -2134,327 +2133,25 @@ Fontend aufgeteilt. Das Frontend von TensorFlow bezeichnet man als
   Programmes und bekommt somit nichts direkt von dessen Existenz mit.
 \end{infobox}
 \para{}
-Der Client --- also das Frontend --- von TF ist in \keyword{Python} geschrieben%
+Das Frontend von TF ist in \keyword{Python} geschrieben%
 \footnote{
   TF besitzte mehrere Frontends, welche in den verschiedensten
   Programmiersprachen geschrieben sind. Wir werden jedoch nur das
   Python-Frontend betrachten, da es am besten von TF unterstützt ist.
 }.
-Python ist allgemein als eine sehr einsteigerfreundliche Programmiersprache bekannt. Sie
+Python wird allgemein als eine sehr einsteigerfreundliche Programmiersprache wahrgenommen. Sie
 ermöglicht es dem Benutzer mit wenigen Zeilen Code und ziemlich intuitiv
 TensorFlow zu verwenden. Somit werden wir die Entwicklung eines Modells in
 Python vornehmen.
 \para{}
-Der Master --- also das Backend --- von TF ist dagegen in \keyword{C++} (und CUDA)
+Das Backend von TF ist dagegen in \keyword{C++} (und CUDA)
 geschrieben. Dies hat den Grund, dass C++ im Gegensatz zu Python sehr performant
 ist. Dies bedeutet, dass die Ausführungszeit eines Programms sehr kurz ist. In
-der Konsequenz jedoch ist der deutlich anspruchsvoller und ausführlicher (engl.:
-verbose).
-Da der Benutzer jedoch keine direkte Interaktion mit dem Master hat, muss er
+der Konsequenz jedoch ist Programmcode deutlich anspruchsvoller und
+ausführlicher (engl.: verbose) geschrieben.
+Da der Benutzer jedoch keine direkte Interaktion mit dem Backend hat, muss er
 sich nicht mit C++ befassen.
-
-\subsection{Verwendung --- der Client}
-Nun wird erörtert, wie TensorFlow verwendet werden kann, um ein Modell zu
-definieren und zu trainieren. Es wird als der Client betrachtet. Mithilfe diesem Wissen kann nachvollzogen werden,
-wie Keras als Schnittstelle, es dem Benutzer erleichtert ein Modell zu erstellen.
-Dieser Abschnitt und die folgenden setzen gewisse Python-Kenntnisse voraus.
 \para{}
-TensorFlow bitet verschiedene Konzepte, um programmatisch zu arbeiten.
-Im folgenden Abschnitt werden wir diese Konzepte behandeln.
-
-\subsubsection{Graph}
-TensorFlow ist datenstromorientiert. Das bedeutet, dass eine Berechnung
-durch einen gerichteten Graphen beschrieben wird. Zuerst wird solch ein Graph
-aufgestellt und fügt ihm Knoten hinzu. Erst nach der Definition wird er dann ausgeführt.
-Es handelt es sich dabei um einen \keyword{Computation Graph}, welcher schon in
-Anhang (\ref{sec:anhang_bp}) erwähnt wurde.
-In TensorFlow wird dieser als als einen \keycode{Graph} bezeichnet.
-\para{}
-Dieser Graph führt eine Datenstrom-Berechnung aus.
-Er besteht aus einer Menge an Knoten, welche miteinander über Pfade
-verbunden sind. Die Knoten beinhalten Zahlenwerte, welche über die Pfade
-verrechnet und so auf den nächsten Knoten abbgebildet werden.
-Die Pfade sind also die Operationen, welche auf die Werte
-angewandt werden. Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
-\para{}
-Man muss einen Graph nicht explizit definieren, da beim Definieren der
-Operationen, sie implizit dem sogenannten Default Graph hinzugefügt
-werden.
-
-\begin{figure}[h!]
-  \caption{Visualisierung eines \code{Graph}}
-\end{figure}
-
-\subsubsection{Tensoren und Knoten}
-Die zentrale Dateneinheit in TensorFlow sind Tensoren, welche bereits in
-Sektion (\ref{sec:tensor}) präsentiert wurden.
-Auch die Knoten des Graphen repräsentieren Tensoren. Die meisten jedoch
-enthalten keine festen Zahlenwerte, sondern werden erst bei der
-der Ausführung des Graphen befüllt. Danach können die Werte ausgelesen werden.
-\para{}
-Die Tensoren erlauben es den Daten innerhalb des Graphen belibige
-Dimensionaltäten und Formen anzunehmen. Es können sowohl Listen von Zahlen
-(Vektoren), wie auch Bilder (Tensoren dritter Stufe) verrechnet werden.
-Aus diesem Grund war es auch sinnvoll in Sektion (\ref{sec:forward}) und im
-Anhang (\ref{sec:anhang_bp}) die Gleichungen in Matrixform herzuleiten.
-\para{}
-In Tensorflow bezeichnet man einen Tensor mit \keycode{Tensor}.
-Er ist definiert durch seine Form (z.B. (2,2,2)) und den Datentyp seiner
-Elemente (z.B. tf.float32).
-\para{}
-Fast alle Tensoren ist mit einer einzigen Graph-Ausführung assoziert. Sie
-besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird er verworfen.
-Man sagt die Tensoren sind ``immutable'', da die Werte nicht erhalten bleiben
-und so nicht modifiziert werden können.
-\para{}
-Die soeben beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb
-des Graphen. Sie müssen nicht explizit definiert werden, da sie automatisch
-eingefügt werden, wenn der Graph durch seine Operationen definiert wird.
-\para{}
-Neben dieser Art von Knoten, gibt es auch noch Inputknoten.
-Es gibt verschiedene von ihnen und jeder stellt eine Art von Input in den
-Graphen dar. Daher müssen sie explizit definiert werden.
-Die verschiedene Inputknoten werden wir nun betrachten.
-
-\paragraph{constant}
-Der \keycode{constant}-Tensor ist ein Input-Knoten in den Graphen.
-Er hat immer einen konstanten Wert, welcher beim Erstellen
-angegeben wird. Seine Definition hat folgenden Charakter:
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
-  <Variable> = tf.constant(<Elemente>)
-\end{minted}
-\para{}
-Folgender Python-Code ist ein Beispiel, welcher drei konstante Tensoren mit unterschiedenlichen
-Formen erstellt. Als Argument, gibt man die Elemente des Tensors, worüber auch
-die Form ersichtlich an.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  skalar = tf.constant(1.0)
-  vector2 = tf.constant([1.0, 2.0])
-  matrix2x2 = tf.constant([[1.0, 2.0], [3.0, 4.0]])
-\end{minted}
-\[\text{\code{skalar}}=1 \quad \text{\code{vector2}}=\begin{pmatrix}1&2\end{pmatrix} \quad
-  \text{\code{matrix2x2}}=\begin{pmatrix}1&2\\3&4\end{pmatrix}\]
-
-\paragraph{placeholder}
-Um den Graphen für Maschinelles Lernen zu verwenden, muss er mit Modellinputs
-befüllt werden können.
-Dafür eignet sich der \keycode{placeholder}-Tensor. Wie es der Name schon sagt,
-ist er ein Platzhalter für die Inputs, welche beim Start der Graphausführung
-eingespeist werden. Bei der Erstellung muss einzig seine Form und sein Datentyp
-angegeben werden.
-\para{}
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
-  <Variable> = tf.placeholder(dtype=<Datentyp>, shape=<Form>)
-\end{minted}
-Für den Datentyp wählt man eigentlich immer
-\mintinline{python}{dtype=tf.float32}, da sich Gleitkommazahlen am besten für ML eignen.
-Die Form gibt man einfach als $n$-Tupel von Integern an, welche die Anzahl
-Komponenten in der jeweiligen Dimension angeben. Somit bedeutet die Form
-\mintinline{python}{shape=(4,2,3)} einen Tensor im Tensorraum $\set{R}^{4 \times
-  2 \times 3}$.
-
-\paragraph{variable}
-Eine weitere Vorausetzung um Maschinelles Lernen mit dem Graphen durchzuführen
-ist, dass Modellparameter eingeführt werden können. Dafür ist der
-\keycode{variable}-Tensor geeignet. Er ist im Gegensatz zu den anderen
-Tensoren ``mutable''. Das bedeutet, dass seine Werte unabhängig von einer
-einzigen Graphausführung existieren und erhalten bleiben. Seine Elementen
-können können von Ausführung zu Ausführung modifiziert werden. Somit sind sie
-geeignet um Modellparameter einzuführen.
-Die Modifizierung der Werte findet generell nur im Trainingsdurchlauf statt.
-\para{}
-Eine Variable definiert man folgendermassen, mit einem Initalwert.
-Folgender Python-Code kreirt eine tf.Variable mit einem Anfangswert und ändert ihren Wert danach.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
-  <Varname> = tf.Variable(<Initialwert>)
-  <Varname>.assign(<neuer Wert>)
-\end{minted}
-Bei der neuen Wertebesetzung kann auch der alte Wert des Tensors referenziert
-werden, um den Wert zum Beispiel zu erhöhen:
-\mintinline{python}{var.assign(var + 2.0)}.
-
-\subsubsection{Operationen}
-Die Knoten des tf.Graph - also die Tensoren - werden über die Pfade aufeinander
-abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
-als \keycode{tf.Operation}. Eine tf.Operation besitzt jeweils einen Namen und repräsentiert eine
-abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
-Input, wie auch als Output.
-\para{}
-Man definiert meistens keine neuen Operationen, sondern verwendet einfach die vordefinierten.
-Ein Beispiel dafür wäre die \keycode{tf.matmul(a,b)}, welche eine
-Matrixmultiplikation zwischen \mintinline{python}{a} und \mintinline{python}{b}
-ausführt. Im folgenden Code wird das Resulat im neuen Tensor
-\mintinline{python}{c} gespeichert.
-``MatMul'' bezeichnet).
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  c = tf.matmul(a, b)
-\end{minted}
-\para{}
-Mit diesem Konzept können wir nun endlich den eigentlichen Graph definieren.
-Dafür muss man lediglich ein paar Inputtensoren erstellen, und diese mithilfe
-von Operationen verrechnen. Natürlich kann man die Resulate der Operationen
-dann weiter verrechnen, bis man den gewünschten Grapen hat.
-\para{}
-Hier ein Beispiel eines solchen Graphs.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  # Inputknoten
-  a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
-  b = tf.constant([[1.0, 1.0], [0.0, 1.0]])
-  # Operationen
-  c = tf.matmul(a, b)
-  d = tf.placeholder(dtype=tf.float32, shape(2,2))
-  e = tf.add(c, e)
-\end{minted}
-
-\begin{figure}
-  \caption{Visualisierung des beschriebenen \keycode{tf.graph}}
-\end{figure}
-\para{}
-
-
-\subsubsection{Session}
-Der Client kommuniziert mit dem Master über eine sogenannte
-\keycode{tf.Session}.
-Sie ist die Schnittstelle zwischen Frontend und Backend und ermöglicht es einen tf.Graph
-zu erstellen und ihn auszuführen.
-Um die Session zu erstellen verwendet man die Funktion \keycode{tf.Session()}.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  sess = tf.Session()
-\end{minted}
-Es ist Best-Practise eine Session, wie eine Datei über das
-\keycode{with}-Statment zu öffen und zu schliessen.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  with tf.Session() as sess:
-  # Code
-\end{minted}
-\para{}
-Um den Graphen nun zu berechnen, muss man lediglich die Session ausführen, das
-geschieht über die Methode \keycode{tf.Session.run()}.
-Diese Funktion erwartet als Argument einerseits den Knotenpunkt, welchen man
-berchnen möchte. Dessen Wert ist der Rückgabewert der Funktion.
-Andererseits erwartet die Funktion noch einen Python-Dictionary, den sogenannten
-\keycode{feed\_dict}, welcher die \code{tf.placeholder} mit ihren Werten befüllt.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  result = sess.run(<Knotenpunkt>, feed_dict=<Placeholder-Dictionary>)
-\end{minted}
-Es folgt nun ein Codebeispiel, welches die Forwärtspropagierung eines
-Sigmoide Neurons mit drei Inputs implementiert. Es wird es mit den Inputs $x = \trans{\begin{pmatrix}1&2&3\end{pmatrix}}$ ausgeführt.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  import tensorflow as tf
-
-  # Inputs
-  x = tf.placeholder(dtype=tf.float32, shape=(3))
-
-  # Modellparameter
-  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
-  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
-
-  # Forwärtspropagierung
-  z = tf.add(tf.tensordot(x, w, 1), b)
-  a = tf.sigmoid(z)
-  y = a
-
-  with tf.Session() as sess:
-  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-  print(res)
-\end{minted}
-
-\subsubsection{Optimizer}
-Um ein ML-Modell in TF zu implementieren, muss man das ganze Modell mit
-allen Operationen als Graphen definieren. Dies hört sich im Moment noch sehr
-aufwendig an, ist es jedoch nicht. Wir werden nämlich die High-Level-API Keras
-zur Hilfe ziehen, bei der Graphen erstellt.
-Keras stellt Implementationen von verschiedenen KNN-Schichten zu verfügen, damit man sie nicht mehr selber
-erstellen muss. Diese kann man dann einfach zu einem Graphen zusammenfügen.
-Aber dazu später mehr.
-\para{}
-Die Ausführung des erstellen Graphen stellt dann einfach eine
-Vorwärtspropagierung dar. Bevor jedoch das Modell brachbare Resualte liert,
-muss man es trainieren. Dafür verwendet man einen \keycode{tf.train.Optimizer}.
-\para{}
-Der erste Schritt ist dafür eine Kostenfunktion zu definieren. Es sthene dabei
-Verschiedne aus \keycode{tf.losses} zur Verfügung. Als Argument nimmt die
-Kostenfunktion die Label-Tensoren \code{labels} und die Vorhersagen-Tensoren \code{predictions}.
-Beispielsweise könnte man den Mittleren Quadratischen Fehler wählen:
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  cost = tf.losses.mean_squared_error(labels=y_hat, predictions=y)
-\end{minted}
-Nun erstellt man den Optimizer. Dabei stehen wieder mehrere zur Auswahl. Der
-\keycode{tf.train.GraidentDescentOptimizer} ist eine Implementation des
-Gradientenverfahren. Er nimmt als Arugment die Lernrate $\eta$.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  optimizer = tf.train.GradientDescentOptimizer(learning_rate=<>)
-\end{minted}
-Nun kann man den Optimizer damit beauftragen die Kostenfunktion \code{loss} zu
-minimieren. Ausserdem muss man dem Optimizer eine List von \code{tf.Variable}s
-geben, welche die zu optimierenden Modellparameter sind.
-Man erhält so man eine Optimierungs-Operation, welche man dann
-ausführen kann.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  opt_op = opt.minimize(cost, var_list=<Hyperparameter-Liste>)
-  opt_op.run()
-\end{minted}
-\para{}
-Nun folgt ein kleines Beispielmodell, welches trainiert wird.
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  import tensorflow as tf
-
-  # Inputs
-  x = tf.placeholder(dtype=tf.float32, shape=(3))
-
-  # Modellparameter
-  w = tf.Variable(tf.random_uniform([3], -1, 1), name='weight')
-  b = tf.Variable(tf.random_uniform(1, -1, 1), name='bias')
-
-  # Forwärtspropagierung
-  z = tf.add(tf.tensordot(x, w, 1), b)
-  a = tf.sigmoid(z)
-  y = a
-
-  cost = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
-
-
-  with tf.Session() as sess:
-  print(sess.run(cost)) # cost is just another node
-  optimizer = tf.train.GradientDescentOptimizer(0.01)
-  train = optimizer.minimize()
-  res = sess.run(y, feed_dict = {x: [1, 2, 3]})
-  print(res)
-
-  # Daten
-  x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
-  y_true = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)
-
-  # Modell
-  linear_model = tf.layers.Dense(units=1)
-  y_pred = linear_model(x)
-
-  # Evalutaion
-  sess = tf.Session()
-  init = tf.global_variables_initializer()
-  sess.run(init)
-
-  print(sess.run(y_pred))
-
-  # Loss
-  loss = tf.losses.mean_squared_error(labels=y_true, predictions=y_pred)
-
-  print(sess.run(loss))
-
-
-  # Training
-  optimizer = tf.train.GradientDescentOptimizer(0.01)
-  train = optimizer.minimize(loss)
-
-
-  for i in range(100):
-  _, loss_valü = sess.run((train, loss))
-  print(loss_valü)
-
-\end{minted}
-
-
-\subsection{Implementation --- der Master}
 TF ist gerade deshalb sehr attraktiv für ML, da es sehr performant (schnell
 ausführbar) ist und dadurch die Trainingszeit für die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
@@ -2463,156 +2160,262 @@ Falls der Leser am Verständniss dieser Entscheide interessiert ist und an der
 eigentlichen Implemention von TF (dem Master) kann er im Anhang (\ref{sec:anhang_tf}) dazu
 Informationen finden.
 
+\subsection{Graph}
+TensorFlow ist datenstromorientiert. Das bedeutet, dass eine Berechnung
+durch einen gerichteten Graphen beschrieben wird. Zuerst wird solch ein Graph
+aufgestellt und es werden ihm Knoten und Pfade hinzugefügt. Erst nach der Definition wird er dann ausgeführt.
+Es handelt sich dabei um einen \keyword{Computation Graph}, welcher schon in
+Anhang (\ref{sec:anhang_bp}) erwähnt wurde.
+In TensorFlow wird dieser als einen \keycode{Graph} bezeichnet.
+\para{}
+Dieser Graph führt eine Datenstrom-Berechnung aus.
+Er besteht aus einer Menge an Knoten, welche miteinander über Pfade
+verbunden sind. Die Knoten beinhalten Zahlenwerte, welche über die Pfade
+verrechnet und so auf den nächsten Knoten abbgebildet werden.
+Die Pfade sind also die Operationen, welche auf die Werte
+angewandt werden. Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
+Der Graph zeichnet sich bei der Erstellung nur durch seine Operationen aus.
+\para{}
+Mithilfe des Graphs wird das eigentliche ML-Modell definiert. Die Ausführung von
+ihm stellt die Vorwärtspropagierung dar.
+\para{}
 
+\begin{figure}[h!]
+  \caption{Visualisierung eines \code{Graph}}
+\end{figure}
+
+\subsubsection{Knoten und Tensoren}
+Die zentrale Dateneinheit in TensorFlow sind Tensoren, welche bereits in Sektion
+(\ref{sec:tensor}) präsentiert wurden. Auch die Knoten des Graphen
+repräsentieren Tensoren. Die meisten jedoch enthalten keine festen Zahlenwerte,
+sondern werden erst bei der der Ausführung des Graphen befüllt. Danach können
+die Werte ausgelesen werden. \para{} Die Tensoren erlauben es den Daten
+innerhalb des Graphen belibige Dimensionaltäten und Formen anzunehmen. Es können
+sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren dritter Stufe)
+verrechnet werden. Aus diesem Grund war es auch sinnvoll in Sektion
+(\ref{sec:forward}) und im Anhang (\ref{sec:anhang_bp}) die Gleichungen in
+Matrixform herzuleiten. \para{} In Tensorflow bezeichnet man einen Tensor mit
+\keycode{Tensor}. Er ist definiert durch seine Form und den Datentyp seiner
+Elemente. \para{} Fast alle Tensoren sind mit einer einzigen Graph-Ausführung
+assoziert. Sie besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird
+er verworfen. Man sagt die Tensoren sind ``immutable'', da die Werte nicht
+erhalten bleiben und so nicht modifiziert werden können. \para{} Die soeben
+beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb des
+Graphen. Sie müssen nicht explizit definiert werden, da sie automatisch
+eingefügt werden, wenn der Graph durch seine Operationen definiert wird. \para{}
+Neben dieser Art von Knoten, gibt es auch noch Inputknoten. Diese können
+verwendet werden, um Werte in den Graphen einzuspeisen. Eine Art von Inputknoten
+beispielsweise wird benutzt um die Modellinputs einzufügen
+(\keycode{placeholder}). Eine andere Art wird verwendet um die Modellparameter
+einzuführen (\keycode{variable}). Die Modellparameter-Tensoren sind im Gegensatz
+zu den anderen Tensoren ``mutable''. Ihre Werte bleiben als also über mehrere
+Graphenausführungen erhalten und können beispielsweise beim Training modifiziert werden.
+
+\subsubsection{Pfade und Operationen}
+Die Knoten des Graphen werden über die Pfade aufeinander
+abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
+als \keycode{Operation}. Eine Operation besitzt jeweils einen Namen und repräsentiert eine
+abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
+Input, wie auch als Output.
+\para{}
+Man definiert meistens keine neuen Operationen, sondern verwendet einfach die vordefinierten.
+Ein Beispiel dafür wäre die \keycode{matmul(a,b)}-Operation, welche eine
+Matrixmultiplikation zwischen dem Knoten \mintinline{python}{a} und dem Knoten \mintinline{python}{b}
+ausführt. Das Resultat kann dann in einer neuen Knotenvariable
+\mintinline{python}{c} gespeichert werden.
+\para{}
+Um den eigentlichen Graphen zu definieren, werden zu Beginn einige Inputknoten
+definiert. Diese werden dann durch die vordefinierten Operationen abbgebildet.
+Deren Resultate kann man dann erneut weiter verrechnen, bis der gewünschte Graph entsteht.
+
+\subsection{Ausführungen}
+\subsubsection{Session}
+Für die Kommunikation zwischen Frontend und Backend ist die sogennante
+\keycode{Session} zuständig. Sie schickt den Graphen an das Backend, damit er
+dort performant ausgeführt werden kann. Diese Ausführung stellt die
+Vorwärtspropagierung dar.
+\para{}
+Eine der essentiellen Aufgaben einer Session ist es den Graphen auszuführen.
+Dabei kann der Benutzer die Knoten angeben, dessen Werte die Funktions
+zurückgeben soll. Dabei erwartet diese Funktion die Werte mit denen die
+Inputknoten befüllt werden sollen.
+
+
+\subsubsection{Optimizer}
+Bevor das definierte Modell brachbare Resultate bei der Graphausführung liert,
+muss es trainiert werden. Dafür verwendet man einen sogennanten \keycode{Optimizer}.
+Dabei handelt es sich immer um Algorithmen, welche zur Minimieren oder
+Maximierung von Funktionen benutzt werden können.
+Es gibt verschiedene komplexe Optimizer, welche unterschiedliche
+Konvergenzgeschwindigkeiten und unterschiedliche Exaktheiten aufweisen. In der
+Theorie wurde nur das SGD-Verfahren behandelt.
+\para{}
+Für ML verwendet man solche Optimizer zur Minimierung der Kostenfunktion, indem die Modellparameter
+angepasst werden. Dabei kann aus einer Menge von Konstenfunktion ausgewählt
+werden. Wir werden nur den Mittleren-Quadratischen-Fehler als Kostenfunktion verwenden.
+\para{}
+Der Grund weshalb Computational Graphs für TensorFlow gewählt wurden, ist die
+einfache Bestimmung der Ableitungen der Variabeln innerhalb des Graphen, um die
+Optimierung vorzunehmen. Dieses Vorgehen wird in Sektion (\ref{sec:anhang_bp})
+ausführlich erklärt.
 
 \subsection{Tensorboard}
 TensorBoard ist ein externes Zusatzprogramm zu TensorFlow. Mit dessen Hilfe
-man Daten zum Modell-Graph und zu dem Trainingsprozess sammeln kann
-und diese dann Visualisieren kann. \\
+Daten zum Modell-Graph und zu dem Trainingsprozess erfasst
+und visualisiert werden können.
 Es ist möglich eine Visualisierung des Modell-Graphs zu betrachten. Desweiteren
 kann man Funktionsgraphen der Kostenfunktionentwicklung betrachten.
 \para{}
-TensorBoard ist als WebServer geschrieben und kann über einen WebBrowser
+TensorBoard ist als Webserver geschrieben und kann über einen Webbrowser
 benutzt werden.
-Man muss TensorBoard als Backend/Callback in TensorFlow aktivieren, damit die
+Man muss TensorBoard als Callback in TensorFlow aktivieren, damit die
 nötigen Daten während der Graphausführung gesammelt werden.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{tensorboard.png}
+  \includegraphics[width=0.7\textwidth]{tensorboard.png}
   \caption{das TensorBoard-Webinterface}
 \end{figure}
 
 \subsubsection{Hyperparameter einstellen}
-Der wichtigste Aspekt für uns von TensorBoard stellt die Tatsache dar, dass man
-die Trainingsfortschritte visualisieren kann. Man kann verschiedene
-Funktionsgraphen der Kostenfunktion betrachten. Es ist sogar möglich mehrere
-solcher Graphen miteinander zu vergleichen. Somit kann man ein Modell, bei
-welchem man mehrere Trainings mit jeweils verschiedene Hyperparameter gemacht
-hat, miteinander vergleichen. So ist es ziemlich einfach gute Hyperparameter
-herauszusuchen. Genau dieses Verfahren werden wir dann bei unserem eigenen
-Modell anwenden. \\
-Der Graph ist interaktiv, was bedeutet, dass man mit ihm interagieren kann und
-so detailiertere Angaben erhalten kann. Zum Beispiel kann man so auch die
-beanspruchte Trainingszeit des Modells erfassen, welche meistens von Interesse ist.
+Der wichtigste Aspekt von TensorBoard für uns stellt die Tatsache dar, dass
+die Trainingsfortschritte visualisieren werden können. Man kann die
+Funktionsgraphen der Kostenfunktion betrachten. Es ist sogar möglich die
+Kostengraphen mehrerer Modelle gleichzeitig anzuzeigen und zu vergleichen.
+Somit kann man ein Modell, bei welchem mehrere Trainingsdurchläufe mit
+verschiedenen Hyperparameter durchgeführt wurden, gegenüberstellen.
+So können die besten Hyperparameter herausgesucht werden.
+Genau dieses Verfahren werden wir dann bei unserem eigenen Modell anwenden.
+\para{}
+Der Graph ist interaktiv, was bedeutet, dass mit ihm interagiert werden kann und
+so detailiertere Angaben erhalten kann. Zum Beispiel kann so auch die
+beanspruchte Trainingszeit des Modells erfassen werden, welche meistens von Interesse ist.
 \para{}
 In der untenstehenden Abbildung ist ein Graph von TensorBoard dargestellt,
 welcher die Entwicklung der Kostenfunktion für den Testdatensatz verschiedener
 Modell anzeigt. In diesem Beispiel hätte die orange Kurve ganz unten am besten
-Abgeschnitten. Dieses Modell hat die kleinsten Kosten verursacht.
+abgeschnitten. Dieses Modell hat die kleinsten Kosten verursacht.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{tensorboard_graph.png}
+  \includegraphics[width=0.7\textwidth]{tensorboard_graph.png}
   \caption{Trainingsvisualisierungen in TensorBoard}
 \end{figure}
 \para{}
 
-\pagebreak
 \section{Keras}
-\begin{wrapfigure}{l}{3cm}
-  \includegraphics[width=3cm]{keras_logo.jpg}
+\begin{wrapfigure}{l}{2cm}
+  \includegraphics[width=2cm]{keras_logo.jpg}
   \caption{Keras-Logo}
 \end{wrapfigure}
-\keyword{Keras} ist ein Open-Source Deep-Learning Framework geschrieben in
+Um ein Modell in TF zu implementieren, müsste man das ganze Modell mit
+allen Operationen als Graphen definieren. Dies wäre ziemlich aufwendig und fehleranfällig.
+Man müsste die verschiedenen KNN-Schichten, wie z.B eine Convolutional-Schicht, selbst definieren.
+Damit dies nicht nötig ist, verschaffen wir uns Abhilfe mit der High-Level API \keyword{Keras}.
+Keras stellt Implementationen von verschiedenen KNN-Schichten zu verfügen, damit
+diese nicht mehr selbst erstellt werden müssen.
+\para{}
+Keras ist ein Deep-Learning Framework geschrieben in
 Python. Keras wurde entwickelt, um eine einheitliche Schnittstelle für
 verschieden Backends, wie TensorFlow, Microsoft Cognitive Toolkit und Theano zu
 bieten. Seit TF Version 1.4 ist Keras ein fester Bestandteil der TensorFlow-Core-API.
+Keras ermöglicht ein sehr simples und benutzerfreundliches definieren von
+KNNs welche dann sehr einfach trainiert werden können.
 
-Keras ermöglicht ein sehr simples und benutzerfreundliches defnieren von
-Deep-Learning-Modeln welche dann sehr einfach trainiert werden können.
-Wir werden also anstatt TF direkt zu verwenden, über Keras das Modell definieren.
-Deshalb ist ein tiefgehendes Verstätniss von TF überflüssig.
-
-\subsection{Funktionsweise}
-Keras baut auf TensorFlow auf. Es verwendet die verschiedenene Konzepte von TF,
-wie Variablen, Operationen und Graphen und abstrahiert sie.
-Dadurch bietet Keras eine einfacheres Vorgehen dem Benutzer an.
+\subsection{Sequential-Modell}
+Keras ist nicht eine eigenständige Programmbibliothek, sondern baut auf
+TensorFlow auf und dient dabei als High-level Schnittstelle.
+Keras verwendet die verschiedenen Konzepte von TF, wie Graphen und Operationen,
+um eigene KNN-Bestandteile zu implementieren.
+Dadurch ist es für den Benutzer deutlich einfach ein Modell aus diesem Baukasten
+zu konstruieren.
 \para{}
 Die gängigste Vorgehensweise besteht darin, ein sogenanntes
 \keyword{Sequential-Modell} zu bauen.
 Dies ist ein Modell, welches einfach ein linearer Stapel von verschiedenen
-Schichten ist. Keras stellt verschiedene Arten von KNN-Schichten bereits zur
-verfügung, welche einfach aneinander gereiht werden können und so einen Graph bilden.
-\para{}
-Es gibt verschiedene Arten ein Modell zu definieren. Entweder definiert man eine
-\code{tf.keras.Sequential} Variable, welcher dann mit der Methode \code{add()}
-neue Schichten hinzugefügt werden.
-Oder man speichert die verschiedenene Schichten in Variablen und gibt dann die
-Anfangsschicht und die Schlussschicht bei der Erstellung des Modellvariable an.
+KNN-Schichten. Man kann dabei aus den vordefinierten Schichten von Keras
+auswählen. Im folgenden werden diese Schichten betrachtet.
 
 \subsection{Schichten}
-Bei der Initalizsierung der Modellparameter, benutzt Keras standardmässig
-anderes Vorgehen als in der Theorie in Sektion \ref{sec:parameter_initalisieren} erklärt. Es benutzt nämlich eine
-Glorot-Initalisierung mit einer Uniformen Verteilung. Wir werden spezifizieren
-bei der Schicht-Erstellung, dass wir die in der Theorie erklärte Variante
-verwenden wollen.
-
-Wir werden nun kurz die verschiedenen Schichttypen von Keras durchgehen, welche wir in
+Man definiert den Graphen in Keras, indem die verschiedenen Schichten des
+gewünschten Modells in Variabeln gespeichert werden. Man referenziert bei der
+Deklaration jeder neuen Schicht jeweils die vorherige Schicht, damit sie
+verbunden werden.
+Am Ende der Erstellung der Schichten definiert man eine Modellvariable, welche
+die erste und die letzte Schicht als Argumenete erwartet.
+\para{}
+Wir werden nun im folgenden die verschiedenen Schichttypen von Keras durchgehen, welche wir in
 der Theorie schon vorgestellt haben.
 \para{}
-
+Noch eine Anmerkung zur Initalisierung der Modellparameter in Keras:
+Keras benutzt standardmässig ein
+anderes Vorgehen zur Initalisierung als in der Theorie in Sektion
+\ref{sec:parameter_initalisieren} erklärt.
+Es benutzt nämlich eine Glorot-Initalisierung mit einer Uniformen Verteilung.
+Wir werden deshalb explizit spezifizieren, dass wir die in der Theorie erklärte
+Variante der Glorot-Initalisierung mit einer Normalverteilung verwenden möchten.
+\para{}
 
 \cite{net:keras_init}
 
 \paragraph{Input-Schicht}
 Die Input-Schicht ist ziemlich selbsterklärend. Sie ist einfach die
 Platzhalter-Schicht, welche alle Features enthält.
-Man definiert sie folgendermassen:
+Man muss bei der Definierung die Form der Inputdaten angeben:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   tf.keras.Input(shape=(<Form>)
 \end{minted}
 
 \paragraph{Dense-Schicht}
-Wir beginnen mit dem Fully-Connected-Schicht. Diese wird in Keras als
-\code{Dense} bezeichnet. Der Name kommt davon, dass sie dicht mit jedem Neuron
-der vorherigen Schicht verbunden ist.
+Die erste richtige KNN-Schicht ist die Fully-Connected-Schicht. Sie wird in
+Keras als \keycode{Dense} bezeichnet. Sie ist wie in
+der Theorie erklärt, die Schicht, welche aus Neuronen besteht und ``dicht'' zu jedem
+Neuron der nächsten Schicht verbunden ist.
+Als Argumente erwartet die Schicht die Anzahl Neuronen, aus welcher sie besteht,
+wie die Aktivierungsfunktion und die vorherige Schicht. Wie vorhin erwähnt
+überschreiben wir den Standard-Initalisierer mit dem \code{'glorot_normal'}-Initalisierer.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  tf.keras.layers.Dense(<Anzahl Neuronen>,
+  tf.keras.layers.Dense(<#Neuronen>,
   activation=<Aktivierungsfunktion>)(<vorherige Schicht>, kernel_initalizer='glorot_normal')
 \end{minted}
 
 \paragraph{Conv2D-Schicht}
-
+Die Convolutional-Schicht eines CNNs wird in Keras mit \keycode{Conv2D}
+bezeichnet. Sie verhaltet sich wie in der Theorie erklärt. Um sie zu definieren,
+muss man die Anzahl Filter, die Filtergrösse $f$, den Stride $s$, das Padding
+$p$ und die Aktivierungsfunktion angeben.
+Die Daten welche in eine Schicht eines CNNs gehen, müssen
+folgendes Format ausweisen: $(samples, channels, rows, cols)$. Der Output der
+Conv2D-Schicht hat wiederum folgende Form: $(samples, filters, new\_rows, new\_cols)$.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   tf.keras.layers.Conv2D(filters=<#Filters>, kernel_size=<Filtergrösse>,
-  strides=<>, padding=<>, activation=<>, )
+  strides=<>, padding=<>, activation=<>, kernel_initalizer='glorot_normal')
 \end{minted}
-Für alle Schichten eines CNNs gilt folgendes Datenformat:
-Input muss folgende Form haben $(samples, channels, rows, cols)$. Output hat
-analoge Form $(samples, filters, new\_rows, new\_cols)$
 
 \paragraph{MaxPool2D-Schicht}
+Die Pooling-Schicht in Keras, welche MaxPooling betreit, heisst
+\keycode{MaxPool2D}. Um sie zu definieren, muss die zusammenfassende Feldgrösse
+$f$, den Stride $s$ und das Padding $p$ angeben.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   tf.keras.layers.MaxPool2D(pool_size=<Feldgrösse>, strides=<>, padding=<>)
 \end{minted}
 
-
 \paragraph{UpSampling2D-Schicht}
+Die UpSampling-Schicht als Gegenstück zur Pooling-Schicht, heisst
+\keycode{UpSampling2D}. Dabei muss die Feldgrösse $f$ und die
+Interpolationsmethode angegen werden.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   tf.keras.layers.UpSampling2D(size=<>, interpolation=<>)
 \end{minted}
 
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  model = tf.keras.Sequential()
-  # Adds a densely-connected layer with 64 units to the model:
-  model.add(layers.Dense(64, activation='relu'))
-  # Add another:
-  model.add(layers.Dense(64, activation='relu'))
-  # Add a softmax layer with 10 output units:
-  model.add(layers.Dense(10, activation='softmax'))
-\end{minted}
-
-
 \subsection{Training und Evaluierung}
 
 Nach dem das Modell definiert wurde, muss man es Kompilieren.
-Dies macht man mit der Methode \code{tf.keras.Model.compile} diese erwartet als
+Dies macht man mit der Methode \code{compile} diese erwartet als
 Arugmente, den Optimzier und eine Kostenfunktion. Man kann optional noch gewisse
-Metriken angeben, welche wahrend des Trainings erfasst werden sollen.
+Metriken angeben, welche während des Trainings erfasst werden sollen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   model.compile(optimizer=tf.train.AdamOptimizer(0.001),
   loss='categorical_crossentropy',
@@ -2648,30 +2451,6 @@ gegeben Inputs.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   result = model.predict(data, batch size=32)
-\end{minted}
-
-\subsection{Keras Beispielmodell}
-
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  inputs = tf.keras.Input(shape=(32,))  # Returns a placeholder tensor
-
-  # A layer instance is callable on a tensor, and returns a tensor.
-  x = layers.Dense(64, activation='relu')(inputs)
-  x = layers.Dense(64, activation='relu')(x)
-
-  predictions = layers.Dense(10, activation='softmax')(x)
-
-  Instantiate the model given inputs and outputs.
-
-  model = tf.keras.Model(inputs=inputs, outputs=predictions)
-
-  # The compile step specifies the training configuration.
-  model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
-  loss='categorical_crossentropy',
-  metrics=['accuracy'])
-
-  # Trains for 5 epochs
-  model.fit(data, labels, batch_size=32, epochs=5)
 \end{minted}
 
 
