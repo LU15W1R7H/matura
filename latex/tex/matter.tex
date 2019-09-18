@@ -3051,45 +3051,53 @@ Modelle mit den angegebenen Hyperparametern, die besten Resultate liefern:
     50 & Sigmoid & 256 & 16 & 0.09438 \\
     \hline
   \end{tabular}
-  \caption{Rangliste der besten Modelle mit ihren Hyperparametern}
+  \caption{Rangliste der besten Modelle mit ihren Eigenschaften}
 \end{table}
 \para{}
 
 
 \subsection{Diskussion des Modells}
-2 bis drei Seiten.
+Nun soll das entwickelte Modell diskutiert werden bezüglich seiner Leistung und
+seinem Verhalten.
+\subsubsection{Hyperparameter Ergebnisse}
+Die Ergebnisse bei der Auswertung mit TensorBoard stimmen ziemlich gut mit den
+Erwartungne überein. Wie bereits in der Theorie geäussert, liefert die
+ReLU-Aktivierungsfunktion bessere Ergebnisse in CNNs als die Simgmoidfunktion.
+Deshalb sind die ersten Plätze der Randliste nur mit Modellen, welche die
+ReLU-Funktion verwenden, besetzt. Weiter ist auffallend, dass die besten Modelle
+alle möglichst tiefe Minibatch-Grössen verwenden. Dies ist naheliegend, da eine
+kleine Grösse mit einer höheren Präzesion der Gradientenapproximation
+einhergehen. Somit ist der Gradientenabstieg exakter. Auch eine höhere
+Filteranzahl lässt das Modell bessere Resultate erbringen. Jedoch ist dessen
+Einfluss am geringsten von allen Hyperparametern, welche hier getestet wurden.
+\para{}
+Es ist anzumerken, dass die Hyperparameter ausführlicher getestet hätten werden.
+Die Topologie des Netzes und die Schichtenarten wurden beispielsweise gar nicht
+verändert. Dies hat den praktischen Grund, dass die Anzahl Permutationen an Hyperparametern nochmals dermassen
+gestiegen wäre, dass das Training kein Ende gefunden hätte.
+Desweiteren wurden die getesteten Hyperparameter über das ganze Netz gleich
+gewählt und nicht pro Schicht getestet.
 
-
-Diese Ergebnisse stimmen ziemlich gut mit den Erwartungen überein. Wie bereits
-in der Theorie behauptet, liefern die ReLU-Aktivierungsfunktion bessere Ergebnisse
-in CNNs als die Sigmoid-Aktivierungsfunktion. Deshalb finden sich auf den ersten
-Plätzen nur Modelle mit der ReLU-Aktivierungsfunktion. \\
-Auch, dass die kleinste Minibatch-Grösse die besten Resultate liefert ist
-naheliegend. Durch die kleine Grösse sind die Fehler bei der Approximation des
-wahren Gradienten kleiner als bei grossen Batches. \\
-Die Anzahl Filter haben den geringsten Einfluss, jedoch gibt es trotzdem
-minimale Vorteile von einer grösseren Anzahl davon.
-
-
-Auf Modell selber bezogen:
+\subsubsection{Kritik am Modells und Verbesserungsmöglichkeiten}
 Echt gutes Modell.
-\subsubsection{Maximale Leistung}
 Wie hoch kann man den Noise-Factor stellen?
 
 \subsubsection{Mögliche Verbesserungen}
 Es gibt konkrete Verbesserungsmöglichkeiten, welche nicht umgesetzt wurden bei
-der Entwicklung des Denoisers. Es wäre vermutlich möglich gewesen bessere
-Resulate zu erziehlen, wenn verschiedene Topologien durchprobiert werden wären.
-Denn die Anzahl Zwischenschichten stellt auch einen Hyperparameter dar. Jedoch
-hätte dies das Training noch länger gemacht. \\
+der Entwicklung des Denoisers. Wie bereits erwähnt, wäre es vermutlich möglich
+gewesen bessere Resultate zu erzielen, falls noch mehr Hyperparameter und auch
+die Topologie getestet geworden wären.
+\\
 Eine Modifikation, welche wahrscheinlich das Modell deutlich verbessert hätte,
 wäre eine alternative Kostenfunktion gewesen: die Kreuzentropy-Kostenfunktion.
 Diese lässt die Neuronen eines Netzes weniger schnell saturieren und erzeugt so
-bessere Resultate.
+bessere Resultate. Weitere Verbessungen könnten in der Wahl eines anderen
+Optimisierungsverfahren liegen. Beispielsweise hätte eine impulsorientierte
+Version des SGD verwendet werden können, welches mit TensorFlow nur eine
+Codeänderung entfernt gewesen wäre. Jedoch wurde aufgrund des jetztigen Umfangs der Arbeit auf
+weitere Ausführungen zu diesen Konzepten verzichtet. Ohne diese theoretische
+Behandlung, ist der Wert einer Verwendung solcher Werkzeuge sehr gering.
 \para{}
-Es ist darauf hinzuweisen, dass das hier konstruierte Modell bei weitem nicht
-das eigentliche Potenzial von TensorFlow und Keras ausschöpft.
-
 
 %%% Local Variables:
 %%% TeX-command-extra-options: "--shell-escape"
