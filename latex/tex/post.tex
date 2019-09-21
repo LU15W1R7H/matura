@@ -3,54 +3,56 @@
 
 Viele Ideen bezüglich dieser Arbeit konnten aufgrund des bereits jetzt sehr
 grossen Umfangs nicht realisiert werden. Es war ursprünglich eine deutlich
-mächtigere Problemstellung zu lösen angedacht gewesen.
-Aufgrund dieser Reduktion des Anspruches, wurde das eigentliche Potenzial von
-TensorFlow und Keras bei weitem nicht ausgeschöpft. Dadurch könnte in falscher
-Eindruck entstehen. Deshalb ist es essentiell zu erkennen, dass TensorFlow und
-Keras zu weitem mehr im Stande sind.
+mächtigere Problemstellung zu lösen angedacht.
+Aufgrund der Reduktion des Anspruches, wurde das eigentliche Potenzial von
+TensorFlow und Keras bei weitem nicht ausgeschöpft. Dadurch könnte ein verfälschter
+Eindruck von ihrem eigentlichen Potenzial entstehen. Deshalb ist es essentiell zu erkennen, dass TensorFlow und
+Keras zu weit mehr im Stande sind.
 \para{}
 Um noch einige weitere Konzepte des Maschinellen Lernen, welche teilweise für
-diese Arbeit intendiert waren, folgt nun ein Ausblick über sonstige Aspekte.
-
-\section*{Technische Aspekte}
-\subsection*{Weitere Kostenfunktionen}
-Cross-entropy.
-\subsection*{Weitere Optimisierungsverfahren}
-Adam-Optimizer
-Momentum-Optimizer
-
-
+diese Arbeit intendiert waren, zu beleuchten, folgt nun ein Ausblick über sonstige Aspekte.
 
 \section*{Variational Autoencoder}
-Wie bereits im Vorwort erwähnt, war es der ursprüngliche Plan dieser Arbeit
-einen \keyword{Variational Autoencoder} (VAE) zu implementieren. Dieser sollte genutzt werden,
-um künstliche generierte Bilder von menschlichen Gesichtern zu erzeugen.
+\begin{wrapfigure}{L}{2cm}
+  \qrcode[height=2cm]{https://www.youtube.com/watch?v=9zKuYvjFFS8}
+\end{wrapfigure}
+Wie bereits im Vorwort erwähnt, bestand der ursprüngliche Plan dieser Arbeit
+darin, einen \keyword{Variational Autoencoder} (VAE) zu implementieren. Dieser sollte genutzt werden,
+um künstlich generierte Bilder von menschlichen Gesichtern zu erzeugen.
 Dies ist möglich, da es sich bei einem VAE um ein sogennantes
 \keyword{Generatives Modell} handelt.
 \para{}
 Generative Modelle sind im Allgemeinen Modelle, welche in der Lage sind anhand
 von einem existierenden Datensatz neue Dateneinträge zu generieren. Diese neuen Daten
 weisen einen ähnlichen Charakter auf, wie der ursprüngliche Datensatz, sind
-jedoch nicht so in ihm enthalten.
+jedoch nicht in ihm enthalten.
 \para{}
-Ein VAE baut das Grundkonzept eines normalen Autoencoders aus. Er verwandelt das
-Encoding (Repräsentation) in eine Stochastische Verteilung, welche den Code enthält. Dadurch wird
-bezwegt, dass Codes, welche nahe beiander sind, auch nahe beieinander liegede
-Decodings (Rekonstruktionen) erzeugt. Falls ein VAE mit menschlichen Gesichtern
-trainiert wird, können neue nie-gesehene Codes rekonstruiert werden und so neue
-Gesichter erhalten.
+Ein VAE baut das Grundkonzept eines normalen Autoencoders aus. Bei ihm ist das
+Encoding (Repräsentation) eine Stochastische Verteilung, welche den Code
+enthält.
+Dadurch wird bezwegt, dass Codes, welche nahe beiander sind, auch ähnliche
+Decodings (Rekonstruktionen) erzeugen. Dadurch wird der Repräsentationraum
+kontinuierlich. Der Decoder kann dann als generatives
+Modell verwendet werden. Falls ein VAE mit menschlichen Gesichtern
+trainiert wurde, können neue zufällige Codes rekonstruiert werden, welche dann
+neue noch nie gesehene Gesichter ergeben.
+\para{}
+Eine verständliche und gute Erklärung bietet der Youtube-Kanal
+``Arxiv-Insights'' in seinem Video ``Variational Autoencoder'':
+
+\cite{wiki:autoencoder}
 
 \section*{Generative Adversial Networks}
 Ein weiteres Generatives Modell sind sogennante \keyword{Generative Adversial
   Networks} (GANs). Sie sind der momentane Status Quo, was generative KNNs
 anbelangt.
 \para{}
-Der Grundkonzept ihrer Funktionsweise lautet wie folgt. Ein GAN besteht aus zwei
+Das Grundkonzept ihrer Funktionsweise lautet wie folgt. Ein GAN besteht aus zwei
 KNNs, welche miteinander konkurrenzieren. Das eine Modell, der
 \keyword{Diskriminator} kämpft gegen das andere Modell, den \keyword{Generator}.
 Die Aufgabe des Generator ist es Daten zu generieren, welche möglichst stark
-dem Trainingsdatensatz ähneln. Der Diskriminator hingegen bekommt immer entweder
-ein Sample aus dem Trainingsdatensatz vorgelegt oder ein generiertes Sample und
+dem Trainingsdatensatz ähneln. Der Diskriminator bekommt immer entweder
+ein Sample aus dem Trainingsdatensatz oder ein generiertes Sample vorgelegt und
 muss dann entscheiden, ob es echt oder generiert ist. Beide Netzwerke lernen so,
 immer besser in ihrer Tätigkeit zu werden und betreiben gewissermassen einen Wettbewerb.
 
@@ -75,6 +77,16 @@ weniger gleich performante Implementierungen wie TF auf. Vorteile können in der
 Intuition und Einfachheit der Bedienung liegen. Viele Privatpersonen bevorzugen
 genau aus diesem Grund \keyword{PyTorch} gegenüber TF.
 Weitere erwähnenswerte Frameworks sind: Caffe, Scikit-Learn, Sonnet.
+
+\section*{Weiterführende Literatur}
+Machinelles Lernen hat bei weitem noch mehr zu bieten. Falls der Leser sich noch
+mehr damit befassen möchte, kann er folgende Literatur konsultieren:
+\begin{itemize}
+\item{``Hands-On Machine Learning with Skikit-Learn and TensorFlow'' von Aurélien Géron}
+  \item{``Deep Learning'' von Ian Goodfellow, Yoshua Bengio und Aaron Courville,
+      unter: \url{http://www.deeplearningbook.org}}
+\end{itemize}
+
 
 \chapter*{Schlusswort}
 \addcontentsline{toc}{chapter}{Schlusswort}
@@ -470,6 +482,7 @@ Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
 \para{}
 \cite{Nielsen}
 \cite{rojas}
+\cite{ma:deep_learning}
 
 \chapter{Performance von TensorFlow}\label{sec:anhang_tf}
 \section*{Devices}

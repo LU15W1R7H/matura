@@ -50,8 +50,8 @@ kann das Modell Vorhersagen für neue Daten machen.
 Der Grossteil der Modelle des Maschinellen Lernens zählt zum Überwachten
 Lernen, da es deutlich mehr Anwendungsmöglichkeiten bietet. Grundsätzlich steht
 daher das Überwachte Lernen im Vordergrund der Arbeit. Allerdings gehört der
-später erläuterte Autoencoder strenggenommen (aufgrund einer irreführender Zuordnung) zum Unüberwachten Lernen, auch wenn
-es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion~\ref{sec:autoencoder}).
+später erläuterte Autoencoder streng genommen (aufgrund einer irreführender Zuordnung) zum Unüberwachten Lernen, auch wenn
+es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion~\refbox{sec:autoencoder}).
 \para{}
 GUTE QUELLE (Pionier)
 \cite{wiki:supervised_learning}
@@ -89,7 +89,7 @@ Der Algorithmus soll
 anhand dieser Features seine Vorhersagen machen.
 Diese Vorhersagen werden dann mit den Labels abgeglichen und bewertet.
 Anhand der Bewertungen wird eine Optimierung des Modells vorgenommen.
-Unter korrekten Bedingungen (kein Overfitting (siehe \ref{sec:overfitting})) findet kein Auswendig lernen der Trainingsdaten statt,
+Unter korrekten Bedingungen (kein Overfitting (siehe \refbox{sec:overfitting})) findet kein Auswendig lernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmässigkeiten.
 \para{}
 Um eine endgültige Bewertung des Modells durchzuführen, wird ein Testdatensatz
@@ -149,12 +149,12 @@ Eine \keyword{Verlustfunktion} $L(y,\hat{y})$ soll ein Mass für die
 Abweichung der Vorhersage $y$ von dem Label $\hat{y}$ sein.
 Aus ihr bildet man die \keyword{Kostenfunktion} $C(\vec{y},\vec{\hat{y}})$, indem die
 Verluste der einzelnen Outputs aufsummiert werden. Somit erhält man die Kosten
-einer gesamten Vorhersage mit $m$ Outputs (siehe Gl. (\ref{eq:errorfunc})). Bei
+einer gesamten Vorhersage mit $m$ Outputs (siehe Gl. \refbox{eq:errorfunc}). Bei
 gewissen Kostenfunktionen gibt es keine Verlustfunktion, da diese nicht auf die
 einzelnen Outputpaare aufgeteilt werden kann. \\
 Der Fehler $\bar{C}(\set{X})$ des gesamten Trainingsdatensatzes $\set{X}$, der
 Grösse $p$, ergibt sich aus dem arithmetischen Mittel der einzelnen Kosten der
-Vorhersagen (siehe Gl. (\ref{eq:meanerrorfunc})).
+Vorhersagen (siehe Gl. \refbox{eq:meanerrorfunc}).
 \\
 \begin{minipage}[h!]{0.5\textwidth}
   \begin{equation}\label{eq:errorfunc}
@@ -171,7 +171,7 @@ Eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \begin{itemize}
 \item{$C$ ist minimal, wenn $\vec{y} = \vec{\hat{y}}$}
 \item{$C$ wächst mit $|\vec{y} - \vec{\hat{y}}|$}
-\item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklärt in Anhang (\ref{ref:partielle_ableitungen}))}
+\item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklärt in Anhang \refbox{ref:partielle_ableitungen})}
 \end{itemize}
 \para{}
 
@@ -182,8 +182,8 @@ Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''.
 (engl.:\ mean squared error). Sie ist definiert als das arithmetische Mittel
 aller quadrierten Differenzen zwischen den Vorhersagen und Labels.
 Zusätzlich halbiert man noch das arithmetische Mittel, damit bei der Ableitung der Faktor
-$2$ wegfällt. Sie hat keine entsprechene Verlustfunktion, da man so das
-arithemtische Mittel nicht ausgedrückt werden kann.
+$2$ weg fällt. Sie hat keine entsprechende Verlustfunktion, da man so das
+arithmetische Mittel nicht ausgedrückt werden kann.
 \\
 Die Kostenfunktion kann mithilfe einer Summe berechnen werden, oder in
 diesem Fall mithilfe einer Vektorsubtraktion Vorhersagen $\vec{y}$ von den Labels $\vec{\hat{y}}$.
@@ -202,7 +202,7 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 
 \subsection{Stochastisches Gradientenverfahren}\label{sec:gradientenverfahren}
 Beim Training eines Modells handelt es sich um ein Optimierungsproblem.
-Das Modell macht die besten Vorraussagen, wenn die
+Das Modell macht die besten Vorhersagen, wenn die
 Funktionswerte der Kostenfunktion am kleinsten sind.
 Deshalb muss die gewählte Kostenfunktion $C$ minimiert werden.
 Hierbei muss die Funktion $C$ nicht mehr in Abhängigkeit der Inputs und Outputs betrachtet
@@ -222,7 +222,7 @@ Das Gradientenverfahren ist eine gängige Methode, um Funktionen $f: \set{R}^n \
   verwendet.
 }.
 Falls dem Leser das Prinzip nicht vertraut ist, wird auf Anhang
-(\ref{sec:anhang_gd}) verwiesen, in
+\refbox{sec:anhang_gd} verwiesen, in
 welchem die Funktionsweise des Gradientenverfahrens erklärt wird.
 \para{}
 Das Gradientenverfahren zur Minimierung verläuft iterativ nach folgender
@@ -231,9 +231,9 @@ Gleichung:
   \vec{\param}_{t+1} = \vec{\param}_t - \eta \cdot \vecf{\nabla} \mathit{C}(\vec{\param}_t)
 \end{equation}
 Wie die initialen Modellparameter $\vec{\param}_{t=0}$ zu wählen sind, wird in Sektion
-(\ref{sec:parameter_initalisieren}) erläutert.
+\refbox{sec:parameter_initalisieren} erläutert.
 \para{}
-Die sogenannte \keyword{Lernrate} $\eta$ aus Gleichung (\ref{eq:gd_ml}) stellt
+Die sogenannte \keyword{Lernrate} $\eta$ aus Gleichung \refbox{eq:gd_ml} stellt
 einen Hyperparameter dar. Sie ist der positive Proportionalitätsfaktor, welcher die Schrittgrösse des
 Gradientenabstiegs bestimmt.
 Je nach zu minimierender Funktion muss sie anders gewählt werden.
@@ -273,8 +273,8 @@ Durchkämmung der Trainingsdaten statt. Eine solche vollständige Durchkämmung 
 bezeichnet man als eine \keyword{Epoche}.
 Oft wird mehrere Epochen lang trainiert bis das Modell genügend gute Resultate
 liefert. Jedoch sollte auch nicht zu oft mit den gleichen Daten trainiert
-werden, da es sonst zu Overfitting (siehe Sektion \ref{sec:overfitting}) kommen kann.
-Der Gradienten eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradieten des gesamten Datensatzen genügend gut.
+werden, da es sonst zu Overfitting (siehe Sektion \refbox{sec:overfitting}) kommen kann.
+Der Gradienten eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber approximiert den Gradienten des gesamten Datensatzes genügend gut.
 Sowohl die Mini-Batch Grösse, wie auch die Anzahl Epochen sind weitere Hyperparameter.
 \para{}
 Die partiellen Ableitungen der gesamten Trainingsdaten werden mit dem
@@ -284,7 +284,7 @@ arithmetischen Mittel der partiellen Ableitungen eines Mini-Batches der Grösse 
   \partderiv{\bar{C}}{\param_k} \approx \frac{1}{q}\sum_{i=1}^{q} \partderiv{C_i}{\param_k}
 \end{equation}
 \\
-Eine Iteration des Stochastischen Gradientenverfahrens wird analog zu Gleichung (\ref{eq:gd_ml}) folgendermassen durchgeführt.
+Eine Iteration des Stochastischen Gradientenverfahrens wird analog zu Gleichung \refbox{eq:gd_ml} folgendermassen durchgeführt.
 \\
 \begin{equation}\label{eq:sgd}
   \param_{k,t+1} = \param_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \partderiv{C_i}{\param_{k,t}}
@@ -305,6 +305,7 @@ sogar divergiert. Bei Divergenz werden die Kosten im Verlaufe des Training immer
 grösser.
 Dies kann verschiedene Gründe haben. Einige davon können sein:
 \begin{itemize}
+\item{zu grosse Lernrate $\eta$}
 \item{zu wenig Trainingsdaten}
 \item{zu schwache Korrelation zwischen Inputs und Labels}
 \item{falsche Hyperparameter}
@@ -340,7 +341,7 @@ anderen Testdatensatz $\set{T}$ liefern, welchen es nicht auswendig lernen konnt
 \para{}
 Somit kann Overfitting folgendermassen definiert werden: Eine
 Hypothesenfunktion $h$ overfittet dann, wenn eine alternative Hypothesenfunktion
-$h'$ exisitert, für welche die Kosten bezüglich dem Trainingsdatensatz
+$h'$ existiert, für welche die Kosten bezüglich dem Trainingsdatensatz
 grösser sind $\bar{C}_{h'}(\set{X}) > \bar{C}_h(\set{X})$, jedoch die Kosten
 für Testdatensatz kleiner sind $\bar{C}_{h'}(\set{T}) < \bar{C}_h(\set{T})$.
 \para{}
@@ -379,7 +380,7 @@ Man bezeichnet diesen Bereich des Maschinellen Lernens auch als \keyword{Deep
 \para{}
 Künstliche Neuronale Netze sind vor allem biologisch durch Nervensystemen von
 Lebewesen inspiriert.
-Sie sind aber lediglich eine Abstraktion dieser Informationverarbeitung und
+Sie sind aber lediglich eine Abstraktion dieser Informationsverarbeitung und
 versuchen nicht eine möglichst genaue biologische Abbildung zu kopieren.
 Es gibt nicht nur eine Art von Neuronalem Netz, sondern es existieren die
 verschiedensten Architekturen, welche je nach Problemstellung ausgewählt werden
@@ -412,11 +413,11 @@ Zusätzlich besitzt das Perzeptron einen \keyword{Schwellenwert} $\tilde{b}$.
 Zusammen mit den Gewichten, bilden sie die Modellparameter.
 Das Perzeptron verhält sich so, dass, falls die gewichtete Summe $\tilde{z}$ grösser als der
 Schwellenwert $\tilde{b}$ ist, das Neuron feuert, d.h.\ der Output 1 beträgt.
-Andernfalls ist er 0 (siehe erster Teil der Hypothesenfunktion $h$ in Gleichung (\ref{eq:perzeptron_1})).
+Andernfalls ist er 0 (siehe erster Teil der Hypothesenfunktion $h$ in Gleichung \refbox{eq:perzeptron_1}).
 Es ist gängig, die Ungleichung der Bedingung in die Nullstellenform zu bringen
 und $\tilde{b}$ durch die \keyword{Neigung} (engl.:\ bias)
 $b = -\tilde{b}$ zu ersetzten. Somit lautet die Ungleichung: $\tilde{z} + b
-> 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. (\ref{eq:perzeptron_1})).
+> 0$. Der neue Term $\tilde{z} + b$ wird mit $z$ bezeichnet (siehe Rest der Gl. \refbox{eq:perzeptron_1}).
 Die Neigung gibt an, wie stark das Neuron dazu neigt zu feuern.\\
 
 \begin{equation}\label{eq:perzeptron_1}
@@ -455,7 +456,7 @@ Die Neigung gibt an, wie stark das Neuron dazu neigt zu feuern.\\
 Für das Trainieren des Perzeptrons existieren spezielle Verfahren, welche hier
 aber nicht weiter beleuchtet werden sollen. Dies aus dem Grund, weil das
 Gradientenverfahren hier nicht verwendet werden kann.
-Der Grund dafür soll später in Sektion (\ref{sec:künstlicheNeuronen}) erläutert werden.
+Der Grund dafür soll später in Sektion \refbox{sec:künstlicheNeuronen} erläutert werden.
 \para{}
 \cite{wiki:perzeptron}
 \cite{Nielsen}
@@ -474,8 +475,8 @@ Jedoch müssen diese Klassen linear separierbar sein.
 Lineare Separierbarkeit bedeutet, dass alle Featurevektoren $\vec{x}_1,\ldots,\vec{x}_p \in \set{R}^m$
 innerhalb ihres Vektorraums $\set{R}^m$ durch eine Hyperebene in ihre Klassen aufteilbar sein müssen.
 Falls das Perzeptron zwei Inputs besitzt, bedeutet dies, dass die Ortsvektoren
-durch eine Gerade voneinander trennenbar sein müssen (siehe Abb.
-(\ref{fig:linearer_Klassifikator})). \\
+durch eine Gerade voneinander trennbar sein müssen (siehe Abb.
+\refbox{fig:linearer_Klassifikator}). \\
 Falls die Features nicht linear separierbar sind,
 kann das Perzeptron die Klassifizierung nicht erlernen.
 \\
@@ -499,7 +500,7 @@ besonders gut als Baustein für KNNs eignet.
 \subsection{Künstliche Neuronen im Allgemeinen}
 Künstliche Neuronen sind immer so aufgebaut, dass sie einen oder mehrere Inputs
 und nur einen einzigen Output besitzen. Zu jedem Input $x_i$ ist ein Gewicht
-$w_{i}$ assoziert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
+$w_{i}$ assoziiert. Zuerst wird die gewichtete Summe der Inputs $\tilde{z}$ gebildet.
 Die Neigung $b$ wird ebenfalls dazu addiert, um $z$ zu erhalten. Nun muss
 die sogenannte \keyword{Aktivierung} $a$ gebildet werden. Sie ist der Output des Neurons.
 Die Aktivierung $a = \varphi(z)$ ist das Resultat der
@@ -531,7 +532,7 @@ Ein wesentlicher Unterschied des Perzeptrons gegenüber sonstigen künstlichen
 Neuronen, besteht darin, dass seine Inputs und Outputs nur binäre Werte
 annehmen können. Um dieses Verhalten des Perzeptrons zu erhalten,
 muss eine Stufenfunktion als Aktivierungfunktion verwendet werden: die Heaviside-Funktion $\Theta$.
-Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref{fig:heaviside})).
+Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. \refbox{fig:heaviside}).
 \\
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
@@ -573,7 +574,7 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. (\ref
 \cite{wiki:perzeptron}
 
 
-\subsection{ReLU Neuronen}\label{sec:ReLU}
+\subsection{ReLU-Neuronen}\label{sec:ReLU}
 Der nächste Schritt nach einer Stufenfunktion als Aktivierungsfunktion, sind
 lineare Aktivierungsfunktionen. Für diese können die Inputs nun beliebige reelle
 Zahlen sein.
@@ -582,12 +583,12 @@ Dies ist dadurch begründet, dass eine Verkettung von linearen Neuronen
 immer auf eine einzige lineare Funktion reduziert werden kann. Somit hat
 die Verkettung keinen Mehrwert.
 \para{}
-Stattdessen verwendet man sogenannte ReLU Neuronen. Sie benutzen die
+Stattdessen verwendet man sogenannte ReLU-Neuronen. Sie benutzen die
 \keyword{Rectified Linear Unit} (\keyword{ReLU}) als Aktivierungsfunktion.
 Diese ist eine
-nur teilweise lineare Aktiverungsfunktion. Die Werte grösser als 0 werden
-auf sich selbst linear abbgebildet und die Werte kleiner als 0 werden auf 0
-abbgebildet (siehe Abb. (\ref{fig:relu})).
+nur teilweise lineare Aktivierungsfunktion. Die Werte grösser als 0 werden
+auf sich selbst linear abgebildet und die Werte kleiner als 0 werden auf 0
+abgebildet (siehe Abb. \refbox{fig:relu}).
 Eine sehr wichtige Eigenschaft der ReLU-Funktion ist, dass sie - im Gegensatz zu den vorhin
 Heaviside-Funktion $\Theta$ - fast überall differenzierbar%
 \footnote{%
@@ -600,14 +601,14 @@ und strikt monoton
 steigend ist. Erst für diese Aktivierungsfunktion kann das Gradientenverfahren
 angewendet und somit das KNN trainiert werden.
 \para{}
-Da die ReLU-Funktion nur teilweise linear ist, gehört sie genaugenommen den
-nicht-linearen Aktiverungsfunktionen an. Diese Nicht-Linearität erlaubt es dem
+Da die ReLU-Funktion nur teilweise linear ist, gehört sie genau genommen den
+nicht-linearen Aktivierungsfunktionen an. Diese Nicht-Linearität erlaubt es dem
 Neuron, deutlich komplexere Systeme zu modellieren bzw. deutlich komplexere
-Probleme zu lösen. In Sektion (\ref{sec:UAT}) wird dargelegt, dass
-eine Kompostion von nicht-linearen Neuronen jede beliebige Funktion approximieren kann.
+Probleme zu lösen. In Sektion \refbox{sec:UAT} wird dargelegt, dass
+eine Komposition von nicht-linearen Neuronen jede beliebige Funktion approximieren kann.
 \para{}
 Das ReLU-Neuron werden wir an dieser Stelle zur Seite legen und erst wieder in
-Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung wieder betrachten.
+Kapitel \refbox{sec:CNN} im Zusammenhang mit KNNs zur Bilderkennung wieder betrachten.
 \para{}
 \begin{figure}[h!]
   \begin{minipage}[h!]{0.5\textwidth}
@@ -650,7 +651,7 @@ Kapitel (\ref{sec:CNN}) im Zusammenhang mit KNNs zur Bilderkennung wieder betrac
 \cite{wiki:kuenstliches_neuron}
 \cite{Nielsen}
 
-\subsection{Sigmoid Neuronen}
+\subsection{Sigmoid-Neuronen}
 Ein weiteres nicht-lineares Neuron sind sogenannte Sigmoid-Neuronen.
 Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$.
 \para{}
@@ -663,7 +664,7 @@ modellieren kann. (QUELLE)
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
 zwei Asymptoten, eine $\ds\lim_{x \to -\infty} \sigma(x)=0$
 und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
-(\ref{fig:sigmoid})). Desweiteren zeichnet sie sich durch eine vergleichsweise
+\refbox{fig:sigmoid}). Desweiteren zeichnet sie sich durch eine vergleichsweise
 einfache Ableitung aus.
 \\
 \begin{figure}[h!]
@@ -701,7 +702,7 @@ einfache Ableitung aus.
 
 
 \section{Topologie der Künstlichen Neuronalen Netze}
-Nun sollen die Sigmoiden-Neuronen als Bausteine für Künstliche
+Nun sollen die Sigmoid-Neuronen als Bausteine für Künstliche
 Neuronale Netze Verwendung finden. Dazu werden sie miteinander verbunden und bilden so ein Netz,
 ähnlich wie ein Nervensystem.
 \para{}
@@ -720,11 +721,11 @@ der Zwischenschichten, wie auch
 die Anzahl der Neuronen pro Schicht.
 \para{}
 Jedes Neuron aus einer Schicht ist mit jedem Neuron aus der nächsten Schicht über
-Verbindungen gekoppelt. Alle Verbindungen besitzten ein Gewicht analog zu den Inputs des
+Verbindungen gekoppelt. Alle Verbindungen besitzen ein Gewicht analog zu den Inputs des
 Perzeptrons. Die Aktivierung, also der Output, eines Neurons wandert entlang den jeweiligen
 Verbindungen zu allen Neuronen der nächsten Schicht und dienen als deren Input.
 \para{}
-In Abbildung (\ref{fig:nn_layers}) ist ein Beispiel eines Neuronalen Netzes
+In Abbildung \refbox{fig:nn_layers} ist ein Beispiel eines Neuronalen Netzes
 abgebildet. In diesem Fall besitzt es sowohl 4 Inputs, als auch 4 Outputs. Es hat
 ausserdem 3 Zwischenschichten. Die erste und die dritte haben jeweils 3 Neuronen
 und die zweite besitzt 4 Neuronen. \\
@@ -746,7 +747,7 @@ Beispiel ein Netzwerk zur Gesichtserkennung trainieren, könnte man sich den
 Erkennungsprozess folgendermassen vorstellen: Die erste Zwischenschicht erkennt
 Kanten und Konturen. Die zweite vereint diese Merkmale zu Ecken und primitiven
 geometrischen Formen. Die dritte Schichte sollte dann schon komplexere
-geometrische Formen erkennen, welche gewissen Gesichtmerkmalen, wie der Nase,
+geometrische Formen erkennen, welche gewissen Gesichtsmerkmalen, wie der Nase,
 ähneln.
 Die letzten Schichten soll dann alle diese
 Merkmale zusammensetzen und so ein Gesicht als Ganzes erkennen.
@@ -757,7 +758,7 @@ des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte wird
 \keyword{Vorwärtspropagierung} genannt. Dieses Verfahren gibt dieser Art von KNN auch den
 Namen: Feedforward Neural Network. Für das Verständnis müssen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden. Es sollten vor allem noch
-Abbildungen (\ref{fig:nomenklatur1}) und (\ref{fig:nomenklatur2}) zum
+Abbildungen \refbox{fig:nomenklatur1}) und (\ref{fig:nomenklatur2} zum
 Verständnis der Nomenklatur studiert werden.
 \begin{itemize}
 \item{$l$ ist der Index einer Schicht. Die Indexierung beginnt bei 0.}
@@ -782,8 +783,8 @@ Verständnis der Nomenklatur studiert werden.
     \footnote{
       Man beachte die Reihenfolge!\\
       Diese Konvention scheint zwar auf den ersten Blick unintuitiv, macht jedoch
-      Sinn für die Matrixindezierung.
-      (\ref{sec:backpropagation}).
+      Sinn für die Matrixindexierung.
+      \refbox{sec:backpropagation}.
     }
   }
 \item{$\varphi$ ist die gewählte Aktivierungsfunktion (diese ist immer eine
@@ -818,14 +819,14 @@ einen Inputwert in sich tragen. Diese Werte werden, um für eine kohärente Nome
 analog zu den Aktivierungen der anderen Neuronen mit $a_j^0$ bezeichnet, wobei
 $j$ der Index des Neurons ist. \\
 Nun müssen die restlichen Aktivierungen der Neuronen bis und mit den Ouputneuronen berechnet werden. Dies geschieht rekursiv anhand der
-Aktivierungen der voherigen Schicht und zwar folgendermassen (ersichtlich in
-Gleichung (\ref{eq:gewichtete_summe_normal})).
+Aktivierungen der vorherigen Schicht und zwar folgendermassen (ersichtlich in
+Gleichung \refbox{eq:gewichtete_summe_normal}).
 \para{}
-Zuerst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetztigen Schicht
+Zuerst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetzigen Schicht
 $l$. Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l}$ mit den
-assozierten Gewichten $w_{j,k}^l$ gebildet. Hierbei ist das Gewicht jenes, welches das
+assoziierten Gewichten $w_{j,k}^l$ gebildet. Hierbei ist das Gewicht jenes, welches das
 $k$-te Neuron der $l$-ten Schicht mit dem $j$-ten Neuron der ($l+1$)-ten Schicht
-verbindet (siehe Abb. (\ref{fig:nomenklatur2})).
+verbindet (siehe Abb. \refbox{fig:nomenklatur2}).
 Zusätzlich gehört zu der gewichteten Summe auch die jeweilige Neigung $b_j^l$, welche
 dazu addiert wird. Diese gewichtete Summe wird mit $z_j^{l+1}$ bezeichnet.
 \\
@@ -852,7 +853,7 @@ Ausserdem besteht ein weiterer Vorteil darin, dass Computer mithilfe von Vektor-
 und Matrixoperationen die Berechnungen parallelisieren können und in kürzerer
 Zeit und mit weniger Ressourcen viele Berechnungen gleichzeitig ausführen können.
 Dies beschleunigt das Training der Modelle um
-ein Vielfaches. Später in Sektion (\ref{sec:tensorflow}) wird dies nochmals thematisiert.
+ein Vielfaches. Später in Sektion \refbox{sec:tensorflow} wird dies nochmals thematisiert.
 \para{}
 Die Inputs $\vec{x}$, Vorhersagen $\vec{y}$ und Labels $\vec{\hat{y}}$ wurden
 bereits zu Beginn als Vektoren geschrieben.
@@ -886,7 +887,7 @@ dem Neuron $n_j^{l+1}$.
   \end{pmatrix}
 \end{equation*}
 \\
-Mit diesen Definitionen kann Gleichung (\ref{eq:gewichtete_summe_normal}) in
+Mit diesen Definitionen kann Gleichung \refbox{eq:gewichtete_summe_normal} in
 Matrixform geschrieben werden. Dies, weil die Matrixmultiplikation von $\mat{W}^l$ mit
 $\vec{a}^{l}$ einen Vektor $\vec{\tilde{z}}^{l+1}$ ergibt, welcher alle gewichteten
 Summen $\tilde{z}_j^{l+1}$ ohne die jeweilige Neigung enthält.
@@ -896,7 +897,7 @@ Summen $\tilde{z}_j^{l+1}$ ohne die jeweilige Neigung enthält.
 \end{equation*}
 \\
 Nun muss noch der Neigungsvektor $\vec{b}^l$ dazu addiert werden, damit die
-Gleichung (\ref{eq:gewichtete_summe_matrix}) ensteht, mit welcher der
+Gleichung \refbox{eq:gewichtete_summe_matrix} entsteht, mit welcher der
 Vektor der gewichteten Summen $\vec{z}^{l+1}$ gebildet werden kann.
 \\
 \begin{equation}\tag{FP1a}\label{eq:gewichtete_summe_matrix}
@@ -942,7 +943,7 @@ Initialisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
 Dies ist ein sehr essentieller Schritt, da diese Initialwerte die
 Leistungsfähigkeit des Modells erheblich beinflussen.
 \para{}
-Wie in Sektion (\ref{sec:gradientenverfahren}) gezeigt, muss am Anfang des
+Wie in Sektion \refbox{sec:gradientenverfahren} gezeigt, muss am Anfang des
 Gradientenverfahrens ein Startpunkt $\vec{\param}_{t=0} = \trans{\begin{pmatrix}
     \param_1 & \cdots & \param_k \end{pmatrix}}$ innerhalb des Gradientenfeldes
 $\vecf{\nabla}C$ gewählt werden, von welchem aus der Gradientenabstieg beginnt.
@@ -952,7 +953,7 @@ schlechte Initialwerte gewählt wurden, konvergiert der Punkt in ein hohes lokal
 Minimum, was grosse Kostenfunktionswerte und schlechte Vorhersagen verursacht.
 \para{}
 Es ist nicht möglich im Vorhinein zu wissen, welche Initialwerte gute Resultate
-liefern. Es müssen verschiedene Werte ausprobiert werden. Dafür initialisert man gängierweise die
+liefern. Es müssen verschiedene Werte ausprobiert werden. Dafür initialisiert man gängigerweise die
 Hyperparameter mit Zufallswerten. Zu diesem Zweck werden nicht irgendwelche
 Zufallsvariablen verwendet, sondern es gelangt die Gauss'sche Normalverteilung
 $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion zur Anwendung.
@@ -967,11 +968,11 @@ $\mathcal{N}(\mu,\sigma^2)$ bzw. ihre Dichtefunktion zur Anwendung.
 In den Anfängen des Maschinellen Lernens wurde häufig die normierte
 Normalverteilung verwendet. Jedoch hatte dies zur Konsequenz, dass mit jeder Schicht die
 Outputs eine stetig grösser werdende Standardabweichung $\sigma$ aufwiesen.
-In der Konsequenz verlansamte sich der Lernprozess ohne nahe genug am lokalen
+In der Konsequenz verlangsamt sich der Lernprozess ohne nahe genug am lokalen
 Minimum zu sein. Dies wird auch als Saturierung der Neuronen bezeichnet (FUSSNOTE?).
 \para{}
-In der Konsequenz wurde eine neue Technik entwickelt: die Glorot-Initalisierung
-(auch Xavier-Initalisierung genannt). Dabei gelangt erneut eine Normalverteilung
+In der Konsequenz wurde eine neue Technik entwickelt: die Glorot-Initialisierung
+(auch Xavier-Initialisierung genannt). Dabei gelangt erneut eine Normalverteilung
 mit Erwartungswert $\mu = 0$ zur Anwendung. Die Standardabweichung $\sigma$ wird
 anhand der Grösse einer Schicht skaliert.
 Für eine Schicht $l$ wird der Durchschnitt zwischen der Anzahl Inputs
@@ -983,7 +984,7 @@ Die Gewichte werden folgendermassen initialisert:
 \end{equation}
 Durch dieses Verfahren bleibt die Varianz innerhalb einer Schicht erhalten.
 Teilweise wird diese Verfahren auch für die Neigungen $b$ angewendet. Eine
-andere Möglichkeit besteht in der Initalisierung der Neigungen mit 0, wie Keras
+andere Möglichkeit besteht in der Initialisierung der Neigungen mit 0, wie Keras
 das etwa auch macht.
 \begin{equation}
   b_{t=0}^l = 0
@@ -1003,7 +1004,7 @@ Anders gesagt müssen alle Terme
 $\ds\partderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ds\partderiv{C}{b_k^l}$,
 bestimmt werden.
 Das Verfahren zur Ermittlung dieser Ausdrücke ist so spezifisch und aufwendig,
-dass das SGD für KNNs einen eigenen Namen besitzt: die sogennante
+dass das SGD für KNNs einen eigenen Namen besitzt: die sogenannte
 \keyword{Rückwärtspropagierung} (engl.: backpropagation, auch
 Fehlerrückführung). \\
 Für das Verständnis von ML ist es nicht essentiell, die Rückwärtspropagierung zu
@@ -1014,7 +1015,7 @@ rückwärts durch das Modell zu schicken und dabei die partiellen Ableitungen
 mithilfe der Kettenregel zu bestimmen. Daher hat das Verfahren auch seinen Namen.
 \para{}
 Für eine ausführliche Herleitung ist auf Anhang
-(\ref{sec:anhang_bp}) zu verweisen, in welchem auf das Konzept eines
+\refbox{sec:anhang_bp} zu verweisen, in welchem auf das Konzept eines
 Computational Graphs eingegangen wird.
 
 \section{Universal Approximation Theorem}\label{sec:UAT}
@@ -1045,7 +1046,7 @@ Rahmen dieser Arbeit nicht weiter behandelt.
 \pagebreak
 \chapter{Convolutional Neural Networks}\label{sec:CNN}
 Nachdem in Kapitel zwei das Wesen von Künstlichen Neuronalen Netzen
-charakterisiert wurde, soll es nun in Kapitel drei darum gehen, eine spezfische
+charakterisiert wurde, soll es nun in Kapitel drei darum gehen, eine spezifische
 Architektur einen KNNs, welche sich besonders gut für Bilderverarbeitung eignet,
 zu erklären. Es handelt sich um das Convolutional Neural Network.
 \para{}
@@ -1061,7 +1062,7 @@ Um diesen Umstand zu erklären, wird ein kleines Beispielmodell erläutert:
 Es soll ein KNN entworfen werden, welches eine Photographie danach klassifizieren
 soll, ob ein Hund darauf sichtbar ist oder nicht. Für dieses
 Gedankenexperiment wird ein relativ niedrig aufgelöstes Bild mit $256 \times 256$
-Pixel gewählt (dies entspricht weniger als $0.07$ Megapixel, im Verlgeich dazu, hat ein iPhone XS hat eine Kamera mit
+Pixel gewählt (dies entspricht weniger als $0.07$ Megapixel, im Vergleich dazu, hat ein iPhone XS hat eine Kamera mit
 12 Megapixel). Um die verschiedenen Farben zu codieren, besitzt jeder Pixel drei
 Farbkomponenten: R (rot), G (grün)
 und B (blau). Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
@@ -1069,7 +1070,7 @@ Komponenten. Jede Komponente ist ein Feature, welches das KNN zu verarbeiten hat
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
 nun mit seiner Nachbarsschicht zu verbinden, welche die gleichen Grösse besitzt, werden
 $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich
-viele Gewichte benötigt! Für ein Netwerk ohne eine einzige Zwischenschichten gäbe es
+viele Gewichte benötigt! Für ein Netzwerk ohne eine einzige Zwischenschichten gäbe es
 also über 38 Milliarden Modellparameter zu erlernen! Dass dies nicht realistisch ist,
 liegt wohl auf der Hand.
 \para{}
@@ -1125,7 +1126,7 @@ soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint is
   Tiefe.
   \para{}
   Die Schreibweisen-Konvention für Tensoren 3. Ordnung soll an folgendem
-  Beispieltensor der Form $\set{R}^{3 \times 3 \times 3}$ illustriert werden. \\
+  Beispielstensor der Form $\set{R}^{3 \times 3 \times 3}$ illustriert werden. \\
   \includegraphics[width=0.8\textwidth]{tensor.pdf}
 
 \end{defbox}
@@ -1135,8 +1136,7 @@ Ein Bild kann somit als Tensor dritten Ranges $\ten{B} \in \set{R}^{h
 \times \text{Anzahl Farbkomponenten})$.
 Die Elemente der Matrix nehmen dann die Werte der Pixelkomponenten an.
 Ein schwarz-weisses Bild hat nur eine Komponente, welche die Helligkeit angibt.
-Somit wäre es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$ (siehe
-Abb. (\ref{fig:bildmatrix})).
+Somit wäre es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$.
 \para{}
 \cite{deeplearning.ai:cnn}
 \cite{wiki:tensor}
@@ -1168,12 +1168,12 @@ skalieren. Dies ist sinnvoll, da durch die Extraktion gewisser Features die
 restlichen Features wegfallen. Somit muss weniger Information pro Bild gespeichert
 werden und die Bilder sollten schrumpfen, um Overfitting vorzubeugen. Die Pooling-
 Schichten reduzieren die Bilder und die Upsampling-Schichten erweitern sie.
-Dies wird in Sektion (\ref{sec:autoencoder}) für die Entwicklung von Autoencoder
+Dies wird in Sektion \refbox{sec:autoencoder} für die Entwicklung von Autoencoder
 hilfreich werden. \\
 Grundsätzlich folgt auf eine Convolutional-Schicht entweder eine Pooling-
 oder eine Upsampling-Schicht. Somit bilden sie gewissermassen eine Einheit.
 \para{}
-In Abbildung (\ref{fig:cnn_topology}) ist ein Schema eines CNNs abbgebildet.
+In Abbildung \refbox{fig:cnn_topology} ist ein Schema eines CNNs abgebildet.
 \begin{figure}[h!]
 
   \caption{Schichtung eines CNNs}
@@ -1209,7 +1209,7 @@ $\ten{B}$, welche über alle Pixel wandert, diese manipuliert und so wieder ein 
 $\tilde{\ten{B}}$ erzeugt.
 Mathematisch gesehen handelt es sich bei einem solchen Filter um einen Tensor,
 den sogenannten \keyword{Filtertensor} $\ten{F}$ oder auch Faltungstensor (siehe Abb.
-(\ref{fig:filter2d}) und Abb. (\ref{fig:filter3d})). Solche Filter sind immer quadratisch, wobei ihre
+\refbox{fig:filter2d}) und Abb. (\ref{fig:filter3d}). Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlänge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
 Element, das sogenannte \keyword{Zentralelement} (engl.: center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
@@ -1235,8 +1235,8 @@ Die Elemente können so gewählt werden, dass bei Anwendung des Filters auf
 ein Bild, dieser bestimmte Features hervorhebt. Solche Features
 könnten zum Beispiel Ränder oder Kanten sein, welche akzentuiert werden.
 \para{}
-Nun wird ein beispielshafter Kantendetektionfilter betrachtet. Er besitzt die
-Filtergrösse $f=3$ und seine Einträge lauten folgenermassen:
+Nun wird ein beispielhafter Kantendetektionfilter betrachtet. Er besitzt die
+Filtergrösse $f=3$ und seine Einträge lauten folgendermassen:
 \begin{equation*}
   \mat{F}_K =
   \begin{pmatrix}
@@ -1250,7 +1250,7 @@ Angewendet auf ein schwarz-weisses Bild, wird ein neues Bild erzeugt, bei welche
 Kanten weiss eingefärbt werden und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
-In Abbildung (\ref{fig:sobel_filter}) wurde der erwähnte Kantendetektionfilter auf ein
+In Abbildung \refbox{fig:sobel_filter} wurde der erwähnte Kantendetektionfilter auf ein
 Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
 generierte Bild zu sehen
 \footnote{
@@ -1303,12 +1303,12 @@ stellt dabei einen Hyperparameter dar.
 \end{equation*}
 
 
-\subsection{Filteroperation intutitiv}\label{sec:filteroperation_intuitiv}
+\subsection{Filteroperation intuitiv}\label{sec:filteroperation_intuitiv}
 Wie wendet man nun einen solchen Filter auf ein Bild an? Um das Prozedere einer
 Filteroperation leichter verständlich zu machen, soll es erneut für ein
 graustufiges Bild $\mat{B} \in \set{R}^{h \times w}$ erläutert werden. Zu einem
 später Zeitpunkt wird auch die Anwendung auf farbige
-Bilder erklärt (siehe Sektion (\ref{sec:filteroperation_mathematisch})).
+Bilder erklärt (siehe Sektion \refbox{sec:filteroperation_mathematisch}).
 \para{}
 Bei einer Filteroperation wendet man einen Filter $\ten{W}$ auf einen Bildtensor
 $\ten{B}$ an und erhält so ein neues Bild $\tilde{\ten{B}}$. Man schreibt dafür:
@@ -1321,7 +1321,7 @@ Wie bereits oben erwähnt wandert der Filter über das Bild. Dabei befindet
 sich der Filter immer über einer Region des Bildes, welche gleich gross ist
 wie der Filter selbst (in diesem Fall ($3 \times 3$)). Auf diese entsprechen den Filtermatrixeinträgen immer eindeutig
 Bildmatrixeinträge. Diese Region des Bildes bezeichnet man als das
-\keyword{Rezeptives Feld} des Filters (siehe Abb. (\ref{fig:receptive_field})).
+\keyword{Rezeptives Feld} des Filters (siehe Abb. \refbox{fig:receptive_field}).
 Das Rezeptive Feld, bezeichnet mit $\hat{\mat{B}} \in \set{R}^{3 \times 3}$, ist also eine
 Untermatrix der Obermatrix $\mat{B}$.
 \para{}
@@ -1350,8 +1350,8 @@ gebildet. Daraus resultiert eine neue Matrix $\mat{W} \odot
 \hat{\mat{B}}^{(2,2)} = \mat{P} \in \set{R}^{3 \times 3}$.
 Anschliessend werden alle Elemente der neuen Matrix $\mat{P}$
 aufsummiert. Dieser Wert ist dann der Grauwert des ersten Pixels
-$(\tilde{\mat{B}})_{1,1}$ des neu enstandenen
-Bildes (siehe Gl. (\ref{eq:filter1})). In diesem Sinne stellt der Filter eine
+$(\tilde{\mat{B}})_{1,1}$ des neu entstandenen
+Bildes (siehe Gl. \refbox{eq:filter1}). In diesem Sinne stellt der Filter eine
 Gewichtung der Nachbarspixel des Ursprungsbild dar, welche
 bestimmt, wie die neuen Pixel aussehen.
 \\
@@ -1411,7 +1411,7 @@ Ihre Bedeutung soll auf die Faltung von Filtern beschränkt werden.
 \end{defbox}
 \para{}
 Mithilfe der Faltungsoperation können die Schritte aus Sektion
-(\ref{sec:filteroperation_intuitiv}) zusammengefasst werden.
+\refbox{sec:filteroperation_intuitiv} zusammengefasst werden.
 Bei der Filteroperation handelt es sich nämlich um eine diskrete Faltung des
 Filtertensors $\ten{W}$ über den Bildtensor $\ten{B}$. Somit kann
 folgende Formel verwenden werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neuen Bildes zu berechnen.
@@ -1510,7 +1510,7 @@ einer Schicht, wie auch für die Tiefe des verarbeiteten Bildes.
 \subsection{Padding}
 Wie bereits erwähnt schrumpfen die Bilder (an den Rändern), wenn man einen Filter auf sie anwendet.
 Zur Erinnerung: Dies liegt daran, dass pro Lage des Zentralelements jeweils nur ein Pixel
-des neuen Bildes entsteht. Das Zentralelement kommt jedoch nicht nicht auf allen
+des neuen Bildes entsteht. Das Zentralelement kommt jedoch nicht auf allen
 Ursprungspixeln zu liegen. Auf diese Weise fallen die Ränder weg. Der Umfang des
 Wegfalls hängt von der Filtergrösse $f$ ab. Folgende Formel gilt für die
 neue Grösse $n_1$ des Bildes, berechnet anhand der alten Grösse $n_0$. $n$ bezeichnet
@@ -1521,7 +1521,7 @@ eine der zwei Seitenlängen.
 
 Das Problem hierbei ist, dass nach einigen Faltungen das Bild extrem geschrumpft
 ist und im Grenzfall kleiner als der Filter wird. Das darf natürlich nicht
-passieren. Zusätzlich kommt es zu einem relativen Informationverlust an den
+passieren. Zusätzlich kommt es zu einem relativen Informationsverlust an den
 Rändern, im Vergleich zum Rest des Bildes. Dies rührt daher,
 das es im Innern des Bildes zu mehr Überlappungen der Filterlagen kommt und dies
 bei den Rändern seltener auftritt.
@@ -1538,17 +1538,17 @@ Enden erweitert. Die neuen Elemente werden dabei auf den Wert $0$ gesetzt.
   \caption{Padding $p=1$ in blau}
 \end{figure}
 
-Das Padding $p$ ist eine Zahl, welche angibt, wieviele Elemente an allen Rändern
+Das Padding $p$ ist eine Zahl, welche angibt, wie viele Elemente an allen Rändern
 hinzugefügt werden. Padding $p = 1$ bedeutet, dass an allen Kanten jeweils eine
 Reihe bzw. Spalte hinzugefügt wird.
 Begrifflich unterscheidet man zwischen zwei Arten von Padding:
 \begin{itemize}
-\item{\keyword{Valid-Padding}: Es werden keine züsäzlichen Elemente angebracht. $p$ ist also 0.}
+\item{\keyword{Valid-Padding}: Es werden keine zusätzlichen Elemente angebracht. $p$ ist also 0.}
 \item{\keyword{Same-Padding}: Es werden so viele Reihen und Spalten angebracht, dass
     die Grösse des Bildes nach der Faltung unverändert bleibt.}
 \end{itemize}
 \para{}
-Um Same-Padding durchzuführen, muss $p$ so gewählen werden, dass es den Wegfall durch
+Um Same-Padding durchzuführen, muss $p$ so gewählt werden, dass es den Wegfall durch
 die Filteroperation gerade kompensiert. Da das Bilder durch das Padding der Länge und
 Breite nach jeweils um zwei $p$ verlängert wird, erhält man den Ausdruck $n_1 =
 n_0 - f + 1 + 2p$. Wenn diese Formel nach $p$ auflöst,
@@ -1595,7 +1595,7 @@ eines Bildes hervorzuheben und die restlichen auszublenden. Die gleiche
 Aufgabe erfüllen die Neuronen in einem KNN. Auch sie sollen Features der
 Inputdaten erlernen, wobei gewisse Neuronen auf gewisse Features reagieren.
 Weshalb verwendet man also nicht einfach KNNs? (abgesehen
-von dem Problem mit der grossen Menge an Modellparametern, siehe Sektion \ref{sec:CNN_parameter_problem})
+von dem Problem mit der grossen Menge an Modellparametern, siehe Sektion \refbox{sec:CNN_parameter_problem})
 \para{}
 Man muss erkennen, dass Bilddaten sich deutlich von sonstigen Daten unterscheiden.
 Bildfeatures bzw. Pixel sind nur im Kontext ihrer Nachbarn relevant. Denn
@@ -1673,7 +1673,7 @@ Die Faltung berechnet sich aus folgender Gleichung:
 Jede dieser Matrizen ist ein Querschnitt $\tilde{\mat{A}}^l_{:,:,i}$ entlang der
 Tiefe des neuen 3D-Tensors $\tilde{\ten{A}}^l \in \set{R}^{h^{l+1} \times w^{l+1} \times c^l}$.
 Hierbei ist die Tiefe $c^l$ gerade die Anzahl der Filter $c^l$. Die Höhe
-$h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils gemäss nachstender Formel berechnet,
+$h^{l+1}$ und die Breite $w^{l+1}$ werden jeweils gemäss nachstehender Formel berechnet,
 anhand der Höhe $h^l$ und der Breite $w^l$ des Ausgangsbildes:
 \\
 \begin{equation}
@@ -1686,7 +1686,7 @@ lösen zu können.
 Deshalb wird in einem letzten Schritt die vektorisierte Aktivierungsfunktion
 $\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ angewendet. So ergibt sich die
 neue Aktiverung $\ten{A}^{l+1}$ der nächsten Schicht. Empirisch lässt sich nachweisen,
-dass sich für CNNs die ReLU-Aktivierungsfunktion aus Sektion (\ref{sec:ReLU}) besser eignet als die
+dass sich für CNNs die ReLU-Aktivierungsfunktion aus Sektion \refbox{sec:ReLU} besser eignet als die
 Sigmoidfunktion (QUELLE). Deshalb wird in der Regel die ReLU-Funktion für CNNs verwendet.
 \begin{equation}
   \ten{A}^{l+1} = \vecf{\varphi}[\tilde{\ten{A}}^l]
@@ -1703,8 +1703,8 @@ die relevanten Features hervorgehoben werden und der Rest verworfen wird. Jedoch
 schrumpft das Bild entweder gar nicht (bei Same-Padding) oder es schrumpft nur
 vergleichsweise leicht (bei Valid-Padding). Dies ist ein Problem, da die Information in
 deutlich weniger Pixeln bzw. Tensorelementen codiert werden könnte. In der Konsequenz
-zeigt sich ein unötig hoher Ressourcenverbrauch und eine erhöhte Gefahr für
-Overfitting (siehe Sektion (\ref{sec:overfitting})). Um diesem Effekt
+zeigt sich ein unnötig hoher Ressourcenverbrauch und eine erhöhte Gefahr für
+Overfitting (siehe Sektion \refbox{sec:overfitting}). Um diesem Effekt
 entgegenzuwirken, gibt es einerseits sogenannte
 \keyword{Pooling-Schichten} und als Gegenstück dazu
 \keyword{Upsampling-Schichten}. Ersteres wird verwendet, um die Dimensionalität
@@ -1779,7 +1779,7 @@ Die Upsampling-Schicht bildet das Gegenstück zur Pooling-Schicht, da sie die
 Dimensionalität des Bildes erhöht. Auf den ersten Blick erscheint unklar,
 weshalb man die Dimensionalität erhöhen will, da die eigentliche
 Motivation dieser Schichten in der Verhinderung von Overfitting besteht. Jedoch
-sollte mit dem Kapitel (\ref{sec:autoencoder}) klar werden, weshalb solche Schichten
+sollte mit dem Kapitel \refbox{sec:autoencoder} klar werden, weshalb solche Schichten
 einen Nutzen haben können.
 \para{}
 Man verwendet auch hier wieder den Begriff der Feldgrösse $f^l$. Dieses Mal
@@ -1804,13 +1804,13 @@ Elements an. Der Wert auf diese Weise also vermehrt.
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
 In Kapitel drei wurde die Architektur eines Convolutional Neural Networks dargelegt.
-Nun soll eine weitere Architekur erörtert werden, welche das letzte Bindeglied zur
-praktischen Programmierung eines Convolutional-Denoising-Autoencoder verköpert.
+Nun soll eine weitere Architektur erörtert werden, welche das letzte Bindeglied zur
+praktischen Programmierung eines Convolutional-Denoising-Autoencoder verkörpert.
 Dieses ist notwendig, um die theoretische Funktionsweise eines Autoencoders zu verstehen.
 Zielsetzung ist, den Autoencoder mit dem Convolutional
 Neural Network zu fusionieren, um auf diese Weise einen einen
 Convolutional-Autoencoder zu erhalten. Zu
-guter letzt soll dann noch eine Anwendung eines solchen
+guter Letzt soll dann noch eine Anwendung eines solchen
 Convolutional-Autoencoder betrachtet werden, in der Form eines Denoiser.
 \para{}
 \bigskip
@@ -1859,8 +1859,8 @@ gliedern lassen:
 \item{eine Zwischenschicht mit $p$ Neuonen, bezeichnet als \keyword{Flaschenhals}}
 \item{eine Outputschicht mit $d$ Neuronen}
 \end{itemize}
-In Abbildung (\ref{fig:basic_autoencoder}) ist
-ein beispielhafter Autoencoder abbgebildet, mit $d = 5$ Features und einem
+In Abbildung \refbox{fig:basic_autoencoder} ist
+ein beispielhafter Autoencoder abgebildet, mit $d = 5$ Features und einem
 Flaschenhals der Grösse $p = 2$.
 \begin{figure}[h!]
   \centering
@@ -1880,7 +1880,7 @@ damit die \keyword{Kapazitätsbeschränkung}.
 Damit wurde ein Autoencoder mit nur einer Zwischenschicht betrachtet.
 Gängiger ist jedoch das Netz aus mehreren Zwischenschichten zu konstruieren. Dabei
 werden die Schichten zum Flaschenhals hin immer schmaler und die Schichten nach
-dem Flaschenhals wieder dicker. In Abbildung (\ref{fig:big_autoencoder})
+dem Flaschenhals wieder dicker. In Abbildung \refbox{fig:big_autoencoder}
 ist dies gut ersichtlich.
 Aus Vereinfachungsgründen soll dennoch die Funktionsweise eines Autoencoder mit
 nur einer Zwischenschichten hergeleitet werden.
@@ -2070,7 +2070,7 @@ Diese Frameworks habe eine Implementation für ML-Algorithmen realisiert.
 \bigskip
 
 \section{TensorFlow}\label{sec:tensorflow}
-\begin{wrapfigure}{l}{2.5cm}
+\begin{wrapfigure}{L}{2.5cm}
   \includegraphics[width=2.5cm]{tf_logo.png}
   \caption{TF-Logo}
 \end{wrapfigure}
@@ -2085,9 +2085,9 @@ zu trainieren und auszuführen. Somit ist TF gegenüber selbstgeschriebenen
 Implementationen zu bevorzugen.
 TF ist gratis und ein Open-Source-Projekt. Es kann auf Github gefunden werden
 (siehe QR-Code).
-\para{}
-\qrcode[height=2cm]{https://github.com/tensorflow/tensorflow}
-\para{}
+\begin{wrapfigure}{L}{2cm}
+  \qrcode[height=2cm]{https://github.com/tensorflow/tensorflow}
+\end{wrapfigure}
 In der Industrie ist TensorFlow gut etabliert und weit verbreitet. Es wird von
 vielen Grossunternehmen des Internets für ihre Produkte verwenden. Einige dieser
 Firmen sind: Google, Twitter, AirBnB, Intel, CocaCola, Snapchat und noch viele mehr.
@@ -2109,10 +2109,10 @@ wird. Somit wird nur teilweise direkt mit TF gearbeitet. Trotzdem ist es hilfrei
 grobes Verständniss über TF zu besitzen, um die Funktionsweise zu verstehen.
 \para{}
 Die wichtige Resource um TensorFlow zu lernen ist wohl die offizielle TensorFlow
-Website. Dort findet man auch die Dokumentation.
-\para{}
-\qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
-
+Website. Dort findet man auch die Dokumentation. QR CODE
+% \begin{wrapfigure}{L}{2cm}
+%   \qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
+% \end{wrapfigure}
 \para{}
 \cite{book:tensorflow}
 \cite{net:tf_docs}
@@ -2157,7 +2157,7 @@ ausführbar) ist und dadurch die Trainingszeit für die Modelle relativ
 kurz haltet. Dies wurde durch verschieden Designentscheidungen von TF erreicht.
 \para{}
 Falls der Leser am Verständniss dieser Entscheide interessiert ist und an der
-eigentlichen Implemention von TF (dem Master) kann er im Anhang (\ref{sec:anhang_tf}) dazu
+eigentlichen Implemention von TF (dem Master) kann er im Anhang \refbox{sec:anhang_tf} dazu
 Informationen finden.
 
 \subsection{Graph}
@@ -2165,13 +2165,13 @@ TensorFlow ist datenstromorientiert. Das bedeutet, dass eine Berechnung
 durch einen gerichteten Graphen beschrieben wird. Zuerst wird solch ein Graph
 aufgestellt und es werden ihm Knoten und Pfade hinzugefügt. Erst nach der Definition wird er dann ausgeführt.
 Es handelt sich dabei um einen \keyword{Computation Graph}, welcher schon in
-Anhang (\ref{sec:anhang_bp}) erwähnt wurde.
+Anhang \refbox{sec:anhang_bp} erwähnt wurde.
 In TensorFlow wird dieser als einen \keycode{Graph} bezeichnet.
 \para{}
 Dieser Graph führt eine Datenstrom-Berechnung aus.
 Er besteht aus einer Menge an Knoten, welche miteinander über Pfade
 verbunden sind. Die Knoten beinhalten Zahlenwerte, welche über die Pfade
-verrechnet und so auf den nächsten Knoten abbgebildet werden.
+verrechnet und so auf den nächsten Knoten abgebildet werden.
 Die Pfade sind also die Operationen, welche auf die Werte
 angewandt werden. Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
 Der Graph zeichnet sich bei der Erstellung nur durch seine Operationen aus.
@@ -2186,18 +2186,18 @@ ihm stellt die Vorwärtspropagierung dar.
 
 \subsubsection{Knoten und Tensoren}
 Die zentrale Dateneinheit in TensorFlow sind Tensoren, welche bereits in Sektion
-(\ref{sec:tensor}) präsentiert wurden. Auch die Knoten des Graphen
+\refbox{sec:tensor} präsentiert wurden. Auch die Knoten des Graphen
 repräsentieren Tensoren. Die meisten jedoch enthalten keine festen Zahlenwerte,
 sondern werden erst bei der der Ausführung des Graphen befüllt. Danach können
 die Werte ausgelesen werden. \para{} Die Tensoren erlauben es den Daten
 innerhalb des Graphen belibige Dimensionaltäten und Formen anzunehmen. Es können
 sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren dritter Stufe)
 verrechnet werden. Aus diesem Grund war es auch sinnvoll in Sektion
-(\ref{sec:forward}) und im Anhang (\ref{sec:anhang_bp}) die Gleichungen in
+\refbox{sec:forward}) und im Anhang (\ref{sec:anhang_bp} die Gleichungen in
 Matrixform herzuleiten. \para{} In Tensorflow bezeichnet man einen Tensor mit
 \keycode{Tensor}. Er ist definiert durch seine Form und den Datentyp seiner
 Elemente. \para{} Fast alle Tensoren sind mit einer einzigen Graph-Ausführung
-assoziert. Sie besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird
+assoziiert. Sie besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wird
 er verworfen. Man sagt die Tensoren sind ``immutable'', da die Werte nicht
 erhalten bleiben und so nicht modifiziert werden können. \para{} Die soeben
 beschriebene Tensoren agieren einfach als Durchflussstellen innerhalb des
@@ -2213,7 +2213,7 @@ Graphenausführungen erhalten und können beispielsweise beim Training modifizie
 
 \subsubsection{Pfade und Operationen}
 Die Knoten des Graphen werden über die Pfade aufeinander
-abbgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
+abgebildet. Die Operationen, welche sie aufeinander abbildet, bezeichnet man
 als \keycode{Operation}. Eine Operation besitzt jeweils einen Namen und repräsentiert eine
 abstrakte Berechnung. Sie hat jeweils null oder mehr Tensor-Objekte als
 Input, wie auch als Output.
@@ -2225,7 +2225,7 @@ ausführt. Das Resultat kann dann in einer neuen Knotenvariable
 \mintinline{python}{c} gespeichert werden.
 \para{}
 Um den eigentlichen Graphen zu definieren, werden zu Beginn einige Inputknoten
-definiert. Diese werden dann durch die vordefinierten Operationen abbgebildet.
+definiert. Diese werden dann durch die vordefinierten Operationen abgebildet.
 Deren Resultate kann man dann erneut weiter verrechnen, bis der gewünschte Graph entsteht.
 
 \subsection{Ausführungen}
@@ -2256,8 +2256,7 @@ werden. Wir werden nur den Mittleren-Quadratischen-Fehler als Kostenfunktion ver
 \para{}
 Der Grund weshalb Computational Graphs für TensorFlow gewählt wurden, ist die
 einfache Bestimmung der Ableitungen der Variabeln innerhalb des Graphen, um die
-Optimierung vorzunehmen. Dieses Vorgehen wird in Sektion (\ref{sec:anhang_bp})
-ausführlich erklärt.
+Dieses Vorgehen wird in Sektion \refbox{sec:anhang_bp} ausführlich erklärt.
 
 \subsection{Tensorboard}
 TensorBoard ist ein externes Zusatzprogramm zu TensorFlow. Mit dessen Hilfe
@@ -2347,13 +2346,13 @@ die erste und die letzte Schicht als Argumenete erwartet.
 Wir werden nun im folgenden die verschiedenen Schichttypen von Keras durchgehen, welche wir in
 der Theorie schon vorgestellt haben.
 \para{}
-Noch eine Anmerkung zur Initalisierung der Modellparameter in Keras:
+Noch eine Anmerkung zur Initialisierung der Modellparameter in Keras:
 Keras benutzt standardmässig ein
-anderes Vorgehen zur Initalisierung als in der Theorie in Sektion
-\ref{sec:parameter_initalisieren} erklärt.
-Es benutzt nämlich eine Glorot-Initalisierung mit einer Uniformen Verteilung.
+anderes Vorgehen zur Initialisierung als in der Theorie in Sektion
+\refbox{sec:parameter_initalisieren} erklärt.
+Es benutzt nämlich eine Glorot-Initialisierung mit einer Uniformen Verteilung.
 Wir werden deshalb explizit spezifizieren, dass wir die in der Theorie erklärte
-Variante der Glorot-Initalisierung mit einer Normalverteilung verwenden möchten.
+Variante der Glorot-Initialisierung mit einer Normalverteilung verwenden möchten.
 \para{}
 
 \cite{net:keras_init}
@@ -2373,11 +2372,12 @@ der Theorie erklärt, die Schicht, welche aus Neuronen besteht und ``dicht'' zu 
 Neuron der nächsten Schicht verbunden ist.
 Als Argumente erwartet die Schicht die Anzahl Neuronen, aus welcher sie besteht,
 wie die Aktivierungsfunktion und die vorherige Schicht. Wie vorhin erwähnt
-überschreiben wir den Standard-Initalisierer mit dem \code{'glorot_normal'}-Initalisierer.
+überschreiben wir den Standard-Initalisierer mit dem \code{'glorot\_normal'}-Initalisierer.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   tf.keras.layers.Dense(<#Neuronen>,
   activation=<Aktivierungsfunktion>)(<vorherige Schicht>, kernel_initalizer='glorot_normal')
 \end{minted}
+
 
 \paragraph{Conv2D-Schicht}
 Die Convolutional-Schicht eines CNNs wird in Keras mit \keycode{Conv2D}
@@ -2709,7 +2709,7 @@ Ausserdem ist der Plot als schwarz-weiss Grafik zu spezifizieren.
   plt.show()
 \end{minted}
 
-Das Ergebniss ist in Abbildung (\ref{fig:noisy_clean_mnist}) sichtbar.
+Das Ergebniss ist in Abbildung \refbox{fig:noisy_clean_mnist} sichtbar.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{noised.png}
@@ -2743,7 +2743,7 @@ ein Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
 Da Keras standardmässig die Initialisierung der Modellparameter mit einer
 Uniformen Verteilung vornimmt, muss der \code{kernel\_initalizer} explizit auf
 \code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initalisation gleich
-wie in Sektion \ref{sec:parameter_initalisieren} statt. \\
+wie in Sektion \refbox{sec:parameter_initalisieren} statt. \\
 Der Code für die Defition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3),
@@ -3054,22 +3054,41 @@ Modelle mit den angegebenen Hyperparametern, die besten Resultate liefern:
   \caption{Rangliste der besten Modelle mit ihren Eigenschaften}
 \end{table}
 \para{}
+Nun wird das Modell mit den optimalen Hyperparametern
+nochmals für 100 Epochen trainiert, um danach nochmals Bilder zu entrauschen.
+Diesmal stellen wir den \code{noise\_factor} bei der Generierung des Rauschen
+auf 1. Die Ergebnisse sind in Abbildung zu sehen.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{denoised.png}
+  \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
+\end{figure}
 
 
 \subsection{Diskussion des Modells}
 Nun soll das entwickelte Modell diskutiert werden bezüglich seiner Leistung und
 seinem Verhalten.
+
+\subsubsection{Leistung des Modells}
+Grundsätzlich ist das Modell ziemlich gut. Es ist in der Lage ein stark
+verrauschtes Bild, welches für einen Menschen schwer entzifferbar ist,
+vollständig von seinem Rauschen zu befreien.
+
 \subsubsection{Hyperparameter Ergebnisse}
 Die Ergebnisse bei der Auswertung mit TensorBoard stimmen ziemlich gut mit den
-Erwartungne überein. Wie bereits in der Theorie geäussert, liefert die
-ReLU-Aktivierungsfunktion bessere Ergebnisse in CNNs als die Simgmoidfunktion.
+Erwartungen überein. Wie bereits in der Theorie geäussert, liefert die
+ReLU-Aktivierungsfunktion bessere Ergebnisse in CNNs als die Sigmoidfunktion.
 Deshalb sind die ersten Plätze der Randliste nur mit Modellen, welche die
 ReLU-Funktion verwenden, besetzt. Weiter ist auffallend, dass die besten Modelle
 alle möglichst tiefe Minibatch-Grössen verwenden. Dies ist naheliegend, da eine
 kleine Grösse mit einer höheren Präzesion der Gradientenapproximation
-einhergehen. Somit ist der Gradientenabstieg exakter. Auch eine höhere
-Filteranzahl lässt das Modell bessere Resultate erbringen. Jedoch ist dessen
-Einfluss am geringsten von allen Hyperparametern, welche hier getestet wurden.
+einhergeht. Somit ist der Gradientenabstieg exakter. Jedoch existiert eine
+entsprechende Schattenseite: Die Motivation hinter der Einführung der
+Minibatches für SGD liegt darin die Trainingszeit zu verkürzen. Durch die
+kleineren Batches jedoch die Trainingszeit erheblich zu.
+Eine weiteres Ergebniss ist, dass eine erhöhte Filteranzahl das Modell bessere
+Resultate erbringen lässt. Jedoch ist der Einfluss dieses Hyperparameter am
+geringsten, von allen die hier getestet wurden.
 \para{}
 Es ist anzumerken, dass die Hyperparameter ausführlicher getestet hätten werden.
 Die Topologie des Netzes und die Schichtenarten wurden beispielsweise gar nicht
@@ -3078,26 +3097,39 @@ gestiegen wäre, dass das Training kein Ende gefunden hätte.
 Desweiteren wurden die getesteten Hyperparameter über das ganze Netz gleich
 gewählt und nicht pro Schicht getestet.
 
-\subsubsection{Kritik am Modells und Verbesserungsmöglichkeiten}
-Echt gutes Modell.
-Wie hoch kann man den Noise-Factor stellen?
-
-\subsubsection{Mögliche Verbesserungen}
+\subsubsection{Verbesserungsmöglichkeiten}
 Es gibt konkrete Verbesserungsmöglichkeiten, welche nicht umgesetzt wurden bei
-der Entwicklung des Denoisers. Wie bereits erwähnt, wäre es vermutlich möglich
-gewesen bessere Resultate zu erzielen, falls noch mehr Hyperparameter und auch
-die Topologie getestet geworden wären.
-\\
-Eine Modifikation, welche wahrscheinlich das Modell deutlich verbessert hätte,
-wäre eine alternative Kostenfunktion gewesen: die Kreuzentropy-Kostenfunktion.
-Diese lässt die Neuronen eines Netzes weniger schnell saturieren und erzeugt so
-bessere Resultate. Weitere Verbessungen könnten in der Wahl eines anderen
-Optimisierungsverfahren liegen. Beispielsweise hätte eine impulsorientierte
-Version des SGD verwendet werden können, welches mit TensorFlow nur eine
-Codeänderung entfernt gewesen wäre. Jedoch wurde aufgrund des jetztigen Umfangs der Arbeit auf
-weitere Ausführungen zu diesen Konzepten verzichtet. Ohne diese theoretische
-Behandlung, ist der Wert einer Verwendung solcher Werkzeuge sehr gering.
+der Entwicklung des Denoisers. Diese hätten wohlmöglich für noch bessere
+Resultate gesorgt. Aufgrund der Länge der Arbeit, wurde jedoch darauf
+verzichtet.
 \para{}
+Die erste Verbesserungsmöglichkeiten bestünde darin, dass noch mehr und
+ausführlicher die Hyperparametern auszutesten. Die Topologie und die
+Schichtenarten wurden beispielsweise gar nicht verändert. Dies hat den
+praktischen Grund, dass die Anzahl Permutationen an Hyperparameter nohcmals
+dermassen gestiegen wäre, dass das Trainings kein Ende gefunden hätte.
+Ausserdem ist es schwierig bei einem Convolutional-Autoencoder verschiedene
+Topologien automatisiert zu testen, denn es muss garantiert werden, dass die
+Inputschicht die gleichen Dimensionen wie die Outputschicht besizt. Dies stellt
+sich als Herausforderung dar.
+\para{}
+Eine weitere Modifikation, welche das Modell vermutlich deutlich verbessert hätte,
+wäre eine alternative Kostenfunktion gewesen. Beispielsweise die
+Kreuzentropy-Kostenfunktion, welche deutlich raffinierter ist als die MSE-Kostenfunktion.
+Sie stellt eine Lösung für das sogennante \keyword{Vanishing-Gradient-Problem}
+dar. Durch dessen Behebung, kommt es nicht zu einer verlansam der Trainings, im
+Verlauf des Gradientenabstiegs.
+\para{}
+Weitere Verbessungen könnten in der Wahl eines anderen
+Optimisierungsverfahren liegen. Beispielsweise könnte eine SGD-Variante mit
+Impuls (engl.: momentum) verwendet werden. Diese Art von SGD stellt ein
+Verfahren dar, welches den Gradientenabstieg weniger sprunghaft macht und damit beschleunigt.
+\para{}
+Viele dieser Modifikationen wären programmatisch in TensorFlow nur wenige
+Codeänderungen entfernt gewesen. Jedoch ohne zugrundeliegende theoretische
+Behandlung der Funktionsweise, hält sich der Wert der Verwendung dieser Methoden
+in Grenzen.
+
 
 %%% Local Variables:
 %%% TeX-command-extra-options: "--shell-escape"
@@ -3105,10 +3137,20 @@ Behandlung, ist der Wert einer Verwendung solcher Werkzeuge sehr gering.
 %%% End:
 
 % LocalWords:  gelabelt Unüberwachtes unsupervised Inputdaten Grossteil Vector
-% LocalWords:  unüberwachtem Hauptkomponentenanalysen Adversial Networks bzw
-% LocalWords:  Trainingssample Inputsvektor Labelvektor Overfitting Machines
+% LocalWords:  unüberwachtem Hauptkomponentenanalysen Adversial Networks bzw Gl
+% LocalWords:  Trainingssample Inputsvektor Labelvektor Overfitting Machines eq
 % LocalWords:  Trainingsdaten Testdatensatz Trainingsdatensatz gewissermassen
 % LocalWords:  Hypothesenfunktion Klassifizierungsprobleme Regressionsprobleme
-% LocalWords:  Regressionsmodell Regressionsproblem Modellparameter Machine
+% LocalWords:  Regressionsmodell Regressionsproblem Modellparameter Machine sec
 % LocalWords:  Hyperparameter Regressionsgerade Kostenfunktionen BEISPIELMODELL
-% LocalWords:  Verlustfunktionen Verlustfunktion Label Kostenfunktion Ouputs
+% LocalWords:  Verlustfunktionen Verlustfunktion Label Kostenfunktion Ouputs gd
+% LocalWords:  Datenrauschen Autoencoder Unüberwachten autoencoder Inputvektor
+% LocalWords:  overfitting Auswendiglernen errorfunc Outputpaare Grösse ref ml
+% LocalWords:  meanerrorfunc ableitungen mean squared error quadrierten descent
+% LocalWords:  Gradientenverfahren Optimierungsproblem Funktionswerte anhang
+% LocalWords:  Gymnasialstufe Gradientenverfahrens parameter initalisieren
+% LocalWords:  Lernrate Proportionalitätsfaktor Schrittgrösse Ausserdem gross
+% LocalWords:  Gradientenabstiegs schiesst Aktivierungsfunktion Neurons Neural
+% LocalWords:  ausserdem Zwischenschichten folgendermassen rasterartige Network
+% LocalWords:  Rückwärtspropagierung Tensoren graustufiges Invarianzen Denoiser
+% LocalWords:  Dimensionalität Convolutional Autoencoders
