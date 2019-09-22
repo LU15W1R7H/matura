@@ -1,82 +1,102 @@
 \chapter*{Rückblick und Ausblick}
 \addcontentsline{toc}{chapter}{Rückblick und Ausblick}
 
-Viele Ideen bezüglich dieser Arbeit konnten aufgrund des bereits jetzt sehr
-grossen Umfangs nicht realisiert werden. Es war ursprünglich eine deutlich
-mächtigere Problemstellung zu lösen angedacht.
-Aufgrund der Reduktion des Anspruches, wurde das eigentliche Potenzial von
-TensorFlow und Keras bei weitem nicht ausgeschöpft. Dadurch könnte ein verfälschter
-Eindruck von ihrem eigentlichen Potenzial entstehen. Deshalb ist es essentiell zu erkennen, dass TensorFlow und
-Keras zu weit mehr im Stande sind.
+Der vorgegebene Rahmen der Maturaarbeit in Bezug auf Umfang,
+Nachvollziehbarkeit und Erstellungsdauer schränkte verschiedene Ideen zu dieser
+Arbeit markant ein. Ursprünglich war angedacht, eine deutlich umfangreichere
+Problemstellung zu bearbeiten. Aus diesem Grund wurde das eigentliche Potenzial von
+TensorFlow und Keras bei weitem nicht ausgeschöpft. Dadurch könnte ein falscher
+Eindruck von eigentlichen Potenzial dieser Tools entstehen. Wichtig ist daher zu
+erkennen, dass TensorFlow und Keras zu weit mehr im Stande sind, als das
+dargelegte Anwendungsbeispiel vermuten lässt.
 \para{}
-Um noch einige weitere Konzepte des Maschinellen Lernen, welche teilweise für
-diese Arbeit intendiert waren, zu beleuchten, folgt nun ein Ausblick über sonstige Aspekte.
+Daher soll an dieser Stelle exemplarisch aufgezeigt werden, welche
+weiteren Anwendungen in einem grösseren Rahmen und unter Verwendung von
+TensorFlow und Keras ebenfalls hätten bearbeitet werden können.
 
 \section*{Variational Autoencoder}
 \begin{wrapfigure}{L}{2cm}
   \qrcode[height=2cm]{https://www.youtube.com/watch?v=9zKuYvjFFS8}
 \end{wrapfigure}
-Wie bereits im Vorwort erwähnt, bestand der ursprüngliche Plan dieser Arbeit
+Wie im Vorwort erwähnt, bestand der ursprüngliche Plan dieser Arbeit
 darin, einen \keyword{Variational Autoencoder} (VAE) zu implementieren. Dieser sollte genutzt werden,
 um künstlich generierte Bilder von menschlichen Gesichtern zu erzeugen.
 Dies ist möglich, da es sich bei einem VAE um ein sogennantes
 \keyword{Generatives Modell} handelt.
 \para{}
-Generative Modelle sind im Allgemeinen Modelle, welche in der Lage sind anhand
+Generative Modelle sind in der Lage, anhand
 von einem existierenden Datensatz neue Dateneinträge zu generieren. Diese neuen Daten
-weisen einen ähnlichen Charakter auf, wie der ursprüngliche Datensatz, sind
+weisen einen ähnlichen Charakter auf wie der ursprüngliche Datensatz. Diese sind
 jedoch nicht in ihm enthalten.
 \para{}
-Ein VAE baut das Grundkonzept eines normalen Autoencoders aus. Bei ihm ist das
-Encoding (Repräsentation) eine Stochastische Verteilung, welche den Code
-enthält.
-Dadurch wird bezwegt, dass Codes, welche nahe beiander sind, auch ähnliche
+Ein VAE erweitert das Grundkonzept eines normalen Autoencoders. Beim VAE ist das
+Encoding (Repräsentation) eine stochastische Verteilung, welche den entwickelten
+Code darstellt.
+Auf diese Weise wird bezweckt, dass Codes, welche im Repräsentationraum nahe beieinander liegen, auch ähnliche
 Decodings (Rekonstruktionen) erzeugen. Dadurch wird der Repräsentationraum
-kontinuierlich. Der Decoder kann dann als generatives
-Modell verwendet werden. Falls ein VAE mit menschlichen Gesichtern
-trainiert wurde, können neue zufällige Codes rekonstruiert werden, welche dann
-neue noch nie gesehene Gesichter ergeben.
+kontinuierlich (siehe Abb. \ref{fig:vae}). So können neue zufällige Codes
+rekonstruiert werden, welche sinnvolle Decodings erzeugen. Auf diese Weise agiert der Decoder als generatives
+Modell. Wenn beispielsweise ein VAE mit menschlichen Gesichtern
+trainiert würde, könnten neue zufällige Codes rekonstruiert werden, welche dann
+neue, noch nie gesehene Gesichter produzieren würde.
 \para{}
 Eine verständliche und gute Erklärung bietet der Youtube-Kanal
-``Arxiv-Insights'' in seinem Video ``Variational Autoencoder'':
+``Arxiv-Insights'' in seinem Video ``Variational Autoencoder'' (siehe QR-Code).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{vae.png}
+  \caption{Decodingraum eines VAE trainiert auf MNIST: Ähnliche Ziffern sind
+    nahe beieinander \ref{res:vae}}
+  \label{fig:vae}
+\end{figure}
+
 
 \cite{wiki:autoencoder}
 
 \section*{Generative Adversial Networks}
 Ein weiteres Generatives Modell sind sogennante \keyword{Generative Adversial
-  Networks} (GANs). Sie sind der momentane Status Quo, was generative KNNs
+  Networks} (GANs). Sie sind der annerkante Status Quo, was generative KNNs
 anbelangt.
 \para{}
-Das Grundkonzept ihrer Funktionsweise lautet wie folgt. Ein GAN besteht aus zwei
-KNNs, welche miteinander konkurrenzieren. Das eine Modell, der
-\keyword{Diskriminator} kämpft gegen das andere Modell, den \keyword{Generator}.
-Die Aufgabe des Generator ist es Daten zu generieren, welche möglichst stark
-dem Trainingsdatensatz ähneln. Der Diskriminator bekommt immer entweder
-ein Sample aus dem Trainingsdatensatz oder ein generiertes Sample vorgelegt und
-muss dann entscheiden, ob es echt oder generiert ist. Beide Netzwerke lernen so,
+Das Grundkonzept ihrer Funktionsweise lautet wie folgt: Ein GAN besteht aus zwei
+KNNs, welche miteinander konkurrieren. Das eine Modell, der
+\keyword{Diskriminator}, kämpft gegen das andere Modell, den \keyword{Generator}.
+Die Aufgabe des Generator ist es, Daten zu generieren, welche möglichst stark
+dem Trainingsdatensatz ähneln. Der Diskriminator bekommt entweder
+ein Sample aus dem Trainingsdatensatz vorgelegt oder ein generiertes.
+Er muss dann entscheiden, ob es echt oder generiert ist. Beide Netzwerke lernen so,
 immer besser in ihrer Tätigkeit zu werden und betreiben gewissermassen einen Wettbewerb.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[height=0.5\textwidth]{gan.png}
+  \caption{generierte Gesichter von NVIDIAs GAN \cite{res:gan}}
+\end{figure}
 
 \section*{Frameworks}
 \subsection*{TensorFlow 2.0}
 TensorFlow befindet sich momentan in einer grossen Überarbeitungsphase. Es
-wachst gewissermassen aus seinen Kinderschuhen. Es handelt sich dabei um das
+wächst gewissermassen aus seinen Kinderschuhen heraus. Es handelt sich dabei um das
 TensorFlow 2.0 Update. Bereits zum Zeitpunkt des Verfassens dieser Arbeit
 existiert eine Entwicklungsversion von TF 2.0, jedoch läuft diese noch nicht
-völlig stabil. Sobald TF 2.0 offiziel freigegeben wird, ist es zu empfehlen
+völlig stabil. Sobald TF 2.0 offiziel freigegeben wird, ist zu empfehlen,
 davon Gebrauch zu machen. In dieser Überarbeitung werden viele Relikte aus den
-ursprünglichen TensorFlow Versionen entfernt, welche zu Verwirrung sorgen
-können. Somit entsteht ein in sich stimmiges Framework, welches wirklich
-angenehm zu bedienen ist.
+ursprünglichen TensorFlow Versionen entfernt, welche für Verwirrung sorgen
+könnten. Somit entsteht ein in sich stimmiges Framework, welches einene höheren
+Konfort aufweisen soll.
+QUELLE
 
 \subsection*{Alternativen}
 Es gibt neben TensorFlow und Keras noch weitere Frameworks, welche sich für
-Maschinelles Lernen eignen. Die meisten davon sind auch hauptsächlich auf Deep
-Learning ausgelegt. Sie machen meistens auch Gebrauch von der cuDNN-Bibliothek
-von NVIDIA (erwähnt in Anhang (\ref{sec:anhang_tf})). Somit weisen sie mehr oder
-weniger gleich performante Implementierungen wie TF auf. Vorteile können in der
+Maschinelles Lernen eignen. Die meisten davon sind ebenfalls hauptsächlich auf Deep
+Learning ausgelegt. Sie machen auch Gebrauch von der cuDNN-Bibliothek
+von NVIDIA (erwähnt in Anhang (\ref{sec:anhang_tf})). Somit weisen sie
+ähnlich performante Implementierungen wie TF auf. Vorteile können in der
 Intuition und Einfachheit der Bedienung liegen. Viele Privatpersonen bevorzugen
-genau aus diesem Grund \keyword{PyTorch} gegenüber TF.
+aus diesem Grund \keyword{PyTorch} gegenüber TF.
 Weitere erwähnenswerte Frameworks sind: Caffe, Scikit-Learn, Sonnet.
+QUELLE
 
 \section*{Weiterführende Literatur}
 Machinelles Lernen hat bei weitem noch mehr zu bieten. Falls der Leser sich noch
@@ -182,6 +202,9 @@ Schrittgrösse beim Abstieg bestimmt.
 Während des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
 beliebigen \textit{lokalen} Minimum, abhängig davon, wie der Startpunkt
 $\vec{p}_0$ gewählt wurde.
+
+\cite{book:hands-on}
+\cite{Nielsen}
 
 \chapter{Herleitung der Rückwärtsprogagierung für KNNs}\label{sec:anhang_bp}
 Da ein KNN, wie der Name schon andeutet, vernetzt ist, können die partiellen

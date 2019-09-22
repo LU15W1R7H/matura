@@ -54,8 +54,8 @@ später erläuterte Autoencoder streng genommen (aufgrund einer irreführender Z
 es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion~\refbox{sec:autoencoder}).
 \para{}
 GUTE QUELLE (Pionier)
-\cite{wiki:supervised_learning}
-\cite{wiki:unsupervised_learning}
+\cite{Goodfellow-et-al-2016}
+\cite{book:hands-on}
 
 \section{Allgemeine Begriffe}
 
@@ -98,6 +98,9 @@ Dies garantiert, dass kein Auswendiglernen möglich ist.
 \para{}
 BEISPIEL
 
+\cite{Nielsen}
+\cite{book:hands-on}
+
 
 \subsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
@@ -138,6 +141,8 @@ Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
   \caption{Schema eines Modells}
 \end{figure}
 
+\cite{book:hands-on}
+
 \section{Training}
 \subsection{Verlust- und Kostenfunktionen}
 Einsicht ist der erste Schritt zur Besserung. Diese Maxime gilt auch für das
@@ -176,6 +181,7 @@ Eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \para{}
 
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \subsubsection{Mittlere quadratische Abweichung}
 Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''.
@@ -198,6 +204,8 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 \item{Sie ist proportional zu ${(\vec{\hat{y}}-\vec{y})}^2$}
 \item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{MSE}'=\frac{1}{n}(y_i-\hat{y_i})$}
 \end{itemize}
+
+\cite{Nielsen}
 
 
 \subsection{Stochastisches Gradientenverfahren}\label{sec:gradientenverfahren}
@@ -291,6 +299,7 @@ Eine Iteration des Stochastischen Gradientenverfahrens wird analog zu Gleichung 
 \end{equation}
 
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \section{Trainingsphänomene}
 
@@ -362,6 +371,8 @@ Sampels anzuschmiegen.
 \end{figure}
 
 \cite{wiki:overfitting}
+\cite{Goodfellow-et-al-2016}
+\cite{book:hands-on}
 
 % ------------------------------------------------------------
 
@@ -388,7 +399,7 @@ müssen. Diese Arbeit wird vor allem von zwei solcher Architekturen Gebrauch mac
 Convolutional Neural Networks und sogenannte Autoencodern.
 
 \para{}
-\cite{wiki:kuenstliches_neuronales_netz}
+\cite{book:hands-on}
 
 \section{Perzeptron}
 Um den Aufbau und die Funktion eines Künstlichen Neuronalen Netzes besser zu
@@ -460,6 +471,7 @@ Der Grund dafür soll später in Sektion \refbox{sec:künstlicheNeuronen} erläu
 \para{}
 \cite{wiki:perzeptron}
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \subsection{Lernpotenzial eines Perzeptrons}
 Nun stellt sich die Frage, was ein Perzeptron eigentlich erlernen kann und wofür
@@ -525,6 +537,7 @@ sich fast nur in ihrer Aktivierungsfunktion.
 \para{}
 \cite{Nielsen}
 \cite{wiki:kuenstliches_neuron}
+\cite{book:hands-on}
 
 \subsection{Perzeptronen als künstliche Neuronen}
 Nun nochmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
@@ -572,6 +585,7 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. \refb
 
 \cite{wiki:kuenstliches_neuron}
 \cite{wiki:perzeptron}
+\cite{book:hands-on}
 
 
 \subsection{ReLU-Neuronen}\label{sec:ReLU}
@@ -650,6 +664,7 @@ Kapitel \refbox{sec:CNN} im Zusammenhang mit KNNs zur Bilderkennung wieder betra
 \para{}
 \cite{wiki:kuenstliches_neuron}
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \subsection{Sigmoid-Neuronen}
 Ein weiteres nicht-lineares Neuron sind sogenannte Sigmoid-Neuronen.
@@ -699,6 +714,7 @@ einfache Ableitung aus.
 \para{}
 \cite{wiki:kuenstliches_neuron}
 \cite{wiki:sigmoidfunktion}
+\cite{book:hands-on}
 
 
 \section{Topologie der Künstlichen Neuronalen Netze}
@@ -739,6 +755,7 @@ und die zweite besitzt 4 Neuronen. \\
 
 \cite{wiki:kuenstliches_neuronales_netz}
 \cite{Nielsen}
+\cite{book:hands-on}
 
 \section{Lernverhalten}
 Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell für jede
@@ -1250,7 +1267,7 @@ Angewendet auf ein schwarz-weisses Bild, wird ein neues Bild erzeugt, bei welche
 Kanten weiss eingefärbt werden und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
-In Abbildung \refbox{fig:sobel_filter} wurde der erwähnte Kantendetektionfilter auf ein
+In Abbildung \refbox{fig:edge_filter} wurde der erwähnte Kantendetektionfilter auf ein
 Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
 generierte Bild zu sehen
 \footnote{
@@ -1262,14 +1279,14 @@ generierte Bild zu sehen
   \centering
   \includegraphics[width=0.4\textwidth]{eagle-gray.jpg}
   \includegraphics[width=0.4\textwidth]{eagle-gray-filtered.jpg}
-  \caption{Sobel-Filter angewandt auf Beispielsbild \cite{res:eagle_image}}
-  \label{fig:sobel_filter}
+  \caption{Kantendetektionfilter angewandt auf Beispielsbild \cite{res:eagle_image}}
+  \label{fig:edge_filter}
 \end{figure}
 
 \para{}
-\cite{wiki:sobel_operator}
 \cite{deeplearning.ai:cnn}
 \cite{wiki:kernel}
+\cite{net:gimp_conv}
 
 
 \subsection{Filter in CNNs}
@@ -2457,34 +2474,32 @@ gegeben Inputs.
 % ------------------------------------
 
 \chapter{Entwicklung eines Denoising-Autoencoders}
-In diesem Kapitel soll nun das bisherige Wissen zusammengeführt werden, indem
-unter Anwendung von TensorFlow und Keras ein konkretes
-Anwendungsbeispiel programmiert wird.
-
-Dabei wird darauf eingegangen, welche Schritte die
-Entwicklung eines solchen Modells umfasst und wie dabei am besten vorgegangen
-wird.
+In diesem Kapitel soll die erarbeitete Theorie zum Maschinellen Lernen und zu
+TensorFlow sowie Keras zusammengeführt werden, um ein konkretes
+Anwendungsbeispiel zu programmieren.
+Es wird darauf eingegangen, welche Schritte die
+Entwicklung eines solchen Modells umfasst und welches Vorgehen
+idealtypischer Weise zu wählen ist.
 
 \section{Das konkrete Modell}
-Wir werden nun einen Convolutional-Denoising-Autoencoder programmieren.
-Dieser kann verwendet werden um das Bildrauschen von Bildern zu eliminieren und
-sie so wieder erkenntlich zu machen.
+Es soll nun ein Convolutional-Denoising-Autoencoder programmieren werden.
+Dieser kann verwendet werden, um das Bildrauschen von Bildern zu eliminieren, und
+sie so wieder erkennbar zu machen.
 Zu Demonstrationszwecken werden handgeschriebene Ziffern vom MNIST-Datenset
-verwendet, weil die Funktionsfähigkeit auf dieser Basis sehr einfach erkennbar ist.
+verwendet, da die Funktionsfähigkeit der Modells auf diese Weise einfach
+erkannbar ist.
 
-\begin{figure}
+\begin{figure}[h!]
   \caption{grobes Schema des Modells}
 \end{figure}
 
-\para{}
 \subsection{Daten}
-Als Trainingsdaten verwenden wir den \keyword{MNIST}-Datensatz. Er ist der wohl
-bekannteste Datensatz für beispielhaftes Maschinelles Lernen.
+Als Trainingsdaten wird der \keyword{MNIST}-Datensatz verwendet. Es handlet sich
+um den wohl bekannteste Datensatz für beispielhaftes Maschinelles Lernen.
 Er besteht aus schwarz-weiss Bildern von handgeschrieben Ziffern.
-Zusätzlich würde es auch noch Labels zu den Ziffern geben, um das Modell beispielweise
-für Ziffernerkennung zu trainieren. Jedoch werden
-wir diese nicht brauchen, da wir einen Autoencoder entwickeln, dessen Labels den
-Inputs entsprechen.
+Der Datensatz würde grundsätzlich auch Labels zu den Ziffern enthalten, um das Modell beispielweise
+für Ziffernerkennung trainieren zu können. Jedoch ist dies hier nicht notwendig,
+weil ein Autoencoder entwickelt werden soll, dessen Labels den Inputs entsprechen.
 \para{}
 Der Datensatz besteht aus einem Trainingsdatensatz von 60'000 Sampels und einem Testdatensatz
 von 10'000 Sampels. Alle Ziffern sind bereits korrekt formatiert, da ihre Grösse
@@ -2502,12 +2517,12 @@ auf $28 \times 28$ Pixel normalisiert wurde und sie im Bild zentriert sind.
 \section{Setup}
 Zunächst ist es wichtig, das Entwicklungsumfeld richtig zu konfigurieren. Das
 bedeutet konkret, dass Python zusammen mit den verschiedenen Programmbibliotheken
-installieren werden muss.
+installiert werden muss.
 \para{}
 Die Installationsschritte werden in dieser Arbeit für eine arch-basierte
 Linuxdistribution erklärt, welche den \keyword{Pacman}-Package-Manager verwendet.
 \para{}
-Falls der Leser ein anderes Betriebssystem verwendet möchte, ist auf die offizielle
+Falls der Leser ein anderes Betriebssystem verwenden möchte, ist auf die offizielle
 TensorFlow Website für die Installationsschritte zu verweisen:
 \para{}
 \qrcode[height=2cm]{https://www.tensorflow.org/install}
@@ -2516,14 +2531,14 @@ TensorFlow Website für die Installationsschritte zu verweisen:
 Damit TensorFlow und Keras verwenden werden können, bedingt dies, dass Python3
 installiert sein muss.
 Folgender Befehl muss in der Kommandozeile ausgeführt werden, um die
-Installation vorzunehmen.
+Installation durchzuführen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
   sudo pacman -S python
 \end{minted}
 
 \paragraph{TensorFlow}
 Für die Installation von TensorFlow muss unter Arch Linux das entsprechende
-Package installieren werden.
+Package installiert werden.
 Falls der Leser über eine Nvidia-Grafikkarte verfügt, welche eine ``Compute
 Capability'' von mehr als 3.5 besitzt, kann er von der
 GPU-Hardwarebeschleunigung Gebrauch machen.
@@ -2535,14 +2550,14 @@ Pacman installiert nun automatisch zuerst alle Programmabhängigkeiten, wie
 CUDA, cuDNN und das TensorFlow-Backend, bevor das eigentliche
 Python-TensorFlow installiert wird.
 \para{}
-Falls keine geeignete Grafikkarte vorliegt, ist es ebenso möglich die normale
+Falls keine geeignete Grafikkarte vorliegt, ist es ebenso möglich, die normale
 TF-Version ohne Unterstützung für die GPU zu verwenden.
 Dies kann durch nachstehendes Kommando vorgenommen werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
   sudo pacman -S python-tensorflow
 \end{minted}
 \para{}
-Dabei muss Keras nicht explizit installiert werden, da es in TensorFlow implementiert ist.
+Dabei muss Keras nicht explizit installiert werden, da es bereits in TensorFlow implementiert ist.
 
 \paragraph{Python-Module}
 
@@ -2550,8 +2565,8 @@ Für das Python-Programm werden zwei Packages benötigt, welche
 nicht in der Standardbibliothek von Python enthalten sind:
 \begin{itemize}
 \item{NumPy: Ein Package, welches verschiedene mathematische Konzepte
-    implementiert; vor allem Vektor- und Matrix-Arithmetik}
-\item{Matplotlib: Ein Package zum Erstellen von Plots und Grafiken}
+    implementiert; vor allem Vektor- und Matrix-Arithmetik.}
+\item{Matplotlib: Ein Package zum Erstellen von Plots und Grafiken.}
 \end{itemize}
 
 Man installiert beide mit folgenden Kommandos.
@@ -2561,14 +2576,14 @@ Man installiert beide mit folgenden Kommandos.
 \end{minted}
 
 \section{Entwicklung}
-Nun beginnt die eigentliche Programmierung.
+Nun kann die eigentliche Programmierung beginnen.
 
 \subsection{Testprogramm}
 Zunächst wird ein kleines Testprogramm geschrieben, welches überprüft, ob
-alle Programmabhängigkeiten korrekt installiert wurden und verwendet werden können.
+alle Programmabhängigkeiten korrekt installiert sind und verwendet werden können.
 
 In den ersten Zeilen des Pythonprogamms werden die Importstatments
-geschreiben, um NumPy, Matplotlib und TensorFlow verfügbar zu machen.
+geschrieben, um NumPy, Matplotlib und TensorFlow verfügbar zu machen.
 Keras muss wie gesagt nicht explizit geladen werden, da es in TensorFlow
 enthalten ist.
 Nun können die Versionnummern der verschiedenen Programmbibliotheken
@@ -2592,13 +2607,13 @@ die gleichen sein) und keine Fehlermeldungen erfolgen, sollte alles funktioniere
 \para{}
 
 \subsection{Trainingsdaten}
-Nun haben wir mit dem kleinen Testprogramm verifiziert, dass alle
+Nun wurde mit dem kleinen Testprogramm verifiziert, dass alle
 Programmabhängigkeiten funktionieren. Auf dieser Basis können wir mit dem
-eigentlichen Programm beginnnen.
+eigentlichen Programm beginnen.
 \para{}
 In den folgenden Auschnitten wird der Code laufend weiter ausgebaut.
 Auf diese Weise zeigt sich, was er bewirkt.
-Das eigentliche Programm beginnt mit folgenden Importstatements.
+Das eigentliche Programm startet mit folgenden Importstatements.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   import numpy as np
   import matplotlib.pyplot as plt
@@ -2617,13 +2632,13 @@ Labels \code{y} mithilfe der Wegwerf-Variable \code{\_} verworfen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   (x_train, _), (x_test, _) = tf.keras.datasets.mnist.load_data()
 \end{minted}
-Nun sind die Features fürs Training in der Variable \code{x\_train} und die
+Nun sind die Features für das Training in der Variable \code{x\_train} und die
 Features des Trainingsdatensatzes in der Variable \code{x\_test} gespeichert.
 
 \subsubsection{Formatieren der Daten}
 In einem nächsten Schritt müssen die Daten transformiert werden, damit sie die
-richtige Form für das Modell haben.
-Wie bereits erwähnt, ist der MNIST-Datensatz einfach verwendbar,
+richtige Form für das Modell aufweisen.
+Wie bereits erwähnt, ist der MNIST-Datensatz unkompliziert verwendbar,
 da alle Bilder die gleichen Masse aufweisen und die Ziffern zentriert sind.
 \para{}
 Jedoch sind die Grauwerte zu normalisieren, denn im Moment liegen sie noch im
@@ -2634,8 +2649,8 @@ umgehen. Um diese Anpassung vorzunehmen, kann folgender Code angefügt werden.
   x_train = x_train.astype('float32') / 255.0 # Normalisierung
   x_test = x_test.astype('float32') / 255.0 # Normalisierung
 \end{minted}
-Desweiteren werden im Modell ConvLayers verwendet. Diese in Keras
-implementierten ConvLayers erwarten Inputs in der Form $(m, w, h, c)$, wobei
+Desweiteren werden im Modell Conv2D-Schichten verwendet. Diese in Keras
+implementierten Conv2D-Schichten erwarten Inputs in der Form $(m, w, h, c)$, wobei
 $m$ die Anzahl der Bilder ist, $w$ die Bildbreite, $h$ die Bildhöhe und $c$ die
 Anzahl der Farbkomponenten. Die Bildbreite $w$ und -höhe $h$ von 28 Pixeln wird beibehalten, wie auch
 die Anzahl Farbkomponeten $c=1$. Die Anzahl Bilder $m$ lässt sich aus der Länge
@@ -2646,12 +2661,12 @@ des Arrays entnehmen \code{len(x\_train)}. Mithilfe vom NumPy lässt sich das Ar
 \end{minted}
 Die Daten besitzen nun die richtige Form für das Modell.
 
-\subsubsection{Generieren der verrauschten Bilder}
-Den Input in das Modell stellen nicht die normalen MNIST-Bilder dar, sondern
-eine verrauschte Variante von diesen. Sie werden nun generiert, indem ein
+\subsubsection{Generieren der verrauschten Bilder}\label{sec:generierung_verrauschte_bilder}
+Als Input in das Modell werden nicht die normalen MNIST-Bilder verwendet, sondern
+eine verrauschte Variante von diesen. Sie werden generiert, indem ein
 additives Gauss'sches Rauschen auf sie angewendet wird.
 \para{}
-Zuerst wird eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$ erstellt, welche die gleiche Form, wie die
+Zuerst wird eine Matrix $\mat{R} \in \set{R}^{28 \times 28 \times 1}$ erstellt, welche die gleiche Form wie die
 Bilder besitzt. Diese Matrix wird mit Zufallswerten gefüllt. Für die
 Zufallswerte wird eine normalisierte Gauss'sche Normalverteilung
 $\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
@@ -2661,7 +2676,7 @@ Rauschmatrizen erzeugt. Dafür kann die NumPy Funktion
 \code{np.random.normal(loc=<$\mu$>, scale=<$\sigma^2$>,size=<Form>)} verwendet werden.
 Die somit erhaltenen Rauschmatrizen werden dann mit einer Rauschkonstante
 \code{noise\_factor} multiplziert und anschliessend wird das Produkt auf die
-MNIST-Bilder addiert.
+MNIST-Bilder addiert. Vorerst wird der $\code{noise\_factor} = 0.5$ gewählt.
 Nach dem Hinzufügen der Rauschwerte müssen die Grauwerte noch auf das Intervall
 $[0,1]$ zurecht gestutzt werden. Auch hierfür kann eine NumPy-Funktion
 \code{np.clip(var, min, max)} angewendet werden. Diese Schritte werden sowohl mit dem
@@ -2681,7 +2696,7 @@ Somit lautet der Code:
   x_test_noisy = np.clip(x_test_noisy, 0.0, 1.0)
 \end{minted}
 \para{}
-Mithilfe der Matplotlib ein Blick auf die verrauschten Bilder im Vergleich zu
+Mithilfe der Matplotlib kann ein Blick auf die verrauschten Bilder im Vergleich zu
 den Originalbildern geworfen werden.
 Dafür wird ein Plot erstellt, welcher jeweils 10 Bilder beider Arrays zeigt.
 \para{}
@@ -2718,13 +2733,13 @@ Das Ergebniss ist in Abbildung \refbox{fig:noisy_clean_mnist} sichtbar.
 \end{figure}
 \para{}
 Die Daten liegen nun vollständig und im richtigem Format vor.
-Somit kann zur Definition des Modells übergegangen werden.
+Nun kann zur Definition des Modells übergegangen werden.
 
 \subsection{Modell definieren}
 Mithilfe von Keras kann das Modell eines Convolutional-Denoising-Autoencoder
 definiert werden. Dies geschieht nach dem Vorbild der Theorie.
 Wie bereits erklärt umfasst die Topologie eines CNNs die verschiedensten Hyperparameter.
-Für diese werden der Einfachheit halber zunächst unbegründeten Werte verwendet.
+Für diese werden der Einfachheit halber zunächst willkürliche Werte verwendet.
 Zu einem späteren Zeitpunkt werden die passenden Hyperparameter durch iteratives Ausprobieren ermittelt.
 \para{}
 Das Modell beginnt mit der Inputschicht $l=0$, welche ein Tensor ist, der
@@ -2735,15 +2750,15 @@ die Inputwerte enthält. Die Schicht hat logischerweise die gleiche Form, wie ei
 \para{}
 Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht
 sowohl aus Convolutional-Schichten, wie auch aus Pooling-Schichten, welche sich abwechseln.
-Für alle Schichten werden vorerst unbegründeten Hyperparameter gewählt.
+Für alle Schichten werden vorerst unbegründete Hyperparameter gewählt.
 Für die Convolutional-Schichten wird
 eine Filtergrösse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
-ein Stride $s=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
+ein Stride $s^l=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
 \varphi^{\text{ReLU}}$ verwendet.
 Da Keras standardmässig die Initialisierung der Modellparameter mit einer
-Uniformen Verteilung vornimmt, muss der \code{kernel\_initalizer} explizit auf
-\code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initalisation gleich
-wie in Sektion \refbox{sec:parameter_initalisieren} statt. \\
+uniformen Verteilung vornimmt, muss der \code{kernel\_initalizer} explizit auf
+\code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initalisierung analog
+zu Sektion \refbox{sec:parameter_initalisieren} statt. \\
 Der Code für die Defition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3),
@@ -2751,7 +2766,7 @@ Der Code für die Defition einer solchen Convolutional-Schicht lautet:
   kernel_initializer='glorot_normal')
 \end{minted}
 Für die Pooling-Schichten wird analog eine Feldgrösse $f = 2$, ein
-Stride $s = 2$ und Same-Padding gewählt. Dies hat zur Wirkung, dass jedes $(2
+Stride $s = 2$ und Same-Padding gewählt. Dies bewirkt, dass jedes $(2
 \times 2)$-Feld zu einem einzigen Element zusammengefasst wird. \\
 Der Code für eine dieser Pooling-Schichten lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -2761,7 +2776,7 @@ Für den Decoder werden die gleichen Convolutional-Schichten wie für den Encode
 verwendet. Anstelle von Pooling-Schichten verwendet er UpSampling-Schichten,
 welche jeweils nach einer Convolutional-Schicht folgen.
 Für die UpSampling-Schichten wurde eine Feldgrösse $f = 2$ gewählt. Somit wird
-ein einziger Pixel auf ein $2 \times 2$-Felder hochskaliert.
+ein einziger Pixel auf ein $(2 \times 2)$-Felder hochskaliert.
 Als Interpolationsmethode wird der Nächste-Nachbar-Algorithmus verwendet.
 Die beschriebene UpSampling-Schicht wird folgendermassen definiert:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -2770,11 +2785,11 @@ Die beschriebene UpSampling-Schicht wird folgendermassen definiert:
 Nun folgt die Deklarierung aller Schichten und deren Verknüpfung. \\
 Das Modell weist einen Flaschenhals auf, welcher zwei Convolutional-Schichten
 tief ist. Das bedeutet, dass der Encoder aus zwei
-Convoutional-Layer-Pooling-Player-Paaren besteht. Danach folgt der einschichtige
-Flaschenhals. Im Anschluss liegt der Decoder, der zwei
-Convolutional-Layer-Upsampling-Layer-Paaren umfasst.
+Conv-Pool-Paaren besteht. Danach folgt der einschichtige
+Flaschenhals. Im Anschluss daran folgt der Decoder, der zwei
+Conv-UpSampling-Paare umfasst.
 Um die jeweils neue Schicht zur vorherigen Schicht zu verbinden, gibt man die
-Vorherige in Klammern am Ende des Statements an. \\
+vorherige in Klammern am Ende des Statements an. \\
 Der ganze Graph wird durch folgenden Code gebildet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   # Encoder
@@ -2804,13 +2819,13 @@ Auffallend im Code ist, dass der Decoder nicht etwa zwei Convolutional-Layers
 besitzt, sondern sogar drei. Die letzte Schicht wird benötigt, damit
 die Daten wieder die richtige Formatierung aufweisen. Das heisst einerseits,
 dass die Outputs wieder in der Ursprungsform $(28 \times 28)$ vorliegen müssen.
-Andererseits sollen die Outputs wieder im Intervall
-$[0,1]$ befinden. Mithilfe der Sigmoid-Funktion als Aktivierungsfunktion werden
+Andererseits sollen sich die Outputs wieder im Intervall
+$[0,1]$ befinden. Mithilfe der Sigmoid-Aktivierungsfunktion $\varphi^{\text{sig}}$ werden
 sie genau auf dieses Intervall abgebildet. \\
 Für alle anderen Schichten wurde die ReLU-Aktivierungsfunktion gewählt.
 \para{}
-Nun muss noch eine Modellvariable deklariert werden, indem man die Input- \code{input\_data} und
-die Outputschicht \code{decoded} angibt.
+Nun muss noch eine Modellvariable deklariert werden. Als Argumente erwartet
+diese die Inputschicht \code{input\_data} und die Outputschicht \code{decoded}.
 Danach ist das Modell zu kompilieren. Bei der Kompilierung kann das
 Optimierungsverfahren und die Kostenfunktion gewählt werden. Für die Optimierung
 wird das Stochastische-Gradientenverfahren SGD verwendet.
@@ -2856,52 +2871,53 @@ Es zeigt sich, dass das Modell gesamthaft circa 28'000 Parameter umfasst,
 welche zu trainieren sind.
 
 \subsection{Modell trainieren}
-Nun gilt es das definierte Modell zu trainieren.
-Mit Keras kann dies mit einem einzigen Funktionsaufruf durchgeführt werden.
+Das definierte Modell ist nun zu trainieren.
+Mit Keras kann dies durch einen einzigen Funktionsaufruf erfolgen.
 Diese Funktion erwartet einige Argumente. Zuerst sind die Features und Labels anzugeben. Die
 Features wurden in der Variable \code{x\_train\_noisy} gespeichert. Die Labels
 sind die unverrauschten MNIST-Bilder, welche in der Variable \code{x\_train} enthalten sind.
 Desweiteren wird die Grösse eines Mini-Batches als 128 Sampels spezifiziert. Das
 Training erfolgt über 100 Epochen.
-Wichtig ist auch, dass die Trainingssampels vor dem Training druchmischt werden, damit keine Mustern
-innerhalb der Anordnung der Samples erlernt werden. Als letzen Argument wird noch
-der Testdatensatz angegeben.
+Wichtig ist, dass die Trainingssampels vor dem Training durchmischt werden,
+damit das Modell nicht versucht, Muster innerhalb der Anordnung der Samples zu
+erlernen. Als letzen Argument wird noch der Testdatensatz angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,
     validation_data=(x_test_noisy, x_test))
 \end{minted}
-Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet und auch die
+Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet, und auch die
 CUDA-Version von TF installiert ist, erfolgt das Training mithilfe von GPU-Hardwarebeschleunigung.
 Dadurch sollte das Trainings innherhalb einiger Minuten abgeschlossen sein.
 Während des Trainings schreibt TensorFlow Informationen zum aktuellen Fortschritt in die
-Kommandozeile. Diese Infos weisen nachstehenden Charakter auf und geben Auskunft über die aktuelle Epoche und die
-Werte der Kostenfunktion. Die Kosten für den Trainingsdatensatz werden mit
-\code{loss} bezeichnet und die für den Testdatensatz mit \code{val\_loss}.
+Kommandozeile. Diese Informationen weisen nachstehenden Charakter auf und geben
+Auskunft über die aktuelle Epoche sowie die Werte der Kostenfunktion. Die Kosten
+für den Trainingsdatensatz werden mit \code{loss} bezeichnet und die für den
+Testdatensatz mit \code{val\_loss}.
+
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
   Epoch 3/100
   60000/60000 [==============================] - 4s 60us/sample - loss: 0.0911 - val_loss: 0.0772
 \end{minted}
-Das Kostenfunktion hat nach dem Training einene Wert \code{val\_los} von $0.0180$,
-bezüglich dem Testdatensatz.
+Die Kostenfunktion weist bezüglich dem Testdatensatz nach dem Training einen Wert \code{val\_los} von $0.0180$,
+auf.
 \para{}
-Jetzt, da das Modell trainiert wurde, ist es sinnvoll es auf dem Computer als
-Modelldatei abzuspeichern.
-So muss das es nicht jedesmal wieder neu trainieren werden, sondern kann über
-die Modelldatei eingelesen werden. Für dieses Einlesen, wird folgender Code benötigt.
+Jetzt, da das Modell trainiert wurde, ist es sinnvoll, es auf dem Computer als
+Modelldatei abzuspeichern. So muss es nicht jedes Mal wieder neu trainiert werden, sondern kann über
+die Modelldatei eingelesen werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.save('denoiser.model')
 \end{minted}
-Um das Modell wieder einzulesen verwendet man folgenden Code:
+Für dieses Einlesen wird folgender Code benötigt:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder = tf.keras.models.load_model('denoiser.model')
 \end{minted}
 Mit der Summary-Funktion kann man überprüfen, ob das richtige Modell geladen wurde.
 
 \subsection{Modell ausführen}
-Da das Modell nun trainiert ist, kann es nun für seinen eigentlichen Zweck
+Da das Modell nun trainiert ist, kann es für seinen eigentlichen Zweck
 genutzt werden.
 Dieser besteht darin, Bilder zu entrauschen. Dafür gelangen die
-Bilder aus dem Testdatensatz zur Anwendung. Damit ist garantiert, dass diese
+Bilder aus dem Testdatensatz zur Anwendung. Auf diese Weise wird garantiert, dass diese
 unbenutzten Daten vom Modell nicht auswenig gelernt werden konnten.
 Mit der Funktion \code{tf.keras.model.predict}
 erhält man alle Vorhersagen des Autoencoders zum gesamten Testdatensatz.
@@ -2910,7 +2926,7 @@ erhält man alle Vorhersagen des Autoencoders zum gesamten Testdatensatz.
 \end{minted}
 Mithilfe von der Matplotlib können die entrauschten Bilder mit den
 ursprünglichen MNIST-Bilder direkt verglichen werden.
-So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse tatsächlich sind.
+So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse des Modells tatsächlich sind.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   n = 10 # jeweils 10 Bilder
   plt.figure()
@@ -2932,38 +2948,38 @@ So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse tatsächlich s
   plt.show()
 \end{minted}
 In der ersten Zeile der Grafik sind die verrauschten Bilder dargestellt.
-Darunter folgen die Rekonstuktionen als Ergebniss des Modells und ganz unten
+Darunter folgen die Rekonstuktionen als Ergebnis des Modells und in der dritten Zeile
 sind die Original-Bilder zu sehen.
+Wirkliche Unterschiede zwischen der zweiten und der dritten Zeile sind kaum zu erkennen.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{denoised.png}
   \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
 \end{figure}
-Wirkliche Unterschiede zwischen der zweiten und der dritten Zeile sind kaum zu erkennen.
 
 \subsection{Hyperparameter einstellen}
-Um die Hyperparameter einzustellen, müssen lediglich verschiedene Werte
-ausprobiert werden. Die Applikation wird insofern modifiziert, als dass
-verschiedene Modelle konstruiert werden, welche unterschiedliche
-Hyperparametern verwenden.
+Für die Hyperparameter haben wir zunächst willkürliche Werte verwendet. Es
+sollen nun besser geeignete Hyperparameter bestimmt werden. Dazu müssen
+lediglich verschiedene Wert iterativ ausprobiert werden.
+Die Applikation wird modifiziert, indem verschiedene Modelle konstruiert werden,
+welche unterschiedliche Hyperparameter verwenden.
 Beim Training werden mithilfe von TensorBoard
 Daten zum Lernfortschritt und den Kosten der verschiedenen Modelle erfasst. Auf
 diese Weise kann eine Auswertung erstellt werden, um die besten Hyperparameter
 zu identifizieren.
 \para{}
 Zuerst werden einige Arrays definiert, welche die zu testenden Hyperparameter beinhalten.
-Ein Hyperparameter ist die Anzahl Epochen. Diesen werden wir aber nicht testen,
-da es offensichtlich ist, dass mit einer längeren Trainingszeit sich auch die
+Ein Hyperparameter ist die Anzahl Epochen. Für diesen werden wir aber nicht
+verschiedene Werte ausprobieren, da es offensichtlich ist, dass sich mit einer längeren Trainingszeit auch die
 Resultate verbessern.
-Alle Modelle werden für 20 Epochen traniert.
+Alle Modelle werden für 20 Epochen trainiert.
 \para{}
-Folgende Mini-Batch-Grössen sollen ausprobiert werden: 16, 32, 64, 128, 265.
-Die Vermutung liegt nahe, dass mit kleineren Mini-Batches die
-Gradientapproximationen besser mit dem reellen Gradienten übereinstimmt und
-damit die Resultate besser werden. \\
+Folgende Mini-Batch-Grössen sollen geprüft werden: 16, 32, 64, 128, 265.
 Als zu testende Anzahl von Filtern werden definiert: 16, 32, 64, 128, 256.
-Für die Aktivierungsfunktionen werden Sigmoid und ReLU ausprobiert und gelangen
-für das ganze Modell zur Anwendung.
+Für die Aktivierungsfunktionen werden Sigmoid und ReLU ausprobiert. Anstatt dass
+jede Schicht eine eigene Aktivierungsfunktion erhält, gelangt für das gesamte
+Modell eine einzige Funktion zur Anwendung. Auf diese Weise soll die Anzahl an
+Permutationen der Hyperparameter gering gehalten werden.
 Jedoch wird für die letzte Schicht immer die
 Sigmoid-Aktivierungsfunktion verwendet, damit die Outputs im Intervall $[0,1]$
 liegen.
@@ -2975,9 +2991,9 @@ liegen.
   FILTER_NUMS = [ 16, 32, 64, 128, 256 ]
   ACTIVATIONFUNCTIONS = [ 'sigmoid', 'relu' ]
 \end{minted}
-Nun werden wir den gesamten Code zum Bauen des Graphens, zur Kompilierung und
-zum Training des Modells in verschachtele For-Loops stecken, welche alle
-Kombinationen an Hyperparameter ausprobiert.
+Nun werden wir den gesamten Code zum Erstellen des Graphens, zur Kompilierung und
+zum Training des Modells in verschachtelte For-Loops verschieben, welche alle
+Kombinationen an Hyperparameter ausprobieren.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   for activation_function in ACTIVATIONFUNCTIONS:
@@ -2985,21 +3001,22 @@ Kombinationen an Hyperparameter ausprobiert.
       for num_filters in FILTER_NUMS:
         # ganzer Modell-Code
 \end{minted}
-Nun muss der Code zur Definition des Modells insofern modiziert werden, dass
-die Variabeln \code{activation\_function}, \code{batch\_size} und
-\code{num\_filters} an den entsprechenden Stellen anstatt der Konstanten benutzt werden.
+Nun muss der Code zur Definition des Modells so modiziert werden, dass die
+Konstanten an den entsprechenden Stellen durch die Variablen
+\code{activation\_function}, \code{batch\_size} und \code{num\_filters} ersetzt
+werden.
 
 \subsubsection{TensorBoard konfigurieren}
-Um den Lernprozess und die Leistungen des Modells zu analysieren,
-wird nun nun TensorBoard konfiguriert.
-Dafür müssen die Methoden \code{compile} und \code{fit} angepasst werden.
+Um den Lernprozess und die Leistungsfähigkeit des Modells zu analysieren,
+soll nun TensorBoard konfiguriert werden.
+Zu diesem Zweck müssen die Methoden \code{compile} und \code{fit} angepasst werden.
 Zuerst müssen wir in der \code{compile} Methode die zu erfassenden Metriken
 angeben. Von Interesse ist die \code{'accuracy'}.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.compile(optimizer='sgd', loss='mean_squared_error', metrics=['accuracy'])
 \end{minted}
-Nun muss eine TensorFlow-Variable definiert werden. Hierbei ist anzugeben, wo
-die erfassten Daten gespeichert werden sollen. Dabei ist es sinnvoll den Dateien
+Nun ist eine TensorFlow-Variable zu definieren. Es ist anzugeben, wo
+die erfassten Daten gespeichert werden sollen. Es ist sinnvoll, den Dateien
 der einzelnen Modelle aussagekräftige Namen zu geben. Deshalb benennen wir die
 Dateien in folgendem Format: ``denoiser-(Aktivierungsfunktion)-(Mini-Batch
 Grösse)-batches-(Anzahl Filter)-filters''.
@@ -3007,24 +3024,28 @@ Grösse)-batches-(Anzahl Filter)-filters''.
   NAME = 'denoiser-{}-{}-batches-{}-filters'.format(activation_function, batch_size, num_filters)
   tensorboard = tf.keras.callbacks.TensorBoard(log_dir='logs/{}'.format(NAME))
 \end{minted}
-Zu letzt muss noch die TensorBoard-Variable als \code{callback} in der
+Zuletzt muss noch die TensorBoard-Variable als \code{callback} in der
 \code{fit}-Methode spezifiziert werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,
     validation_data=(x_test_noisy,x_test), callbacks=[tensorboard])
 \end{minted}
+Nun kann das modizifizierte Programm ausgeführt werden. Dabei werden alle
+spezifzierten Kombinationen an Hyperparametern durchgetestet. Gleichzeitig
+erzeugt das TensorBoard-Callback Logdateien im \code{'logs'}-Verzeichnis. Diese
+Dateien enthalten alle nötigen Informationen zur anschliessenden Auswertung.
 
 \subsubsection{TensorBoard-Analyse}
-Um nun die besten Hyperparameter mithilfe von TensorBoard herauszufinden, muss
-zuerst der TensorBoard-Webserver gestartet werden. Dafür navigiert man zuerst
+Um die besten Hyperparameter mithilfe von TensorBoard zu bestimmen, muss
+zunächst der TensorBoard-Webserver gestartet werden. Dafür navigiert man
 mit der Kommandozeile in das Verzeichniss, welches die Logdateien enthält.
 Dort kann dann der Webserver mithilfe folgendem Kommando gestartet werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 tensorboard --logdir .
 \end{minted}
-Nun kann mit einem WebBrowser zur angegebenen Webadresse navigieren. Meistens
-ist diese: \code{http://localhost:6006/}.
-Der Graph, welcher die Kosten bezüglich dem Testdatensatz aufzeichnet ist von
+Nun kann mit einem WebBrowser zur angegebenen Webadresse navigiert werden. In
+der Regel lautet diese: \code{http://localhost:6006/}.
+Der Graph, welcher die Kosten bezüglich des Testdatensatz aufzeichnet, ist von besonderem
 Interesse. Dieser sieht folgendermassen aus:
 \para{}
 \begin{figure}[h!]
@@ -3033,8 +3054,8 @@ Interesse. Dieser sieht folgendermassen aus:
   \caption{Kosten bezüglich dem Testdatensatz}
 \end{figure}
 \para{}
-Dank dem interaktivem Interface, kann dem Graphen entnommen werden, das folgende
-Modelle mit den angegebenen Hyperparametern, die besten Resultate liefern:
+Dank dem interaktiven Interface von TensorBoard, kann dem Graphen entnommen
+werden, welche Werte der Hyperparameter die besten Resulate liefern.
 
 \para{}
 \begin{table}[h!]
@@ -3052,83 +3073,89 @@ Modelle mit den angegebenen Hyperparametern, die besten Resultate liefern:
     \hline
   \end{tabular}
   \caption{Rangliste der besten Modelle mit ihren Eigenschaften}
+  \label{tab:rangliste}
 \end{table}
 \para{}
-Nun wird das Modell mit den optimalen Hyperparametern
-nochmals für 100 Epochen trainiert, um danach nochmals Bilder zu entrauschen.
-Diesmal stellen wir den \code{noise\_factor} bei der Generierung des Rauschen
-auf 1. Die Ergebnisse sind in Abbildung zu sehen.
+Die geeigneten Hyperparameter konnten jetzt identifizieren werden. Um die
+Leistungsfähigkeit des Modells aufzuzeigen, wird es unter Verwendung
+der gefundenen Hyperparameter nochmals zur Bildentrauschung eingesetzt.
+Das diesbezügliche Training soll wiederum 100 Epochen umfassen.
+Aufgrund der erwarteten höheren Leistungsfähigkeit, wird in diesem Durchlauf der
+\code{noise\_factor} von 0.5 (vgl. \ref{sec:generierung_verrauschte_bilder}) auf
+1 gesetzt. Das Rauschentfernen wird dadurch anspruchsvoller. Die Ergebnisse sind
+in untenstehender Abbildung zu erkennen.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{denoised.png}
-  \caption{Verrauschte Bilder, Rekonstruktionen und Orignalbilder}
+  \includegraphics[width=0.9\textwidth]{denoised_best.png}
+  \caption{Sehr verrauschte Bilder, Rekonstruktionen und Orignalbilder}
 \end{figure}
 
 
 \subsection{Diskussion des Modells}
-Nun soll das entwickelte Modell diskutiert werden bezüglich seiner Leistung und
-seinem Verhalten.
+Das entwickelte Modell soll an dieser Stelle bezüglich seiner Leistungsfähigkeit
+diskutiert werden.
 
 \subsubsection{Leistung des Modells}
-Grundsätzlich ist das Modell ziemlich gut. Es ist in der Lage ein stark
-verrauschtes Bild, welches für einen Menschen schwer entzifferbar ist,
-vollständig von seinem Rauschen zu befreien.
+Die Leistung des Modells kommt am besten in der letzten Abbildung zur
+Geltung. Da die Hyperparamter nun optimaler gewählt wurden, ist das Modell auch
+in der Lage, extrem verrauschte Ziffern wieder gut erkennbar zu machen. Dem
+menschlichen Auge fällt es schwer, noch klare Ziffern in den verrauschten Bildern
+auszumachen. Das Modell hingegen kann verblüffend gut die Ziffern rekonstruieren
+und gänzlich von ihrem Rauschen befreien. Dies ist für ein vergleichsweise
+einfaches Programm eine bemerkenswerte Leistung.
 
-\subsubsection{Hyperparameter Ergebnisse}
-Die Ergebnisse bei der Auswertung mit TensorBoard stimmen ziemlich gut mit den
+\subsubsection{Ergebnisse der Hyperparameter}
+Die Ergebnisse der Auswertung mit TensorBoard stimmen ziemlich gut mit meinen
 Erwartungen überein. Wie bereits in der Theorie geäussert, liefert die
 ReLU-Aktivierungsfunktion bessere Ergebnisse in CNNs als die Sigmoidfunktion.
-Deshalb sind die ersten Plätze der Randliste nur mit Modellen, welche die
+Deshalb sind die ersten Plätze der Rangliste (vgl. Tabelle \ref{tab:rangliste}) nur mit Modellen, welche die
 ReLU-Funktion verwenden, besetzt. Weiter ist auffallend, dass die besten Modelle
-alle möglichst tiefe Minibatch-Grössen verwenden. Dies ist naheliegend, da eine
-kleine Grösse mit einer höheren Präzesion der Gradientenapproximation
-einhergeht. Somit ist der Gradientenabstieg exakter. Jedoch existiert eine
-entsprechende Schattenseite: Die Motivation hinter der Einführung der
-Minibatches für SGD liegt darin die Trainingszeit zu verkürzen. Durch die
-kleineren Batches jedoch die Trainingszeit erheblich zu.
-Eine weiteres Ergebniss ist, dass eine erhöhte Filteranzahl das Modell bessere
-Resultate erbringen lässt. Jedoch ist der Einfluss dieses Hyperparameter am
-geringsten, von allen die hier getestet wurden.
-\para{}
-Es ist anzumerken, dass die Hyperparameter ausführlicher getestet hätten werden.
-Die Topologie des Netzes und die Schichtenarten wurden beispielsweise gar nicht
-verändert. Dies hat den praktischen Grund, dass die Anzahl Permutationen an Hyperparametern nochmals dermassen
-gestiegen wäre, dass das Training kein Ende gefunden hätte.
-Desweiteren wurden die getesteten Hyperparameter über das ganze Netz gleich
-gewählt und nicht pro Schicht getestet.
+möglichst tiefe Minibatch-Grössen verwenden. Dies ist naheliegend, da eine
+kleine Grösse mit einer höheren Präzision der Gradientenapproximation
+einhergeht. Somit ist der Gradientenabstieg exakter. Jedoch hat dies auch seine
+Schattenseite: Die Motivation hinter zur Einführung der
+Minibatches für SGD liegt darin, die Trainingszeit zu verkürzen. Durch die
+kleineren Batches nimmt die Trainingszeit jedoch erheblich zu.
+Eine weitere Feststellung ist, dass eine höhere Anzahl an Filtern das Modell zu
+besseren Resultaten führt. Jedoch ist der Einfluss dieses Hyperparameters
+geringer als jene der übrigen.
 
 \subsubsection{Verbesserungsmöglichkeiten}
-Es gibt konkrete Verbesserungsmöglichkeiten, welche nicht umgesetzt wurden bei
-der Entwicklung des Denoisers. Diese hätten wohlmöglich für noch bessere
-Resultate gesorgt. Aufgrund der Länge der Arbeit, wurde jedoch darauf
-verzichtet.
+Es gibt konkrete Verbesserungsmöglichkeiten, welche bei der Entwicklung
+des Denoisers bewusst nicht umgesetzt wurden.
+Diese hätten wohlmöglich für noch bessere Resultate gesorgt. Allerdings hätten
+sie den Umfang der vorliegenden Arbeit gesprengt.
 \para{}
-Die erste Verbesserungsmöglichkeiten bestünde darin, dass noch mehr und
-ausführlicher die Hyperparametern auszutesten. Die Topologie und die
-Schichtenarten wurden beispielsweise gar nicht verändert. Dies hat den
-praktischen Grund, dass die Anzahl Permutationen an Hyperparameter nohcmals
-dermassen gestiegen wäre, dass das Trainings kein Ende gefunden hätte.
-Ausserdem ist es schwierig bei einem Convolutional-Autoencoder verschiedene
-Topologien automatisiert zu testen, denn es muss garantiert werden, dass die
-Inputschicht die gleichen Dimensionen wie die Outputschicht besizt. Dies stellt
-sich als Herausforderung dar.
+Ein erster Ansatzpunkt hätte möglicherweise darin bestanden, mehr Werte für die
+Hyperparameter auszuprobieren, anstatt nur einige wenige zu testen.
 \para{}
-Eine weitere Modifikation, welche das Modell vermutlich deutlich verbessert hätte,
-wäre eine alternative Kostenfunktion gewesen. Beispielsweise die
-Kreuzentropy-Kostenfunktion, welche deutlich raffinierter ist als die MSE-Kostenfunktion.
-Sie stellt eine Lösung für das sogennante \keyword{Vanishing-Gradient-Problem}
-dar. Durch dessen Behebung, kommt es nicht zu einer verlansam der Trainings, im
+Auch wäre es möglich gewesen, anderweitige
+Hyperparamter einzubeziehen, welche im vorliegenden Modell keine
+Berücksichtigung gefunden haben. So wurden beispielsweise die Topologie und die
+Schichtenarten gar nicht verändert. Dies hatte den
+praktischen Grund, dass die Anzahl Permutationen an Hyperparametern nochmals
+stark zugenommen und sich die Trainingsdauer deutlich verlängert hätte.
+Ausserdem ist es schwierig, bei einem Convolutional-Autoencoder verschiedene
+Topologien automatisiert zu testen. Es muss nämlich garantiert werden, dass die
+Inputschicht die gleichen Dimensionen wie die Outputschicht besitzt. Dies stellt
+sich als weitere Herausforderung dar.
+\para{}
+Eine weitere Modifikation, welche das Modell vermutlich nochmals verbessert hätte,
+wäre eine alternative Kostenfunktion gewesen. So gilt beispielsweise die
+\keyword{Kreuzentropie-Kostenfunktion} als deutlich raffinierter ist als die MSE-Kostenfunktion.
+Sie stellt eine Lösung für das sogenannte \keyword{Vanishing-Gradient-Problem}
+dar. Durch dessen Behebung kommt es nicht --- wie im vorliegenden Modell --- zu einer Verlangsamung des Trainings im
 Verlauf des Gradientenabstiegs.
 \para{}
 Weitere Verbessungen könnten in der Wahl eines anderen
-Optimisierungsverfahren liegen. Beispielsweise könnte eine SGD-Variante mit
+Optimierungsverfahren als SGD liegen. Beispielsweise könnte eine SGD-Variante mit
 Impuls (engl.: momentum) verwendet werden. Diese Art von SGD stellt ein
-Verfahren dar, welches den Gradientenabstieg weniger sprunghaft macht und damit beschleunigt.
+Verfahren dar, welches den Gradientenabstieg weniger sprunghaft macht und damit
+zielstrebiger zum Minimum führt.
 \para{}
-Viele dieser Modifikationen wären programmatisch in TensorFlow nur wenige
-Codeänderungen entfernt gewesen. Jedoch ohne zugrundeliegende theoretische
-Behandlung der Funktionsweise, hält sich der Wert der Verwendung dieser Methoden
-in Grenzen.
+Viele dieser Modifikationen wären durch einige wenige Codeänderungen im Programm
+umsetzbar. Ohne deren theoretische Behandlung sind sie jedoch nur schwer
+nachvollziehbar und daher für die vorliegende Arbeit nicht von höherem Wert.
 
 
 %%% Local Variables:

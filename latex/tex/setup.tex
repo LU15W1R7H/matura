@@ -37,8 +37,8 @@
 % for bibliography
 \usepackage[
 backend=biber,
-citestyle=authortitle
-%style=science
+style=alphabetic,
+style=science
 ]{biblatex}
 \addbibresource{tex/refs.bib}
 \usepackage{csquotes}
@@ -59,9 +59,8 @@ citestyle=authortitle
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{2pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
 \rhead{Luis Wirth}
-\lhead{\chaptername\ \thechapter\ ---\ \leftmark}
+\lhead{Maschinelles Lernen}
 \cfoot{\thepage}
 
 % footnote at bottom
