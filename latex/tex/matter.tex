@@ -51,11 +51,9 @@ Der Grossteil der Modelle des Maschinellen Lernens zählt zum Überwachten
 Lernen, da es deutlich mehr Anwendungsmöglichkeiten bietet. Grundsätzlich steht
 daher das Überwachte Lernen im Vordergrund der Arbeit. Allerdings gehört der
 später erläuterte Autoencoder streng genommen (aufgrund einer irreführender Zuordnung) zum Unüberwachten Lernen, auch wenn
-es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion~\refbox{sec:autoencoder}).
+es der gleichen Systematik des Überwachten Lernens folgt (siehe Sektion \refbox{sec:autoencoder}).
 \para{}
-GUTE QUELLE (Pionier)
-\cite{Goodfellow-et-al-2016}
-\cite{book:hands-on}
+Quellen: \cite{Goodfellow-et-al-2016} \cite{book:hands-on}
 
 \section{Allgemeine Begriffe}
 
@@ -96,11 +94,20 @@ Um eine endgültige Bewertung des Modells durchzuführen, wird ein Testdatensatz
 $\set{T}$ genutzt, um Vorhersagen zu generieren. Dieser ist nicht Teil des Trainingsdatensatz.
 Dies garantiert, dass kein Auswendiglernen möglich ist.
 \para{}
-BEISPIEL
-
-\cite{Nielsen}
-\cite{book:hands-on}
-
+\begin{examplebox}{Beispiel für Daten}
+Um die Begriffe zu verdeutlichen, folgt nun ein Beispiel.
+Ein Modell wird darauf trainiert, die Grösse einer Person
+anhand von Alter und Gewicht abzuschätzen. Der Trainingsdatensatz besteht aus
+mehreren Samples, wobei jedes Sample Werte, welche von einer Person gemessen
+wurden, enthält. Ein Sample beinhaltet beispielsweise die Inputs
+$\vec{x} = \trans{\begin{pmatrix} \SI{18}{\year} & \SI{65}{\kg} \end{pmatrix}}$
+und die Labels
+$\vec{\hat{y}} = \trans{\begin{pmatrix} \SI{180}{\centi\metre} \end{pmatrix}}$
+umfassen. Das trainierte Modell erzeugt für die Inputs diese Sampels die
+Vorhersage $\vec{y} = \trans{\begin{pmatrix} \SI{176}{\centi\metre} \end{pmatrix}}$.
+\end{examplebox}
+\para{}
+Quellen: \cite{Nielsen} \cite{book:hands-on}
 
 \subsection{Modelle}
 Ein \keyword{Modell} ist eine mathematische Funktion $\mathit{h}\colon \set{R}^m
@@ -124,24 +131,31 @@ Diese können nicht erlernt werden, sondern müssen manuell vor dem Training gew
 Dies bedeutet, dass man ausprobieren muss, welche Werte der Hyperparameter
 die besten Resultate liefern.
 \para{}
-Das wohl einfachste Beispiel eines Regressionsmodell ist eine Regressionsgerade. Diese ist
-angemessen, falls ein einfacher linearen Zusammenhang der Form $y=\param_1x +
-\param_0$ zwischen den Features und den Labels besteht.
-Danach müssten nur noch $\param_0$ und $\param_1$ bestimmt werden.
-BEISPIELMODELL AUTO
-\para{}
 Für Maschinelles Lernen haben sich gewisse Modelle besonders gut etabliert,
 dazu zählen: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
-\\
+\para{}
 \begin{figure}[h!]
   \centering
 
-
   \caption{Schema eines Modells}
 \end{figure}
-
-\cite{book:hands-on}
+\para{}
+\begin{examplebox}{Beispiel für ein Modell}
+Es wird nun erneut ein Beispiel erläutert, um das Konzept zu verdeutlichen.
+Ein Modell soll verwendet werden, um den Zusammenhang zwischen dem
+Benzinverbrauch eines Autos und der zurückgelegten Strecke zu erlernen.
+Dafür wird angenommen, das es sich dabei um eine lineare Beziehung zwischen
+diesen Variablen handelt. Somit eignet sich das wohl einfachste
+Regressionmodell: eine Regressiongerade der From $y=\param_1x + \param_0$, wobei
+$y$ der Benzinverbrauch in Litern und $x$ die Strecke in Kilometern ist.
+Beim Trainieren werden die besten Werte für die Parameter $\param_0$ und
+$\param_1$ gesucht, welche die Vorhersagen am besten mit den Labels
+übereinstimmen lässt. Das Modell könnte somit nach dem Training folgende
+Hypothesenfunktion besitzten $y = h(x) = 0.07 \cdot x + 0$.
+\end{examplebox}
+\para{}
+Quellen: \cite{book:hands-on}
 
 \section{Training}
 \subsection{Verlust- und Kostenfunktionen}
@@ -179,9 +193,7 @@ Eine Kostenfunktion $C$ sollte folgende Eigenschaften aufweisen:
 \item{$C$ ist nach jedem $y_n$ partiell differenzierbar (erklärt in Anhang \refbox{ref:partielle_ableitungen})}
 \end{itemize}
 \para{}
-
-\cite{Nielsen}
-\cite{book:hands-on}
+Quellen: \cite{Nielsen} \cite{book:hands-on}
 
 \subsubsection{Mittlere quadratische Abweichung}
 Die bekannteste Kostenfunktion ist die ``Mittlere quadratische Abweichung''.
@@ -204,9 +216,8 @@ Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 \item{Sie ist proportional zu ${(\vec{\hat{y}}-\vec{y})}^2$}
 \item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{MSE}'=\frac{1}{n}(y_i-\hat{y_i})$}
 \end{itemize}
-
-\cite{Nielsen}
-
+\para{}
+Quellen: \cite{Nielsen}
 
 \subsection{Stochastisches Gradientenverfahren}\label{sec:gradientenverfahren}
 Beim Training eines Modells handelt es sich um ein Optimierungsproblem.
@@ -297,9 +308,8 @@ Eine Iteration des Stochastischen Gradientenverfahrens wird analog zu Gleichung 
 \begin{equation}\label{eq:sgd}
   \param_{k,t+1} = \param_{k,t} - \frac{\eta}{q} \sum_{i=1}^{q} \partderiv{C_i}{\param_{k,t}}
 \end{equation}
-
-\cite{Nielsen}
-\cite{book:hands-on}
+\para{}
+Quellen: \cite{Nielsen} \cite{book:hands-on}
 
 \section{Trainingsphänomene}
 
@@ -367,12 +377,10 @@ Sampels anzuschmiegen.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{overunderfitting.jpg}
-  \caption{Visalierung von Under- und Overfitting}
+  \caption{Visualisierung von Under- und Overfitting}
 \end{figure}
-
-\cite{wiki:overfitting}
-\cite{Goodfellow-et-al-2016}
-\cite{book:hands-on}
+\para{}
+Quellen: \cite{wiki:overfitting} \cite{Goodfellow-et-al-2016} \cite{book:hands-on}
 
 % ------------------------------------------------------------
 
@@ -386,8 +394,7 @@ dargelegt.
 \para{}
 Die wohl besten Resultate für die meisten Problemstellungen des Maschinellen Lernens (Bilderkennung,
 Spracherkennung, etc.) werden durch \keyword{Künstliche Neuronale Netze} (KNN) (engl.: Neural Network) geliefert.
-Man bezeichnet diesen Bereich des Maschinellen Lernens auch als \keyword{Deep
-  Learning}\footnote{WEITERFÜHRENDE QUELLEN BÜCHER}.
+Man bezeichnet diesen Bereich des Maschinellen Lernens auch als \keyword{Deep Learning}.
 \para{}
 Künstliche Neuronale Netze sind vor allem biologisch durch Nervensystemen von
 Lebewesen inspiriert.
@@ -399,7 +406,7 @@ müssen. Diese Arbeit wird vor allem von zwei solcher Architekturen Gebrauch mac
 Convolutional Neural Networks und sogenannte Autoencodern.
 
 \para{}
-\cite{book:hands-on}
+Quellen: \cite{book:hands-on}
 
 \section{Perzeptron}
 Um den Aufbau und die Funktion eines Künstlichen Neuronalen Netzes besser zu
@@ -469,9 +476,7 @@ aber nicht weiter beleuchtet werden sollen. Dies aus dem Grund, weil das
 Gradientenverfahren hier nicht verwendet werden kann.
 Der Grund dafür soll später in Sektion \refbox{sec:künstlicheNeuronen} erläutert werden.
 \para{}
-\cite{wiki:perzeptron}
-\cite{Nielsen}
-\cite{book:hands-on}
+Quellen: \cite{wiki:perzeptron} \cite{Nielsen} \cite{book:hands-on}
 
 \subsection{Lernpotenzial eines Perzeptrons}
 Nun stellt sich die Frage, was ein Perzeptron eigentlich erlernen kann und wofür
@@ -499,8 +504,7 @@ kann das Perzeptron die Klassifizierung nicht erlernen.
   \label{fig:linearer_Klassifikator}
 \end{figure}
 \para{}
-\cite{wiki:perzeptron}
-\cite{wiki:linear_separability}
+Quellen: \cite{wiki:perzeptron} \cite{wiki:linear_separability}
 
 \section{Erweiterung der künstlichen Neuronen}\label{sec:künstlicheNeuronen}
 Ein Perzeptron ist, wie vorhin erklärt, nur in der Lage, lineare Klassifikationen
@@ -535,9 +539,7 @@ sich fast nur in ihrer Aktivierungsfunktion.
 \\
 
 \para{}
-\cite{Nielsen}
-\cite{wiki:kuenstliches_neuron}
-\cite{book:hands-on}
+Quellen: \cite{Nielsen} \cite{wiki:kuenstliches_neuron} \cite{book:hands-on}
 
 \subsection{Perzeptronen als künstliche Neuronen}
 Nun nochmal ein Blick auf das Perzeptron im Angesicht der Aktivierungsfunktion.
@@ -583,10 +585,8 @@ Sie hat einen einzigen Stufensprung bei $x=0$ vom Wert 0 auf 1 (siehe Abb. \refb
   \label{fig:heaviside}
 \end{figure}
 
-\cite{wiki:kuenstliches_neuron}
-\cite{wiki:perzeptron}
-\cite{book:hands-on}
-
+\para{}
+Quellen: \cite{wiki:kuenstliches_neuron} \cite{wiki:perzeptron} \cite{book:hands-on}
 
 \subsection{ReLU-Neuronen}\label{sec:ReLU}
 Der nächste Schritt nach einer Stufenfunktion als Aktivierungsfunktion, sind
@@ -660,11 +660,8 @@ Kapitel \refbox{sec:CNN} im Zusammenhang mit KNNs zur Bilderkennung wieder betra
   \caption{Formel und Graph der ReLU-Funktion}
   \label{fig:relu}
 \end{figure}
-
 \para{}
-\cite{wiki:kuenstliches_neuron}
-\cite{Nielsen}
-\cite{book:hands-on}
+Quellen: \cite{wiki:kuenstliches_neuron} \cite{Nielsen} \cite{book:hands-on}
 
 \subsection{Sigmoid-Neuronen}
 Ein weiteres nicht-lineares Neuron sind sogenannte Sigmoid-Neuronen.
@@ -672,9 +669,8 @@ Den Namen haben sie von ihrer Aktivierungsfunktion: der Sigmoidfunktion $\sigma$
 \para{}
 Auch sie können in einem KNN aufgrund ihrer Nicht-Linearität zur Approximation jeder Funktion
 verwendet werden. Die Sigmoidfunktion gilt als meist verwendete
-Aktivierungsfunktion in KNNs. Dies ist damit begründet, dass sie sehr stark von
-der Linearität abweicht und auf diese Weise am schnellsten komplexe Sachverhalte
-modellieren kann. (QUELLE)
+Aktivierungsfunktion in KNNs. Sie weichst stark von der Linearität ab und ist
+somit auch in der Lage komplexe Sachverhalte zu modellieren.
 \para{}
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
 zwei Asymptoten, eine $\ds\lim_{x \to -\infty} \sigma(x)=0$
@@ -712,9 +708,7 @@ einfache Ableitung aus.
 \end{figure}
 
 \para{}
-\cite{wiki:kuenstliches_neuron}
-\cite{wiki:sigmoidfunktion}
-\cite{book:hands-on}
+Quellen: \cite{wiki:kuenstliches_neuron} \cite{wiki:sigmoidfunktion} \cite{book:hands-on}
 
 
 \section{Topologie der Künstlichen Neuronalen Netze}
@@ -753,9 +747,8 @@ und die zweite besitzt 4 Neuronen. \\
   \label{fig:nn_layers}
 \end{figure}
 
-\cite{wiki:kuenstliches_neuronales_netz}
-\cite{Nielsen}
-\cite{book:hands-on}
+\para{}
+Quellen: \cite{wiki:kuenstliches_neuronales_netz} \cite{Nielsen} \cite{book:hands-on}
 
 \section{Lernverhalten}
 Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell für jede
@@ -775,7 +768,7 @@ des Modells erklärt werden. Der Prozess der Berechnung der Outputwerte wird
 \keyword{Vorwärtspropagierung} genannt. Dieses Verfahren gibt dieser Art von KNN auch den
 Namen: Feedforward Neural Network. Für das Verständnis müssen einige Konventionen zur
 Bezeichnung der Teile eines KNNs getroffen werden. Es sollten vor allem noch
-Abbildungen \refbox{fig:nomenklatur1}) und (\ref{fig:nomenklatur2} zum
+Abbildungen \refbox{fig:nomenklatur1} und \refbox{fig:nomenklatur2} zum
 Verständnis der Nomenklatur studiert werden.
 \begin{itemize}
 \item{$l$ ist der Index einer Schicht. Die Indexierung beginnt bei 0.}
@@ -952,7 +945,7 @@ $\vec{z}^{l+1}$ angewendet werden.
 \end{equation}
 
 \para{}
-\cite{Nielsen}
+Quellen: \cite{Nielsen}
 
 \subsection{Initialisierung der Modellparameter}\label{sec:parameter_initalisieren}
 Ein weiterer Schritt, der vollzogen werden muss, bevor das Training beginnen kann, ist das
@@ -1008,9 +1001,7 @@ das etwa auch macht.
 \end{equation}
 
 \para{}
-\cite{wiki:normal_distribution}
-\cite{Nielsen}
-\cite{book:hands-on}
+Quellen: \cite{wiki:normal_distribution} \cite{Nielsen} \cite{book:hands-on}
 
 \section{Rückwärtspropagierung}\label{sec:backpropagation}
 Ein KNN wird üblicherweise, wie die meisten Modelle, mithilfe des Stochastischen
@@ -1056,8 +1047,7 @@ Ein mögliches Hindernis könnte in Overfitting bestehen.
 Da der eigentliche Beweis mathematisch ziemlich anspruchsvoll ist, wird er im
 Rahmen dieser Arbeit nicht weiter behandelt.
 \para{}
-\cite{Nielsen}
-\cite{wiki:uat}
+Quellen: \cite{Nielsen} \cite{wiki:uat}
 
 
 \pagebreak
@@ -1104,9 +1094,7 @@ Wie beim Perzeptron und bei den klassischen KNNs wurde auch hier die Architektur
 von der Biologie inspiriert.
 Der folgende Abschnitt wird die Funktionsweise eines solchen CNNs erklären.
 \para{}
-\cite{Goodfellow-et-al-2016}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:cnn}
+Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
 
 
 \section{Bilder als Tensoren}\label{sec:tensor}
@@ -1155,8 +1143,7 @@ Die Elemente der Matrix nehmen dann die Werte der Pixelkomponenten an.
 Ein schwarz-weisses Bild hat nur eine Komponente, welche die Helligkeit angibt.
 Somit wäre es eine normale 2D-Matrix $\mat{B} \in \set{R}^{h \times w}$.
 \para{}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:tensor}
+Quellen: \cite{deeplearning.ai:cnn} \cite{wiki:tensor}
 
 \section{Topologie der Convolutional Neural Networks}
 Ein CNN besteht, wie ein KNN auch, aus mehreren Schichten. Jede dieser Schichten erhält
@@ -1198,9 +1185,7 @@ In Abbildung \refbox{fig:cnn_topology} ist ein Schema eines CNNs abgebildet.
 \end{figure}
 
 \para{}
-\cite{Goodfellow-et-al-2016}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:cnn}
+Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
 
 
 \section{Convolutional-Schichten und Filter}
@@ -1226,7 +1211,7 @@ $\ten{B}$, welche über alle Pixel wandert, diese manipuliert und so wieder ein 
 $\tilde{\ten{B}}$ erzeugt.
 Mathematisch gesehen handelt es sich bei einem solchen Filter um einen Tensor,
 den sogenannten \keyword{Filtertensor} $\ten{F}$ oder auch Faltungstensor (siehe Abb.
-\refbox{fig:filter2d}) und Abb. (\ref{fig:filter3d}). Solche Filter sind immer quadratisch, wobei ihre
+\refbox{fig:filter2d}) und Abb. \refbox{fig:filter3d}. Solche Filter sind immer quadratisch, wobei ihre
 Zeilen- und Spaltenlänge mit $f$ bezeichnet wird. Dabei ist $f$ immer eine ungerade Zahl, damit ein
 Element, das sogenannte \keyword{Zentralelement} (engl.: center element), bezeichnet mit $(\ten{F})_C$,
 immer im Zentrum des Filters liegt. \\
@@ -1284,9 +1269,7 @@ generierte Bild zu sehen
 \end{figure}
 
 \para{}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:kernel}
-\cite{net:gimp_conv}
+Quellen: \cite{deeplearning.ai:cnn} \cite{wiki:kernel} \cite{net:gimp_conv}
 
 
 \subsection{Filter in CNNs}
@@ -1399,13 +1382,11 @@ Pixel generiert wird. Jedoch muss der Filter immer eine vollständige Region als
 Rezeptives Feld besitzen. Dadurch kommt das Zentralelement nie auf die Ränder des
 Bildes zu liegen, wodurch sie entfallen.
 \para{}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:convolution}
+Quellen: \cite{deeplearning.ai:cnn} \cite{wiki:convolution}
 
 \subsection{Filteroperationen als diskrete Faltungen}\label{sec:filteroperation_mathematisch}
 Eigentlich handelt es sich bei der Anwendung eines Filters auf ein Bild um
-eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.:
-\keyword{convolution}).
+eine spezifische mathematische Operation: eine \keyword{diskrete Faltung}%
 \footnote{
   Streng genommen wird in CNNs nicht eine diskrete Faltung durchgeführt, sondern
   eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied besteht darin, dass bei einer
@@ -1414,18 +1395,12 @@ eine spezifische mathematische Operation: eine \keyword{diskrete Faltung} (engl.
   diese Spiegelung statt findet. Jedoch wird
   begrifflich das Wort Faltung für beide Operationen verwendet. Im Verlauf dieser Arbeit
   wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
-}
+} (engl.: \keyword{convolution}).
+
 Daher rührt auch der Name des Convolutional Neural Networks.
 Da die Faltung als mathematische Operation relativ kompliziert ist, wird sie im
 Rahmen dieser Arbeit nicht in vollem Umfang betrachtet.
 Ihre Bedeutung soll auf die Faltung von Filtern beschränkt werden.
-\para{}
-\begin{defbox}{Diskrete Faltung}
-  Definintion Faltung
-  \begin{equation}
-    (f * g)(x) = \int_{-\infty}^{\infty} f(\tau) g(x-\tau) \text{d}\tau
-  \end{equation}
-\end{defbox}
 \para{}
 Mithilfe der Faltungsoperation können die Schritte aus Sektion
 \refbox{sec:filteroperation_intuitiv} zusammengefasst werden.
@@ -1479,9 +1454,9 @@ folgende Formel verwenden werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neu
 Für farbige Bilder ist das Vorgehen ähnlich. Es werden nun
 Tensoren dritten Ranges anstatt von Tensoren zweiten Ranges verwendet.
 Betrachten wird der
-allgemeinen Bildtensor $\ten{B}_{h \times w \times c}$, wobei $c$ die Anzahl
+allgemeinen Bildtensor $\ten{B} \in \set{R}^{h \times w \times c}$, wobei $c$ die Anzahl
 Farbkomponenten (engl.: channels) ist.
-Nun benutzt man einen Filter $\ten{W}_{f \times f \times c}$ mit beliebiger Grösse
+Nun benutzt man einen Filter $\ten{W} \in \set{R}^{f \times f \times c}$ mit beliebiger Grösse
 $f$ aber mit der gleicher Tiefe $c$ wie das Ursprungsbild $\ten{B}$.
 Dadurch muss der Filter nicht entlang der Tiefe des Bildes wandern, weil er
 die gleiche Tiefe aufweist. Das hat zur Folge, dass das verarbeitete
@@ -1493,9 +1468,7 @@ Die allgemeine Filtergleichung lautet:
 \end{equation}
 
 \para{}
-\cite{Goodfellow-et-al-2016}
-\cite{deeplearning.ai:cnn}
-\cite{wiki:cnn}
+Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
 
 \subsection{Mehrere Filter}
 Eine Filteroperation ist nicht auf einen einzigen Filter beschränkt. Es können
@@ -1521,8 +1494,7 @@ Farbkomponenten) mit $c$ bezeichnet. Somit steht $c$ sowohl die Anzahl Filter
 einer Schicht, wie auch für die Tiefe des verarbeiteten Bildes.
 
 \para{}
-\cite{Goodfellow-et-al-2016}
-\cite{deeplearning.ai:cnn}
+Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn}
 
 \subsection{Padding}
 Wie bereits erwähnt schrumpfen die Bilder (an den Rändern), wenn man einen Filter auf sie anwendet.
@@ -1575,7 +1547,8 @@ erhält man folgende Formel für das Wählen des Same-Paddings $p$.
   p = \frac{f-1}{2}
 \end{equation}
 
-\cite{deeplearning.ai:cnn}
+\para{}
+Quellen: \cite{deeplearning.ai:cnn}
 
 \subsection{Stride}
 Bis jetzt wurde bei den Filterfaltungen der Filter pro Verschiebung immer nur
@@ -1602,7 +1575,7 @@ Berücksichtigung der Filtergrösse $f$, dem Padding $p$ und dem Stride $s$.
   n_1 = \frac{n_0 + 2p - f}{s} + 1
 \end{equation}
 
-\cite{deeplearning.ai:cnn}
+Quellen: \cite{deeplearning.ai:cnn}
 
 \subsection{Vorzüge von Filtern}
 Es stellt sich nun die Frage, weshalb sich Filter für Maschinelles
@@ -1641,7 +1614,7 @@ Eine weiterer Vorteil durch dieses Parameter-Sharing ist, dass die Inputbilder
 beliebige Dimensionen besitzen können, da die Filter ihre Bewegung lediglich an
 die Grösse des Bildes anpassen müssen.
 \para{}
-\cite{deeplearning.ai:cnn}
+Quellen: \cite{deeplearning.ai:cnn}
 
 \subsection{Convolutional-Schicht}
 Nun soll all das zusammengefasst werden, was soeben über Filter geschrieben
@@ -1654,8 +1627,7 @@ Falls es sich um die erste Schicht handelt, erhält sie den Input $\ten{X}$ des 
 Die Schicht besitzt $c^l$ Varianten an Filtern $\ten{W}^l_i \in
 \set{R}^{f^l \times f^l \times c^{l-1}}$. Diese Filter haben alle die gleichen
 Eigenschaften bezüglich: der Grösse $f^l$, der Tiefe $c^{l-1}$, dem Padding
-$p^l$ und dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern
-$w^l_{i\,|\,\alpha,\beta,\gamma}$.
+$p^l$ und dem Stride $s^l$. Sie unterscheiden sich nur in den Modellparametern.
 \\
 \begin{equation*}
   \ten{W}^l_i =
@@ -1709,10 +1681,7 @@ Sigmoidfunktion (QUELLE). Deshalb wird in der Regel die ReLU-Funktion für CNNs 
   \ten{A}^{l+1} = \vecf{\varphi}[\tilde{\ten{A}}^l]
 \end{equation}
 \para{}
-\cite{wiki:cnn}
-\cite{deeplearning.ai:cnn}
-\cite{Goodfellow-et-al-2016}
-\cite{Nielsen}
+Quellen: \cite{wiki:cnn} \cite{deeplearning.ai:cnn} \cite{Goodfellow-et-al-2016} \cite{Nielsen}
 
 \section{Dimensionalitätskontrolle}
 Beim Anwenden einer Convolutional Schicht gehen Informationen verloren, da nur
@@ -1786,10 +1755,8 @@ gleichen Formeln wie für die Filteroperationen:
   n_1 = \frac{n_0 - f}{s} + 1
 \end{equation}
 \\
-
-
-\cite{deeplearning.ai:cnn}
-\cite{Goodfellow-et-al-2016}
+\para{}
+Quellen: \cite{deeplearning.ai:cnn} \cite{Goodfellow-et-al-2016}
 
 \subsection{Upsampling-Schicht}
 Die Upsampling-Schicht bildet das Gegenstück zur Pooling-Schicht, da sie die
@@ -1815,8 +1782,7 @@ Hier soll nur die Nächste-Nachbar-Interpolation betrachten werden. Sie ist
 vergleichsweise trivial, denn alle neuen Feldelemente nehmen einfach den Wert des alten
 Elements an. Der Wert auf diese Weise also vermehrt.
 \para{}
-\cite{deeplearning.ai:cnn}
-\cite{Goodfellow-et-al-2016}
+Quellen: \cite{deeplearning.ai:cnn} \cite{Goodfellow-et-al-2016}
 
 \pagebreak
 \chapter{Autoencoder}\label{sec:autoencoder}
@@ -1848,7 +1814,7 @@ weil nur deshalb keine Labels benötigt werden, da sie den Features entsprechen!
 Somit wird das Netzwerk trotzdem darauf trainiert, gewisse gewünschte Outputs
 zu liefern.
 \para{}
-\cite{book:autoencoder}
+Quellen: \cite{book:autoencoder}
 
 \section{Topologie}
 Ein Autoencoder besteht wie das klassische KNN aus Neuronen.
@@ -1982,29 +1948,58 @@ Es ist wichtig zu erkennen das der Code, welcher der Autoencoder entwickelt,
 Bildkompressionalgorithmus auf beliebige Daten angewendet werden. Stattdessen
 ist er nur sinnvoll für die Kompression von Daten zu verwenden, mit welchen er trainiert
 wurde.
-BEISPIEL EINER ABSTRAKTION (a la Menschliches Gesicht beschreiben).
+\para{}
+Die Codeentwicklung eines Autoencoder kann man sich ungefähr so vorstellen:
+Ein Autoencoder wird mit einem Datensatz von Bilder von meschlichen Gesichtern trainiert.
+Anstatt, dass der Autoencoder die Farbkomponenten der Pixel im Encoding speichert, würde er
+die Features abstrahieren. Er würde Information zum Augenabstand, zur
+Nasenbreite, zur Augenfarbe usw. als Code verwenden, welche deutlich geringeren
+Informationsgehalt besitzen.
+
 
 \section{Anwendungen}
 Die Eigenschaft, welche einen Autoencoder für die verschiedensten
 Anwendungen geeignet macht, ist die Dimensionalitätsreduktion.
-Wir werden nun einige Anwendungen grob betrachten.
+Wir werden nun zwei Anwendungen grob betrachten und eine Anwendung wird in der
+nächsten Sektion ausführlich behandelt: der Denoiser.
 
-\subsection{Kompression}
-Es handlet sich um eine verlustbehaftete Kompression.
-Dimensionalitätsreduktion. Falls lineare Neuronen, ähnlich zur Hauptkomponentenanalyse
-$\frac{p}{d}$ des ursprünglichen Speicherbedarfs. Diese Komprimierung ist dabei Datenspezifisch.
+\subsection{Datenkompression}
+Durch die Dimensionalitätsreduktion besitzt das Encoding einen geringeren
+Informationsgehalt als die ursprünglichen Daten. Aus diesem Grund kann der
+Autoencoder zur Datenkompression verwendet werden. Die komprimierten Daten
+können somit platzsparender gespeichert oder über das Internet versendet werden.
+Die komprimierten Daten brauchen um den Faktor $\frac{p}{d}$ weniger Speicher als die
+unkomprimierten, wobei $p$ die Grösse des Falschenhals und $d$ die Grösse
+der Inputschicht ist.
+Mithilfe der Decoders können die ursprünglichen Daten zurückgewonnen werden.
+Jedoch hat das Decoding einen gewissen Qualitätsverlust im Vergleich zu den
+Features erlitten. Somit können die Daten nicht in voller Qualität rekonstruiert
+werden. Es handelt sich also um \keyword{verlustbehaftete Kompression}.
+Ausserdem ist diese Kompression datenspezifisch. Das heisst, dass ein
+Autoencoder, welcher darauf trainiert wurde Bilder von Katzen zu komprimieren,
+nur sehr schlechte Rekonstruktionen für Landschaftsbilder erzeugen würde. Dies
+steht im Gegensatz zu beispielsweise JPEG-Kompression, welche sich für beliebige
+Bilder eignet, dafür aber geringere Kompressionsraten als Autoencoder aufweisen.
+\para{}
+Eine andere datenspezifische Kompressionmethode stellt die
+Hauptkomponentenanalyse (PCA) dar. Sie ist eine erweiterte Version der
+Hauptachsentransformation, welche dafür gebraucht wird um Kegelschnitte in
+Standardlage zu bringen. Falls ausschliesslich lineare Neuronen in einem
+Autoencoder verwendet werden, ist das Verhalten des Modells sehr ähnlich zu PCA.
+Jedoch sind Autoencoder PCA grundsätzlich überlegen, da sie mithilfe von
+nicht-linearen Neuronen komplexere Kompressionsmethoden entwickeln können.
 
-Datenverkehr beschleunigen, weil weniger Daten.
+\para{}
+Quellen: \cite{paper:autoencoder_compression}
 
-\subsection{Neue Datenrepräsentation}
-neues Datenformat
 
 \subsection{Visualisierung von Daten}
-Visualisierung von hochdimensionaler Daten in $\set{R}^2$ und $\set{R}^3$
-
-
-Im übernachsten Kapitel werden wir eine Anwendung noch genauer Betrachten die
-des Denoisers.
+Durch die Dimensionalitätsreduktion ist es möglich die Daten besser zu
+Visualisieren. Datensätze, welche eine hohe Dimensionalität von $\set{R}^n$
+aufweisen, können mithilfe von Autoencoder auf $\set{R}^2$ oder $\set{R}^3$
+reduziert werden. Solche Datensätze können deutlich einfacher als 2D oder 3D
+Abbildung dargestellt werden und so Aufschluss über Muster in den Daten gewähren.
+Auch hier wieder ist PCA eine alternative Methode zum Autoencoder.
 
 \section{Convolutional-Autoencoder}
 Ein Convolutional-Autoencoder ist, wie es der Name schon sagt, ein Autoencoder,
@@ -2030,8 +2025,7 @@ Dieser soll im nächsten Abschnitt betrachtet werden.
   \caption{Darstellung eines Convolutional Autoencoders}
 \end{figure}
 
-
-\cite{yt:autoencoder_faces}
+Quellen: \cite{yt:autoencoder_faces}
 
 \section{Denoising-Autoencoder}
 Ein Denoising-Autoencoder oder einfach Denoiser verkörpert einen leicht abgeänderterten
@@ -2058,19 +2052,29 @@ Autoencoder diese Rausch-Features verwerfen. Gegenüber sonstigen CNNS hat er ei
 
 
 \subsection{Generierung der verrauschten Bilder}
-Um den Autoencoder zu trainieren, müssen verrauschte Daten generieren werden.
-Dies geschieht, indem auf die Features ein additives Gauss'sches Rauschen
-anwendet wird.
-Dafür verwendet man üblicherweise eine Gauss'sche Normalverteilung
-$\mathcal{N}(\mu = 0, \sigma^2 = 1)$ mit Erwartungswert $\mu = 0$ und Varianz
-$\sigma^2 = 1$. Dieser wird jeweils ein Zufallswert entnommen und addiert ihn zu
-jedem Feature hinzu.
+Ein Denoising-Autoencoder kann verwendet werden um viele verschiedene Arten von
+Rauschen zu entfernen. Jedoch werden wir uns in dieser Arbeit auf ein
+generiertes Rauschen beschränken: das additive Gauss'sche Rauschen.
+Dieses muss generiert werden.
+Um es zu erzeugen, wird eine Gauss'sche Normalverteilung
+$\mathcal{N}(\mu = 0, \sigma^2 = 1)$ verwendet mit Erwartungswert $\mu = 0$ und Varianz
+$\sigma^2 = 1$. Für jedes Feature eines Datensatzes wird dieser Verteilung ein
+Zufallswert entnommen. Dieser Wert wird mit einem Rauschfaktor $c$
+mutlipliziert, welcher die Rauschstärke bestimmt. Das Resultate wird zum
+entsprechenden Wert des Features addiert.
 Auf diese Weise lässt sich ein verrauschter Datensatz entwickeln.
 \begin{gather*}
   r \sim \mathcal{N}(\mu = 0, \sigma^2 = 1) \\
-  \tilde{x} = x + r
+  \tilde{x} = x + c \cdot r
 \end{gather*}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.3\textwidth]{gauss_noise.png}
+  \caption{zwei-dimensionales Gauss'sches Rauschen mit Rauschfaktor $c=1$}
+\end{figure}
+\para{}
+Quelle: \cite{wiki:gauss_noise}
 
 % ------------------------------------
 
@@ -2131,8 +2135,7 @@ Website. Dort findet man auch die Dokumentation. QR CODE
 %   \qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
 % \end{wrapfigure}
 \para{}
-\cite{book:tensorflow}
-\cite{net:tf_docs}
+Quellen: \cite{book:tensorflow} \cite{net:tf_docs}
 
 \subsection{Frontend und Backend}
 Wie die meisten grossen Frameworks ist TensorFlow in Backend und
@@ -2210,7 +2213,7 @@ die Werte ausgelesen werden. \para{} Die Tensoren erlauben es den Daten
 innerhalb des Graphen belibige Dimensionaltäten und Formen anzunehmen. Es können
 sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren dritter Stufe)
 verrechnet werden. Aus diesem Grund war es auch sinnvoll in Sektion
-\refbox{sec:forward}) und im Anhang (\ref{sec:anhang_bp} die Gleichungen in
+\refbox{sec:forward} und im Anhang \refbox{sec:anhang_bp} die Gleichungen in
 Matrixform herzuleiten. \para{} In Tensorflow bezeichnet man einen Tensor mit
 \keycode{Tensor}. Er ist definiert durch seine Form und den Datentyp seiner
 Elemente. \para{} Fast alle Tensoren sind mit einer einzigen Graph-Ausführung
@@ -2372,7 +2375,7 @@ Wir werden deshalb explizit spezifizieren, dass wir die in der Theorie erklärte
 Variante der Glorot-Initialisierung mit einer Normalverteilung verwenden möchten.
 \para{}
 
-\cite{net:keras_init}
+Quellen: \cite{net:keras_init}
 
 \paragraph{Input-Schicht}
 Die Input-Schicht ist ziemlich selbsterklärend. Sie ist einfach die
@@ -2512,7 +2515,7 @@ auf $28 \times 28$ Pixel normalisiert wurde und sie im Bild zentriert sind.
 \end{figure}
 
 \para{}
-\cite{net:mnist}
+Quellen: \cite{net:mnist}
 
 \section{Setup}
 Zunächst ist es wichtig, das Entwicklungsumfeld richtig zu konfigurieren. Das
@@ -3081,7 +3084,7 @@ Leistungsfähigkeit des Modells aufzuzeigen, wird es unter Verwendung
 der gefundenen Hyperparameter nochmals zur Bildentrauschung eingesetzt.
 Das diesbezügliche Training soll wiederum 100 Epochen umfassen.
 Aufgrund der erwarteten höheren Leistungsfähigkeit, wird in diesem Durchlauf der
-\code{noise\_factor} von 0.5 (vgl. \ref{sec:generierung_verrauschte_bilder}) auf
+\code{noise\_factor} von 0.5 (vgl. \refbox{sec:generierung_verrauschte_bilder}) auf
 1 gesetzt. Das Rauschentfernen wird dadurch anspruchsvoller. Die Ergebnisse sind
 in untenstehender Abbildung zu erkennen.
 \begin{figure}[h!]
@@ -3108,7 +3111,7 @@ einfaches Programm eine bemerkenswerte Leistung.
 Die Ergebnisse der Auswertung mit TensorBoard stimmen ziemlich gut mit meinen
 Erwartungen überein. Wie bereits in der Theorie geäussert, liefert die
 ReLU-Aktivierungsfunktion bessere Ergebnisse in CNNs als die Sigmoidfunktion.
-Deshalb sind die ersten Plätze der Rangliste (vgl. Tabelle \ref{tab:rangliste}) nur mit Modellen, welche die
+Deshalb sind die ersten Plätze der Rangliste (vgl. Tabelle \refbox{tab:rangliste}) nur mit Modellen, welche die
 ReLU-Funktion verwenden, besetzt. Weiter ist auffallend, dass die besten Modelle
 möglichst tiefe Minibatch-Grössen verwenden. Dies ist naheliegend, da eine
 kleine Grösse mit einer höheren Präzision der Gradientenapproximation

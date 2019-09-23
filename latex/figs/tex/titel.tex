@@ -1,62 +1,141 @@
+\makeatletter
+\tikzoption{canvas is plane}[]{\@setOxy#1}
+\def\@setOxy O(#1,#2,#3)x(#4,#5,#6)y(#7,#8,#9)%
+{\def\tikz@plane@origin{\pgfpointxyz{#1}{#2}{#3}}%
+  \def\tikz@plane@x{\pgfpointxyz{#4}{#5}{#6}}%
+  \def\tikz@plane@y{\pgfpointxyz{#7}{#8}{#9}}%
+  \tikz@canvas@is@plane
+}
+\makeatother
 
-\begin{tikzpicture}[>=latex,white]
+\begin{tikzpicture}[line join=round,white]
+  \coordinate (offset) at (0,0,0);
 
-  \tikzstyle{netstyle} = [matrix of nodes,nodes={draw,circle,inner sep=0, minimum size=1cm},column sep=0.5cm,row sep=-9pt]
-  \tikzstyle{cl} = [draw=none,fill=none]
-  \tikzstyle{heading} = [clear,text width=15mm,text centered]
-  \tikzstyle{inp} = [fill=red!70!pagecolor]
-  \tikzstyle{hid} = [fill=blue!70!pagecolor]
-  \tikzstyle{ou} = [fill=green!70!pagecolor]
+  % #1 is size
+  % #2 is depth
+  % #3 is x-offset
+  \newcommand{\deflayer}[4]{
+    \def\s{#1/2}
+    \def\d{#2}
+    \def\o{#3}
+    \def\c{#4}
 
-  \matrix[netstyle] (mat)
-  {
-    |[inp]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]| \\
-    |[cl]| & |[hid]| & |[cl]| & |[cl]| & |[cl]| & |[hid]| & |[cl]|  \\
-    |[inp]| & |[cl]| & |[hid]|& |[cl]| & |[hid]| & |[cl]| & |[ou]| \\
-    |[cl]| & |[hid]| & |[cl]| & |[hid]| & |[cl]| & |[hid]|& |[cl]| \\
-    |[inp]| & |[cl]| & |[hid]|& |[cl]| & |[hid]| & |[cl]| & |[ou]|\\
-    |[cl]| & |[hid]| & |[cl]| & |[cl]| & |[cl]| & |[hid]| & |[cl]| \\
-    |[inp]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[cl]| & |[ou]| \\
-  };
+    \coordinate (offset) at ($(offset)+(\o+\d,0,0)$);
 
-  % input -> hidden1
-  \foreach \ai in {1,3,...,7} {
-    \foreach \aii in {2,4,6}
-    \draw[->] (mat-\ai-1) -- (mat-\aii-2);
-  }
+    \coordinate (A) at ($(offset)+(-\d, -\s, \s)$);
+    \coordinate (B) at ($(offset)+(0, -\s, \s)$);
+    \coordinate (C) at ($(offset)+(0, \s, \s)$);
+    \coordinate (D) at ($(offset)+(-\d,\s,\s)$);
 
-  % hidden1 -> hidden2
-  \foreach \ai in {2,4,...,6} {
-    \foreach \aii in {3,5}
-    \draw[->] (mat-\ai-2) -- (mat-\aii-3);
-  }
-
-  % hidden2 -> hidden3
-  \foreach \ai in {3,5} {
-    \foreach \aii in {4}
-    \draw[->] (mat-\ai-3) -- (mat-\aii-4);
-  }
-
-  % hidden3 -> output
-  \foreach \ai in {4} {
-    \foreach \aii in {3,5}
-    \draw[->] (mat-\ai-4) -- (mat-\aii-5);
+    \coordinate (E) at ($(offset)+(-\d,-\s,-\s)$);
+    \coordinate (F) at ($(offset)+(0, -\s,-\s)$);
+    \coordinate (G) at ($(offset)+(0,\s, -\s)$);
+    \coordinate (H) at ($(offset)+(-\d,\s,-\s)$);
 
   }
 
-  % hidden3 -> output
-  \foreach \ai in {3,5} {
-    \foreach \aii in {2,4,6}
-    \draw[->] (mat-\ai-5) -- (mat-\aii-6);
+  \newcommand{\drawlayer}[0]{
+    \path[draw,thick, fill=\c] (E) -- (F) -- (G) -- (H) -- cycle; % back
+    \path[draw,thick, fill=\c] (E) -- (F) -- (B) -- (A) -- cycle; % bottom
+    \path[draw,thick, fill=\c] (E) -- (A) -- (D) -- (H) -- cycle; % left
+    \path[draw,thick, fill=\c] (B) -- (F) -- (G) -- (C) -- cycle; % right
+    \path[draw,thick, fill=\c] (A) -- (B) -- (C) -- (D) -- cycle; % front
+    \path[draw,thick, fill=\c] (D) -- (C) -- (G) -- (H) -- cycle; % top
   }
 
-  % hidden3 -> output
-  \foreach \ai in {2,4,6} {
-    \foreach \aii in {1,3,...,7}
-    \draw[->] (mat-\ai-6) -- (mat-\aii-7);
-  }
+
+  \deflayer{3.0}{0.1}{0}{red}
+
+  \coordinate(1-A) at (A);
+  \coordinate(1-D) at (D);
+  \coordinate(1-H) at (H);
+  \coordinate(1-E) at (E);
+
+  \drawlayer{}
+  \deflayer{3.0}{0.1}{0.1}{green}
+  \drawlayer{}
+  \deflayer{3.0}{0.1}{0.1}{blue}
+  \drawlayer{}
+
+  \coordinate(1-B) at (B);
+  \coordinate(1-C) at (C);
+  \coordinate(1-F) at (F);
+  \coordinate(1-G) at (G);
+
+  \deflayer{1.8}{1}{2}{purple}
+
+  \coordinate(2-A) at (A);
+  \coordinate(2-B) at (B);
+  \coordinate(2-C) at (C);
+  \coordinate(2-D) at (D);
+  \coordinate(2-E) at (E);
+  \coordinate(2-F) at (F);
+  \coordinate(2-G) at (G);
+  \coordinate(2-H) at (H);
+  \draw[thick,dashed] (1-B) -- (2-A);
+  \draw[thick,dashed] (1-F) -- (2-E);
+  \draw[thick,dashed] (1-C) -- (2-D);
+  \draw[thick,dashed] (1-G) -- (2-H);
+  \drawlayer{}
+
+  \deflayer{1}{3}{2}{pink}
+
+  \coordinate(3-A) at (A);
+  \coordinate(3-B) at (B);
+  \coordinate(3-C) at (C);
+  \coordinate(3-D) at (D);
+  \coordinate(3-E) at (E);
+  \coordinate(3-F) at (F);
+  \coordinate(3-G) at (G);
+  \coordinate(3-H) at (H);
+  \draw[thick,dashed] (2-B) -- (3-A);
+  \draw[thick,dashed] (2-F) -- (3-E);
+  \draw[thick,dashed] (2-C) -- (3-D);
+  \draw[thick,dashed] (2-G) -- (3-H);
+  \drawlayer{}
+
+  \deflayer{1.8}{1}{2}{purple}
+
+  \coordinate(4-A) at (A);
+  \coordinate(4-B) at (B);
+  \coordinate(4-C) at (C);
+  \coordinate(4-D) at (D);
+  \coordinate(4-E) at (E);
+  \coordinate(4-F) at (F);
+  \coordinate(4-G) at (G);
+  \coordinate(4-H) at (H);
+  \draw[thick,dashed] (3-B) -- (4-A);
+  \draw[thick,dashed] (3-F) -- (4-E);
+  \draw[thick,dashed] (3-C) -- (4-D);
+  \draw[thick,dashed] (3-G) -- (4-H);
+  \drawlayer{}
+
+  \deflayer{3.0}{0.1}{2}{red}
+
+  \coordinate(5-A) at (A);
+  \coordinate(5-D) at (D);
+  \coordinate(5-E) at (E);
+  \coordinate(5-H) at (H);
+  \draw[thick,dashed] (4-B) -- (5-A);
+  \draw[thick,dashed] (4-F) -- (5-E);
+  \draw[thick,dashed] (4-C) -- (5-D);
+  \draw[thick,dashed] (4-G) -- (5-H);
+  \drawlayer{}
+
+  \deflayer{3.0}{0.1}{0.1}{green}
+  \drawlayer{}
+  \deflayer{3.0}{0.1}{0.1}{blue}
+  \coordinate(5-B) at (B);
+  \coordinate(5-C) at (C);
+  \coordinate(5-F) at (F);
+  \coordinate(5-G) at (G);
+  \drawlayer{}
+
+
 
 \end{tikzpicture}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../figs"

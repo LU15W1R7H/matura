@@ -67,11 +67,17 @@ dem Trainingsdatensatz ähneln. Der Diskriminator bekommt entweder
 ein Sample aus dem Trainingsdatensatz vorgelegt oder ein generiertes.
 Er muss dann entscheiden, ob es echt oder generiert ist. Beide Netzwerke lernen so,
 immer besser in ihrer Tätigkeit zu werden und betreiben gewissermassen einen Wettbewerb.
+\para{}
+NVIDIA hat 2019 ein Paper veröffentlicht, in welchem sie ein GAN implementiert
+haben. Dieses Modell generierte Bilder von meschlichen Gesichtern. Die
+Ergebnisse sind von Auge nicht von echten Fotos zu unterscheiden.
+In Abbildung (\ref{fig:nvidia_gan}) ist ein Auszug an generierten Bildern dargestellt.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[height=0.5\textwidth]{gan.png}
   \caption{generierte Gesichter von NVIDIAs GAN \cite{res:gan}}
+  \label{fig:nvidia_gan}
 \end{figure}
 
 \section*{Frameworks}
@@ -624,15 +630,12 @@ direkter Link zum entsprechenden GitHub-Repository.
 \end{appendices}
 
 \printbibliography[heading=bibintoc]
-\pagebreak
 
 \addcontentsline{toc}{chapter}{Abbildungsverzeichniss}
 \listoffigures
-\pagebreak
 
 \addcontentsline{toc}{chapter}{Tabellenverzeichniss}
 \listoftables
-\pagebreak
 
 \addcontentsline{toc}{chapter}{Selbstständigkeitserklärung}
 \chapter*{Selbstständigkeitserklärung}
