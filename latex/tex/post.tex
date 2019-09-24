@@ -34,7 +34,7 @@ Encoding (Repräsentation) eine stochastische Verteilung, welche den entwickelte
 Code darstellt.
 Auf diese Weise wird bezweckt, dass Codes, welche im Repräsentationraum nahe beieinander liegen, auch ähnliche
 Decodings (Rekonstruktionen) erzeugen. Dadurch wird der Repräsentationraum
-kontinuierlich (siehe Abb. \ref{fig:vae}). So können neue zufällige Codes
+kontinuierlich (siehe Abb. \refbox{fig:vae}). So können neue zufällige Codes
 rekonstruiert werden, welche sinnvolle Decodings erzeugen. Auf diese Weise agiert der Decoder als generatives
 Modell. Wenn beispielsweise ein VAE mit menschlichen Gesichtern
 trainiert würde, könnten neue zufällige Codes rekonstruiert werden, welche dann
@@ -47,10 +47,9 @@ Eine verständliche und gute Erklärung bietet der Youtube-Kanal
   \centering
   \includegraphics[width=0.4\textwidth]{vae.png}
   \caption{Decodingraum eines VAE trainiert auf MNIST: Ähnliche Ziffern sind
-    nahe beieinander \ref{res:vae}}
+    nahe beieinander \cite{res:vae}}
   \label{fig:vae}
 \end{figure}
-
 
 \cite{wiki:autoencoder}
 
@@ -71,14 +70,16 @@ immer besser in ihrer Tätigkeit zu werden und betreiben gewissermassen einen We
 NVIDIA hat 2019 ein Paper veröffentlicht, in welchem sie ein GAN implementiert
 haben. Dieses Modell generierte Bilder von meschlichen Gesichtern. Die
 Ergebnisse sind von Auge nicht von echten Fotos zu unterscheiden.
-In Abbildung (\ref{fig:nvidia_gan}) ist ein Auszug an generierten Bildern dargestellt.
+In Abbildung \refbox{fig:nvidia_gan} ist ein Auszug an generierten Bildern dargestellt.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[height=0.5\textwidth]{gan.png}
-  \caption{generierte Gesichter von NVIDIAs GAN \cite{res:gan}}
+  \caption{generierte Gesichter von NVIDIAs GAN \cite{paper:gan}}
   \label{fig:nvidia_gan}
 \end{figure}
+\para{}
+Quellen: \cite{paper:gan}
 
 \section*{Frameworks}
 \subsection*{TensorFlow 2.0}
@@ -91,13 +92,14 @@ davon Gebrauch zu machen. In dieser Überarbeitung werden viele Relikte aus den
 ursprünglichen TensorFlow Versionen entfernt, welche für Verwirrung sorgen
 könnten. Somit entsteht ein in sich stimmiges Framework, welches einene höheren
 Konfort aufweisen soll.
-QUELLE
+\para{}
+Quelle: \cite{net:tf_2.0}
 
 \subsection*{Alternativen}
 Es gibt neben TensorFlow und Keras noch weitere Frameworks, welche sich für
 Maschinelles Lernen eignen. Die meisten davon sind ebenfalls hauptsächlich auf Deep
 Learning ausgelegt. Sie machen auch Gebrauch von der cuDNN-Bibliothek
-von NVIDIA (erwähnt in Anhang (\ref{sec:anhang_tf})). Somit weisen sie
+von NVIDIA (erwähnt in Anhang \refbox{sec:anhang_tf}). Somit weisen sie
 ähnlich performante Implementierungen wie TF auf. Vorteile können in der
 Intuition und Einfachheit der Bedienung liegen. Viele Privatpersonen bevorzugen
 aus diesem Grund \keyword{PyTorch} gegenüber TF.
@@ -133,13 +135,13 @@ zu minimieren.
 Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$ gewählt wird, dessen
 Komponenten den Input von $f(\vec{p}_0)$ darstellen.
 Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
-Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimun ist.
+Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimum ist.
 \para{}
 Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{p}_t$ addiert einen neuen Punkt $\vec{p}_{t+1}$ bildet,
 bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der stärksten Funktionswertabnahme zeigt.
 
-Hierzu wird man den sogennanten \keyword{Gradient} $\vecf{\nabla}$ verwendet,
+Hierzu wird der sogennanten \keyword{Gradient} $\vecf{\nabla}$ verwendet,
 für den wiederum partielle Ableitungen benötigt werden.
 \para{}
 \begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
@@ -159,14 +161,16 @@ für den wiederum partielle Ableitungen benötigt werden.
 \end{defbox}
 \\
 \begin{defbox}{Gradient}
-  Der Gradient $\vecf{\nabla}$ ist ein Differentialoperator, den man auf eine
-  Funktion $f(\vec{x}) = f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$ anwendet kann, welcher ein Skalarfeld auf ein Vektorfeld (das sogennante Gradientenfeld) abbildet.\\
-  Um den Gradienten $\vecf{\nabla}f$ der Funktion $f$ zu bilden, fasst man alle partiellen Ableitungen der Funktion $f$, nach jedem
-  Argument $x_i$, in einem Vektor zusammen. Meistens bestimmt man den Gradienten
-  $\vecf{\nabla} f(\vec{p})$ in einem spezifischen Punkt $\vec{p} =
-  \trans{\begin{pmatrix} p_1 & \cdots & p_n \end{pmatrix}}$.
+  Der Gradient $\vecf{\nabla}$ ist ein Differentialoperator, der auf eine
+  skalare Funktion $f(\vec{x}) = f(x_1,\ldots,x_n): \set{R}^n \to \set{R}$
+  angewendet, das Skalarfeld auf das Gradientenfeld (Vektorfeld) abbildet.
+  Um das Gradientenfeld $\vecf{\nabla}f$ der Funktion $f$ zu bilden, fasst man alle
+  partiellen Ableitungen der Funktion $f$, nach jedem Argument $x_i$, in einem
+  Vektor zusammen.
+  Um nun einen partikulären Vektor zu bestimmen, berechnet man den Gradienten in einem spezifischen Punkt
+  $\vec{p} = \trans{\begin{pmatrix} p_1 & \cdots & p_n \end{pmatrix}}$:
   \begin{equation*}
-    \vecf{\nabla}_{\vec{x}} f(\vec{p}) = \ds\partderiv{f}{\vec{x}}(\vec{p}) =
+    \vecf{\nabla}_{\vec{x}} f(\vec{p}) =
     \begin{pmatrix}
       \ds\partderiv{f}{x_1}(\vec{p}) \\
       \vdots \\
@@ -177,14 +181,50 @@ für den wiederum partielle Ableitungen benötigt werden.
   Geometrisch ist der Gradient $\vecf{\nabla}f(\vec{p})$ einer Funktion $f$ in
   einem Punkt $\vec{p}$ der Vektor, welcher in die Richtung des steilsten
   Anstiegs von $f$ zeigt. Sein Betrag gibt die Stärke des Anstiegs an.
-  \para{}
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{grad.pdf}
-    %\caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
-  \end{center}
 \end{defbox}
+\\
+\begin{examplebox}{Beispiel für partielle Ableitungen}
+  Als Beispiel wird die Funktion $f(x,y) = x^2 + y^2 - 2$ betrachtet, welche von
+  den Variabeln $x$ und $y$ anhängt.
+  Um die partielle Ableitung bezüglich $x$ zu bestimmen, muss $y$ als konstant
+  betrachten werden. Beispielsweise kann man $y=0$ wählen, damit die Funktion
+  $g(x) = f(x,0) = x^2 - 2$ nur noch von der Variable $x$ abhängt.
+  Leitet man nun nach $x$ ab, erhält man:
+  $\deriv{g(x)}{x} = g'(x) = 2x$.\\
+  Dies entspricht der partiellen Ableitung von $f$ nach $x$:
+  \[ \partderiv{f(x,y)}{x} = 2x \]
+  Die partielle Ableitung von $f$ nach $y$ lautet entsprechend:
+  \[ \partderiv{f(x,y)}{y} = 2y \]
+\end{examplebox}
+\\
+\begin{examplebox}{Gradientenbeispiel}
+  Als Beispiel für den Gradienten wird die Funktion $f(x,y) = x \cdot \exp(-x^2 - y^2)$ betrachtet.
+  Werden die partiellen Ableitungen nach den Argumenten $x$ und $y$ gebildet,
+  so erhält man (Kettenregel und Produktregel):
+  \[ \partderiv{f}{x} = \exp(-x^2 - y^2) \cdot (1-2x^2) \]
+  \[ \partderiv{f}{y} = \exp(-x^2 - y^2) \cdot (-2xy) \]
+  Diese beiden partiellen Ableitungen werden zum Gradient $\vecf{\nabla} f$ zusammengefasst:
+  \[ \vecf{\nabla}f(x,y) =
+    \begin{pmatrix}
+      \ds\partderiv{f}{x} \\[8pt]
+      \ds\partderiv{f}{y} \\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \exp(-x^2 - y^2) \cdot (1-2x^2) \\[5pt]
+      \exp(-x^2 - y^2) \cdot (-2xy) \\
+    \end{pmatrix}
+ \]
+ In der unterstehenden Abbildung ist das Konturdiagramm der Funktion $f$
+ zusammen mit dem Gradientenfeld (blaue Vektoren) dargestellt.
+
+  \begin{center}
+    \includegraphics[width=0.68\textwidth]{grad.pdf}
+    % \caption{ein Skalarfeld als Konturdiagramm mit zugehörigem Gradientenfeld}
+  \end{center}
+\end{examplebox}
 \para{}
-Da der Gradient in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
+Da der Gradient also in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
 $\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Demnach sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ weisen.
 Jetzt kann das iterative Annähern an das lokale Minimum folgendermassen beschrieben
 werden:
@@ -212,10 +252,10 @@ $\vec{p}_0$ gewählt wurde.
 \cite{book:hands-on}
 \cite{Nielsen}
 
-\chapter{Herleitung der Rückwärtsprogagierung für KNNs}\label{sec:anhang_bp}
+\chapter{Herleitung der Rückwärtspropagierung für KNNs}\label{sec:anhang_bp}
 Da ein KNN, wie der Name schon andeutet, vernetzt ist, können die partiellen
 Ableitungen einer Schicht anhand seiner Nachbarsschichten berechnet werden.
-Dies ist auch der namensgebende Grundgedanke der Rückwärtsprogagierung: Man
+Dies ist auch der namensgebende Grundgedanke der Rückwärtspropagierung: Man
 beginnt damit die partiellen Ableitung der letzten Schicht zu bestimmen und
 berechnet dann retrograd Schicht für Schicht die vorherigen
 partiellen Ableitungen, bis zur Inputsschicht. \\
@@ -235,7 +275,7 @@ Es ist sinnvoll, für das Aufstellen dieser Gleichungen das Netzwerk als
   der Kettenregel die Ableitungen unkompliziert bestimmt werden.
 \end{infobox}
 \para{}
-\begin{examplebox}{Beispiel: Computational Graph}
+\begin{examplebox}{Beispiel eines Computational Graph}
   Untenstehend ist ein Beispiel eines Computational
   Graph zusammen mit der Herleitung der partiellen Ableitungen dargestellt.
   \para{}
@@ -246,7 +286,7 @@ Es ist sinnvoll, für das Aufstellen dieser Gleichungen das Netzwerk als
 \end{examplebox}
 \para{}
 \pagebreak
-Der erste Schritt der Rückwärtsprogagierung besteht darin, dass die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
+Der erste Schritt der Rückwärtspropagierung besteht darin, dass die partiellen Ableitungen $\ds\partderiv{C}{z_j^l}$
 der Kostenfunktion $C$ bezüglich den gewichteten Summen $z_j^l$ aller Schichten
 berechnet werden müssen. Daraus lassen sich dann später die partiellen Ableitungen
 bezüglich den Gewichten $\ds\partderiv{C}{w_{j,k}^l}$ und bezüglich den Neigungen
@@ -254,14 +294,14 @@ $\ds\partderiv{C}{b_j^l}$ ermitteln.
 \para{}
 Zur Übersichtlichkeit definiert man einen \keyword{Fehler} $\delta_j^l$ für
 jedes $j$-te Neuron in jeder $l$-ten Schicht, welcher die partielle Ableitung bezüglich der
-gewichteten Summe dieses Neurons darstellt (siehe Gl. (\ref{eq:BP0}). Ebenfalls definiert man analog einen Fehlervektor
+gewichteten Summe dieses Neurons darstellt (siehe Gl. \refbox{eq:RP0}). Ebenfalls definiert man analog einen Fehlervektor
 $\vec{\delta}^l$, welcher alle Fehler $\delta_j^l$ einer Schicht $l$
-zusammenfasst (siehe Gl. (\ref{eq:BP0a})). Nun heisst es, diesen Wert für jedes Neuron jeder Schicht zu
+zusammenfasst (siehe Gl. \refbox{eq:RP0a}). Nun heisst es, diesen Wert für jedes Neuron jeder Schicht zu
 berechnen.
 \\
 \begin{gather}
-  \tag{BP0}\label{eq:BP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
-  \tag{BP0a}\label{eq:BP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
+  \tag{RP0}\label{eq:RP0} \delta_j^l \coloneqq \partderiv{C}{z_j^l} \\
+  \tag{RP0a}\label{eq:RP0a} \vec{\delta}^l \coloneqq \trans{\begin{pmatrix} \ds\partderiv{C}{z_1^l} & \ds\partderiv{C}{z_2^l} & \cdots & \ds\partderiv{C}{z_{|l|}^l} \end{pmatrix}}
 \end{gather}
 \\
 Da die Kostenfunktion unmittelbar auf die letzte Schicht $L$ angewendet wird, beginnt
@@ -275,22 +315,22 @@ Nun wird ein Computational Graph aufgestellt, um die partiellen Ableitungen zu b
   \label{fig:cg_L}
 \end{figure}
 \para{}
-Aus dem Computational Graph der Abbildung (\ref{fig:cg_L}) kann entnommen werden, dass die Kosten $C$ eine Funktion
+Aus dem Computational Graph der Abbildung \refbox{fig:cg_L} kann entnommen werden, dass die Kosten $C$ eine Funktion
 in Abhängigkeit von den letzten Aktivierungen $a_j^L$ ist. Diese ist wiederum
 eine Funktion in Abhängigkeit von der jeweiligen gewichteten Summe $z_j^L$.
-Somit kann mithilfe der Kettenregel die Beziehung (\ref{eq:BPh1})
+Somit kann mithilfe der Kettenregel die Beziehung \refbox{eq:RPh1}
 aufstellt werden.
 \\
-\begin{equation}\label{eq:BPh1}
+\begin{equation}\label{eq:RPh1}
   \delta_j^L = \partderiv{C}{z_j^L} = \partderiv{C}{a_j^L} \cdot \partderiv{a_j^L}{z_j^L}
 \end{equation}
 \\
 Da $a_j^L$ durch die Anwendung der Aktivierungsfunktion $\varphi$ auf $z_j^L$
 gebildet wird, ist $\ds\partderiv{a_j^L}{z_j^L}$ die Ableitung der Aktivierungsfunktion
-$\varphi'(z_j^L)$. Auf diese Weise lässt sich die erste (\ref{eq:BP1}) von vier
-wichtigen Gleichungen für die Rückwärtsprogagierung herleiten.
+$\varphi'(z_j^L)$. Auf diese Weise lässt sich die erste \refbox{eq:RP1} von vier
+wichtigen Gleichungen für die Rückwärtspropagierung herleiten.
 \\
-\begin{equation}\tag{BP1}\label{eq:BP1}
+\begin{equation}\tag{RP1}\label{eq:RP1}
   \delta_j^L = \partderiv{C}{a_j^L} \cdot \varphi'(z_j^L)
 \end{equation}
 \\
@@ -330,32 +370,32 @@ neue Operation eingeführt werden: das Hadamard-Produkt.
 \para{}
 
 Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
-kann der Fehlervektor der letzten Schicht nach Gleichung (\ref{eq:BPh0})
+kann der Fehlervektor der letzten Schicht nach Gleichung \refbox{eq:RPh0}
 berechnen werden.
 
-\begin{equation}\label{eq:BPh0}
+\begin{equation}\label{eq:RPh0}
   \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'[\vec{z}^L]
 \end{equation}
 
 Dabei ist der erste Operand des Hadamard-Produkts nichts anderes als
 der Gradient $\vecf{\nabla}_{\vec{a}^L} C$ der Kostenfunktion $C$ bezüglich dem Aktivierungsvektor
 $\vec{a}^L$ der letzten Schicht. Dieser Gradient kann ermittelt werden, indem die
-vektorisierte Ableitungsfunktion für die gewählte Kostenfunktion gebildet wird. Würde die
-Mittlere quadratischen Abweichung $C = \frac{1}{2|L|}(\vec{\hat{y}} -
-\vec{a}^L)^2$ als Kostenfunktion gewählt werden, ergibbt sich
-$\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}}) \cdot \frac{1}{|L|}$.
+vektorisierte Ableitungsfunktion für die gewählte Kostenfunktion gebildet wird.
+Würde $C_{\text{MSE}} = \frac{1}{2|L|}(\vec{\hat{y}} -
+\vec{a}^L)^2$ als Kostenfunktion gewählt werden,
+ergäbe sich $\vecf{\nabla}_{\vec{a}^L} C = (\vec{a}^L - \vec{\hat{y}}) \cdot \frac{1}{|L|}$.
 \para{}
-Daraus folgt die kompakte Matrix-Version (\ref{eq:BP1a}) der Gleichung
-(\ref{eq:BP1}), welche den Fehlervektor für die letzte Schicht berechnet.
+Daraus folgt die kompakte Matrix-Version \refbox{eq:RP1a} der Gleichung
+\refbox{eq:RP1}, welche den Fehlervektor für die letzte Schicht berechnet.
 \\
-\begin{equation}\tag{BP1a}\label{eq:BP1a}
+\begin{equation}\tag{RP1a}\label{eq:RP1a}
   \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
 \end{equation}
 \\
 Nun soll eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
 der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetzigen Schicht
 erarbeiten werden. Zu diesem Zweck ist wiederum ein Computational Graph aufzustellen
-(siehe Abb. (\ref{fig:cg_L-1})).
+(siehe Abb. \refbox{fig:cg_L-1}).
 \para{}
 \begin{figure}[h!]
   \centering
@@ -364,9 +404,9 @@ erarbeiten werden. Zu diesem Zweck ist wiederum ein Computational Graph aufzuste
   \label{fig:cg_L-1}
 \end{figure}
 \para{}
-Es gilt erneut die Gleichung (\ref{eq:BPh1}) für die Berechnung des Fehlers $\delta_j^{l-1}$.
+Es gilt erneut die Gleichung \refbox{eq:RPh1} für die Berechnung des Fehlers $\delta_j^{l-1}$.
 \\
-\begin{equation}\tag{\ref{eq:BPh1}}
+\begin{equation}\tag{\refbox{eq:RPh1}}
   \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
 \end{equation}
 \\
@@ -375,9 +415,9 @@ Beim Übergang einer Schicht ($l-1$) zur Schicht $l$ beinflusst eine Aktivierung
 $a_j^{l-1}$ alle gewichteten Summen $z_k^l$. Mit der Kettenregel folgt daher,
 dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
 $\ds\partderiv{C}{z_k^l} \cdot \ds\partderiv{z_k^l}{a_j^{l-1}}$ sein muss.
-Daraus ergibt sich Gleichung (\ref{eq:BPh2}).
+Daraus ergibt sich Gleichung \refbox{eq:RPh2}.
 \\
-\begin{equation}\label{eq:BPh2}
+\begin{equation}\label{eq:RPh2}
   \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \partderiv{C}{z_k^l} \cdot \partderiv{z_k^l}{a_j^{l-1}} \right)
 \end{equation}
 \\
@@ -387,14 +427,14 @@ $w_{k,j}^{l-1}$ multipliziert.
 Dadurch entspricht diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade dem
 Gewicht selbst. Desweiteren ist $\ds\partderiv{C}{z_k^l}$ per Definition der
 Fehler $\delta_k^l$. Mit dieser Erkenntnis lässt sich die zweite essentielle
-Gleichung (\ref{eq:BP2}) für die Rückwärtsprogagierung aufstellen.
+Gleichung \refbox{eq:RP2} für die Rückwärtspropagierung aufstellen.
 \\
-\begin{equation}\tag{BP2}\label{eq:BP2}
+\begin{equation}\tag{RP2}\label{eq:RP2}
   \delta_j^{l-1} = \varphi'(z_j^{l-1}) \cdot \sum_{k=1}^{|l|} \left( \delta_k^l \cdot w_{k,j}^{l-1} \right)
 \end{equation}
 \\
 Auch diese Gleichung soll in der Matrixschreibweise dargestellt werden. Zu
-diesem Zweck wird der Erweiterungen auf alle gewichteten Summen begonnen:
+diesem Zweck wird mit der Erweiterungen auf alle gewichteten Summen begonnen:
 \\
 \begin{equation*}
   \vec{\delta}^{l-1} = \vecf{\varphi}'[\vec{z}^{l-1}] \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|}^{l-1} \cdot \delta_k^l \end{pmatrix}}
@@ -413,7 +453,7 @@ und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$.
     \vdots & \vdots & \ddots & \vdots \\
     w_{1,|l-1|}^{l-1} & w_{2,|l-1|}^{l-1} & \cdots & w_{|l|,|l-1|}^{l-1}
   \end{pmatrix}
-  \trans{\begin{pmatrix} \delta_1^l & \cdots & \delta_{|l|}^l \end{pmatrix}} \\=
+  \trans{\begin{pmatrix} \delta_1^l & \cdots & \delta_{|l|}^l \end{pmatrix}} \\[5pt]=
   \trans{\begin{pmatrix}
       w_{1,1}^{l-1} & w_{1,2}^{l-1} & \cdots & w_{1,|l-1|}^{l-1} \\
       w_{2,1}^{l-1} & w_{2,2}^{l-1} & \cdots & w_{2,|l-1|}^{l-1} \\
@@ -424,20 +464,20 @@ und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$.
 \end{gather*}
 \para{}
 Damit wurde die die rekursive Fehlerdefinition in Matrixschreibweise
-abbgebildet. Und wir erhalten die kompakte Version (\ref{eq:BP2a}) der zweiten wichtigen Formel (\ref{eq:BP2}).
+ausgedrückt. Und wir erhalten die kompakte Version \refbox{eq:RP2a} der zweiten wichtigen Formel \refbox{eq:RP2}.
 \\
-\begin{equation}\tag{BP2a}\label{eq:BP2a}
+\begin{equation}\tag{RP2a}\label{eq:RP2a}
   \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
 \end{equation}
 \\
-In einem letzten Schritt sind nun noch die noch Formeln herzuleiten, mit welchen
+In einem letzten Schritt sind nun noch die Formeln herzuleiten, mit welchen
 anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
 der Neigungen berechnen werden können.
 \para{}
 Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
-Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel (\ref{eq:BPh3}).
+Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel \refbox{eq:RPh3}.
 \\
-\begin{equation}\label{eq:BPh3}
+\begin{equation}\label{eq:RPh3}
   \partderiv{C}{b_j^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{b_k^l}
 \end{equation}
 \\
@@ -445,62 +485,62 @@ Der erste Term ist hierbei per Definition der Fehler $\delta_j^{l+1}$ und der
 zweite Term lässt sich auf 1 kürzen, da die Summe $z_k^{l+1}$ nur aus
 $b_k^l$ besteht und aus Summanden, welche für die partielle Ableitung als konstant gelten.
 Somit entspricht die Ableitung der Neigung gerade dem Fehler, womit die
-dritte (\ref{eq:BP3}) von vier essentiellen Gleichungen ermittelt wurde.
+dritte \refbox{eq:RP3} von vier essentiellen Gleichungen ermittelt wurde.
 \\
-\begin{equation}\tag{BP3}\label{eq:BP3}
+\begin{equation}\tag{RP3}\label{eq:RP3}
   \partderiv{C}{b_j^l} = \delta_j^{l+1}
 \end{equation}
 \\
 Somit entspricht der Kostengradient bezüglich der Neigung dem Fehlervektor.
 \\
-\begin{equation}\tag{BP3a}\label{eq:BP3a}
+\begin{equation}\tag{RP3a}\label{eq:RP3a}
   \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
 \end{equation}
 \\
 Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
 gewichteten Summe $z_j^{l+1}$. Dadurch gilt für die partiellen Ableitungen der
-Kosten nach dem Gewicht die Gleichung (\ref{eq:BPh4}).
+Kosten nach dem Gewicht die Gleichung \refbox{eq:RPh4}.
 \\
-\begin{equation}\label{eq:BPh4}
+\begin{equation}\label{eq:RPh4}
   \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
 \end{equation}
 \\
 Dabei lässt sich der erste Teil der Gleichung entspricht wieder dem Fehler $\delta_j^{l+1}$.
 Die zweite partielle Ableitung ist gerade die Aktivierung $a_k^l$, da sich die
 gewichtete Summe aus der Multiplikation des Gewichtes mit der Aktivierung ergibt.
-Auf diese Weise ensteht die letzte der vier essentiellen Gleichungen (\ref{eq:BP4}).
-\begin{equation}\tag{BP4}\label{eq:BP4}
+Auf diese Weise entsteht die letzte der vier essentiellen Gleichungen \refbox{eq:RP4}.
+\begin{equation}\tag{RP4}\label{eq:RP4}
   \partderiv{C}{w_{j,k}^l} = \delta_j^{l+1} \cdot a_k^l
 \end{equation}
 \\
-Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
-\begin{equation}\tag{BP4a}\label{eq:BP4a}
+Die Matrix-Version lässt sich als Gleichung \refbox{eq:RP4a} ausdrücken.
+\begin{equation}\tag{RP4a}\label{eq:RP4a}
   \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
 \end{equation}
 
-\begin{graybox}{Zusammenfassung Rückwärtsprogagierung}
+\begin{graybox}{Zusammenfassung Rückwärtspropagierung}
   \begin{enumerate}
     \setcounter{enumi}{-1}
   \item{Vorwärtspropagierung durchführen und dabei alle Zwischenwerte beibehalten.}
     \item{Berechnung des Fehlers $\vec{\delta}^L$ der letzten Schicht, anhand
         der Formel:
-      \begin{equation}\tag{BP1a}
+      \begin{equation}\tag{RP1a}
         \vec{\delta}^L = \vecf{\nabla}_{\vec{a}^L}C \odot \vecf{\varphi}'(\vec{z}^L)
       \end{equation}
       }
       \item{Rekursive Berechnung des Fehlers $\vec{\delta}^{l-1}$ der jeweils
           vorherigen Schicht, anhand der Formel:
-          \begin{equation}\tag{BP2a}
+          \begin{equation}\tag{RP2a}
             \vec{\delta}^{l-1} = (\trans{(\mat{W}^{l-1})} \vec{\delta}^l) \odot \vecf{\varphi}'[\vec{z}^{l-1}]
           \end{equation}
         }
       \item{Berechnung des Kostengradienten bezüglich der Neigungen, anhand der Formel:
-          \begin{equation}\tag{BP3a}
+          \begin{equation}\tag{RP3a}
             \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
           \end{equation}
         }
       \item{Berechnung des Kostengradienten bezüglich den Gewichten anhand der Formel:
-          \begin{equation}\tag{BP4a}
+          \begin{equation}\tag{RP4a}
             \vecf{\nabla}_{\mat{W}^l} C = \vec{\delta}^{l+1} \trans{(\vec{a^l})}
           \end{equation}
         }
@@ -515,66 +555,61 @@ Die Matrix-Version lässt sich als Gleichung (\ref{eq:BP4a}) ausdrücken.
 
 \chapter{Performance von TensorFlow}\label{sec:anhang_tf}
 \section*{Devices}
-Die Kernstücke des Masters sind die verschiedenen \keyword{Devices}, auf
+Die Kernstücke des TensorFlow Backends sind die verschiedenen \keyword{Devices}, auf
 welchen die Berechnungen ausgeführt werden. Ein Device ist jedliche Art von
-Computerprozessor, auf welchem die Graphen ausführt werden können.
-Zu diesen Prozessoren gehören die CPU (Hauptprozessor) und die GPU (Grafikprozessor).
-\footnote{
-  Die normale TensorFlow Version ist nicht in der Lage die GPU zu verwenden. Um
-  sie verfügbar zu machen, muss man die GPU Version installieren. Wir werden im folgenden
-  von der GPU-Version ausgehen, da sie erhebliche Performance Vorteile gewährt.
-}
+Computerprozessor, auf welchem die Computational Graphs ausführt werden können.
+Zu diesen Prozessoren gehören die CPU (Hauptprozessor) und die GPU
+(Grafikprozessor), falls die CUDA-Version von TF installiert wurde.
 \para{}
-
-Der Master analysiert die verfügbaren Devices und bewertete sie, bezüglich
-ihren Fähigkeiten. Anhand dieser Bewertung entscheidet der Master dann, auf
-welchem Device die Berechnugen ausgefürt werden.
+Das Backend analysiert die verfügbaren Devices und bewertete sie, bezüglich
+ihren Fähigkeiten. Anhand dieser Bewertung wird dann entschieden, auf
+welchem Device die Berechnugen ausgefürt werden%
 \footnote{
   Es ist möglich die Graphen auf mehreren Devices gleichzeitig auszuführen und
   so noch schneller die Modelle zu trainieren. Dies ist jedoch erst für sehr
-  aufwendige Projekte nötig und erfordert ein fortgeschritteneres Versteantniss.
-}
+  aufwendige Projekte nötig und erfordert ein fortgeschritteneres Verstäntniss.
+}.
 Insofern GPUs zur Verfügung stehen, wählt TF grundsätzlich immer diese, da
 sie Tensoroperationen deutlich schneller als CPUs verarbeiten können.
 
 \section*{Performance und Hardwarebeschleunigung}
 Nun möchten wir die Gründe für die beachtliche Performance von TF erschliessen.
-Der erste wichtiger Faktor dabei ist, dass der Master hauptsächlich in C++
+Der erste wichtige Faktor dabei ist, dass das Backend grösstenteils in C++
 geschrieben ist. C++ ist eine Programmiersprache die sehr nahe am Maschinen-Code
 (engl.: low-level) ist. Somit ist der Code sehr hardwarenah und kann so
 schneller ausgeführt werden. Der Nachteil besteht dafür darin, dass die Programmiersprache
-ziemlich verbos ist. Das bedeutet man braucht viel Code um eine relativ einfach Idee
+ziemlich verbos ist. Das bedeutet man braucht viel Programmcode, um eine relativ einfach Idee
 auszudrücken. Deshalb wurde der Client von TF in Python geschrieben, was
 Abhilfe verschafft und so ein relativ einfaches und unverboses Entwickeln ermöglicht.
 \para{}
-Der andere wichtige Aspekt für die Performance ist wohl die sogennante
-\keyword{Hardwarebeschleuniging} (engl. Hardware Acceleration), von welcher TF
-gebrauch macht. \\
+Der andere wichtige Aspekt für die Performance ist die sogennante
+\keyword{Hardwarebeschleuniging} (engl. hardware acceleration), von welcher TF
+Gebrauch macht.
 Hardwarebeschleunigung bezeichnet eine Sammlung an Methoden,
 bei welchen man spezialisierte Hardware verwendet um rechenintensive Aufgaben
 schneller auszuführen. Die Architektur einer CPU ist zwar so ausgelegt, dass
 sie beliebige Aufgaben ausführen kann, jedoch meistens nicht besonders
-effizient. Deshalb wurden einerseits neue externe Hardwarebausteine, wie die
-GPU, welche sich für Grafikberechnungen besonders eignet, entwickelt.
+effizient. Deshalb existieren einerseits alternative externe Hardwarebausteine, wie die
+GPU, welche sich für Grafikberechnungen besonders eignen.
 Andererseits wurde auch die interne Architektur der CPU so angepasst, dass sie
-auch spezielisierte Aufgaben besser meistert.
+auch spezialisierte Aufgaben besser meistert.
 \para{}
-Der Grossteil der Hardwarebeschleunigung wird durch die
-\keyword{Parallelisierung} von Operationen erreicht. Dabei spaltet man eine
+Eine solche Architekuranpassung stellt die
+\keyword{Parallelisierung} von Operationen dar. Dabei spaltet man eine
 rechenintensive Aufgabe in viele Teilaufgaben auf, welche gleichzeitig in
 gleicher Weise ausgeführt werden. Voraussetzung dafür ist, dass die
-Teilaufgaben unabhängig voneinander bearbeitet werden können. \\
+Teilaufgaben alle die gleichen Schritte umfassen und unabhängig voneinander bearbeitet werden können.
 Ein typisches Beispiel für die Paralleliserbarkeit von Operationen ist die
 Matrixmultiplikation. Möchte man eine Matrix $\mat{A} \in \set{R}^{n \times m}$ mit
 einer zweiten Matrix $\mat{B} \in \set{R}^{m \times p}$ multiplizieren, muss man
-praktisch $m$-mal die gleichen Schritte ausführen: Man berechnet jeweils das
+praktisch $m$-mal den gleichen Schritte ausführen: Man berechnet jeweils das
 Skalarprodukt zwischen der $i$-ten Zeile von $\mat{A}$ und der $i$-ten Spalte
-von $\mat{B}$. Alle diese Skalarprodukte haben keinen Einfluss aufeindander und
+von $\mat{B}$. Alle diese Skalarprodukte haben keinen Einfluss aufeinander und
 können so unabhänigig mit der gleichen Prozedur berchnet werden.
 \para{}
-Allgemein eignen sich Tensoroperatiön für Parallelisierung und damit zur Hardwarebeschleunigung.
+Allgemein eignen sich Tensoroperationen zur Parallelisierung und damit zur Hardwarebeschleunigung.
 Nun ist auch ersichtlich, weshalb TensorFlow als Hauptdatentyp Tensoren
-verwendet; damit es gebrauch von der Hardwarebeschleunigung machen kann. wir fast alle Gleichungen des Maschinellen
+verwendet.
 
 \subsection*{CPU-Beschleunigung}
 Die Hardwarebeschleunigung der CPU ist für TensorFlow nur von geringfügiger
@@ -582,42 +617,27 @@ Relevanz, da TF sich vorallem für GPU-Hardwarebeschleunigung eignet
 und dafür optimiert ist. Ausserdem ist es praktisch unmöglich die gleiche
 Performance von TF mit einer CPU zu erreichen, welche mit einer GPU möglich ist.
 \para{}
-Hauptsächlich parallelisiert TensorFlow mithilfe von der \keyword{SIMD}. SIMD
-ist ein Prinzip zur Paralleliserung einer Insturktion für mehrere
-Dateneinheiten und steht deshalb für ``Single Instruction, Multiple Data''.
-SIMD umfasst einerseits die spezifische CPU-Architektur und den dazugehörigen
-Befehlssatz, um die Operatiön zu parallelisieren.
-Es gibt verschiedene
+Die Parallelisierung auf der CPU wird einerseits durch sogennantes \keyword{SIMD}
+(``single instruction, mutiple data'') bewerkstelligt. Dies stellt ein Prinzip
+dar, welches die gleiche Instruktion parallel auf mehrere Dateneinheiten
+ausführt.
+Andererseits werden auf der CPU die ganzen Berechnung auf mehreren sogennanten
+\keyword{Threads} ausgeführt. Da fast alle heutigen CPUs mehrere Kerne
+besitzten, können nicht nur auf einem einzigen sondern gleich auf mehreren
+Kernen gerechnet werden.
 
-SSE4.1, SSE4.2, AVX, AVX2, FMA
+\subsection*{GPU-Beschleunigung}
+Die Hardwarebeschleunigung für die Grafikkarte wird durch ein spezielles
+externes Framework erreicht. TensorFlow verwendet \keyword{cuDNN} (``NVIDIA CUDA
+deep learning neural network library'') eine von
+NVIDIA entwickelte Programmbibliotheck um Deep Learning performant auf einer NVIDIA-GPU
+auszuführen. Praktisch alle professionellen Deep-Learning-Frameworks machen
+Gebrauch von diesem Framework. Dieses ist in der Programmiersprache
+\keyword{CUDA} geschrieben. CUDA ist ebenfalls von NVIDIA entwickelt worden und
+ist eine zu C++ sehr ähnliche Programmiersprache, welche --- im Gegensatz zu C++
+--- nicht auf der CPU ausgeführt wird sondern auf der GPU.
 
-\subsection*{GPU-Beschleunigung durch cuDNN und CUDA}
-cuDNN ist die NVIDIA CUDA Deep Neural Network library. Sie ist eine
-GPU-beschleunigte Bibliothek für deep neural networks. Sie stellt
-implementation für standard routines wie Vorwärts- und Rückwärtspropagierung bereit.
-
-\subsection*{CUDA}
-\subsection*{cuDNN}
-
-
-\subsubsection*{Automatische Gradientenberechnung}
-Als wir die Rückwärtsprogagierung hergeleitet haben, haben wir mithilfe von
-Computational Graphs die Kettenregel angewandt um die partiellen Ableitungen zu
-bilden. Genau das gleiche macht TF, jedoch automatisiert. Aus diesem Grund ist
-TF auch datenstromorient.
-
-
-% Many optimization algorithms including common ml training algorithms like SGD
-% compute the gradient of a cost function with respect to a set of inputs.
-% Therefor TF has a built-in support for automatic gradient computation.
-% It extends the TF Graph using following procedure:
-% If TF needs to compute the gradient of a tensor $C$ with respect to some tensor
-% $I$ it first finds the path in the computational graph from $I$ to $C$. It then
-% backtracks from $C$ to $I$ and for each operation on the backward path it adds a
-% node to the graph composing the partial gradients using the chain rule. The
-% newely added node computes the gradient function for the corresponding operation
-% in the forward path.
-% Code: [db,dW,dx] = tf.gradients(C, [b,W,x])
+% --------------------------
 
 \chapter{GitHub}
 Der gesamte Programmcode und alle \LaTeX{} Dokumente sind auf meinem
@@ -639,7 +659,10 @@ direkter Link zum entsprechenden GitHub-Repository.
 
 \addcontentsline{toc}{chapter}{Selbstständigkeitserklärung}
 \chapter*{Selbstständigkeitserklärung}
-Ich erkläre hiermit, dass ich diese Arbeit selbständig durchgeführt und keine anderen als die angegebene Quellen, Hilfsmittel und Hilfspersonen beigezogen habe. Alle Textstellen in der Arbeit, die wörtlich oder sinngemäss aus Quellen entnommen wurden, habe ich als solche gekennzeichnet.
+Ich erkläre hiermit, dass ich diese Arbeit selbständig durchgeführt und keine
+anderen als die angegebene Quellen, Hilfsmittel und Hilfspersonen beigezogen
+habe. Alle Textstellen in der Arbeit, die wörtlich oder sinngemäss aus Quellen
+entnommen wurden, habe ich als solche gekennzeichnet.
 
 \vspace{2cm}
 \begin{center}
