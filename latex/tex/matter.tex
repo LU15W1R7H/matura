@@ -2277,17 +2277,17 @@ sind die \code{Placeholder}-Tensoren und in blau die \code{Variable}-Tensoren da
 
     \node[inp] (x1) at (0,2) {$x_1$};
     \node[param] (w1) at (1.5,3) {$w_1$};
-    \node[] (+1) at (3,2) {+};
+    \node[] (+1) at (3,2) {$\times$};
     \draw[arr] (+1) edge (x1) edge (w1);
 
     \node[inp] (x2) at (0,0) {$x_2$};
     \node[param] (w2) at (1.5,1) {$w_2$};
-    \node[] (+2) at (3,0) {+};
+    \node[] (+2) at (3,0) {$\times$};
     \draw[arr] (+2) edge (x2) edge (w2);
 
     \node[inp] (x3) at (0,-2) {$x_3$};
     \node[param] (w3) at (1.5,-1) {$w_3$};
-    \node[] (+3) at (3,-2) {+};
+    \node[] (+3) at (3,-2) {$\times$};
     \draw[arr] (+3) edge (x3) edge (w3);
 
     \node[param] (b) at (5,3) {$b$};
@@ -2936,6 +2936,8 @@ Nachfolgende Summary gilt für unser Modell:
 \end{minted}
 Es zeigt sich, dass das Modell gesamthaft circa 28'000 Parameter umfasst,
 welche zu trainieren sind.
+\para{}
+Quelle: \cite{net:keras_tut}
 
 \subsection{Modell trainieren}
 Das definierte Modell ist nun zu trainieren.
