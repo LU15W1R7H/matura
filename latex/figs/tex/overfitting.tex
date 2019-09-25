@@ -54,17 +54,67 @@ declare function={f(\x)=0.5*pow(abs(\x-2),2)-0.06*pow(\x-2,3);}]
  }
  \draw[thick,blue] (0.1,0.4) -- (4.2,2);
  \end{scope}
+
+ \pgfplotsset{every axis/.append style={
+     font = \LARGE
+     }}
+
+
+ \begin{scope}[local bounding box=under_cost,shift={($(under)+(-2cm,-6cm)$)},scale=0.6]
+   \begin{axis}[
+     grid=major,
+     xmin=0, xmax=50, ymin=-0.1, ymax=3.1, domain=0:50,
+     xlabel={Trainingszeit $t$}, ylabel={Kosten {\color{red}$\bar{C}(\set{X})$} {\color{blue}$\bar{C}(\set{T})$}},
+     ticks=none,
+     axis x line=bottom,thick,axis line style={-Latex[round]},
+     axis y line=left,thick,axis line style={-Latex[round]},
+     scale=1]
+     \addplot[thick,red, samples=500, smooth] plot (\x, { 5/\x + 2 } );
+     \addplot[thick,blue, samples=500, smooth] plot (\x, { 5/\x + 2.1 } );
+   \end{axis}
+ \end{scope}
+
+ \begin{scope}[local bounding box=over_cost,shift={($(over)+(-2cm,-6cm)$)},scale=0.6]
+   \begin{axis}[
+     grid=major,
+     xmin=0, xmax=50, ymin=-0.1, ymax=3.1, domain=0:50,
+     xlabel={Trainingszeit $t$}, ylabel={Kosten {\color{red}$\bar{C}(\set{X})$} {\color{blue}$\bar{C}(\set{T})$}},
+     ticks=none,
+     axis x line=bottom,thick,axis line style={-Latex[round]},
+     axis y line=left,thick,axis line style={-Latex[round]},
+     scale=1]
+     \addplot[thick,red, samples=500, smooth] plot (\x, { 5/\x } );
+     \addplot[thick,blue, samples=500, smooth] plot (\x, { 5/\x + 2 } );
+   \end{axis}
+ \end{scope}
+
+
+ \begin{scope}[local bounding box=good_cost,shift={($(good)+(-2cm,-6cm)$)},scale=0.6]
+   \begin{axis}[
+     grid=major,
+     xmin=0, xmax=50, ymin=-0.1, ymax=3.1, domain=0:50,
+     xlabel={Trainingszeit $t$}, ylabel={Kosten {\color{red}$\bar{C}(\set{X})$} {\color{blue}$\bar{C}(\set{T})$}},
+     ticks=none,
+     axis x line=bottom,thick,axis line style={-Latex[round]},
+     axis y line=left,thick,axis line style={-Latex[round]},
+     scale=1]
+     \addplot[thick,red, samples=500, smooth] plot (\x, { 10/\x  + 0.7} );
+     \addplot[thick,blue, samples=500, smooth] plot (\x, { 10/\x + 1.2 } );
+   \end{axis}
+ \end{scope}
+
  %
  \foreach \X in {over,good,under}
  {\draw[gray,thin] ([xshift=-3pt,yshift=3pt]\X.north west) rectangle
  ([xshift=3pt,yshift=-3pt]\X.south east);
- \draw[stealth-stealth,thick] ([xshift=-3pt,yshift=3pt]\X.north west) node[right=1.5pt,fill=white]{Label $\hat{y}$ / \color{blue}Vorhersage $y$}
+ \draw[latex-latex,thick] ([xshift=-3pt,yshift=3pt]\X.north west) node[right=1.5pt,fill=white]{Label $\hat{y}$ / \color{blue}Vorhersage $y$}
  |- ([xshift=3pt,yshift=-3pt]\X.south east) node[below left]{Input $x$};}
 
 
-\node[] at (under.north)[yshift=1cm] {Underfitting};
-\node[] at (good.north)[yshift=1cm] {passend};
-\node[] at (over.north)[yshift=1cm] {Overfitting};
+
+\node[draw,rectangle] at (under.north)[yshift=1cm] {Underfitting};
+\node[draw,rectangle] at (good.north)[yshift=1cm] {passend};
+\node[draw,rectangle] at (over.north)[yshift=1cm] {Overfitting};
 \end{tikzpicture}
 %%% Local Variables:
 %%% mode: latex
