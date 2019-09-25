@@ -2,7 +2,7 @@
 
 Im ersten Kapitel sollen die Grundlagen für ein fundiertes Verständnis
 von Maschinellem Lernen gelegt werden. Neben den verschieden Arten sollen
-essentielle Begriffe und das Modellkonzept dargelegt werden. Darüber hinaus werden
+essenzielle Begriffe und das Modellkonzept dargelegt werden. Darüber hinaus werden
 die Funktionsweise des Trainings sowie daraus entstehende Phänomene erläutert.
 Auf dieser Basis erfolgt in Kapitel zwei die Darlegung eines konkreten Modells.
 \para{}
@@ -17,7 +17,7 @@ Die Grundidee dabei ist, dass Daten erfasst, generiert oder gemessen werden,
 welche anschliessend analysiert werden sollen.
 Innerhalb dieser Daten existieren gewisse
 Gesetzmässigkeiten und Muster. Diese Muster sollen vom Modell
-erkannt und verallgemeinert werden. Nach dem erfolgreichen Lernprozess,
+erkannt und verallgemeinert werden. Nach dem erfolgreichen Lernprozess
 kann das Modell Vorhersagen für neue Daten machen.
 \para{}
 Wir unterscheiden zwei Arten von Maschinellem Lernen%
@@ -101,7 +101,7 @@ findet kein Auswendiglernen der Trainingsdaten statt,
 sondern ein Generalisieren des Zusammenhangs anhand von Mustern und Gesetzmässigkeiten.
 \para{}
 Um eine endgültige Bewertung des Modells durchzuführen, wird ein Testdatensatz
-$\set{T}$ genutzt, um Vorhersagen zu generieren. Dieser ist nicht Teil des Trainingsdatensatz.
+$\set{T}$ genutzt, um Vorhersagen zu generieren. Dieser ist nicht Teil des Trainingdatensatzes.
 Er garantiert also, dass kein Auswendiglernen möglich ist.
 \para{}
 \begin{examplebox}{Beispiel für Modelldaten}
@@ -158,12 +158,12 @@ Es soll ein Modell entwickelt werden, um den Zusammenhang zwischen dem
 Benzinverbrauch eines Autos und der zurückgelegten Strecke zu erlernen.
 Dafür wird angenommen, dass es sich dabei um eine lineare Beziehung zwischen
 diesen Variablen handelt. Somit eignet sich das wohl einfachste
-Regressionmodell: eine Regressiongerade der Form $y=\param_1x + \param_0$, wobei
+Regressionsmodell: eine Regressionsgerade der Form $y=\param_1x + \param_0$, wobei
 $y$ der Benzinverbrauch in Litern und $x$ die Strecke in Kilometern ist.
 Beim Trainieren werden die besten Werte für die Parameter $\param_0$ und
 $\param_1$ gesucht, welche die Vorhersagen am besten mit den Labels
 übereinstimmen lässt. Das Modell könnte somit nach dem Training folgende
-Hypothesenfunktion besitzten $y = h(x) = 0.07 \cdot x + 0$. Dies entspricht der
+Hypothesenfunktion besitzen $y = h(x) = 0.07 \cdot x + 0$. Dies entspricht der
 Hypothese, dass ein Auto einen Spritverbrauch von 7 Litern pro 100 Kilometer hat.
 \end{examplebox}
 \para{}
@@ -224,7 +224,7 @@ $\vec{\hat{y}}$.
 \\
 Sie erfüllt alle Anforderungen an eine Kostenfunktion:
 \begin{itemize}
-\item{Ihr Funktionwert ist 0 und minimal für $\vec{y} = \vec{\hat{y}}$}
+\item{Ihr Funktionswert ist 0 und minimal für $\vec{y} = \vec{\hat{y}}$}
 \item{Sie ist proportional zu ${(\vec{\hat{y}}-\vec{y})}^2$}
 \item{Ihre partielle Ableitung nach einem $y_i$ lautet: $C_{\text{MSE}}'=\frac{1}{n}(y_i-\hat{y_i})$}
 \end{itemize}
@@ -262,7 +262,7 @@ Gleichung:
   \vec{\param}_{t+1} = \vec{\param}_t - \eta \cdot \vecf{\nabla} \mathit{C}(\vec{\param}_t)
 \end{equation}
 Wie die initialen Modellparameter $\vec{\param}_{t=0}$ zu wählen sind, wird in Sektion
-\refbox{sec:parameter_initalisieren} erläutert.
+\refbox{sec:parameter_initialisieren} erläutert.
 \para{}
 Die sogenannte \keyword{Lernrate} $\eta$ aus Gleichung \refbox{eq:gd_ml} stellt
 einen Hyperparameter dar. Sie ist der positive Proportionalitätsfaktor, welcher die Schrittgrösse des
@@ -296,14 +296,14 @@ Das Problem des herkömmlichen Gradientenverfahrens besteht darin, dass der
 Gradient für den \textit{gesamten} Trainingsdatensatz berechnet werden muss.
 Dies ist zwar ein exakter Prozess, aber ein extrem langsamer zugleich.
 Bei grossen Datensätzen würde es sehr lange dauern, bis das Modell nur annähernd gute Vorhersagen machen könnte.
-Somit steht die Genauigkeit in keinem Verhältniss zur Effizienz dieser Methode.
+Somit steht die Genauigkeit in keinem Verhältnis zur Effizienz dieser Methode.
 \para{}
 Bei SGD wird der ``echte'' Gradient des gesamten Datensatzes mit dem Gradient einiger Trainingssamples approximiert.
 Dazu wird der Trainingsdatensatz in sogenannte \keyword{Mini-Batches} eingeteilt und der Gradient jeweils pro Mini-Batch berechnet.
 Als Konsequenz finden deutlich mehr Iterationen in einer einzigen
 Durchkämmung der Trainingsdaten statt. Eine solche vollständige Durchkämmung der Trainingsdaten
 bezeichnet man als eine \keyword{Epoche}.
-Oft wird mehrere Epochen lang trainiert bis das Modell genügend gute Resultate
+Oft wird mehrere Epochen lang trainiert, bis das Modell genügend gute Resultate
 liefert. Jedoch sollte auch nicht zu oft mit den gleichen Daten trainiert
 werden, da es sonst zu Overfitting (siehe Sektion \refbox{sec:overfitting}) kommen kann.
 Der Gradient eines genug grossen Mini-Batches ist zwar nicht ganz exakt, aber
@@ -357,11 +357,11 @@ Dies liegt zumeist daran, dass das Modell zu viele Parameter besitzt oder
 aber der Trainingsdatensatz zu wenige Samples dafür beinhaltet.
 Somit übersteigt die Komplexität des Modells gewissermassen jene der Aufgabenstellung.
 \para{}
-Um das Phänomen zu verdeutlichen, wird ein ganzrationales Regressionmodell betrachtet.
+Um das Phänomen zu verdeutlichen, wird ein ganzrationales Regressionsmodell betrachtet.
 Dieses besitzt eine Hypothesenfunktion $h = a_0 + a_1 x + a_2 x^2 + \cdots + a_n
 x^n$, welche ein Polynom $n$-ter Ordnung ist. Falls der
 Trainingsdatensatz nun aus $n$ oder weniger Samples besteht, kann das Modell die
-Regressionkurve der Hypothesenfunktion exakt durch jeden Datenpunkt legen.
+Regressionskurve der Hypothesenfunktion exakt durch jeden Datenpunkt legen.
 Dies entspricht dem Verhalten eines Modells mit $n$ Modellparametern, welches
 mit $n$ Samples trainiert wird, und dabei exakt jedes Samples \textit{auswendig} lernt, anstatt
 dessen Gesetzmässigkeiten zu erkennen.
@@ -385,9 +385,9 @@ wenige Modellparameter $\param_k$ besitzt, um die Komplexität der Aufgabenstell
 Die Parameter reichen nicht aus, damit das Modell die Korrelation zwischen
 Inputs und Labels begreifen kann.
 \para{}
-Bezogen auf das ganzrationale Regressionmodell, bedeutet dies, dass der Grad $n$ der
+Bezogen auf das ganzrationale Regressionsmodell, bedeutet dies, dass der Grad $n$ der
 polynomen Hypothesenfunktion $h$ zu gering ist, um sich an die Datenpunkte der
-Sampels anzuschmiegen.
+Samples anzuschmiegen.
 
 \begin{figure}[h!]
   \centering
@@ -433,7 +433,7 @@ Das einlagige Perzeptron wurde erstmals 1958 von Frank Rosenblatt vorgestellt. D
 besteht aus einem einzigen Künstlichen Neuron. Dieses künstliche Neuron
 hat mehrere binäre Inputs und einen einzigen binären Output. Binär
 bedeutet, dass der Wert nur entweder 0 (\textit{aus}) oder 1 (\textit{ein}) sein
-kann. Des weiteren besitzt es mehrere sogenannte \keyword{Gewichte} $w_1, \ldots,
+kann. Des Weiteren besitzt es mehrere sogenannte \keyword{Gewichte} $w_1, \ldots,
 w_m \in \set{R}$, für jeden Input $x_i$ ein Gewicht $w_i$.
 Diese sind reelle Zahlen, welche das Verhalten des Perzeptron bestimmen.
 Die \keyword{gewichtete Summe}, also die Summe aller Produkte der Inputs mit
@@ -695,7 +695,7 @@ somit auch in der Lage komplexe Sachverhalte zu modellieren.
 Die Sigmoid-Funktion besitzt eine einzige Wendestelle $\sigma''(x=0)=0$ und hat
 zwei Asymptoten, eine $\ds\lim_{x \to -\infty} \sigma(x)=0$
 und eine zweite $\ds\lim_{x \to \infty} \sigma(x)=1$ (siehe Abb.
-\refbox{fig:sigmoid}). Desweiteren zeichnet sie sich durch eine vergleichsweise
+\refbox{fig:sigmoid}). Des Weiteren zeichnet sie sich durch eine vergleichsweise
 einfache Ableitung aus.
 \\
 \begin{figure}[h!]
@@ -739,7 +739,7 @@ Neuronale Netze Verwendung finden. Dazu werden sie miteinander verbunden und bil
 Diese Neuronen sind in verschiedenen Schichten (engl.: layers)
 arrangiert. Die erste ist die \keyword{Inputschicht}. Sie beinhaltet die
 Inputneuronen. Diese sind eigentlich keine richtigen
-Neuronen, sondern eher Platzhalter für ihr jeweiliges Feature $x_i$. Als letztes kommt die
+Neuronen, sondern eher Platzhalter für ihr jeweiliges Feature $x_i$. Als Letztes kommt die
 \keyword{Outputschicht} mit den Outputneuronen, welche jeweils einen Outputwert $y_i$
 besitzen. Dazwischen liegen die \keyword{Zwischenschichten} (engl.: hidden layers). Von ihnen kann es
 beliebig viele geben, und in ihnen können beliebig viele Neuronen liegen.
@@ -757,8 +757,8 @@ Verbindungen zu allen Neuronen der nächsten Schicht und dienen als deren Input.
 \para{}
 In Abbildung \refbox{fig:nn_layers} ist ein Beispiel eines Neuronalen Netzes
 abgebildet. In diesem Fall besitzt es sowohl 4 Inputs, als auch 4 Outputs. Es hat
-ausserdem 3 Zwischenschichten. Die erste und die dritte haben jeweils 3 Neuronen
-und die zweite besitzt 4 Neuronen. \\
+ausserdem 3 Zwischenschichten. Die Erste und die Dritte haben jeweils 3 Neuronen
+und die Zweite besitzt 4 Neuronen. \\
 
 \begin{figure}[h!]
   \centering
@@ -772,14 +772,14 @@ Quellen: \cite{wiki:kuenstliches_neuronales_netz} \cite{Nielsen} \cite{book:hand
 
 \section{Lernverhalten}
 Die Hoffnung beim Trainieren von KNNs besteht darin, dass das Modell für jede
-weitere Schicht eine höheres Abstraktionsniveau erreicht. Würde man zum
+weitere Schicht ein höheres Abstraktionsniveau erreicht. Würde man zum
 Beispiel ein Netzwerk zur Gesichtserkennung trainieren, könnte man sich den
 Erkennungsprozess folgendermassen vorstellen: Die erste Zwischenschicht erkennt
 Kanten und Konturen. Die zweite vereint diese Merkmale zu Ecken und primitiven
 geometrischen Formen. Die dritte Schichte sollte dann schon komplexere
 geometrische Formen erkennen, welche gewissen Gesichtsmerkmalen, wie der Nase,
 ähneln.
-Die letzten Schichten soll dann alle diese
+Die letzte Schichte soll dann alle diese
 Merkmale zusammensetzen und so ein Gesicht als Ganzes erkennen.
 
 \section{Vorwärtspropagierung}\label{sec:forward}
@@ -852,7 +852,7 @@ $j$ der Index des Neurons ist.
 \para{}
 Nun müssen die restlichen Aktivierungen der Neuronen bis und mit den
 Ouputneuronen berechnet werden. Dies geschieht rekursiv, anhand der
-Aktivierungen der vorherigen Schicht und zwar folgendermassen (ersichtlich in
+Aktivierungen der vorherigen Schicht, und zwar folgendermassen (ersichtlich in
 Gleichung \refbox{eq:gewichtete_summe_normal}):\\
 Zuerst läuft eine Summe über alle Neuronen $n_k^{l}$ der jetzigen Schicht
 $l$. Dabei wird die gewichtete Summe der Aktivierungen $a_k^{l}$ mit den
@@ -896,7 +896,7 @@ $\vec{a}^l \in \set{R}^{|l|}$ zusammengefasst.
 Auch alle Neigungen $b_j^l$ für eine Schicht ($l+1$) bilden einen Vektor
 $\vec{b}^l \in \set{R}^{|l+1|}$.
 \para{}
-Zu guter letzt, wird noch eine \keyword{Gewichtsmatrix} $\mat{W}^l \in
+Zu guter Letzt, wird noch eine \keyword{Gewichtsmatrix} $\mat{W}^l \in
 \set{R}^{|l+1| \times |l|}$
 definiert. Sie enthält alle Gewichte, welche die $l$-te
 Schicht \textit{zu} der ($l+1$)-ten Schicht verbindet.
@@ -969,11 +969,11 @@ $\vec{z}^{l+1}$ angewendet werden.
 \para{}
 Quellen: \cite{Nielsen}
 
-\subsection{Initialisierung der Modellparameter}\label{sec:parameter_initalisieren}
+\subsection{Initialisierung der Modellparameter}\label{sec:parameter_initialisieren}
 Ein weiterer Schritt, der vollzogen werden muss, bevor das Training beginnen kann, ist das
 Initialisieren aller Modellparameter, in diesem Fall die Gewichte und Neigungen.
-Dies ist ein sehr essentieller Schritt, da diese Initialwerte die
-Leistungsfähigkeit des Modells erheblich beinflussen.
+Dies ist ein sehr essenzieller Schritt, da diese Initialwerte die
+Leistungsfähigkeit des Modells erheblich beeinflussen.
 \para{}
 Wie in Sektion \refbox{sec:gradientenverfahren} gezeigt, muss am Anfang des
 Gradientenverfahrens ein Startpunkt $\vec{\param}_{t=0} = \trans{\begin{pmatrix}
@@ -984,7 +984,7 @@ wird und bestimmt somit auch die bestmögliche Exaktheit der Vorhersagen. Falls
 schlechte Initialwerte gewählt wurden, konvergiert der Punkt in ein hohes lokales
 Minimum, was grosse Kostenfunktionswerte und schlechte Vorhersagen verursacht.
 \para{}
-Es ist nicht möglich im Vorhinein zu wissen, welche Initialwerte gute Resultate
+Es ist nicht möglich, im Vorhinein zu wissen, welche Initialwerte gute Resultate
 liefern. Es müssen verschiedene Werte ausprobiert werden. Dafür initialisiert man gängigerweise die
 Modellparameter mit Zufallswerten. Zu diesem Zweck werden nicht irgendwelche
 Zufallsvariablen verwendet, sondern es gelangt die Gauss'sche Normalverteilung
@@ -1037,10 +1037,10 @@ Anders gesagt müssen alle Terme
 $\ds\partderiv{C}{w_{j,k}^l}$, wie auch alle Terme $\ds\partderiv{C}{b_k^l}$,
 bestimmt werden.
 Das Verfahren zur Ermittlung dieser Ausdrücke in KNNs ist so spezifisch und aufwendig,
-dass es einen eigenen NAmen besitzt: die sogenannte \keyword{Rückwärtspropagierung} (engl.: backpropagation, auch
+dass es einen eigenen Namen besitzt: die sogenannte \keyword{Rückwärtspropagierung} (engl.: backpropagation, auch
 Fehlerrückführung).
 \para{}
-Für das Verständnis von ML ist es nicht essentiell, die Rückwärtspropagierung zu
+Für das Verständnis von ML ist es nicht essenziell, die Rückwärtspropagierung zu
 verstehen. Jedoch kann so nachvollzogen werden, wie SGD in der Praxis funktioniert.
 Grob umrissen besteht der Grundgedanke darin, die Werte der Kostenfunktion
 rückwärts durch das Modell zu schicken und dabei die partiellen Ableitungen
@@ -1053,7 +1053,7 @@ Computational Graphs eingegangen wird.
 \section{Universal Approximation Theorem}\label{sec:UAT}
 Es stellt sich nun die Frage, was ein Neuronales Netz alles erlernen kann.
 Diese Frage kann mithilfe des \keyword{Universal Approximation Theorem} (UAT)
-beantwortet werden. Es handelt sich um einen mathematischer Beweis dafür, dass ein KNN
+beantwortet werden. Es handelt sich um einen mathematischen Beweis dafür, dass ein KNN
 grundsätzlich in der Lage, ist jede kontinuierliche Funktion beliebig exakt zu
 approximieren.
 \para{}
@@ -1083,7 +1083,7 @@ zu erklären. Es handelt sich um das Convolutional Neural Network.
 \para{}
 \bigskip
 Viele Anwendungen von Machine Learning sind mit einer Bild- oder
-Audioverarbeitung verbunden, wie z.B Bildklassifizierung, Gesichts- oder
+Audioverarbeitung verbunden, wie z. B.Bildklassifizierung, Gesichts- oder
 Spracherkennung.
 Vor allem für hochauflösende Bilder sind die KNNs, wie wir sie soeben
 kennengelernt haben, jedoch nicht geeignet. Sie sind zum Teil gar nicht in der
@@ -1100,19 +1100,19 @@ Farbkomponenten: R (rot), G (grün)
 und B (blau). Somit hat dieses Bild insgesamt $256 \times 256 \times 3 = 196'608$
 Komponenten. Jede Komponente ist ein Feature, welches das KNN zu verarbeiten hat. So bestünde
 die erste Schicht des Netzwerkes aus fast $200'000$ Neuronen. Um diese Schicht
-nun mit seiner Nachbarsschicht zu verbinden, welche die gleichen Grösse besitzt, werden
+nun mit seiner Nachbarsschicht zu verbinden, welche die gleiche Grösse besitzt, werden
 $196'608 \times 196'608 = 38'654'705'664$ Verbindungen und damit gleich
-viele Gewichte benötigt! Für ein Netzwerk ohne eine einzige Zwischenschichten gäbe es
+viele Gewichte benötigt! Für ein Netzwerk ohne eine einzige Zwischenschicht gäbe es
 also über 38 Milliarden Modellparameter zu erlernen! Dass dies nicht realistisch ist,
 liegt wohl auf der Hand.
 \para{}
 Nicht nur die Anzahl der Modellparameter ist ein Problem für KNNs in der
 Bildverarbeitung, sondern es existieren noch weiter Probleme.
-Ohne auf diese Einzugehen sollte nun klar sein, dass eine andere Modellarchitektur notwendig ist, um Machine
+Ohne auf diese einzugehen sollte nun klar sein, dass eine andere Modellarchitektur notwendig ist, um Machine
 Learning auf Bilder anwenden zu können. Für derartige Anwendungen wurde eine modifizierte
 Version eines KNNs entwickelt: das \keyword{Convolutional Neural Network} (CNN).
 Im Allgemeinen sind CNNs immer dann geeignet, wenn es Daten zu verarbeiten gilt, welche eine
-rasterartige Form aufweisen, wie z.B Bilder.
+rasterartige Form aufweisen, wie z. B.Bilder.
 Diese Art von Netzwerk macht Gebrauch von Konzepten aus der klassischen
 Bildverarbeitung, wie sie beispielsweise mit Photoshop gemacht wird.
 Wie beim Perzeptron und bei den klassischen KNNs wurde auch hier die Architektur
@@ -1124,7 +1124,7 @@ Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
 
 \section{Bilder als Tensoren}\label{sec:tensor}
 CNNs verarbeiten Bilder. Diese stellen den Input für die Modelle dar.
-Um diese Bildern erfassen zu können, ist es sinnvoll, sie als sogenannte
+Um diese Bilder erfassen zu können, ist es sinnvoll, sie als sogenannte
 \keyword{Tensoren} vom Rang 3 zu untersuchen, anstatt sie als Anordnungen von
 Pixeln zu betrachten. Um zu verstehen, was ein Tensor dritten Ranges ist,
 soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint ist.
@@ -1136,7 +1136,7 @@ soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint is
   Zahlen liegen, als Rang oder Stufe $n$ des Tensors bezeichnet. Vorstellen kann man sich einen Tensor
   als ein Hyperrechteck mit $n$ Dimensionen, innerhalb dessen die Zahlen in
   einem Raster angeordnet sind. Diese Zahlen sind die Elemente des Tensors.
-  Ein Tensor nullten Ranges ist ein Skalar, eine Tensor ersten Stufe ist ein
+  Ein Tensor nullten Ranges ist ein Skalar, ein Tensor ersten Stufe ist ein
   Vektor und ein Tensor mit Rang 2 ist eine normale 2D-Matrix.
   \begin{gather*}
     1 \in \set{R} \text{ (Skalar)} \quad \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}
@@ -1151,7 +1151,7 @@ soll zunächst erläutert werden, was mit einem Tensor im Allgemeinen gemeint is
 \begin{defbox}{Tensor 3. Ranges}
   Ein Tensor $\ten{T} \in \set{R}^{h \times w \times d}$ mit Rang 3 ist eine 3-dimensionale Zahlenanordnung. Man kann sich
   diesen Tensor als eine 3D-Matrix vorstellen; ein Volumen, innerhalb
-  dessen die Elemente in einem Raster angeordet sind.
+  dessen die Elemente in einem Raster angeordnet sind.
   Analog zum Volumen bezeichnet man die Form des Tensors mit Höhe, Breite und
   Tiefe.
   \para{}
@@ -1273,16 +1273,16 @@ Filtergrösse $f=3$ und seine Einträge lauten folgendermassen:
   \end{pmatrix}
 \end{equation*}
 
-Angewendet auf ein schwarz-weisses Bild, wird ein neues Bild erzeugt, bei welchem alle erkannten
+Angewendet auf ein schwarz-weisses Bild wird ein neues Bild erzeugt, bei welchem alle erkannten
 Kanten weiss eingefärbt werden und die restlichen Bereiche schwarz sind.
 Der Filter erkennt dabei jede Stelle als Kante, welche zwei Regionen mit
 genug grossem Kontrast voneinander trennt.
-In Abbildung \refbox{fig:edge_filter} wurde der erwähnte Kantendetektionfilter auf ein
-Beispielsbild angewendet. Links ist das Ursprungsbild und rechts ist das
+In Abbildung \refbox{fig:edge_filter} wurde der erwähnte Kantendetektionsfilter auf ein
+Beispielbild angewendet. Links ist das Ursprungsbild und rechts ist das
 generierte Bild zu sehen%
 \footnote{
   Dieses Bild wurde mithilfe von GIMP (GNU Image Manipulation Program) erzeugt. Dieses
-  Programm bietet die Möglichkeit eine Filtermatrix auf ein Bild anzuwenden.
+  Programm bietet die Möglichkeit, eine Filtermatrix auf ein Bild anzuwenden.
 }.
 
 \begin{figure}[h!]
@@ -1302,7 +1302,7 @@ Aus didaktischen Gründen betrachten wird nun zunächst
 nur 2D-Filter, welche sich für graustufige Bilder
 $\mat{B} \in \set{R}^{h \times w}$ eignen. Somit ist der hierfür ausgewählte
 Filter eine 2D-Matrix, bezeichnet mit $\mat{F} \in \set{R}^{f \times
-  f}$. Man bedenke, dass es sich im Allgemeinen Fall bei jeder Filtermatrix
+  f}$. Man bedenke, dass es sich im allgemeinen Fall bei jeder Filtermatrix
 um einen 3D-Tensor handelt.
 \para{}
 Wie bereits dargelegt, können Filter genutzt werden, um gewisse
@@ -1391,7 +1391,7 @@ Nun wird der Filter um ein Element nach rechts verschoben und die gleiche
 Prozedur angewendet, um den zweiten Pixel zu berechnen. Dies
 wird so lange vollzogen, bis eine ganze Zeile der Bildmatrix durchstreift wurde.
 Danach wird der Filter wieder ganz nach links verschoben und er bewegt sich ein
-Element nach unten. Das geschieht bis das ganze Bild verrechnet wurde.
+Element nach unten. Das geschieht, bis das ganze Bild verrechnet wurde.
 Dabei werden die Elemente des ursprünglichen Bildes durchaus mehrfach
 verrechnet, da es zu einer Überlappung der vorherigen Position des Filters und
 der verschobenen Position kommt.
@@ -1424,7 +1424,7 @@ eine spezifische mathematische Operation: eine \keyword{diskrete Faltung}%
   eine sogenannte \keyword{Kreuzkorrelation}. Der Unterschied besteht darin, dass bei einer
   Kreuzkorrelation die Faltungsmatrix nicht horizontal und vertikal
   gespiegelt wird. Dies im Gegensatz zu der eigentlichen Faltung, bei welcher
-  diese Spiegelung statt findet. Jedoch wird
+  diese Spiegelung stattfindet. Jedoch wird
   begrifflich das Wort Faltung für beide Operationen verwendet. Im Verlauf dieser Arbeit
   wird mit dem Wort Faltung immer die Kreuzkorrelation gemeint sein.
 } (engl.: \keyword{convolution}).
@@ -1438,7 +1438,7 @@ Mithilfe der Faltungsoperation können die Schritte aus Sektion
 \refbox{sec:filteroperation_intuitiv} zusammengefasst werden.
 Bei der Filteroperation handelt es sich nämlich um eine diskrete Faltung des
 Filtertensors $\ten{W}$ über den Bildtensor $\ten{B}$. Somit kann
-folgende Formel verwenden werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neuen Bildes zu berechnen.
+folgende Formel verwendet werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neuen Bildes zu berechnen.
 \\
 \begin{equation}
   (\tilde{\mat{B}})_{y,x} = (\mat{W} * \mat{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} (\mat{W})_{v,u}(\mat{B})_{y+v-1,x+u-1}
@@ -1473,7 +1473,7 @@ folgende Formel verwenden werden, um einen Pixel $\tilde{\mat{B}}_{y,x}$ des neu
                            = 0
   \end{gather*}
 
-  Das Gesamtergebniss lautet dann:
+  Das Gesamtergebnis lautet dann:
   \begin{equation*}
     \tilde{\mat{B}} = \mat{W} * \mat{B} =
     \begin{pmatrix}
@@ -1512,7 +1512,7 @@ Die Anzahl Filter werden mit $c$ bezeichnet.
 Nun wird pro Filter $\ten{W}_i$ eine Faltung über das Ursprungsbild $\ten{W}$ gemacht, wobei
 jede Faltung eine neue Matrix $\tilde{\mat{B}}_i = \ten{W}_i * \ten{B}$ liefert.
 Dabei ist $i$ der Index des Filters. All diese gefalteten Bilder
-$\tilde{\mat{B}}_i$ sind zwei-dimensionale Matrizen, unabhängig davon, wieviele
+$\tilde{\mat{B}}_i$ sind zwei-dimensionale Matrizen, unabhängig davon, wie viele
 Komponenten das Ursprungsbild hatte. Aus diesem Grund können die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
 $\tilde{\ten{B}}$ bilden.
@@ -1627,7 +1627,7 @@ Farbregionen voneinander trennt. Oder ein Gegenstand wird erst durch eine ganze 
 von Pixeln und deren relative Position zueinander charakterisiert.
 Man bezeichnet diesen Umstand als \keyword{lokalisierte Features}.
 \para{}
-Desweiteren sind Bildausschnitte nicht immer gleich
+Des Weiteren sind Bildausschnitte nicht immer gleich
 ausgerichtet. Wenn man ein Gesicht auf einem Bild erkennen möchte, sollte es aber
 keine Rolle spielen, wo es sich auf dem Bild befindet, welche Grösse es
 hat und welche Ausrichtung es aufweist. Um diese Eigenschaften irrelevant für das
@@ -1707,7 +1707,7 @@ nicht-lineare Aktivierungsfunktion benötigt, um das Modell zu befähigen, nicht
 lösen zu können.
 Deshalb wird in einem letzten Schritt die vektorisierte Aktivierungsfunktion
 $\vecf{\varphi}$ auf den Tensor $\tilde{\mat{A}}^l$ angewendet. So ergibt sich die
-neue Aktiverung $\ten{A}^{l+1}$ der nächsten Schicht. Empirisch lässt sich nachweisen,
+neue Aktivierung $\ten{A}^{l+1}$ der nächsten Schicht. Empirisch lässt sich nachweisen,
 dass sich für CNNs die ReLU-Aktivierungsfunktion aus Sektion \refbox{sec:ReLU} besser eignet als die
 Sigmoidfunktion. Deshalb wird in der Regel die ReLU-Funktion für CNNs verwendet.
 \begin{equation}
@@ -1727,10 +1727,10 @@ Overfitting (siehe Sektion \refbox{sec:overfitting}). Um diesem Effekt
 entgegenzuwirken, gibt es einerseits sogenannte
 \keyword{Pooling-Schichten} und als Gegenstück dazu
 \keyword{Upsampling-Schichten}. Ersteres wird verwendet, um die Dimensionalität
-der Bilder zu vermindern, und letzteres, um die Dimensionalität der Bilder zu
+der Bilder zu vermindern, und Letzteres, um die Dimensionalität der Bilder zu
 erweitern. Somit ermöglichen diese Schichten eine kontrollierte Art, (im Gegensatz zum
 Padding) die Dimensionalität willentlich zu bestimmen. Diese Fähigkeit ist
-essentiell, um in Sektion \refbox{sec:convolutional_autoencoder} die Topologie
+essenziell, um in Sektion \refbox{sec:convolutional_autoencoder} die Topologie
 eines Convolutional Autoencoders zu realisieren.
 
 \subsection{Pooling-Schicht}
@@ -1742,7 +1742,7 @@ einzeln angewendet wird, wodurch sich die Tiefe des Bildes nicht ändert.
 \para{}
 Für die Beschreibung einer Pooling-Schicht finden die gleichen Begriffe
 Anwendung, wie bei der Convolutional-Schicht und den Filtern.
-Die Grösse des Elementfeldes, welches zusammengefasst wird, bezeichnet man analog zur
+Die Grösse des Elementefeldes, welches zusammengefasst wird, bezeichnet man analog zur
 Filtergrösse mit $f^l$. Das Stride $s^l$ bezeichnet auch beim Pooling, wie
 gross die Schrittgrösse beim Verschieben des Feldes ist. Meistens wählt man den
 Stride $s^l$ gerade gleich der Feldgrösse $f^l$, damit alle Pixel
@@ -1750,9 +1750,9 @@ zusammengefasst werden. Kleiner als $f^l$ kann $s^l$ nicht gewählt werden.
 \para{}
 Man unterscheidet zwischen zwei Arten von Pooling:
 \begin{itemize}
-\item{\keyword{Average-Pooling}: Das Elementenfeld wird zusammengefasst, indem
+\item{\keyword{Average-Pooling}: Das Elementefeld wird zusammengefasst, indem
     das arithmetische Mittel der Elemente gebildet wird.}
-\item{\keyword{Max-Pooling}: Das Elementenfeld wird zusammengefasst, indem das
+\item{\keyword{Max-Pooling}: Das Elementefeld wird zusammengefasst, indem das
     Element mit dem höchsten Wert beibehalten wird und die anderen verworfen werden.}
 \end{itemize}
 In der Praxis verwendet man eigentlich nur Max-Pooling, da es deutlich bessere
@@ -1783,7 +1783,7 @@ Es ist festzuhalten, dass eine Pooling-Schicht keinerlei Modellparameter
 besitzt. Somit gibt es nichts zu trainieren. Sie besitzt lediglich einige
 Hyperparameter, wie die Feldgrösse $f^l$ und den Stride $s^l$.
 \para{}
-Um zu berechnen, was die neuen Dimensionen der Bildes nach dem Pooling sind, gelten die
+Um zu berechnen, was die neuen Dimensionen des Bildes nach dem Pooling sind, gelten die
 gleichen Formeln wie für die Filteroperationen:
 \\
 \begin{equation}
@@ -1826,7 +1826,7 @@ Nun soll eine weitere Architektur erörtert werden, welche das letzte Bindeglied
 praktischen Programmierung eines Convolutional-Denoising-Autoencoder verkörpert.
 Dieses ist notwendig, um die theoretische Funktionsweise eines Autoencoders zu verstehen.
 Zielsetzung ist, den Autoencoder mit dem Convolutional
-Neural Network zu fusionieren, um auf diese Weise einen einen
+Neural Network zu fusionieren, um auf diese Weise einen
 Convolutional-Autoencoder zu erhalten. Zu
 guter Letzt soll dann noch eine Anwendung eines solchen
 Convolutional-Autoencoder betrachtet werden, in der Form eines Denoiser.
@@ -1839,10 +1839,10 @@ zu erlernen. Diese neuartige Darstellung soll mit weniger Daten möglichst die g
 Information codieren. Somit entwickelt das Modell eine \keyword{effiziente
   Daten-Codierung} für einen Datensatz. Dadurch kann er zur
 \keyword{Dimensionalitätsreduktion} verwendet werden.
-Neben dieser neuen Repräsentation erlernt das Netzwerk darüberhinaus, wie es
+Neben dieser neuen Repräsentation erlernt das Netzwerk darüber hinaus, wie es
 aus dieser Codierung wieder die Ursprungsdaten reproduzieren kann.
 \para{}
-Autoencoder gehören nicht dem klassischen überwachtem Lernen an. Strenggenommen
+Autoencoder gehören nicht dem klassischen überwachtem Lernen an. Streng genommen
 zählen sie zum unüberwachtem Lernen, da in den Trainingsdaten keine Labels
 enthalten sein müssen. Jedoch gilt das gleiche Vorgehen, wie bei Überwachtem Lernen.
 Das Netzwerk wird nämlich ebenfalls darauf trainiert, gewisse gewünschte Outputs
@@ -1862,11 +1862,11 @@ Aus diesem Grund muss man gewisse Einschränkungen einführen. Diese bringen das
 interessante Methoden zu entwickeln, um die Features \textit{approximativ} zu rekonstruieren.
 \para{}
 Die angesprochene Einschränkung besteht darin, dass dem Autoencoder nicht
-beliebig viel Kapatzität für die Codierung der Features gewährt wird.
+beliebig viel Kapazität für die Codierung der Features gewährt wird.
 Es stehen dem Netzwerk nur wenige Zahlenwerte zur Verfügung, um die Features
 in der neuen Repräsentation zwischenzuspeichern, bevor sie wieder in die
 ursprüngliche Form zurück transformiert werden.
-Die Kapazitätseinschräkung wird durch die Topologie des Autoencoders bezweckt.
+Die Kapazitätseinschränkung wird durch die Topologie des Autoencoders bezweckt.
 \para{}
 \bigskip
 Der einfachste Autoencoder besteht aus drei Schichten, welche sich wie folgt
@@ -1899,8 +1899,8 @@ Gängiger ist jedoch das Netz aus mehreren Zwischenschichten zu konstruieren. Da
 werden die Schichten zum Flaschenhals hin immer schmaler und die Schichten nach
 dem Flaschenhals wieder dicker. In Abbildung \refbox{fig:big_autoencoder}
 ist dies gut ersichtlich.
-Aus Vereinfachungsgründen soll dennoch die Funktionsweise eines Autoencoder mit
-nur einer Zwischenschichten hergeleitet werden.
+Aus Vereinfachungsgründen soll dennoch die Funktionsweise eines Autoencoders mit
+nur einer Zwischenschicht hergeleitet werden.
 \para{}
 \begin{figure}[h!]
   \centering
@@ -1912,14 +1912,14 @@ nur einer Zwischenschichten hergeleitet werden.
 \section{Funktionsweise}
 Ein Autoencoder möchte die Features $\vec{x}$ von der Inputschicht in die
 Outputschicht kopieren. Jedoch zwingt der Flaschenhals den Autoencoder dazu, eine
-neue Repräsenation der Features zu erlernen. Dies aus dem Grund, weil die
+neue Repräsentation der Features zu erlernen. Dies aus dem Grund, weil die
 Features in ihrer jetzigen Form keinen Platz im Flaschenhals finden, da $p \ll d$.
 Daher muss das Modell die Informationen der Features,
 auf nur einige wenige relevante Eigenschaften komprimieren.
 Das Modell muss gewissermassen einen Code entwickeln.
 Diese neue Repräsentation nennt man das \keyword{Encoding}. \\
 In einem zweiten Schritt muss der Autoencoder aus diesem Encoding wiederum
-versuchen, die ursprünlichen Features zu rekonstruieren. Diese Rekonstuktion
+versuchen, die ursprünglichen Features zu rekonstruieren. Diese Rekonstruktion
 bezeichnet man als das \keyword{Decoding}.
 
 \paragraph{Encoder und Decoder}
@@ -1956,7 +1956,7 @@ die Differenz zwischen den ursprünglichen Features $\vec{x}$ und den Rekonstruk
 $\vec{\hat{x}}$ minimieren. Dabei muss der Autoencoder
 eine Dimensionalitätsreduktion betreiben. Er entwickelt einen Code, um die Features
 in der Flaschenhalsschicht komprimiert zu repräsentieren. Durch die
-Kapazitätseinschräkung $p \ll d$ muss $\fspace{E}$ eine niedrig-dimensionale
+Kapazitätseinschränkung $p \ll d$ muss $\fspace{E}$ eine niedrig-dimensionale
 Codierung der Features darstellen. Dem Modell ist es nicht möglich, die Inputs
 identisch wiederherzustellen, da bei der Abbildung $\phi$ Informationen verloren
 gegangen sind. Dadurch sollte der Code im optimalen Fall nur noch die Merkmale
@@ -1971,12 +1971,12 @@ bezeichnet man als \keyword{Datenrauschen}.
 
 \paragraph{Der Code}
 Es ist wichtig zu erkennen das der Code, welcher der Autoencoder entwickelt,
-\keyword{datenspezifisch} ist. Das heisst, er kann nicht wie z.B ein
-Bildkompressionalgorithmus auf beliebige Daten angewendet werden. Stattdessen
+\keyword{datenspezifisch} ist. Das heisst, er kann nicht wie z. B.ein
+Bildkompressionsalgorithmus auf beliebige Daten angewendet werden. Stattdessen
 ist er nur sinnvoll für die Kompression von Daten zu verwenden, mit welchen er trainiert
 wurde.
 \para{}
-Die Codeentwicklung eines Autoencoder kann man sich ungefähr so vorstellen:
+Die Codeentwicklung eines Autoencoders kann man sich ungefähr so vorstellen:
 Ein Autoencoder wird mit einem Datensatz von Bilder von meschlichen Gesichtern trainiert.
 Anstatt, dass der Autoencoder die Farbkomponenten der Pixel im Encoding speichert, würde er
 die Features abstrahieren. Er würde Information zum Augenabstand, zur
@@ -1997,9 +1997,9 @@ Informationsgehalt als die ursprünglichen Daten. Aus diesem Grund kann der
 Autoencoder zur Datenkompression verwendet werden. Die komprimierten Daten
 können somit platzsparender gespeichert oder über das Internet versendet werden.
 Die komprimierten Daten brauchen um den Faktor $\frac{p}{d}$ weniger Speicher als die
-unkomprimierten, wobei $p$ die Grösse des Falschenhals und $d$ die Grösse
+unkomprimierten, wobei $p$ die Grösse des Flaschenhals und $d$ die Grösse
 der Inputschicht ist.
-Mithilfe der Decoders können die ursprünglichen Daten zurückgewonnen werden.
+Mithilfe des Decoders können die ursprünglichen Daten zurückgewonnen werden.
 Jedoch hat das Decoding einen gewissen Qualitätsverlust im Vergleich zu den
 Features erlitten. Somit können die Daten nicht in voller Qualität rekonstruiert
 werden. Es handelt sich also um \keyword{verlustbehaftete Kompression}.
@@ -2009,7 +2009,7 @@ nur sehr schlechte Rekonstruktionen für Landschaftsbilder erzeugen würde. Dies
 steht im Gegensatz zu beispielsweise JPEG-Kompression, welche sich für beliebige
 Bilder eignet, dafür aber geringere Kompressionsraten als Autoencoder aufweisen.
 \para{}
-Eine andere datenspezifische Kompressionmethode stellt die
+Eine andere datenspezifische Kompressionsmethode stellt die
 Hauptkomponentenanalyse (PCA) dar. Sie ist eine erweiterte Version der
 Hauptachsentransformation, welche dafür gebraucht wird um Kegelschnitte in
 Standardlage zu bringen. Falls ausschliesslich lineare Neuronen in einem
@@ -2023,7 +2023,7 @@ Quellen: \cite{paper:autoencoder_compression}
 
 \subsection{Visualisierung von Daten}
 Durch die Dimensionalitätsreduktion ist es möglich die Daten besser zu
-Visualisieren. Datensätze, welche eine hohe Dimensionalität von $\set{R}^n$
+visualisieren. Datensätze, welche eine hohe Dimensionalität von $\set{R}^n$
 aufweisen, können mithilfe von Autoencoder auf $\set{R}^2$ oder $\set{R}^3$
 reduziert werden. Solche Datensätze können deutlich einfacher als 2D oder 3D
 Abbildung dargestellt werden und so Aufschluss über Muster in den Daten gewähren.
@@ -2032,18 +2032,18 @@ Abbildung dargestellt werden und so Aufschluss über Muster in den Daten gewähr
 Ein Convolutional-Autoencoder ist, wie es der Name schon sagt, ein Autoencoder,
 welcher anstatt der normalen Fully-Connected-Schichten eines KNNs, die Schichten eines CNN verwendet.
 Dieser ist interessant, weil er zur Dimensionalitätsreduktion von Bildern
-verwendet werden kann. Er kann beispielsweise als Bildkompressionalgorithmus
+verwendet werden kann. Er kann beispielsweise als Bildkompressionsalgorithmus
 benutzt werden.
 \para{}
 Wie bei den normalen Autoencodern auch, muss hier die Inputschicht und das
 Decoding die gleiche Form aufweisen. Nun ist auch ersichtlich, weshalb es in
-Sektion \refbox{sec:dimensionalitätskontrolle} wichtig war CNN-Schichten zu
+Sektion \refbox{sec:dimensionalitätskontrolle} wichtig war, CNN-Schichten zu
 entwickeln, welche ein willentliches Einstellen der Schichtgrössen erlauben.
 Es muss versucht werden, dass die Vergrösserung nach dem Flaschenhals die
 Verkleinerung vor dem Flaschenhals kompensiert.
 Eine Massnahme dafür ist es bei sämtlichen Convolutional-Schichten Same-Padding zu
 verwenden und die Dimensionalität nur über Pooling- und UpSampling-Schichten zu
-steuern. Desweiteren muss der Decoder den spiegelverkehrten Aufbau zum Encoder
+steuern. Des Weiteren muss der Decoder den spiegelverkehrten Aufbau zum Encoder
 aufweisen, wobei Pooling-Schichten mit UpSampling-Schichten ersetzt werden.
 \para{}
 In Abbildung \refbox{fig:convolutional_autoencoder} ist ein schematischer
@@ -2057,19 +2057,19 @@ drei Farbkomponenten.
   \label{fig:convolutional_autoencoder}
 \end{figure}
 \para{}
-Desweiteren sind Convolutional-Autoencoder von Interesse, da er zu einer weiteren
-Anwendung eines Autoencoder führen: zum Denoising-Autoencoder.
+Des Weiteren sind Convolutional-Autoencoder von Interesse, da er zu einer weiteren
+Anwendung eines Autoencoders führen: zum Denoising-Autoencoder.
 Dieser wird im nächsten Abschnitt betrachtet.
 \para{}
 Quellen: \cite{yt:autoencoder_faces}
 
 \section{Denoising-Autoencoder}
-Ein Denoising-Autoencoder oder einfach Denoiser verkörpert einen leicht abgeänderterten
-Autoencoder. Er wird vorallem verwendet, um das Bildrauschen aus Bildern zu entfernen.
+Ein Denoising-Autoencoder oder einfach Denoiser verkörpert einen leicht abgeänderten
+Autoencoder. Er wird vor allem verwendet, um das Bildrauschen aus Bildern zu entfernen.
 \para{}
 Im Unterschied zu klassischen Autoencodern benötigt er einen Datensatz mit
 wahren Labels, da er nicht die Features kopiert.
-Seine Input besteht aus den verrauschten Bilder und die Labels sind die
+Seine Inputs besteht aus den verrauschten Bilder und die Labels sind die
 unverrauschten Bilder. Somit wird er darauf trainiert, das Rauschen zu entfernen.
 Man mag sich nun die Frage stellen, weshalb hierfür ein Autoencoder und
 kein normales CNN verwendet wird. Empirisch hat sich gezeigt, dass sich
@@ -2101,7 +2101,7 @@ Um es zu erzeugen, wird eine Gauss'sche Normalverteilung
 $\mathcal{N}(\mu = 0, \sigma^2 = 1)$ verwendet mit Erwartungswert $\mu = 0$ und Varianz
 $\sigma^2 = 1$. Für jedes Feature eines Datensatzes wird dieser Verteilung ein
 Zufallswert entnommen. Dieser Wert wird mit einem Rauschfaktor $c$
-mutlipliziert, welcher die Rauschstärke bestimmt. Das Resultat wird zum
+multipliziert, welcher die Rauschstärke bestimmt. Das Resultat wird zum
 entsprechenden Wert des Features addiert.
 Auf diese Weise lässt sich ein verrauschter Datensatz entwickeln.
 \begin{gather*}
@@ -2126,7 +2126,7 @@ Autoencoder) eines KNNs dargelegt.
 Nun findet ein Übergang zur praktischen Programmierung eines
 Convolutional-Denoising-Autoencoders statt. Es wird hier die grobe Funktionsweise der
 Frameworks TensorFlow und Keras erörtert. Aus didaktischen Gründen wird die
-Verwendung isoliert betachtet.
+Verwendung isoliert betrachtet.
 Sie dient als Vorbereitung auf das Kapitel sechs, wo der Gesamtzusammenhang anhand der
 fallbezogenen Programmierung hergestellt wird.
 \para{}
@@ -2142,9 +2142,9 @@ fallbezogenen Programmierung hergestellt wird.
 Mathematik-Programmbibliothek für numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
 liegt. TF zeichnet sich hauptsächlich durch seine einfache Bedienung aus, welche
 es dem Benutzer erlaubt, ohne grosse mathematische Vorkenntnisse, ein ML-Modell
-zu entwickeln. Desweiteren sind die performanten
+zu entwickeln. Des Weiteren sind die performanten
 Implementierungen bemerkenswert, welche den Trainingsvorgang sehr kurz halten.
-Daher ist TF gegenüber selbstgeschriebenen Implementierungen zu bevorzugen.
+Daher ist TF gegenüber selbst geschriebenen Implementierungen zu bevorzugen.
 TF ist gratis und ein Open-Source-Projekt. Es steht auf Github zur Verfügung
 (siehe QR-Code).
 \begin{wrapfigure}{L}{2cm}
@@ -2157,20 +2157,20 @@ Firmen sind: Google, Twitter, AirBnB, Intel, Snapchat und noch viele mehr.
 Grundsätzlich wurde TF für Maschinelles Lernen entwickelt. Speziell eignet es
 sich für Deep Learning. Es bietet die nötigen Werkzeuge, um ein Modell zu
 definieren und es mit den eingebauten Algorithmen zu trainieren.
-Trotz des engen Bezugs zum Maschinellem Lernen, eignet sich TF darüber hinaus auch für
-anderstartige Anwendungen, welche Gebrauch von numerischen Berechnungen machen.
+Trotz des engen Bezugs zum Maschinellen Lernen, eignet sich TF darüber hinaus auch für
+andersartige Anwendungen, welche Gebrauch von numerischen Berechnungen machen.
 \para{}
 Im Folgenden wird die grobe Funktionsweise von TensorFlow untersucht. Wir
 beziehen uns dabei auf TensorFlow-Core Version r1.14%
 \footnote{Momentan befindet sich TF 2.0 in der Beta Version. Es handelt sich
-  dabei um eine grosse Überarbeitung des Frameworks. Sobald TF 2.0 offiziel
+  dabei um eine grosse Überarbeitung des Frameworks. Sobald TF 2.0 offiziell
   veröffentlich wurde, ist es zu empfehlen, diese zu verwenden.}.
 Die Betrachtung von TF wird hier bewusst kurz gehalten, da bei der
 Programmierung in Kapitel sechs auf die High-Level-API Keras zurückgegriffen
 wird. Mit TF wird daher nur teilweise direkt gearbeitet. Trotzdem ist es hilfreich, ein
 grobes Verständnis über TF zu besitzen, um die Funktionsweise zu verstehen.
 \para{}
-Die wichtigste Quelle, um TensorFlow zu erlernen ist die offizielle TensorFlow
+Die wichtigste Quelle, um TensorFlow zu erlernen, ist die offizielle TensorFlow
 Website. Dort findet man auch die Dokumentation. QR CODE
 % \begin{wrapfigure}{L}{2cm}
 %   \qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
@@ -2186,7 +2186,7 @@ Fontend aufgeteilt.
   Das \keyword{Frontend} ist der Teil eines Programms, mit welchem der Benutzer
   interagiert. Es stellt eine Schnittstelle zum sogenannten Backend eines
   Programms dar. Es offenbart so gewisse Funktionalitäten des Programms,
-  ohne die zugrundeliegenden Logik preiszugeben.
+  ohne die zugrunde liegenden Logik preiszugeben.
   \para{}
   Das \keyword{Backend} ist das Gegenstück zum Frontend. Es implementiert
   jegliche Programmlogik, welche das gewünschte Verhalten der Applikation
@@ -2196,9 +2196,9 @@ Fontend aufgeteilt.
 \para{}
 Das Frontend von TF ist in \keyword{Python} geschrieben%
 \footnote{
-  TF besitzte mehrere Frontends, welche in den verschiedensten
+  TF besitzt mehrere Frontends, welche in den verschiedensten
   Programmiersprachen geschrieben sind. Wir werden jedoch nur das
-  Python-Frontend betrachten, da es am Besten von TF unterstützt ist.
+  Python-Frontend betrachten, da es am besten von TF unterstützt ist.
 }.
 Python wird allgemein als eine sehr einsteigerfreundliche Programmiersprache wahrgenommen. Sie
 ermöglicht es dem Benutzer, mit vergleichsweise wenig Programmcode TensorFlow intuitiv zu verwenden.
@@ -2222,7 +2222,7 @@ TensorFlow ist datenstromorientiert, was bedeutet, dass eine Berechnung
 durch einen gerichteten Graphen beschrieben wird. Zuerst wird ein solcher Graph
 aufgestellt und es werden Knoten und Pfade hinzugefügt. Erst nach dieser
 Definition wird er ausgeführt.
-Es handelt sich dabei um einen \keyword{Computatial Graph}, welcher schon in
+Es handelt sich dabei um einen \keyword{Computational Graph}, welcher schon in
 Anhang \refbox{sec:anhang_bp} erwähnt wurde.
 In TensorFlow wird er vereinfacht als \keycode{Graph} bezeichnet.
 \para{}
@@ -2253,7 +2253,7 @@ die Werte ausgelesen werden.
 Die Tensoren erlauben es den Daten, innerhalb des Graphen beliebige
 Dimensionen und Formen anzunehmen. Es können
 sowohl Listen von Zahlen (Vektoren), wie auch Bilder (Tensoren dritter Stufe)
-verrechnet werden. Aus diesem Grund war es auch sinnvoll in Sektion
+verrechnet werden. Aus diesem Grund war es auch sinnvoll, in Sektion
 \refbox{sec:forward} und im Anhang \refbox{sec:anhang_bp} die Gleichungen in
 Matrixform herzuleiten.
 \para{}
@@ -2284,9 +2284,9 @@ Eine Operation besitzt jeweils einen Namen und repräsentiert eine
 abstrakte Berechnung. Sie besitzt jeweils null oder mehr Tensor-Objekte als
 Input, wie auch als Output.
 \para{}
-TensorFlow offeriert eine Vielzahl von vordefinierten Operationen, so dass eine eigenständige
+TensorFlow offeriert eine Vielzahl von vordefinierten Operationen, sodass eine eigenständige
 Definition von Operationen meistens nicht notwendig ist.
-Ein Beispiel für eine vordefinierte Operationen ist die
+Ein Beispiel für eine vordefinierte Operation ist die
 \keycode{matmul(a,b)}-Operation. Sie stellt eine Matrixmultiplikation zwischen
 dem Knoten \mintinline{python}{a} und dem Knoten \mintinline{python}{b} dar.
 Das Resultat kann dann in einer neuen Knotenvariable \mintinline{python}{c} gespeichert werden.
@@ -2316,11 +2316,11 @@ Dieser verkörpert das gewählte Optimierungsverfahren, welches zur Minimierung
 der Kostenfunktion verwendet wird.
 Es gibt verschiedene Optimizer, welche unterschiedliche
 Konvergenzgeschwindigkeiten und Präzisionsgrade aufweisen.
-Im Rahmen dieser Arbeit wurde jedoch nur das SGD-Verfahren behandelt, so dass
+Im Rahmen dieser Arbeit wurde jedoch nur das SGD-Verfahren behandelt, sodass
 ausschliesslich dieser Optimizer hier Anwendung findet.
 \para{}
 Beim Optimierungsverfahren muss TF die partiellen Ableitungen der Kostenfunktion
-bezüglich der Modellparametern bestimmen. Hierfür macht sich die Verwendung von
+bezüglich den Modellparametern bestimmen. Hierfür macht sich die Verwendung von
 Computational Graphs ausgezahlt, da mithilfe von ihnen der Kostengradient
 automatisiert bestimmt werden kann (siehe Anhang \refbox{sec:anhang_bp}).
 
@@ -2351,9 +2351,9 @@ gegenüberstellen und somit die besten Hyperparameter identifizieren.
 Dieses Verfahren gelangt in Kapitel sechs zur Anwendung.
 Ebenfalls wird die beanspruchte Trainingszeit angezeigt und so beurteilbar gemacht.
 \para{}
-In der untenstehenden Abbildung ist ein Graph von TensorBoard dargestellt,
+In der unten stehenden Abbildung ist ein Graph von TensorBoard dargestellt,
 welcher die Entwicklung der Kostenfunktion für den Testdatensatz verschiedener
-Modelle anzeigt. In diesem Beispiel hätte die unterste orange Kurve am Besten
+Modelle anzeigt. In diesem Beispiel hätte die unterste orange Kurve am besten
 abgeschnitten. Dieses Modell hat die kleinsten Kosten verursacht. Jedoch hat
 dieses auch die längste Trainingszeit beansprucht.
 
@@ -2392,12 +2392,12 @@ zu konstruieren.
 \para{}
 Die gängigste Vorgehensweise besteht darin, ein sogenanntes
 \keyword{Sequential-Modell} zu bauen.
-Dies ist ein Modell, welches einen linearer Stapel von verschiedenen
+Dies ist ein Modell, welches einen linearen Stapel von verschiedenen
 KNN-Schichten beinhaltet. Man kann dabei aus den vordefinierten Schichten
 wählen. Im folgenden werden diese Schichten näher betrachtet.
 
 \subsection{Schichten}
-Die Defintion des Graphen in Keras erfolgt, indem die verschiedenen Schichten
+Die Definition des Graphen in Keras erfolgt, indem die verschiedenen Schichten
 des gewünschten Modells in Variabeln gespeichert werden.
 Um die Schichten miteinander zu verbinden, erfolgt eine Referenzierung auf die
 vorherige Schicht.
@@ -2407,12 +2407,12 @@ welche die erste und die letzte Schicht als Argumente erwartet.
 Im folgenden werden die relevanten Schichtentypen von Keras dargelegt.
 \para{}
 Vorgängig sei darauf hingewiesen, dass Keras standardmässig ein anderes Vorgehen
-zur Initalisierung der Modellparameter verwendet, als in der Theorie (siehe
-Sektion \refbox{sec:parameter_initalisieren}) erklärt wurde.
+zur Initialisierung der Modellparameter verwendet, als in der Theorie (siehe
+Sektion \refbox{sec:parameter_initialisieren}) erklärt wurde.
 Keras benutzt nämlich eine Glorot-Initialisierung mit einer uniformen Verteilung.
 Dies steht im Gegensatz zur erklärten Theorie, wo eine Normalverteilung verwendet wurde.
 Aus diesem Grund muss bei jeder Schicht explizit spezifiziert werden, dass eine
-Glorot-Initalisierung mit Normalverteilung angewendet werden soll.
+Glorot-Initialisierung mit Normalverteilung angewendet werden soll.
 \para{}
 
 Quellen: \cite{net:keras_init}
@@ -2432,8 +2432,8 @@ der Theorie erklärt, diejenige Schicht, welche aus Neuronen besteht und ``dicht
 Neuron der nächsten Schicht verbunden ist.
 Als Argumente erwartet die Schicht die Anzahl Neuronen, aus welcher sie besteht,
 die Aktivierungsfunktion und die vorherige Schicht. Wie vorhin erwähnt
-überschreiben wir den Standard-Initalisierer mit dem
-\code{'glorot\_normal'}-Initalisierer. Ebenfalls wird die vorherige Schicht
+überschreiben wir den Standard-Initialisierer mit dem
+\code{'glorot\_normal'}-Initialisierer. Ebenfalls wird die vorherige Schicht
 referenziert, um die Verbindung zwischen den Schichten herzustellen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
   tf.keras.layers.Dense(<Anzahl Neuronen>,
@@ -2457,7 +2457,7 @@ folgendes Format ausweisen: $(\text{Anzahl Samples}, \text{Anzahl
 \paragraph{MaxPool2D-Schicht}
 Die \code{MaxPool2D}-Schicht in Keras ist diejenige Schicht, welche das MaxPooling vornimmt. Um sie zu
 definieren, muss die Grösse des Feldes $f$ festgelegt werden, welches zu einem Element
-zusammengefasst werden soll. Desweiteren müssen der Stride $s$ und das Padding $p$
+zusammengefasst werden soll. Des Weiteren müssen der Stride $s$ und das Padding $p$
 spezifiziert werden.
 
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
@@ -2466,7 +2466,7 @@ spezifiziert werden.
 
 \paragraph{UpSampling2D-Schicht}
 Die UpSampling-Schicht, als Gegenstück zur Pooling-Schicht, heisst in Keras
-\keycode{UpSampling2D}. Zur Definiton muss die Grösse $f$ des neuen Feldes
+\keycode{UpSampling2D}. Zur Definition muss die Grösse $f$ des neuen Feldes
 angegeben werden, welches die interpolierten Werte enthält.
 Zudem muss noch die gewählte Interpolationsmethode gewählt werden. Hier soll nur
 die Nächste-Nachbar-Interpolation zur Anwendung gelangen.
@@ -2519,15 +2519,15 @@ TensorFlow sowie Keras zusammengeführt werden, um ein konkretes
 Anwendungsbeispiel zu programmieren.
 Es wird darauf eingegangen, welche Schritte die
 Entwicklung eines solchen Modells umfasst und welches Vorgehen
-idealtypischer Weise zu wählen ist.
+idealtypischerweise zu wählen ist.
 
 \section{Das konkrete Modell}
-Es soll nun ein Convolutional-Denoising-Autoencoder programmieren werden.
-Dieser kann verwendet werden, um das Bildrauschen von Bildern zu eliminieren, und
+Es soll nun ein Convolutional-Denoising-Autoencoder programmiert werden.
+Dieser kann verwendet werden, um das Bildrauschen von Bildern zu eliminieren und
 sie so wieder erkennbar zu machen.
 Zu Demonstrationszwecken werden handgeschriebene Ziffern vom MNIST-Datenset
-verwendet, da die Funktionsfähigkeit der Modells auf diese Weise einfach
-erkannbar ist.
+verwendet, da die Funktionsfähigkeit der Modell auf diese Weise einfach
+erkennbar ist.
 
 % #TODO: Ausführlichere Modellbeschreibung mit Anzahl Schichten etc. -> erlaubt
 % Kürzung in Programmierabschnitt
@@ -2540,14 +2540,14 @@ erkannbar ist.
 
 \subsection{Daten}
 Als Trainingsdaten wird der \keyword{MNIST}-Datensatz verwendet. Es handelt sich
-um den wohl bekannteste Datensatz für beispielhaftes Maschinelles Lernen.
-Er besteht aus schwarz-weiss Bildern von handgeschrieben Ziffern.
-Der Datensatz würde grundsätzlich auch Labels zu den Ziffern enthalten, um das Modell beispielweise
+dabei um den wohl bekanntesten Datensatz für beispielhaftes Maschinelles Lernen.
+Er besteht aus schwarz-weiss Bildern von handgeschriebenen Ziffern.
+Der Datensatz würde grundsätzlich auch Labels zu den Ziffern enthalten, um das Modell beispielsweise
 für Ziffernerkennung trainieren zu können. Jedoch ist dies hier nicht notwendig,
 weil ein Autoencoder entwickelt werden soll, dessen Labels den Inputs entsprechen.
 \para{}
-Der Datensatz besteht aus einem Trainingsdatensatz von 60'000 Sampels und einem Testdatensatz
-von 10'000 Sampels. Alle Ziffern sind bereits korrekt formatiert, da ihre Grösse
+Der Datensatz besteht aus einem Trainingsdatensatz von 60'000 Samples und einem Testdatensatz
+von 10'000 Samples. Alle Ziffern sind bereits korrekt formatiert, da ihre Grösse
 auf $28 \times 28$ Pixel normalisiert wurde und sie im Bild zentriert sind. Ein
 Auszug an MNIST-Ziffern ist in Abbildung \refbox{fig:minst} zu sehen.
 \para{}
@@ -2574,7 +2574,7 @@ TensorFlow Website für die Installationsschritte zu verweisen:
 \qrcode[height=2cm]{https://www.tensorflow.org/install}
 
 \paragraph{Python3}
-Damit TensorFlow und Keras verwenden werden können, bedingt dies, dass Python3
+Damit TensorFlow und Keras verwendet werden können, bedingt dies, dass Python3
 installiert sein muss.
 Folgender Befehl muss in der Kommandozeile ausgeführt werden, um die
 Installation durchzuführen.
@@ -2588,7 +2588,7 @@ Package installiert werden.
 Falls der Leser über eine Nvidia-Grafikkarte verfügt, welche eine ``Compute
 Capability'' von mehr als 3.5 besitzt, kann er von der
 GPU-Hardwarebeschleunigung Gebrauch machen.
-Somit ist die CUDA-Version von TF mihtilfe des folgenden Kommandos zu installieren:
+Somit ist die CUDA-Version von TF mithilfe des folgenden Kommandos zu installieren:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{bash}
   sudo pacman -S python-tensorflow-cuda
 \end{minted}
@@ -2632,7 +2632,7 @@ In den ersten Zeilen des Pythonprogamms werden die Importstatments
 geschrieben, um NumPy, Matplotlib und TensorFlow verfügbar zu machen.
 Keras muss wie gesagt nicht explizit geladen werden, da es in TensorFlow
 enthalten ist.
-Nun können die Versionnummern der verschiedenen Programmbibliotheken
+Nun können die Versionsnummern der verschiedenen Programmbibliotheken
 in die Konsole geschrieben werden, um zu überprüfen, ob alles richtig konfiguriert ist.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   import numpy as np # NumPy wird impotiert
@@ -2657,7 +2657,7 @@ Nun wurde mit dem kleinen Testprogramm verifiziert, dass alle
 Programmabhängigkeiten funktionieren. Auf dieser Basis können wir mit dem
 eigentlichen Programm beginnen.
 \para{}
-In den folgenden Auschnitten wird der Code laufend weiter ausgebaut.
+In den folgenden Ausschnitten wird der Code laufend weiter ausgebaut.
 Auf diese Weise zeigt sich, was er bewirkt.
 Das eigentliche Programm startet mit folgenden Importstatements.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -2695,11 +2695,11 @@ umgehen. Um diese Anpassung vorzunehmen, kann folgender Code angefügt werden.
   x_train = x_train.astype('float32') / 255.0 # Normalisierung
   x_test = x_test.astype('float32') / 255.0 # Normalisierung
 \end{minted}
-Desweiteren werden im Modell Conv2D-Schichten verwendet. Diese in Keras
+Des Weiteren werden im Modell Conv2D-Schichten verwendet. Diese in Keras
 implementierten Conv2D-Schichten erwarten Inputs in der Form $(m, w, h, c)$, wobei
 $m$ die Anzahl der Bilder ist, $w$ die Bildbreite, $h$ die Bildhöhe und $c$ die
 Anzahl der Farbkomponenten. Die Bildbreite $w$ und -höhe $h$ von 28 Pixeln wird beibehalten, wie auch
-die Anzahl Farbkomponeten $c=1$. Die Anzahl Bilder $m$ lässt sich aus der Länge
+die Anzahl Farbkomponenten $c=1$. Die Anzahl Bilder $m$ lässt sich aus der Länge
 des Arrays entnehmen \code{len(x\_train)}. Mithilfe vom NumPy lässt sich das Array wie folgt umformen.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   x_test = np.reshape(x_test, (len(x_test), 28, 28, 1)) # neue Form: (60'000, 28, 28, 1)
@@ -2721,7 +2721,7 @@ wird zu diesem Zweck eine Liste $(\mat{R}_1,\mat{R}_2,\ldots,\mat{R}_m$) der Lä
 Rauschmatrizen erzeugt. Dafür kann die NumPy Funktion
 \code{np.random.normal(loc=<$\mu$>, scale=<$\sigma^2$>,size=<Form>)} verwendet werden.
 Die somit erhaltenen Rauschmatrizen werden dann mit einer Rauschkonstante
-\code{noise\_factor} multiplziert und anschliessend wird das Produkt auf die
+\code{noise\_factor} multipliziert und anschliessend wird das Produkt auf die
 MNIST-Bilder addiert. Vorerst wird der $\code{noise\_factor} = 0.5$ gewählt.
 Nach dem Hinzufügen der Rauschwerte müssen die Grauwerte noch auf das Intervall
 $[0,1]$ zurecht gestutzt werden. Auch hierfür kann eine NumPy-Funktion
@@ -2770,7 +2770,7 @@ Ausserdem ist der Plot als schwarz-weiss Grafik zu spezifizieren.
   plt.show()
 \end{minted}
 
-Das Ergebniss ist in Abbildung \refbox{fig:noisy_clean_mnist} sichtbar.
+Das Ergebnis ist in Abbildung \refbox{fig:noisy_clean_mnist} sichtbar.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{noised.png}
@@ -2778,7 +2778,7 @@ Das Ergebniss ist in Abbildung \refbox{fig:noisy_clean_mnist} sichtbar.
   \label{fig:noisy_clean_mnist}
 \end{figure}
 \para{}
-Die Daten liegen nun vollständig und im richtigem Format vor.
+Die Daten liegen nun vollständig und im richtigen Format vor.
 Nun kann zur Definition des Modells übergegangen werden.
 
 \subsection{Modell definieren}
@@ -2803,9 +2803,9 @@ ein Stride $s^l=1$, Same-Padding und die ReLU-Aktivierungsfunktion $\varphi =
 \varphi^{\text{ReLU}}$ verwendet.
 Da Keras standardmässig die Initialisierung der Modellparameter mit einer
 uniformen Verteilung vornimmt, muss der \code{kernel\_initalizer} explizit auf
-\code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initalisierung analog
-zu Sektion \refbox{sec:parameter_initalisieren} statt. \\
-Der Code für die Defition einer solchen Convolutional-Schicht lautet:
+\code{'glorot\_normal'} gesetzt werden. Dadurch findet die Initialisierung analog
+zu Sektion \refbox{sec:parameter_initialisieren} statt. \\
+Der Code für die Definition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3),
   strides=(1, 1), padding='same', activation='relu',
@@ -2922,18 +2922,18 @@ Mit Keras kann dies durch einen einzigen Funktionsaufruf erfolgen.
 Diese Funktion erwartet einige Argumente. Zuerst sind die Features und Labels anzugeben. Die
 Features wurden in der Variable \code{x\_train\_noisy} gespeichert. Die Labels
 sind die unverrauschten MNIST-Bilder, welche in der Variable \code{x\_train} enthalten sind.
-Desweiteren wird die Grösse eines Mini-Batches als 128 Sampels spezifiziert. Das
+Des Weiteren wird die Grösse eines Mini-Batches als 128 Samples spezifiziert. Das
 Training erfolgt über 100 Epochen.
-Wichtig ist, dass die Trainingssampels vor dem Training durchmischt werden,
+Wichtig ist, dass die Trainingssamples vor dem Training durchmischt werden,
 damit das Modell nicht versucht, Muster innerhalb der Anordnung der Samples zu
-erlernen. Als letzen Argument wird noch der Testdatensatz angegeben.
+erlernen. Als letzten Argument wird noch der Testdatensatz angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,
     validation_data=(x_test_noisy, x_test))
 \end{minted}
 Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet, und auch die
 CUDA-Version von TF installiert ist, erfolgt das Training mithilfe von GPU-Hardwarebeschleunigung.
-Dadurch sollte das Trainings innherhalb einiger Minuten abgeschlossen sein.
+Dadurch sollte das Trainings innerhalb einiger Minuten abgeschlossen sein.
 Während des Trainings schreibt TensorFlow Informationen zum aktuellen Fortschritt in die
 Kommandozeile. Diese Informationen weisen nachstehenden Charakter auf und geben
 Auskunft über die aktuelle Epoche sowie die Werte der Kostenfunktion. Die Kosten
@@ -2964,7 +2964,7 @@ Da das Modell nun trainiert ist, kann es für seinen eigentlichen Zweck
 genutzt werden.
 Dieser besteht darin, Bilder zu entrauschen. Dafür gelangen die
 Bilder aus dem Testdatensatz zur Anwendung. Auf diese Weise wird garantiert, dass diese
-unbenutzten Daten vom Modell nicht auswenig gelernt werden konnten.
+unbenutzten Daten vom Modell nicht auswendig gelernt werden konnten.
 Mit der Funktion \code{tf.keras.model.predict}
 erhält man alle Vorhersagen des Autoencoders zum gesamten Testdatensatz.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
@@ -2994,7 +2994,7 @@ So kann mit blossem Auge beurteilt werden, wie gut die Ergebnisse des Modells ta
   plt.show()
 \end{minted}
 In der ersten Zeile der Grafik sind die verrauschten Bilder dargestellt.
-Darunter folgen die Rekonstuktionen als Ergebnis des Modells und in der dritten Zeile
+Darunter folgen die Rekonstruktionen als Ergebnis des Modells und in der dritten Zeile
 sind die Original-Bilder zu sehen.
 Wirkliche Unterschiede zwischen der zweiten und der dritten Zeile sind kaum zu erkennen.
 \begin{figure}[h!]
@@ -3047,7 +3047,7 @@ Kombinationen an Hyperparameter ausprobieren.
       for num_filters in FILTER_NUMS:
         # ganzer Modell-Code
 \end{minted}
-Nun muss der Code zur Definition des Modells so modiziert werden, dass die
+Nun muss der Code zur Definition des Modells so modifiziert werden, dass die
 Konstanten an den entsprechenden Stellen durch die Variablen
 \code{activation\_function}, \code{batch\_size} und \code{num\_filters} ersetzt
 werden.
@@ -3076,22 +3076,22 @@ Zuletzt muss noch die TensorBoard-Variable als \code{callback} in der
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=batch_size, epochs=EPOCHS, shuffle=True,
     validation_data=(x_test_noisy,x_test), callbacks=[tensorboard])
 \end{minted}
-Nun kann das modizifizierte Programm ausgeführt werden. Dabei werden alle
-spezifzierten Kombinationen an Hyperparametern durchgetestet. Gleichzeitig
+Nun kann das modifizierte Programm ausgeführt werden. Dabei werden alle
+spezifizierten Kombinationen an Hyperparametern durchgetestet. Gleichzeitig
 erzeugt das TensorBoard-Callback Logdateien im \code{'logs'}-Verzeichnis. Diese
 Dateien enthalten alle nötigen Informationen zur anschliessenden Auswertung.
 
 \subsubsection{TensorBoard-Analyse}
 Um die besten Hyperparameter mithilfe von TensorBoard zu bestimmen, muss
 zunächst der TensorBoard-Webserver gestartet werden. Dafür navigiert man
-mit der Kommandozeile in das Verzeichniss, welches die Logdateien enthält.
+mit der Kommandozeile in das Verzeichnis, welches die Logdateien enthält.
 Dort kann dann der Webserver mithilfe folgendem Kommando gestartet werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{text}
 tensorboard --logdir .
 \end{minted}
-Nun kann mit einem WebBrowser zur angegebenen Webadresse navigiert werden. In
+Nun kann mit einem Webbrowser zur angegebenen Webadresse navigiert werden. In
 der Regel lautet diese: \code{http://localhost:6006/}.
-Der Graph, welcher die Kosten bezüglich des Testdatensatz aufzeichnet, ist von besonderem
+Der Graph, welcher die Kosten bezüglich des Testdatensatzes aufzeichnet, ist von besonderem
 Interesse. Dieser sieht folgendermassen aus:
 \para{}
 \begin{figure}[h!]
@@ -3129,11 +3129,11 @@ Das diesbezügliche Training soll wiederum 100 Epochen umfassen.
 Aufgrund der erwarteten höheren Leistungsfähigkeit, wird in diesem Durchlauf der
 \code{noise\_factor} von 0.5 (vgl. \refbox{sec:generierung_verrauschte_bilder}) auf
 1 gesetzt. Das Rauschentfernen wird dadurch anspruchsvoller. Die Ergebnisse sind
-in untenstehender Abbildung zu erkennen.
+in unten stehender Abbildung zu erkennen.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{denoised_best.png}
-  \caption{Sehr verrauschte Bilder, Rekonstruktionen und Orignalbilder}
+  \caption{Sehr verrauschte Bilder, Rekonstruktionen und Originalbilder}
 \end{figure}
 
 
@@ -3143,7 +3143,7 @@ diskutiert werden.
 
 \subsubsection{Leistung des Modells}
 Die Leistung des Modells kommt am besten in der letzten Abbildung zur
-Geltung. Da die Hyperparamter nun optimaler gewählt wurden, ist das Modell auch
+Geltung. Da die Hyperparameter nun optimaler gewählt wurden, ist das Modell auch
 in der Lage, extrem verrauschte Ziffern wieder gut erkennbar zu machen. Dem
 menschlichen Auge fällt es schwer, noch klare Ziffern in den verrauschten Bildern
 auszumachen. Das Modell hingegen kann verblüffend gut die Ziffern rekonstruieren
@@ -3169,7 +3169,7 @@ geringer als jene der übrigen.
 \subsubsection{Verbesserungsmöglichkeiten}
 Es gibt konkrete Verbesserungsmöglichkeiten, welche bei der Entwicklung
 des Denoisers bewusst nicht umgesetzt wurden.
-Diese hätten wohlmöglich für noch bessere Resultate gesorgt. Allerdings hätten
+Diese hätten womöglich für noch bessere Resultate gesorgt. Allerdings hätten
 sie den Umfang der vorliegenden Arbeit gesprengt.
 \para{}
 Ein erster Ansatzpunkt hätte möglicherweise darin bestanden, mehr Werte für die
@@ -3193,7 +3193,7 @@ Sie stellt eine Lösung für das sogenannte \keyword{Vanishing-Gradient-Problem}
 dar. Durch dessen Behebung kommt es nicht --- wie im vorliegenden Modell --- zu einer Verlangsamung des Trainings im
 Verlauf des Gradientenabstiegs.
 \para{}
-Weitere Verbessungen könnten in der Wahl eines anderen
+Weitere Verbesserungen könnten in der Wahl eines anderen
 Optimierungsverfahren als SGD liegen. Beispielsweise könnte eine SGD-Variante mit
 Impuls (engl.: momentum) verwendet werden. Diese Art von SGD stellt ein
 Verfahren dar, welches den Gradientenabstieg weniger sprunghaft macht und damit
@@ -3221,7 +3221,7 @@ nachvollziehbar und daher für die vorliegende Arbeit nicht von höherem Wert.
 % LocalWords:  overfitting Auswendiglernen errorfunc Outputpaare Grösse ref ml
 % LocalWords:  meanerrorfunc ableitungen mean squared error quadrierten descent
 % LocalWords:  Gradientenverfahren Optimierungsproblem Funktionswerte anhang
-% LocalWords:  Gymnasialstufe Gradientenverfahrens parameter initalisieren
+% LocalWords:  Gymnasialstufe Gradientenverfahrens parameter initialisieren
 % LocalWords:  Lernrate Proportionalitätsfaktor Schrittgrösse Ausserdem gross
 % LocalWords:  Gradientenabstiegs schiesst Aktivierungsfunktion Neurons Neural
 % LocalWords:  ausserdem Zwischenschichten folgendermassen rasterartige Network

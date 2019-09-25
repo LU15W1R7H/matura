@@ -5,8 +5,8 @@ Der vorgegebene Rahmen der Maturaarbeit in Bezug auf Umfang,
 Nachvollziehbarkeit und Erstellungsdauer schränkte verschiedene Ideen zu dieser
 Arbeit markant ein. Ursprünglich war angedacht, eine deutlich umfangreichere
 Problemstellung zu bearbeiten. Aus diesem Grund wurde das eigentliche Potenzial von
-TensorFlow und Keras bei weitem nicht ausgeschöpft. Dadurch könnte ein falscher
-Eindruck von eigentlichen Potenzial dieser Tools entstehen. Wichtig ist daher zu
+TensorFlow und Keras bei Weitem nicht ausgeschöpft. Dadurch könnte ein falscher
+Eindruck vom eigentlichen Potenzial dieser Tools entstehen. Wichtig ist daher zu
 erkennen, dass TensorFlow und Keras zu weit mehr im Stande sind, als das
 dargelegte Anwendungsbeispiel vermuten lässt.
 \para{}
@@ -21,7 +21,7 @@ TensorFlow und Keras ebenfalls hätten bearbeitet werden können.
 Wie im Vorwort erwähnt, bestand der ursprüngliche Plan dieser Arbeit
 darin, einen \keyword{Variational Autoencoder} (VAE) zu implementieren. Dieser sollte genutzt werden,
 um künstlich generierte Bilder von menschlichen Gesichtern zu erzeugen.
-Dies ist möglich, da es sich bei einem VAE um ein sogennantes
+Dies ist möglich, da es sich bei einem VAE um ein sogenanntes
 \keyword{Generatives Modell} handelt.
 \para{}
 Generative Modelle sind in der Lage, anhand
@@ -32,8 +32,8 @@ jedoch nicht in ihm enthalten.
 Ein VAE erweitert das Grundkonzept eines normalen Autoencoders. Beim VAE ist das
 Encoding (Repräsentation) eine stochastische Verteilung, welche den entwickelten
 Code darstellt.
-Auf diese Weise wird bezweckt, dass Codes, welche im Repräsentationraum nahe beieinander liegen, auch ähnliche
-Decodings (Rekonstruktionen) erzeugen. Dadurch wird der Repräsentationraum
+Auf diese Weise wird bezweckt, dass Codes, welche im Repräsentationsraum nahe beieinander liegen, auch ähnliche
+Decodings (Rekonstruktionen) erzeugen. Dadurch wird der Repräsentationsraum
 kontinuierlich (siehe Abb. \refbox{fig:vae}). So können neue zufällige Codes
 rekonstruiert werden, welche sinnvolle Decodings erzeugen. Auf diese Weise agiert der Decoder als generatives
 Modell. Wenn beispielsweise ein VAE mit menschlichen Gesichtern
@@ -54,8 +54,8 @@ Eine verständliche und gute Erklärung bietet der Youtube-Kanal
 \cite{wiki:autoencoder}
 
 \section*{Generative Adversial Networks}
-Ein weiteres Generatives Modell sind sogennante \keyword{Generative Adversial
-  Networks} (GANs). Sie sind der annerkante Status Quo, was generative KNNs
+Ein weiteres Generatives Modell sind sogenannte \keyword{Generative Adversial
+  Networks} (GANs). Sie sind der anerkannte Status Quo, was generative KNNs
 anbelangt.
 \para{}
 Das Grundkonzept ihrer Funktionsweise lautet wie folgt: Ein GAN besteht aus zwei
@@ -68,7 +68,7 @@ Er muss dann entscheiden, ob es echt oder generiert ist. Beide Netzwerke lernen 
 immer besser in ihrer Tätigkeit zu werden und betreiben gewissermassen einen Wettbewerb.
 \para{}
 NVIDIA hat 2019 ein Paper veröffentlicht, in welchem sie ein GAN implementiert
-haben. Dieses Modell generierte Bilder von meschlichen Gesichtern. Die
+haben. Dieses Modell generierte Bilder von menschlichen Gesichtern. Die
 Ergebnisse sind von Auge nicht von echten Fotos zu unterscheiden.
 In Abbildung \refbox{fig:nvidia_gan} ist ein Auszug an generierten Bildern dargestellt.
 
@@ -87,11 +87,11 @@ TensorFlow befindet sich momentan in einer grossen Überarbeitungsphase. Es
 wächst gewissermassen aus seinen Kinderschuhen heraus. Es handelt sich dabei um das
 TensorFlow 2.0 Update. Bereits zum Zeitpunkt des Verfassens dieser Arbeit
 existiert eine Entwicklungsversion von TF 2.0, jedoch läuft diese noch nicht
-völlig stabil. Sobald TF 2.0 offiziel freigegeben wird, ist zu empfehlen,
+völlig stabil. Sobald TF 2.0 offiziell freigegeben wird, ist zu empfehlen,
 davon Gebrauch zu machen. In dieser Überarbeitung werden viele Relikte aus den
 ursprünglichen TensorFlow Versionen entfernt, welche für Verwirrung sorgen
-könnten. Somit entsteht ein in sich stimmiges Framework, welches einene höheren
-Konfort aufweisen soll.
+könnten. Somit entsteht ein in sich stimmiges Framework, welches einen höheren
+Komfort aufweisen soll.
 \para{}
 Quelle: \cite{net:tf_2.0}
 
@@ -107,7 +107,7 @@ Weitere erwähnenswerte Frameworks sind: Caffe, Scikit-Learn, Sonnet.
 QUELLE
 
 \section*{Weiterführende Literatur}
-Machinelles Lernen hat bei weitem noch mehr zu bieten. Falls der Leser sich noch
+Machinelles Lernen hat bei Weitem noch mehr zu bieten. Falls der Leser sich noch
 mehr damit befassen möchte, kann er folgende Literatur konsultieren:
 \begin{itemize}
 \item{``Hands-On Machine Learning with Skikit-Learn and TensorFlow'' von Aurélien Géron}
@@ -129,19 +129,19 @@ Persoenlicher Eindruck
 \begin{appendices}
 
 \chapter{Gradientenverfahren}\label{sec:anhang_gd}
-Das Gradientenverfahren ist ein numerisches Verfahren, um Funkionen $f(x_1,
-x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z.B. die Fehlerfunktion)
+Das Gradientenverfahren ist ein numerisches Verfahren, um Funktionen $f(x_1,
+x_2, \ldots, x_n)$ vom Typ $\set{R}^n \to \set{R}$ (wie z. B. die Fehlerfunktion)
 zu minimieren.
 Dies geschieht, indem ein Startpunkt (Ortsvektor) $\vec{p}_0$ gewählt wird, dessen
 Komponenten den Input von $f(\vec{p}_0)$ darstellen.
-Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimun liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
+Nun werden iterativ neue Punkte $\vec{p}_t$ gesucht, welche immer näher beim lokalen Minimum liegen, also Punkte, die den Funktionswert $f(\vec{p}_t)$ immer kleiner werden lassen.
 Dies wird durchgeführt, bis der Punkt genügend nahe beim lokalen Minimum ist.
 \para{}
 Dafür muss ein Vektor $\vec{b}_t$ bestimmt werden, welcher auf den Punkt $\vec{p}_t$ addiert einen neuen Punkt $\vec{p}_{t+1}$ bildet,
 bei dem der Funktionswert $f(\vec{p}_{t+1})$ kleiner ist als der von $f(\vec{p}_t)$.
 Dies geschieht am effizientesten, wenn $\vec{b}_t$ in die Richtung der stärksten Funktionswertabnahme zeigt.
 
-Hierzu wird der sogennanten \keyword{Gradient} $\vecf{\nabla}$ verwendet,
+Hierzu wird der sogenannten \keyword{Gradient} $\vecf{\nabla}$ verwendet,
 für den wiederum partielle Ableitungen benötigt werden.
 \para{}
 \begin{defbox}{Partielle Ableitungen}\label{ref:partielle_ableitungen}
@@ -187,7 +187,7 @@ für den wiederum partielle Ableitungen benötigt werden.
   Als Beispiel wird die Funktion $f(x,y) = x^2 + y^2 - 2$ betrachtet, welche von
   den Variabeln $x$ und $y$ anhängt.
   Um die partielle Ableitung bezüglich $x$ zu bestimmen, muss $y$ als konstant
-  betrachten werden. Beispielsweise kann man $y=0$ wählen, damit die Funktion
+  betrachtet werden. Beispielsweise kann man $y=0$ wählen, damit die Funktion
   $g(x) = f(x,0) = x^2 - 2$ nur noch von der Variable $x$ abhängt.
   Leitet man nun nach $x$ ab, erhält man:
   $\deriv{g(x)}{x} = g'(x) = 2x$.\\
@@ -225,7 +225,7 @@ für den wiederum partielle Ableitungen benötigt werden.
 \end{examplebox}
 \para{}
 Da der Gradient also in die Richtung des steilsten Anstiegs zeigt, sollte der Vektor
-$\vec{b}_t$ gerade in die entgegengesetze Richtung zeigen. Demnach sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ weisen.
+$\vec{b}_t$ gerade in die entgegengesetzte Richtung zeigen. Demnach sollte er in die Richtung des negierten Gradienten der Funktion $f$ im Punkt $\vec{p}_t$ weisen.
 Jetzt kann das iterative Annähern an das lokale Minimum folgendermassen beschrieben
 werden:
 \\
@@ -245,7 +245,7 @@ Schrittgrösse beim Abstieg bestimmt.
 \end{figure}
 \fi%
 
-Während des Gradientenverfahren konvergiert der Punkt $\vec{p}_t$ zu einem
+Während des Gradientenverfahrens konvergiert der Punkt $\vec{p}_t$ zu einem
 beliebigen \textit{lokalen} Minimum, abhängig davon, wie der Startpunkt
 $\vec{p}_0$ gewählt wurde.
 
@@ -258,7 +258,7 @@ Ableitungen einer Schicht anhand seiner Nachbarsschichten berechnet werden.
 Dies ist auch der namensgebende Grundgedanke der Rückwärtspropagierung: Man
 beginnt damit die partiellen Ableitung der letzten Schicht zu bestimmen und
 berechnet dann retrograd Schicht für Schicht die vorherigen
-partiellen Ableitungen, bis zur Inputsschicht. \\
+partiellen Ableitungen, bis zur Inputschicht. \\
 Dies geschieht unter Anwendung der Kettenregel der Ableitungen.
 Es ist sinnvoll, für das Aufstellen dieser Gleichungen das Netzwerk als
 \keyword{Computational Graph} zu betrachten.
@@ -369,9 +369,9 @@ neue Operation eingeführt werden: das Hadamard-Produkt.
 \end{defbox}
 \para{}
 
-Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion,
+Mit $\vecf{\varphi}'$ als die vektorisierte Ableitung der Aktivierungsfunktion
 kann der Fehlervektor der letzten Schicht nach Gleichung \refbox{eq:RPh0}
-berechnen werden.
+berechnet werden.
 
 \begin{equation}\label{eq:RPh0}
   \vec{\delta}^L = \trans{\begin{pmatrix} \ds\partderiv{C}{a_1^L} & \ds\partderiv{C}{a_2^L} & \cdots & \ds\partderiv{C}{a_{|L|}^L}\end{pmatrix}} \odot \vecf{\varphi}'[\vec{z}^L]
@@ -394,7 +394,7 @@ Daraus folgt die kompakte Matrix-Version \refbox{eq:RP1a} der Gleichung
 \\
 Nun soll eine rekursive Berechnungsmethode des Fehlers $\delta_j^{l-1}$
 der vorherigen Schicht anhand des Fehlers $\delta_j^l$ der jetzigen Schicht
-erarbeiten werden. Zu diesem Zweck ist wiederum ein Computational Graph aufzustellen
+erarbeitet werden. Zu diesem Zweck ist wiederum ein Computational Graph aufzustellen
 (siehe Abb. \refbox{fig:cg_L-1}).
 \para{}
 \begin{figure}[h!]
@@ -410,7 +410,7 @@ Es gilt erneut die Gleichung \refbox{eq:RPh1} für die Berechnung des Fehlers $\
   \delta_j^{l-1} = \partderiv{C}{z_j^{l-1}} = \partderiv{a_j^{l-1}}{z_j^{l-1}} \cdot \partderiv{C}{a_j^{l-1}}
 \end{equation}
 \\
-Der erste Faktor entspricht der Ableitung $\varphi'(z_j^{l-1})$ der Aktiverungsfunktion.
+Der erste Faktor entspricht der Ableitung $\varphi'(z_j^{l-1})$ der Aktivierungsfunktion.
 Beim Übergang einer Schicht ($l-1$) zur Schicht $l$ beinflusst eine Aktivierung
 $a_j^{l-1}$ alle gewichteten Summen $z_k^l$. Mit der Kettenregel folgt daher,
 dass die partielle Ableitung $\ds\partderiv{C}{a_j^{l-1}}$ die Summe aller
@@ -426,7 +426,7 @@ Aktivierung $a_j^{l-1}$ der vorherigen Schicht mit den entsprechenden Gewichten
 $w_{k,j}^{l-1}$ multipliziert.
 Dadurch entspricht diese partielle Ableitung $\ds\partderiv{z_k^l}{a_j^{l-1}}$ gerade dem
 Gewicht selbst. Desweiteren ist $\ds\partderiv{C}{z_k^l}$ per Definition der
-Fehler $\delta_k^l$. Mit dieser Erkenntnis lässt sich die zweite essentielle
+Fehler $\delta_k^l$. Mit dieser Erkenntnis lässt sich die zweite essenzielle
 Gleichung \refbox{eq:RP2} für die Rückwärtspropagierung aufstellen.
 \\
 \begin{equation}\tag{RP2}\label{eq:RP2}
@@ -440,7 +440,7 @@ diesem Zweck wird mit der Erweiterungen auf alle gewichteten Summen begonnen:
   \vec{\delta}^{l-1} = \vecf{\varphi}'[\vec{z}^{l-1}] \odot \trans{\begin{pmatrix} \ds\sum_{k=1}^{|l|} w_{k,1}^{l-1} \cdot \delta_k^l & \cdots & \ds\sum_{k=1}^{|l|} w_{k,|l-1|}^{l-1} \cdot \delta_k^l \end{pmatrix}}
 \end{equation*}
 \\
-Der zweite Operant des Hadamard-Produkts ist hierbei gerade das Produkt der
+Der zweite Operand des Hadamard-Produkts ist hierbei gerade das Produkt der
 Matrixmultiplikation zwischen
 der transponierten Gewichtsmatrix $\trans{(\mat{W}^{l-1})}$ der Schicht ($l-1$)
 und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$.
@@ -463,7 +463,7 @@ und dem Fehlervektor $\vec{\delta}^l$ der Schicht $l$.
   \vec{\delta}^l = \trans{(\mat{W}^{l-1})} \vec{\delta}^l
 \end{gather*}
 \para{}
-Damit wurde die die rekursive Fehlerdefinition in Matrixschreibweise
+Damit wurde die rekursive Fehlerdefinition in Matrixschreibweise
 ausgedrückt. Und wir erhalten die kompakte Version \refbox{eq:RP2a} der zweiten wichtigen Formel \refbox{eq:RP2}.
 \\
 \begin{equation}\tag{RP2a}\label{eq:RP2a}
@@ -472,7 +472,7 @@ ausgedrückt. Und wir erhalten die kompakte Version \refbox{eq:RP2a} der zweiten
 \\
 In einem letzten Schritt sind nun noch die Formeln herzuleiten, mit welchen
 anhand des Fehlers $\delta_j^l$ die partiellen Ableitungen der Gewichte und
-der Neigungen berechnen werden können.
+der Neigungen berechnet werden können.
 \para{}
 Eine Neigung $b_j^l$ ist Funktionsbestandteil der entsprechenden gewichteten
 Summe $z_j^{l+1}$. Somit gilt für die Neigung Formel \refbox{eq:RPh3}.
@@ -485,7 +485,7 @@ Der erste Term ist hierbei per Definition der Fehler $\delta_j^{l+1}$ und der
 zweite Term lässt sich auf 1 kürzen, da die Summe $z_k^{l+1}$ nur aus
 $b_k^l$ besteht und aus Summanden, welche für die partielle Ableitung als konstant gelten.
 Somit entspricht die Ableitung der Neigung gerade dem Fehler, womit die
-dritte \refbox{eq:RP3} von vier essentiellen Gleichungen ermittelt wurde.
+dritte \refbox{eq:RP3} von vier essenziellen Gleichungen ermittelt wurde.
 \\
 \begin{equation}\tag{RP3}\label{eq:RP3}
   \partderiv{C}{b_j^l} = \delta_j^{l+1}
@@ -497,7 +497,7 @@ Somit entspricht der Kostengradient bezüglich der Neigung dem Fehlervektor.
   \vecf{\nabla}_{\vec{b^l}} C =  \vec{\delta}^{l+1}
 \end{equation}
 \\
-Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assozierten
+Ein Gewicht $w_{j,k}^l$ ist ebenfalls ein Funktionsbestandteil der assoziierten
 gewichteten Summe $z_j^{l+1}$. Dadurch gilt für die partiellen Ableitungen der
 Kosten nach dem Gewicht die Gleichung \refbox{eq:RPh4}.
 \\
@@ -505,10 +505,10 @@ Kosten nach dem Gewicht die Gleichung \refbox{eq:RPh4}.
   \partderiv{C}{w_{j,k}^l} = \partderiv{C}{z_j^{l+1}} \cdot \partderiv{z_j^{l+1}}{w_{j,k}^l}
 \end{equation}
 \\
-Dabei lässt sich der erste Teil der Gleichung entspricht wieder dem Fehler $\delta_j^{l+1}$.
+Dabei entspricht der erste Teil der Gleichung wieder dem Fehler $\delta_j^{l+1}$.
 Die zweite partielle Ableitung ist gerade die Aktivierung $a_k^l$, da sich die
 gewichtete Summe aus der Multiplikation des Gewichtes mit der Aktivierung ergibt.
-Auf diese Weise entsteht die letzte der vier essentiellen Gleichungen \refbox{eq:RP4}.
+Auf diese Weise entsteht die letzte der vier essenziellen Gleichungen \refbox{eq:RP4}.
 \begin{equation}\tag{RP4}\label{eq:RP4}
   \partderiv{C}{w_{j,k}^l} = \delta_j^{l+1} \cdot a_k^l
 \end{equation}
@@ -556,18 +556,18 @@ Die Matrix-Version lässt sich als Gleichung \refbox{eq:RP4a} ausdrücken.
 \chapter{Performance von TensorFlow}\label{sec:anhang_tf}
 \section*{Devices}
 Die Kernstücke des TensorFlow Backends sind die verschiedenen \keyword{Devices}, auf
-welchen die Berechnungen ausgeführt werden. Ein Device ist jedliche Art von
+welchen die Berechnungen ausgeführt werden. Ein Device ist jegliche Art von
 Computerprozessor, auf welchem die Computational Graphs ausführt werden können.
 Zu diesen Prozessoren gehören die CPU (Hauptprozessor) und die GPU
 (Grafikprozessor), falls die CUDA-Version von TF installiert wurde.
 \para{}
 Das Backend analysiert die verfügbaren Devices und bewertete sie, bezüglich
 ihren Fähigkeiten. Anhand dieser Bewertung wird dann entschieden, auf
-welchem Device die Berechnugen ausgefürt werden%
+welchem Device die Berechnugen ausgeführt werden%
 \footnote{
   Es ist möglich die Graphen auf mehreren Devices gleichzeitig auszuführen und
   so noch schneller die Modelle zu trainieren. Dies ist jedoch erst für sehr
-  aufwendige Projekte nötig und erfordert ein fortgeschritteneres Verstäntniss.
+  aufwendige Projekte nötig und erfordert ein fortgeschritteneres Verständnis.
 }.
 Insofern GPUs zur Verfügung stehen, wählt TF grundsätzlich immer diese, da
 sie Tensoroperationen deutlich schneller als CPUs verarbeiten können.
@@ -582,8 +582,8 @@ ziemlich verbos ist. Das bedeutet man braucht viel Programmcode, um eine relativ
 auszudrücken. Deshalb wurde der Client von TF in Python geschrieben, was
 Abhilfe verschafft und so ein relativ einfaches und unverboses Entwickeln ermöglicht.
 \para{}
-Der andere wichtige Aspekt für die Performance ist die sogennante
-\keyword{Hardwarebeschleuniging} (engl. hardware acceleration), von welcher TF
+Der andere wichtige Aspekt für die Performance ist die sogenannte
+\keyword{Hardwarebeschleunigung} (engl. hardware acceleration), von welcher TF
 Gebrauch macht.
 Hardwarebeschleunigung bezeichnet eine Sammlung an Methoden,
 bei welchen man spezialisierte Hardware verwendet um rechenintensive Aufgaben
@@ -594,18 +594,18 @@ GPU, welche sich für Grafikberechnungen besonders eignen.
 Andererseits wurde auch die interne Architektur der CPU so angepasst, dass sie
 auch spezialisierte Aufgaben besser meistert.
 \para{}
-Eine solche Architekuranpassung stellt die
+Eine solche Architekturanpassung stellt die
 \keyword{Parallelisierung} von Operationen dar. Dabei spaltet man eine
 rechenintensive Aufgabe in viele Teilaufgaben auf, welche gleichzeitig in
 gleicher Weise ausgeführt werden. Voraussetzung dafür ist, dass die
 Teilaufgaben alle die gleichen Schritte umfassen und unabhängig voneinander bearbeitet werden können.
-Ein typisches Beispiel für die Paralleliserbarkeit von Operationen ist die
+Ein typisches Beispiel für die Parallelisierbarkeit von Operationen ist die
 Matrixmultiplikation. Möchte man eine Matrix $\mat{A} \in \set{R}^{n \times m}$ mit
 einer zweiten Matrix $\mat{B} \in \set{R}^{m \times p}$ multiplizieren, muss man
-praktisch $m$-mal den gleichen Schritte ausführen: Man berechnet jeweils das
+praktisch $m$-mal den gleichen Schritt ausführen: Man berechnet jeweils das
 Skalarprodukt zwischen der $i$-ten Zeile von $\mat{A}$ und der $i$-ten Spalte
 von $\mat{B}$. Alle diese Skalarprodukte haben keinen Einfluss aufeinander und
-können so unabhänigig mit der gleichen Prozedur berchnet werden.
+können so unabhängig mit der gleichen Prozedur berechnet werden.
 \para{}
 Allgemein eignen sich Tensoroperationen zur Parallelisierung und damit zur Hardwarebeschleunigung.
 Nun ist auch ersichtlich, weshalb TensorFlow als Hauptdatentyp Tensoren
@@ -613,29 +613,29 @@ verwendet.
 
 \subsection*{CPU-Beschleunigung}
 Die Hardwarebeschleunigung der CPU ist für TensorFlow nur von geringfügiger
-Relevanz, da TF sich vorallem für GPU-Hardwarebeschleunigung eignet
+Relevanz, da TF sich vor allem für GPU-Hardwarebeschleunigung eignet
 und dafür optimiert ist. Ausserdem ist es praktisch unmöglich die gleiche
 Performance von TF mit einer CPU zu erreichen, welche mit einer GPU möglich ist.
 \para{}
-Die Parallelisierung auf der CPU wird einerseits durch sogennantes \keyword{SIMD}
+Die Parallelisierung auf der CPU wird einerseits durch sogenanntes \keyword{SIMD}
 (``single instruction, mutiple data'') bewerkstelligt. Dies stellt ein Prinzip
 dar, welches die gleiche Instruktion parallel auf mehrere Dateneinheiten
 ausführt.
-Andererseits werden auf der CPU die ganzen Berechnung auf mehreren sogennanten
+Andererseits werden auf der CPU die ganzen Berechnung auf mehreren sogenannten
 \keyword{Threads} ausgeführt. Da fast alle heutigen CPUs mehrere Kerne
-besitzten, können nicht nur auf einem einzigen sondern gleich auf mehreren
+besitzen, können nicht nur auf einem einzigen, sondern gleich auf mehreren
 Kernen gerechnet werden.
 
 \subsection*{GPU-Beschleunigung}
 Die Hardwarebeschleunigung für die Grafikkarte wird durch ein spezielles
 externes Framework erreicht. TensorFlow verwendet \keyword{cuDNN} (``NVIDIA CUDA
 deep learning neural network library'') eine von
-NVIDIA entwickelte Programmbibliotheck um Deep Learning performant auf einer NVIDIA-GPU
+NVIDIA entwickelte Programmbibliothek um Deep Learning performant auf einer NVIDIA-GPU
 auszuführen. Praktisch alle professionellen Deep-Learning-Frameworks machen
 Gebrauch von diesem Framework. Dieses ist in der Programmiersprache
 \keyword{CUDA} geschrieben. CUDA ist ebenfalls von NVIDIA entwickelt worden und
 ist eine zu C++ sehr ähnliche Programmiersprache, welche --- im Gegensatz zu C++
---- nicht auf der CPU ausgeführt wird sondern auf der GPU.
+--- nicht auf der CPU ausgeführt wird, sondern auf der GPU.
 
 % --------------------------
 
@@ -659,7 +659,7 @@ direkter Link zum entsprechenden GitHub-Repository.
 
 \addcontentsline{toc}{chapter}{Selbstständigkeitserklärung}
 \chapter*{Selbstständigkeitserklärung}
-Ich erkläre hiermit, dass ich diese Arbeit selbständig durchgeführt und keine
+Ich erkläre hiermit, dass ich diese Arbeit selbstständig durchgeführt und keine
 anderen als die angegebene Quellen, Hilfsmittel und Hilfspersonen beigezogen
 habe. Alle Textstellen in der Arbeit, die wörtlich oder sinngemäss aus Quellen
 entnommen wurden, habe ich als solche gekennzeichnet.
