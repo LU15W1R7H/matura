@@ -11,6 +11,10 @@
 \begin{tikzpicture}[line join=round,white]
   \coordinate (offset) at (0,0,0);
 
+
+  % \includegraphics[width=2.5cm]{tf_logo.png}
+  %   \includegraphics[width=2cm]{keras_logo.jpg}
+
   % #1 is size
   % #2 is depth
   % #3 is x-offset
@@ -44,7 +48,7 @@
   }
 
 
-  \deflayer{3.0}{0.1}{0}{red}
+  \deflayer{3.0}{0.1}{0}{red!60!black}
 
   \coordinate(1-A) at (A);
   \coordinate(1-D) at (D);
@@ -52,9 +56,9 @@
   \coordinate(1-E) at (E);
 
   \drawlayer{}
-  \deflayer{3.0}{0.1}{0.1}{green}
+  \deflayer{3.0}{0.1}{0.1}{green!60!black}
   \drawlayer{}
-  \deflayer{3.0}{0.1}{0.1}{blue}
+  \deflayer{3.0}{0.1}{0.1}{blue!60!black}
   \drawlayer{}
 
   \coordinate(1-B) at (B);
@@ -62,7 +66,7 @@
   \coordinate(1-F) at (F);
   \coordinate(1-G) at (G);
 
-  \deflayer{1.8}{1}{2}{purple}
+  \deflayer{1.8}{1}{1.5}{white!30!black}
 
   \coordinate(2-A) at (A);
   \coordinate(2-B) at (B);
@@ -78,7 +82,7 @@
   \draw[thick,dashed] (1-G) -- (2-H);
   \drawlayer{}
 
-  \deflayer{1}{3}{2}{pink}
+  \deflayer{1}{3}{1.5}{white!60!black}
 
   \coordinate(3-A) at (A);
   \coordinate(3-B) at (B);
@@ -94,7 +98,7 @@
   \draw[thick,dashed] (2-G) -- (3-H);
   \drawlayer{}
 
-  \deflayer{1.8}{1}{2}{purple}
+  \deflayer{1.8}{1}{1.5}{white!30!black}
 
   \coordinate(4-A) at (A);
   \coordinate(4-B) at (B);
@@ -110,7 +114,7 @@
   \draw[thick,dashed] (3-G) -- (4-H);
   \drawlayer{}
 
-  \deflayer{3.0}{0.1}{2}{red}
+  \deflayer{3.0}{0.1}{1.5}{red!60!black}
 
   \coordinate(5-A) at (A);
   \coordinate(5-D) at (D);
@@ -122,9 +126,9 @@
   \draw[thick,dashed] (4-G) -- (5-H);
   \drawlayer{}
 
-  \deflayer{3.0}{0.1}{0.1}{green}
+  \deflayer{3.0}{0.1}{0.1}{green!60!black}
   \drawlayer{}
-  \deflayer{3.0}{0.1}{0.1}{blue}
+  \deflayer{3.0}{0.1}{0.1}{blue!60!black}
   \coordinate(5-B) at (B);
   \coordinate(5-C) at (C);
   \coordinate(5-F) at (F);

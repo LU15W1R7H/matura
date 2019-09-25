@@ -73,37 +73,28 @@
   \colorlet{conv}{blue!70!white}
   \colorlet{pool}{yellow}
   \colorlet{upsample}{orange}
-  \colorlet{out}{green!70!white}
 
   % input
   \imglayer{3.0}{0.1}{0}{inp}{noisy_num.png}
+  \colorlayer{3.0}{0.40}{0.3}{conv}
 
-  % encoder
-  \colorlayer{3.0}{0.1}{1.5}{conv}
-  \colorlayer{3.0}{0.1}{0.1}{pool}
-  \colorlayer{2.5}{0.2}{0.5}{conv}
-  \colorlayer{2.5}{0.2}{0.1}{pool}
-  \colorlayer{2.0}{0.4}{0.5}{conv}
-  \colorlayer{2.0}{0.4}{0.1}{pool}
-  \colorlayer{1.5}{0.8}{0.5}{conv}
-  \colorlayer{1.5}{0.8}{0.1}{pool}
-  \colorlayer{1.0}{1.5}{0.5}{conv}
-  \colorlayer{1.0}{1.5}{0.1}{pool}
+  \colorlayer{2.0}{0.40}{0.1}{pool}
+  \colorlayer{2.0}{0.40}{0.8}{conv}
+  \colorlayer{1.0}{0.80}{0.1}{pool}
+
+  \colorlayer{1.0}{0.80}{0.8}{conv}
+
+  \node (flasche) at (A)[xshift=0.4cm] {};
 
   % decoder
-  \colorlayer{1.0}{1.5}{1}{conv}
-  \colorlayer{1.0}{1.5}{0.1}{upsample}
-  \colorlayer{1.5}{0.8}{0.5}{conv}
-  \colorlayer{1.5}{0.8}{0.1}{upsample}
-  \colorlayer{2.0}{0.4}{0.5}{conv}
-  \colorlayer{2.0}{0.4}{0.1}{upsample}
-  \colorlayer{2.5}{0.2}{0.5}{conv}
-  \colorlayer{2.5}{0.2}{0.1}{upsample}
-  \colorlayer{3.0}{0.1}{0.5}{conv}
-  \colorlayer{3.0}{0.1}{0.1}{upsample}
+  \colorlayer{2.0}{0.40}{0.8}{upsample}
+  \colorlayer{2.0}{0.40}{0.1}{conv}
+  \colorlayer{3.0}{0.40}{0.8}{upsample}
+  \imglayer{3.0}{0.1}{0.1}{conv}{clean_num.png}
 
-  % output
-  \imglayer{3.0}{0.1}{1.5}{out}{clean_num.png}
+  \node (text) at (flasche)[yshift=-1cm] {Flaschenhals};
+  \draw[->, >=latex,thick] (text) -- (flasche);
+
 
 \end{tikzpicture}
 

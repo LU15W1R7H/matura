@@ -146,12 +146,6 @@ Für Maschinelles Lernen haben sich gewisse Modelle besonders gut etabliert,
 dazu zählen: Support Vector Machines, Evolutionäre Algorithmen, und Künstliche Neuronale Netze.
 Diese Arbeit wird sich vorwiegend mit Neuronalen Netzen auseinandersetzen.
 \para{}
-\begin{figure}[h!]
-  \centering
-
-  \caption{Schema eines Modells}
-\end{figure}
-\para{}
 \begin{examplebox}{Beispiel für ein Modell}
 Es wird nun erneut ein Beispiel erläutert, um das Konzept zu verdeutlichen.
 Es soll ein Modell entwickelt werden, um den Zusammenhang zwischen dem
@@ -279,16 +273,6 @@ sich Probleme beim Training:
     Minimum hinaus schiesst und somit nur darum herum springt (siehe Divergenz \refbox{sec:konvergenz}).}
 \end{itemize}
 
-\begin{figure}[h!]
-  \centering
-  \begin{tikzpicture}
-    \draw[gray] (0,0) grid[step=0.5cm] (5,5);
-    \draw[ultra thick,black,->] (-0.5,0) -- (5.5,0) node[right] {$x_1$};
-    \draw[ultra thick,black,->] (0,-0.5) -- (0,5.5) node [above left] {$f(x_1)$};
-  \end{tikzpicture}
-  \caption{Visualisierung verschiedener Lernraten}
-\end{figure}
-
 Aus nachfolgend erläuterten Gründen wird für ML ein etwas angepasstes
 Verfahren des Gradientenabstiegs verwendet: das \keyword{Stochastische
   Gradientenverfahren} (SGD).
@@ -391,9 +375,8 @@ Samples anzuschmiegen.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{overunderfitting.jpg}
+  \includegraphics[width=0.8\textwidth]{fitting.pdf}
   \caption{Visualisierung von Under- und Overfitting}
-  % #TODO: QUELLE
 \end{figure}
 \para{}
 Quellen: \cite{wiki:overfitting} \cite{Goodfellow-et-al-2016} \cite{book:hands-on}
@@ -1244,19 +1227,9 @@ immer im Zentrum des Filters liegt. \\
 
 \begin{figure}[h!]
   \centering
-  \begin{minipage}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.9\textwidth]{filter2d.pdf}
-    \captionof{figure}{eine 2D-Filtermatrix mit rotem Zentralelement $(\mat{F})_C$}
-    \label{fig:filter2d}
-  \end{minipage}\hspace{1cm}%
-  \begin{minipage}{0.5\textwidth}
-    \centering
-    \includegraphics[width=0.9\textwidth]{filter3d.pdf}
-    \captionof{figure}{ein 3D-Filtertensor mit rotem Zentralelement $(\ten{F})_C$}
-    \label{fig:filter3d}
-    % TODO verschieben
-  \end{minipage}
+  \includegraphics[width=0.3\textwidth]{filter2d.pdf}
+  \captionof{figure}{eine 2D-Filtermatrix mit rotem Zentralelement $(\mat{F})_C$}
+  \label{fig:filter2d}
 \end{figure}
 \para{}
 Das Verhalten des Filters wird durch seine Tensoreinträge bestimmt.
@@ -1501,6 +1474,14 @@ Die allgemeine Filtergleichung lautet:
 \begin{equation}\tag{FO}
   (\tilde{\mat{B}})_{y,x} = (\ten{W} * \ten{B})_{y,x} = \sum_{v=1}^{f} \sum_{u=1}^{f} \sum_{w=1}^c (\ten{W})_{v,u,w} (\ten{B})_{x+u-1,y+v-1,w}
 \end{equation}
+\para{}
+\begin{figure}[h!]
+  \centering
+  \centering
+  \includegraphics[width=0.4\textwidth]{filter3d.pdf}
+  \captionof{figure}{ein 3D-Filtertensor mit rotem Zentralelement $(\ten{F})_C$}
+  \label{fig:filter3d}
+\end{figure}
 
 \para{}
 Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
@@ -1519,10 +1500,6 @@ Komponenten das Ursprungsbild hatte. Aus diesem Grund können die einzelnen
 Matrizen $\tilde{\mat{B}}_i$ aufeinander gelegt werden und somit einen grossen 3D-Endtensor
 $\tilde{\ten{B}}$ bilden.
 Hierfür müssen alle Filter $\ten{W}_i$ gleich gross sein.
-\begin{figure}[h!]
-  \caption{aufeinander gelegte gefaltene Bilder}
-  % #TODO
-\end{figure}
 Die Tiefe des neuen Bildes $\tilde{\ten{B}}$ ist jetzt gerade die Anzahl Filter $c$.
 Schon vorher wurde die Tiefe des Bildes (bzw. die Anzahl
 Farbkomponenten) mit $c$ bezeichnet. Somit steht $c$ sowohl die Anzahl Filter
@@ -2020,8 +1997,7 @@ Jedoch sind Autoencoder grundsätzlich PCAs überlegen, da sie mithilfe von
 nicht-linearen Neuronen komplexere Kompressionsmethoden entwickeln können.
 
 \para{}
-Quellen: \cite{paper:autoencoder_compression}
-% #TODO:QUELLE PCA
+Quellen: \cite{paper:autoencoder_compression} \cite{paper:pca}
 
 
 \section{Convolutional-Autoencoder}\label{sec:convolutional_autoencoder}
@@ -2128,10 +2104,6 @@ fallbezogenen Programmierung hergestellt wird.
 \bigskip
 
 \section{TensorFlow}\label{sec:tensorflow}
-\begin{wrapfigure}{L}{2.5cm}
-  \includegraphics[width=2.5cm]{tf_logo.png}
-  \caption{TF-Logo}
-\end{wrapfigure}
 \keyword{TensorFlow} (TF) ist ein von Google entwickeltes \keyword{Framework} für
 \keyword{datenstromorientierte Programmierung}. Es ist im Grunde genommen eine
 Mathematik-Programmbibliothek für numerische Berechnungen, dessen Hauptanwendungsbereich im Maschinellen Lernen
@@ -2144,6 +2116,7 @@ TF ist gratis und ein Open-Source-Projekt. Es steht auf Github zur Verfügung
 (siehe QR-Code).
 \begin{wrapfigure}{L}{2cm}
   \qrcode[height=2cm]{https://github.com/tensorflow/tensorflow}
+  \captionof{figure}{QR-Code zum GitHub-Repo}
 \end{wrapfigure}
 In der Industrie ist TensorFlow gut etabliert und weit verbreitet. Es wird von
 vielen grossen Internetunternehmen verwendet. Einige dieser
@@ -2166,10 +2139,11 @@ wird. Mit TF wird daher nur teilweise direkt gearbeitet. Trotzdem ist es hilfrei
 grobes Verständnis über TF zu besitzen, um die Funktionsweise zu verstehen.
 \para{}
 Die wichtigste Quelle, um TensorFlow zu erlernen, ist die offizielle TensorFlow
-Website. Dort findet man auch die Dokumentation. QR CODE
-% \begin{wrapfigure}{L}{2cm}
-%   \qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
-% \end{wrapfigure}
+Website. Dort findet man auch die Dokumentation.
+\begin{wrapfigure}{L}{2cm}
+  \qrcode[height=2cm]{https://www.tensorflow.org/api/stable}
+  \captionof{figure}{QR-Code zu den Docs}
+\end{wrapfigure}
 \para{}
 Quellen: \cite{book:tensorflow} \cite{net:tf_docs}
 
@@ -2223,22 +2197,17 @@ In TensorFlow wird er vereinfacht als \keycode{Graph} bezeichnet.
 \para{}
 Dieser Graph führt eine Datenstrom-Berechnung aus.
 Er besteht aus einer Menge an Knoten, welche miteinander über Pfade
-verbunden sind. Die Knoten beinhalten Zahlenwerte, welche über die Pfade
-verrechnet und auf den nächsten Knoten abgebildet werden.
-Die Pfade stellen die Operationen dar, welche auf die Werte
-angewendet werden. Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
+verbunden sind. Die Knoten und die Pfade bilden die Operationen, welche auf die
+Zahlenwerte angewandt werden. Die Resultate landen jeweils im neuen Knoten.
+Jeder Knoten hat null oder mehr Inputs und null oder mehr Outputs.
 Zur Definition des Graphs müssen lediglich die Operationen festgelegt werden.
 \para{}
 Mithilfe des Graphs wird das eigentliche ML-Modell definiert. Die Ausführung von
 ihm stellt die Vorwärtspropagierung dar.
 \para{}
 
-\begin{figure}[h!]
-  % #TODO
-  \caption{Visualisierung eines \code{Graph}}
-\end{figure}
 
-\subsubsection{Knoten und Tensoren}
+\subsubsection{Knoten als Tensoren}
 Die zentrale Dateneinheit in TF sind Tensoren, welche bereits in Sektion
 \refbox{sec:tensor} dargelegt wurden. Auch die Knoten des Graphen
 verkörpern Tensoren. Die meisten jedoch enthalten keine festen Zahlenwerte,
@@ -2258,12 +2227,9 @@ assoziiert. Sie besitzen ihren Wert nur für den jeweiligen Durchlauf, danach wi
 er verworfen. Man sagt die Tensoren sind ``immutable'', da die Werte nicht
 erhalten bleiben und daher auch nicht modifiziert werden können.
 \para{}
-Die soeben beschriebene Tensoren agieren lediglich als Durchflussstellen innerhalb des
-Graphen. Sie müssen nicht explizit definiert werden, da sie automatisch
-eingefügt werden, wenn der Graph durch seine Operationen definiert wird.
-\para{}
-Neben dieser allgemeinen Art von Knoten gibt es aber auch noch sogenannte
-Inputknoten. Diese wirken als Startpunkt des Graphen, bei welchem die
+Die meisten Knoten innerhalb des Graphen verkörpern Operationen, jedoch gibt es
+noch einene anderen speziellen Typ von Knoten: Inputknoten.
+Diese wirken als Startpunkt des Graphen, bei welchem die
 Ursprungswerte eingespiesen werden.
 Sogenannte \keycode{placeholder} dienen beispielsweise dazu, die Features ins Modell einzufügen.
 Hingegen können \keycode{variable}-Inputknoten genutzt werden, um Modellparameter einzuführen.
@@ -2272,9 +2238,12 @@ Diese Modellparameter-Tensoren sind im Gegensatz zu den vorgängig beschriebenen
 können auch beim Training modifiziert werden.
 
 
-\subsubsection{Pfade und Operationen}
-Die Knoten des Graphen werden über die Pfade aufeinander
-abgebildet. Die gewählte Abbildung wird als \keycode{Operation} bezeichnet.
+\subsubsection{Operationen}
+Die Werte der Inputknoten gelangen über die Pfade zu den nächsten Knoten. Dort
+werden diese durch verschiedene \keyword{Operationen} weiterverrechnet.
+Durch das Definieren einer Operation wird automatisch ein neuer Knoten
+erstellt, in welchem das Resultat landet. Auch die benötigen Pfade werden
+von selbst vernetzt.
 Eine Operation besitzt jeweils einen Namen und repräsentiert eine
 abstrakte Berechnung. Sie besitzt jeweils null oder mehr Tensor-Objekte als
 Input, wie auch als Output.
@@ -2290,6 +2259,49 @@ Um den eigentlichen Graph zu erstellen, werden zu Beginn einige Inputknoten
 definiert. Diese werden durch die vordefinierten Operationen abgebildet.
 Die jeweiligen Resultate können weiter verrechnet werden bis dann der gewünschte Graph
 entsteht.
+\para{}
+\bigskip
+In Abbildung \refbox{fig:graph} ist ein Beispielsgraph visualisiert. Dieser
+weist dasselbe Verhalten auf wie ein künstliches Neuron mit drei Inputs. In rot sind
+sind die \code{Placeholder}-Tensoren und in blau die \code{Variable}-Tensoren dargestellt.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[nodes={draw,circle,inner sep=0, minimum size=1cm},>=latex]
+    \tikzstyle{inp} = [fill=red!70!pagecolor]
+    \tikzstyle{param} = [fill=blue!70!pagecolor]
+
+
+    \tikzstyle{arr} = [thick,<-]
+
+
+    \node[inp] (x1) at (0,2) {$x_1$};
+    \node[param] (w1) at (1.5,3) {$w_1$};
+    \node[] (+1) at (3,2) {+};
+    \draw[arr] (+1) edge (x1) edge (w1);
+
+    \node[inp] (x2) at (0,0) {$x_2$};
+    \node[param] (w2) at (1.5,1) {$w_2$};
+    \node[] (+2) at (3,0) {+};
+    \draw[arr] (+2) edge (x2) edge (w2);
+
+    \node[inp] (x3) at (0,-2) {$x_3$};
+    \node[param] (w3) at (1.5,-1) {$w_3$};
+    \node[] (+3) at (3,-2) {+};
+    \draw[arr] (+3) edge (x3) edge (w3);
+
+    \node[param] (b) at (5,3) {$b$};
+
+    \node[] (sum) at (5,0) {$\Sigma$};
+    \draw[arr] (sum) edge (+1) edge (+2) edge (+3) edge (b);
+
+    \node[] (act) at (7,0) {$\varphi$};
+    \draw[arr] (act) edge (sum);
+
+  \end{tikzpicture}
+  \caption{Beispielsgraph, welcher sich wie ein künstliches Neuron verhält}
+  \label{fig:graph}
+\end{figure}
 
 \subsection{Ausführung}
 \subsubsection{Session}
@@ -2360,10 +2372,6 @@ dieses auch die längste Trainingszeit beansprucht.
 \para{}
 
 \section{Keras}
-\begin{wrapfigure}{l}{2cm}
-  \includegraphics[width=2cm]{keras_logo.jpg}
-  \caption{Keras-Logo}
-\end{wrapfigure}
 Die Erstellung von KNNs in TensorFlow erweist sich als vergleichsweise aufwendig, weil jede
 KNN-Schicht manuell zu konstruieren ist.  Aus diesem Grund soll nun die
 Funktionsweise von Keras behandelt werden. \keyword{Keras} ist eine High-Level
@@ -2524,67 +2532,30 @@ Entwicklung eines solchen Modells umfasst und welches Vorgehen
 idealtypischerweise zu wählen ist.
 
 \section{Das konkrete Modell}
-Es soll nun ein Convolutional-Denoising-Autoencoder programmiert werden.
-Dieser kann verwendet werden, um das Bildrauschen von Bildern zu eliminieren und
-sie so wieder erkennbar zu machen.
-Zu Demonstrationszwecken werden handgeschriebene Ziffern vom MNIST-Datenset
-verwendet, da die Funktionsfähigkeit des Modells auf diese Weise einfach
-erkennbar ist.
-
-% #TODO: Ausführlichere Modellbeschreibung mit Anzahl Schichten etc. -> erlaubt
-% Kürzung in Programmierabschnitt
-
-
-Mithilfe von Keras kann das Modell eines Convolutional-Denoising-Autoencoder
-definiert werden. Dies geschieht nach dem Vorbild der Theorie.
-Nach dieser Inputschicht folgt der Encoder des Autoencoders. Dieser besteht
-sowohl aus Convolutional-Schichten, wie auch aus Pooling-Schichten, welche sich abwechseln.
-Für alle Schichten werden vorerst unbegründete Hyperparameter gewählt.
-Für die Convolutional-Schichten wird
-eine Filtergrösse $f^l = 3$, eine Anzahl Filter von $c^l = 32$,
-Nun folgt die Deklarierung aller Schichten und deren Verknüpfung. \\
-Das Modell weist einen Flaschenhals auf, welcher zwei Convolutional-Schichten
-tief ist. Das bedeutet, dass der Encoder aus zwei
-Conv-Pool-Paaren besteht. Danach folgt der einschichtige
-Flaschenhals. Im Anschluss daran folgt der Decoder, der zwei
-Conv-UpSampling-Paare umfasst.
-Um die jeweils neue Schicht zur vorherigen Schicht zu verbinden, gibt man die
-vorherige in Klammern am Ende des Statements an. \\
-Der ganze Graph wird durch folgenden Code gebildet:
-\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
-  # Encoder
-  input_data = tf.keras.Input(shape=(28, 28, 1))
-  econv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
-    activation='relu', kernel_initializer='glorot_normal')(input_data)
-  emaxpool0 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv0)
-  econv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
-    activation='relu', kernel_initializer='glorot_normal')(emaxpool0)
-  emaxpool1 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='same')(econv1)
-
-  # Flaschenhals der Form (7, 7, 32)
-  encoded =  emaxpool1
-
-  # Decoder
-  dconv0 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
-    activation='relu', kernel_initializer='glorot_normal')(encoded)
-  dupsample0 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv0)
-  dconv1 = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), strides=(1, 1), padding='same',
-    activation='relu', kernel_initializer='glorot_normal')(dupsample0)
-  dupsample1 = tf.keras.layers.UpSampling2D(size=(2, 2), interpolation='nearest')(dconv1)
-  dconv2 = tf.keras.layers.Conv2D(filters=1, kernel_size=(3, 3), strides=(1, 1), padding='same',
-    activation='sigmoid', kernel_initializer='glorot_normal')(dupsample1)
-  decoded = dconv2
-\end{minted}
-Auffallend im Code ist, dass der Decoder nicht etwa zwei Convolutional-Layers
-besitzt, sondern sogar drei. Die letzte Schicht wird benötigt, damit
-die Daten wieder die richtige Formatierung aufweisen. Das heisst einerseits,
-dass die Outputs wieder in der Ursprungsform $(28 \times 28)$ vorliegen müssen.
-Andererseits sollen sich die Outputs wieder im Intervall
+Das konkrete Modell, welches wir entwickeln werden, ist ein
+Convolutional-Denoising-Autoencoder. Dieser soll dazu verwendet werden, um das
+Bildrauschen von Bildern zu eliminieren, und sie so wieder erkennbar zu machen.
+Als Bilder wird ein Datensatz von handgeschriebenen Ziffern verwenden:
+den MNIST-Datensatz.
+\para{}
+Das Modell besteht aus drei Typen von Schichten: Conv2D-,
+Pool2D- und UpSampling2D-Schichten. Die Convolutional-Schicht bildet mit einer
+der beiden anderen Schichten ein Paar. Nur die Convolutional-Schicht
+des Flaschenhales ist allein in der Mitte positioniert. Von den jeweiligen
+Paaren liegen jeweils zwei vor und hinter dem Flaschenhals.
+Der Aufbau ist spiegelsymmetrisch zum Flaschenhals. Dabei werden die
+Pooling-Schichten des Encoders mit UpSampling-Schichten im Decoder ersetzt. Die
+Inputschicht dient lediglich als Platzhalter.
+\para{}
+In Abbildung \refbox{fig:the_model} ist eine Illustration des beschrieben
+Modells zu sehen. Die einzelne Input-Schicht ist in rot, die Conv2D-Schichten sind in blau, die
+Pool2D-Schichten in gelb und die UpSampling2D-Schichten in orange dargestellt.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.9\textwidth]{themodel.pdf}
-  \caption{Schema des beschriebenen Modells}
+  \includegraphics[width=0.7\textwidth]{themodel.pdf}
+  \caption{Schema des beschriebenen Modells (Tensoren sind nicht massstabsgetreu)}
+  \label{fig:the_model}
 \end{figure}
 
 \subsection{Daten}
@@ -2613,14 +2584,16 @@ Quellen: \cite{net:mnist}
 Zunächst ist es wichtig, das Entwicklungsumfeld richtig zu konfigurieren. Das
 bedeutet konkret, dass Python zusammen mit den verschiedenen Programmbibliotheken
 installiert werden muss.
-\para{}
 Die Installationsschritte werden in dieser Arbeit für eine arch-basierte
 Linuxdistribution erklärt, welche den \keyword{Pacman}-Package-Manager verwendet.
-\para{}
 Falls der Leser ein anderes Betriebssystem verwenden möchte, ist auf die offizielle
-TensorFlow Website für die Installationsschritte zu verweisen:
+TensorFlow Website für die Installationsschritte zu verweisen (siehe QR-Code).
 \para{}
-\qrcode[height=2cm]{https://www.tensorflow.org/install}
+\begin{minipage}{4cm}
+  \centering
+  \qrcode[height=2cm]{https://www.tensorflow.org/install}
+  \captionof{figure}{QR-Code für Installationsanweisungen}
+\end{minipage}
 
 \paragraph{Python3}
 Damit TensorFlow und Keras verwendet werden können, bedingt dies, dass Python3
