@@ -2504,7 +2504,7 @@ Datenabfolge zu vermeiden.
 Ebenfalls kann auch ein Testdatensatz angegeben werden.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize]{python}
   model.fit(x=<inputs>, y=<labels>, epochs=<>, batch_size=<>, shuffle=<>,
-  validation_data=(test_inputs, test_labels))
+    validation_data=(test_inputs, test_labels))
 \end{minted}
 \para{}
 Quellen: \cite{net:keras_docs} \cite{net:tf_docs}
@@ -2829,8 +2829,7 @@ zu Sektion \refbox{sec:parameter_initialisieren} statt. \\
 Der Code für die Definition einer solchen Convolutional-Schicht lautet:
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   conv_layer = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3),
-  strides=(1, 1), padding='same', activation='relu',
-  kernel_initializer='glorot_normal')
+    strides=(1, 1), padding='same', activation='relu', kernel_initializer='glorot_normal')
 \end{minted}
 Für die Pooling-Schichten wird analog eine Feldgrösse $f = 2$, ein
 Stride $s = 2$ und Same-Padding gewählt. Dies bewirkt, dass jedes $(2
@@ -2952,7 +2951,7 @@ damit das Modell nicht versucht, Muster innerhalb der Anordnung der Samples zu
 erlernen. Als letztes Argument wird noch der Testdatensatz angegeben.
 \begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,bgcolor=lightgray,fontsize=\footnotesize,linenos]{python}
   autoencoder.fit(x=x_train_noisy, y=x_train, batch_size=128, epochs=100, shuffle=True,
-    validation_data=(x_test_noisy, x_test))
+      validation_data=(x_test_noisy, x_test))
 \end{minted}
 Sofern TensorFlow eine geeignete Nvidia-Grafikkarte vorfindet und auch die
 CUDA-Version von TF installiert ist, erfolgt das Training mithilfe von GPU-Hardwarebeschleunigung.
