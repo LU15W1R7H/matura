@@ -1186,14 +1186,6 @@ hilfreich werden. \\
 Grundsätzlich folgt auf eine Convolutional-Schicht entweder eine Pooling-
 oder eine Upsampling-Schicht. Somit bilden sie gewissermassen eine Einheit.
 \para{}
-In Abbildung \refbox{fig:cnn_topology} ist ein Schema eines CNNs abgebildet.
-\begin{figure}[h!]
-
-  \caption{Schichtung eines CNNs}
-  \label{fig:cnn_topology}
-\end{figure}
-
-\para{}
 Quellen: \cite{Goodfellow-et-al-2016} \cite{deeplearning.ai:cnn} \cite{wiki:cnn}
 
 
@@ -1323,8 +1315,7 @@ $f = 3$ gewählt wurde.
 Wie bereits oben erwähnt, wandert der Filter über das Bild. Dabei befindet
 sich der Filter immer über einer Region des Bildes, welche gleich gross ist
 wie der Filter selbst (in diesem Fall ($3 \times 3$)). Diese Region des Bildes
-bezeichnet man als das \keyword{Rezeptives Feld} des Filters (siehe Abb.
-\refbox{fig:receptive_field}). Man bezeichnet es mit $\hat{\mat{B}}
+bezeichnet man als das \keyword{Rezeptives Feld} des Filters. Man bezeichnet es mit $\hat{\mat{B}}
 \in \set{R}^{3 \times 3}$. Somit ist das Rezeptive Feld eine Untermatrix der Obermatrix $\mat{B}$.
 \para{}
 In diesem Bereich entsprechen den Filtermatrixeinträgen immer eindeutige Bildmatrixeinträge.
@@ -1334,14 +1325,6 @@ Zentralelement $(\mat{W})_C$ ist dabei gerade der sogenannte Quellenpixel
 Namenskonvention für das Rezeptive Feld. Das Rezeptive Feld wird mit
 $\hat{\mat{B}}^{(y,x)}$ bezeichnet, wobei die hochgestellten Indizes $(y,x)$ die Position
 des Quellenpixel $(\mat{B})_S$ im Bild $\mat{B}$ angibt.
-
-\begin{figure}[h!]
-
-  % Zentralelement einzeichnen mit Beschriftung
-  \caption{ein Filter und sein rezeptives Feld}
-  \label{fig:receptive_field}
-\end{figure}
-
 \para{}
 Der Filter beginnt nun oben links über das Bild zu wandern. Somit
 hat der Filter zu anfang das Rezeptive Feld $\hat{\mat{B}}^{(2,2)}$, denn der
@@ -1476,7 +1459,6 @@ Die allgemeine Filtergleichung lautet:
 \end{equation}
 \para{}
 \begin{figure}[h!]
-  \centering
   \centering
   \includegraphics[width=0.4\textwidth]{filter3d.pdf}
   \captionof{figure}{ein 3D-Filtertensor mit rotem Zentralelement $(\ten{F})_C$}
